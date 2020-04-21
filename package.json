@@ -1,0 +1,9 @@
+{
+  "name": "react-hook-form-resolvers",
+  "version": "0.0.1",
+  "description": "React Hook Form resolvers",
+  "main": "index.js",
+  "repository": "git@github.com:react-hook-form/react-hook-form-resolvers.git",
+  "author": "Beier Luo <bluebill1049@hotmail.com>",
+  "license": "MIT"
+}
