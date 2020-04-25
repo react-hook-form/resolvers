@@ -1,4 +1,4 @@
-import { yup, parseErrorSchema } from './yup';
+import { yupResolver, parseErrorSchema } from './yup';
 
 const errors = {
   name: 'ValidationError',
@@ -53,7 +53,7 @@ describe('parseErrorSchema', () => {
 describe('validateWithSchema', () => {
   it('should return undefined when no error reported', async () => {
     expect(
-      await yup({
+      await yupResolver({
         validate: () => {
           throw errors;
         },
@@ -63,7 +63,7 @@ describe('validateWithSchema', () => {
 
   it('should return empty object when validate pass', async () => {
     expect(
-      await yup({
+      await yupResolver({
         validate: () => new Promise(resolve => resolve()) as any,
       })({}),
     ).toEqual({

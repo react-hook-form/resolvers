@@ -47,7 +47,7 @@ export const parseErrorSchema = (
         [error.path]: { message: error.message, type: error.type },
       };
 
-export const yup = (
+export const yupResolver = (
   validationSchema: any,
   config: any = {
     abortEarly: false,

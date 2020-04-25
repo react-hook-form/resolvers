@@ -18,9 +18,6 @@
     "lint:check": "eslint ./src --ext .jsx,.ts --ignore-pattern *.test.ts --report-unused-disable-directives",
     "test:watch": "yarn test -- --watchAll --coverage"
   },
-  "peerDependencies": {
-    "react-hook-form": "^5.5.2"
-  },
   "devDependencies": {
     "@types/jest": "^25.1.2",
     "@typescript-eslint/eslint-plugin": "^2.18.0",
@@ -28,9 +25,13 @@
     "eslint": "^6.8.0",
     "jest": "^25.1.0",
     "prettier": "^1.19.1",
+    "react": "^16.13.1",
     "rollup": "^1.31.0",
     "rollup-plugin-typescript2": "^0.25.3",
     "ts-jest": "^25.2.0",
     "typescript": "^3.7.5"
+  },
+  "dependencies": {
+    "react-hook-form": "5.5.3-beta.2"
   }
 }
