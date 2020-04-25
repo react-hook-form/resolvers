@@ -1,9 +1,37 @@
 {
   "name": "react-hook-form-resolvers",
   "version": "0.0.1",
-  "description": "React Hook Form resolvers",
-  "main": "index.js",
+  "description": "React Hook Form validation resolvers: Yup, Joi, Superstruct and etc.",
+  "main": "dist/react-hook-form-resolvers.js",
+  "module": "dist/react-hook-form-resolvers.es.js",
+  "types": "dist/index.d.ts",
   "repository": "git@github.com:react-hook-form/react-hook-form-resolvers.git",
-  "author": "Beier Luo <bluebill1049@hotmail.com>",
-  "license": "MIT"
+  "author": "bluebill1049 <bluebill1049@hotmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "rollup -c",
+    "prepublishOnly": "yarn lint && yarn test && yarn run clean && yarn build",
+    "test": "jest --runInBand",
+    "lint": "yarn lint:check --fix && yarn prettier",
+    "prettier": "prettier --write './src/**/*.ts' './src/**/*.tsx' --config ./.prettierrc",
+    "lint:check": "eslint ./src --ext .jsx,.ts --ignore-pattern *.test.ts --report-unused-disable-directives",
+    "test:watch": "yarn test -- --watchAll --coverage"
+  },
+  "devDependencies": {
+    "@types/jest": "^25.1.2",
+    "@typescript-eslint/eslint-plugin": "^2.18.0",
+    "@typescript-eslint/parser": "^2.18.0",
+    "eslint": "^6.8.0",
+    "jest": "^25.1.0",
+    "prettier": "^1.19.1",
+    "react": "^16.13.1",
+    "rollup": "^1.31.0",
+    "rollup-plugin-typescript2": "^0.25.3",
+    "ts-jest": "^25.2.0",
+    "typescript": "^3.7.5"
+  },
+  "dependencies": {
+    "react-hook-form": "5.5.3-beta.2"
+  }
 }
