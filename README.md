@@ -24,14 +24,14 @@ We are moving away from native support for Yup validation and begin to support o
 
 ## Install
 
-    $ npm install react-hook-form-resolvers -D
+    $ npm install react-hook-form-resolvers
 
 ## Quickstart
 
 ```typescript jsx
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { yup } from 'react-hook-form-resolvers';
+import { yupResolver } from 'react-hook-form-resolvers';
 
 const SignupSchema = yup.object().shape({
   name: yup.string().required(),
@@ -40,19 +40,19 @@ const SignupSchema = yup.object().shape({
 
 const App = () => {
   const { register, handleSubmit } = useForm({
-    validationResolver: yup(SignupSchema), // yup, joi and even your own.
+    validationResolver: yupResolver(SignupSchema), // yup, joi and even your own.
   });
 
   return (
     <>
       <form onSubmit={handleSubmit(d => console.log(d))}>
         <label>Test</label>
-        <input name="test" ref={register} />
+        <input name="name" ref={register} />
+        <input name="age" type="number" ref={register} />
+
         <input type="submit" />
       </form>
     </>
   );
 };
-
-export default App;
 ```
