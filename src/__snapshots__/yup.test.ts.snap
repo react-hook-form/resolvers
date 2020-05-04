@@ -48,3 +48,28 @@ Object {
   "values": Object {},
 }
 `;
+
+exports[`yupResolver should get errors 1`] = `
+Object {
+  "errors": Object {
+    "age": Object {
+      "message": "age must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"test\\"\`).",
+      "type": "typeError",
+    },
+    "createdOn": Object {
+      "message": "createdOn must be a \`date\` type, but the final value was: \`Invalid Date\`.",
+      "type": "typeError",
+    },
+    "foo": Array [
+      Object {
+        "loose": Object {
+          "message": "foo[0].loose must be a \`boolean\` type, but the final value was: \`null\`.
+ If \\"null\\" is intended as an empty value be sure to mark the schema as \`.nullable()\`",
+          "type": "typeError",
+        },
+      },
+    ],
+  },
+  "values": Object {},
+}
+`;

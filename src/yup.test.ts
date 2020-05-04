@@ -1,3 +1,4 @@
+import * as yup from 'yup';
 import { yupResolver, parseErrorSchema } from './yup';
 
 const errors = {
@@ -39,6 +40,58 @@ const errors = {
     },
   ],
 };
+
+const schema = yup.object().shape({
+  name: yup.string().required(),
+  age: yup
+    .number()
+    .required()
+    .positive()
+    .integer(),
+  email: yup.string().email(),
+  website: yup.string().url(),
+  createdOn: yup.date().default(function() {
+    return new Date();
+  }),
+  foo: yup
+    .array()
+    .required()
+    .of(
+      yup.object({
+        loose: yup.boolean(),
+      }),
+    ),
+});
+
+describe('yupResolver', () => {
+  it('should get values', async () => {
+    const data = {
+      name: 'jimmy',
+      age: '24',
+      createdOn: '2014-09-23T19:25:25Z',
+      foo: [{ yup: true }],
+    };
+    expect(await yupResolver(schema)(data)).toEqual({
+      errors: {},
+      values: {
+        name: 'jimmy',
+        age: 24,
+        foo: [{ yup: true }],
+        createdOn: new Date('2014-09-23T19:25:25Z'),
+      },
+    });
+  });
+
+  it('should get errors', async () => {
+    const data = {
+      name: 2,
+      age: 'test',
+      createdOn: null,
+      foo: [{ loose: null }],
+    };
+    expect(await yupResolver(schema)(data)).toMatchSnapshot();
+  });
+});
 
 describe('parseErrorSchema', () => {
   it('should parse the validation errors into react hook form errors format', () => {
