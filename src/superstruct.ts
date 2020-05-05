@@ -7,13 +7,19 @@ type SuperStructError = {
 
 type FieldValues = Record<string, any>;
 
+type FieldError = {
+  path: (string | number)[];
+  message: string;
+  type: string;
+};
+
 const parseErrorSchema = (
   error: SuperStructError,
   validateAllFieldCriteria: boolean,
 ) =>
   Array.isArray(error.failures)
     ? error.failures.reduce(
-        (previous: FieldValues, { path, message, type }: FieldValues) => {
+        (previous: FieldValues, { path, message, type }: FieldError) => {
           const currentPath = convertArrayToPathName(path);
 
           return {
