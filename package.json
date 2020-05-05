@@ -35,6 +35,8 @@
     "yup": "^0.28.5"
   },
   "dependencies": {
+    "@hapi/joi": "^17.1.1",
+    "@types/hapi__joi": "^16.0.12",
     "react-hook-form": "6.0.0-beta.2"
   }
 }
