@@ -28,19 +28,53 @@ We are moving away from native support for Yup validation and begin to support o
 
 ## Quickstart
 
+#### Yup
+
 ```typescript jsx
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from 'react-hook-form-resolvers';
 
-const SignupSchema = yup.object().shape({
+const schema = yup.object().shape({
   name: yup.string().required(),
   age: yup.number().required(),
 });
 
 const App = () => {
   const { register, handleSubmit } = useForm({
-    validationResolver: yupResolver(SignupSchema), // yup, joi and even your own.
+    validationResolver: yupResolver(schema), // yup, joi and even your own.
+  });
+
+  return (
+    <>
+      <form onSubmit={handleSubmit(d => console.log(d))}>
+        <label>Test</label>
+        <input name="name" ref={register} />
+        <input name="age" type="number" ref={register} />
+
+        <input type="submit" />
+      </form>
+    </>
+  );
+};
+```
+
+#### Superstruct
+  
+```typescript jsx
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { superstructResolver } from 'react-hook-form-resolvers';
+import { struct } from 'superstruct';
+
+const schema = struct({
+  name: 'string',
+  age: 'number',
+});
+
+const App = () => {
+  const { register, handleSubmit } = useForm({
+    validationResolver: superstructResolver(schema), // yup, joi and even your own.
   });
 
   return (
