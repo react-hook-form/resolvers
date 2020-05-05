@@ -19,7 +19,7 @@ const parseErrorSchema = (
 ) =>
   Array.isArray(error.failures)
     ? error.failures.reduce(
-        (previous: FieldValues, { path, message, type }: FieldError) => {
+        (previous: FieldValues, { path, message = '', type }: FieldError) => {
           const currentPath = convertArrayToPathName(path);
 
           return {
