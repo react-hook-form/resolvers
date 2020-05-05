@@ -34,6 +34,7 @@ We are moving away from native support for Yup validation and begin to support o
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from 'react-hook-form-resolvers';
+import yup as * from 'yup';
 
 const schema = yup.object().shape({
   name: yup.string().required(),
