@@ -47,15 +47,13 @@ const App = () => {
   });
 
   return (
-    <>
-      <form onSubmit={handleSubmit(d => console.log(d))}>
-        <label>Test</label>
-        <input name="name" ref={register} />
-        <input name="age" type="number" ref={register} />
-
-        <input type="submit" />
-      </form>
-    </>
+    <form onSubmit={handleSubmit(d => console.log(d))}>
+      <label>Test</label>
+      <input name="name" ref={register} />
+      <input name="age" type="number" ref={register} />
+    
+      <input type="submit" />
+    </form>
   );
 };
 ```
@@ -79,15 +77,42 @@ const App = () => {
   });
 
   return (
-    <>
-      <form onSubmit={handleSubmit(d => console.log(d))}>
-        <label>Test</label>
-        <input name="name" ref={register} />
-        <input name="age" type="number" ref={register} />
+    <form onSubmit={handleSubmit(d => console.log(d))}>
+      <label>Test</label>
+      <input name="name" ref={register} />
+      <input name="age" type="number" ref={register} />
+    
+      <input type="submit" />
+    </form>
+  );
+};
+```
 
-        <input type="submit" />
-      </form>
-    </>
+#### Joi
+  
+```typescript jsx
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { joiResolver } from 'react-hook-form-resolvers';
+import Joi from "@hapi/joi";
+
+const schema = Joi.object({
+  username: Joi.string().required()
+});
+
+const App = () => {
+  const { register, handleSubmit } = useForm({
+    validationResolver: joiResolver(schema),
+  });
+
+  return (
+    <form onSubmit={handleSubmit(d => console.log(d))}>
+      <label>Test</label>
+      <input name="name" ref={register} />
+      <input name="age" type="number" ref={register} />
+    
+      <input type="submit" />
+    </form>
   );
 };
 ```
