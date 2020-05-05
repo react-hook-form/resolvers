@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`superstructResolver should return errors 1`] = `
+Object {
+  "errors": Object {
+    "author": Object {
+      "id": Object {
+        "message": undefined,
+        "type": "number",
+      },
+    },
+    "id": Object {
+      "message": undefined,
+      "type": "number",
+    },
+    "tags": Array [
+      Object {
+        "message": undefined,
+        "type": "string",
+      },
+      Object {
+        "message": undefined,
+        "type": "string",
+      },
+    ],
+    "title": Object {
+      "message": undefined,
+      "type": "string",
+    },
+  },
+  "values": Object {},
+}
+`;

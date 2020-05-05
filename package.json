@@ -29,6 +29,7 @@
     "react": "^16.13.1",
     "rollup": "^1.31.0",
     "rollup-plugin-typescript2": "^0.25.3",
+    "superstruct": "^0.8.3",
     "ts-jest": "^25.2.0",
     "typescript": "^3.7.5",
     "yup": "^0.28.5"
