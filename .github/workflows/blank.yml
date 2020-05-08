@@ -1,0 +1,28 @@
+name: CI
+on:
+  push:
+    branches:
+    - master
+  pull_request:
+    branches:
+    - master
+    paths-ignore:
+    - '.gitignore'
+    - '.npmignore'
+    - '*.md'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Install Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+    - uses: actions/checkout@v1
+    - name: Run lint
+      run: npm run lint
+    - name: Run build
+      run: npm install && npm run build
+    - name: Run test
+      run: npm run test
