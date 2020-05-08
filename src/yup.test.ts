@@ -1,5 +1,5 @@
 import * as yup from 'yup';
-import { yupResolver, parseErrorSchema } from './yup';
+import { yupResolver } from './yup';
 
 const errors = {
   name: 'ValidationError',
@@ -90,16 +90,6 @@ describe('yupResolver', () => {
       foo: [{ loose: null }],
     };
     expect(await yupResolver(schema)(data)).toMatchSnapshot();
-  });
-});
-
-describe('parseErrorSchema', () => {
-  it('should parse the validation errors into react hook form errors format', () => {
-    expect(parseErrorSchema(errors as any, false)).toMatchSnapshot();
-  });
-
-  it('should parse the validation errors and append all errors', () => {
-    expect(parseErrorSchema(errors as any, true)).toMatchSnapshot();
   });
 });
 

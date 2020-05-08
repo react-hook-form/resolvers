@@ -9,7 +9,7 @@ type YupValidationError = {
 
 type FieldValues = Record<string, any>;
 
-export const parseErrorSchema = (
+const parseErrorSchema = (
   error: YupValidationError,
   validateAllFieldCriteria: boolean,
 ) =>

@@ -5,26 +5,26 @@ Object {
   "errors": Object {
     "author": Object {
       "id": Object {
-        "message": undefined,
+        "message": "",
         "type": "number",
       },
     },
     "id": Object {
-      "message": undefined,
+      "message": "",
       "type": "number",
     },
     "tags": Array [
       Object {
-        "message": undefined,
+        "message": "",
         "type": "string",
       },
       Object {
-        "message": undefined,
+        "message": "",
         "type": "string",
       },
     ],
     "title": Object {
-      "message": undefined,
+      "message": "",
       "type": "string",
     },
   },
