@@ -1,4 +1,5 @@
 import { appendErrors, transformToNestObject } from 'react-hook-form';
+import Joi from '@hapi/joi';
 import convertArrayToPathName from './utils/convertArrayToPathName';
 
 type JoiError = {
@@ -51,7 +52,7 @@ const parseErrorSchema = (error: JoiError, validateAllFieldCriteria: boolean) =>
     : [];
 
 export const joiResolver = (
-  validationSchema: any,
+  validationSchema: Joi.Schema,
   config: any = {
     abortEarly: false,
   },
