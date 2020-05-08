@@ -20,9 +20,9 @@ jobs:
       with:
         node-version: '12.x'
     - uses: actions/checkout@v1
-    - name: Run lint
-      run: npm run lint
     - name: Run build
       run: npm install && npm run build
+    - name: Run lint
+      run: npm run lint
     - name: Run test
       run: npm run test
