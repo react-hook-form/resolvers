@@ -28,7 +28,7 @@ We are moving away from native support for Yup validation and begin to support o
 
 ## Quickstart
 
-#### [Yup](https://github.com/jquense/yup)
+### [Yup](https://github.com/jquense/yup)
 
 Dead simple Object schema validation
 
@@ -60,7 +60,7 @@ const App = () => {
 };
 ```
 
-#### [Superstruct](https://github.com/ianstormtaylor/superstruct)
+### [Superstruct](https://github.com/ianstormtaylor/superstruct)
 
 A simple and composable way to validate data in JavaScript (or TypeScript).
   
@@ -92,7 +92,7 @@ const App = () => {
 };
 ```
 
-#### [Joi](https://github.com/hapijs/joi)
+### [Joi](https://github.com/hapijs/joi)
 
 The most powerful data validation library for JS
   
