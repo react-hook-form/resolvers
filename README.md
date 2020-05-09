@@ -92,7 +92,7 @@ const App = () => {
 };
 ```
 
-#### (Joi)[https://github.com/hapijs/joi]
+#### [Joi](https://github.com/hapijs/joi)
 
 The most powerful data validation library for JS
   
