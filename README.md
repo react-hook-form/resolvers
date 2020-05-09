@@ -43,7 +43,7 @@ const schema = yup.object().shape({
 
 const App = () => {
   const { register, handleSubmit } = useForm({
-    validationResolver: yupResolver(schema),
+    resolver: yupResolver(schema),
   });
 
   return (
@@ -73,7 +73,7 @@ const schema = struct({
 
 const App = () => {
   const { register, handleSubmit } = useForm({
-    validationResolver: superstructResolver(schema),
+    resolver: superstructResolver(schema),
   });
 
   return (
@@ -102,7 +102,7 @@ const schema = Joi.object({
 
 const App = () => {
   const { register, handleSubmit } = useForm({
-    validationResolver: joiResolver(schema),
+    resolver: joiResolver(schema),
   });
 
   return (
