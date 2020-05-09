@@ -28,7 +28,9 @@ We are moving away from native support for Yup validation and begin to support o
 
 ## Quickstart
 
-### [Yup](https://github.com/jquense/yup) [![npm](https://img.shields.io/bundlephobia/minzip/yup?style=for-the-badge)](https://bundlephobia.com/result?p=yup)
+### [Yup](https://github.com/jquense/yup) 
+
+[![npm](https://img.shields.io/bundlephobia/minzip/yup?style=for-the-badge)](https://bundlephobia.com/result?p=yup)
 
 Dead simple Object schema validation
 
@@ -62,6 +64,8 @@ const App = () => {
 
 ### [Superstruct](https://github.com/ianstormtaylor/superstruct)
 
+[![npm](https://img.shields.io/bundlephobia/minzip/superstruct?style=for-the-badge)](https://bundlephobia.com/result?p=superstruct)
+
 A simple and composable way to validate data in JavaScript (or TypeScript).
   
 ```typescript jsx
@@ -93,6 +97,8 @@ const App = () => {
 ```
 
 ### [Joi](https://github.com/hapijs/joi)
+
+[![npm](https://img.shields.io/bundlephobia/minzip/@hapi/joi?style=for-the-badge)](https://bundlephobia.com/result?p=@hapi/joi)
 
 The most powerful data validation library for JS
   
