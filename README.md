@@ -10,9 +10,9 @@
 
 <div align="center">
 
-[![npm downloads](https://img.shields.io/npm/dm/react-hook-form-resolvers.svg?style=flat-square)](https://www.npmjs.com/package/react-hook-form-resolvers)
-[![npm](https://img.shields.io/npm/dt/react-hook-form-resolvers.svg?style=flat-square)](https://www.npmjs.com/package/react-hook-form-resolvers)
-[![npm](https://badgen.net/bundlephobia/minzip/react-hook-form-resolvers)](https://badgen.net/bundlephobia/minzip/react-hook-form-resolvers)
+[![npm downloads](https://img.shields.io/npm/dm/react-hook-form-resolvers.svg?style=for-the-badge)](https://www.npmjs.com/package/react-hook-form-resolvers)
+[![npm](https://img.shields.io/npm/dt/react-hook-form-resolvers.svg?style=for-the-badge)](https://www.npmjs.com/package/react-hook-form-resolvers)
+[![npm](https://img.shields.io/bundlephobia/minzip/react-hook-form-resolvers?style=for-the-badge)](https://bundlephobia.com/result?p=react-hook-form-resolvers)
 
 [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=React+hooks+for+form+validation+without+the+hassle&url=https://github.com/bluebill1049/react-hook-form-resolvers)&nbsp;[![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/react-hook-form)
 
