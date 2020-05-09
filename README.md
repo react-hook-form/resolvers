@@ -28,7 +28,7 @@ We are moving away from native support for Yup validation and begin to support o
 
 ## Quickstart
 
-### [Yup](https://github.com/jquense/yup)
+### [Yup](https://github.com/jquense/yup) [![npm](https://img.shields.io/bundlephobia/minzip/yup?style=for-the-badge)](https://bundlephobia.com/result?p=yup)
 
 Dead simple Object schema validation
 
