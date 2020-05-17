@@ -34,7 +34,7 @@ We are moving away from native support for Yup validation and begin to support o
 |--|--|--|--|
 | resolver | `function` | | validation resolver function based on Yup/Joi/Superstruct |
 | schema | `object` | ✓| validation schema |
-| config | `object` | | validation schema configration object |
+| config | `object` | | validation schema configuration object |
 
 
 ## Quickstart
