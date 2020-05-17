@@ -25,12 +25,23 @@ We are moving away from native support for Yup validation and begin to support o
 ## Install
 
     $ npm install react-hook-form-resolvers
+    
+## API    
+
+`resolver(schema, config)`
+
+|  | type | Required | Description|
+|--|--|--|--|
+| resolver | `function` | | validation resolver function based on Yup/Joi/Superstruct |
+| schema | `object` | ✓| validation schema |
+| config | `object` | | validation schema configration object |
+
 
 ## Quickstart
 
 ### [Yup](https://github.com/jquense/yup) 
 
-[![npm](https://img.shields.io/bundlephobia/minzip/yup?style=for-the-badge)](https://bundlephobia.com/result?p=yup)
+![npm](https://img.shields.io/bundlephobia/minzip/yup?style=for-the-badge)](https://bundlephobia.com/result?p=yup)
 
 Dead simple Object schema validation
 
