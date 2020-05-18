@@ -41,9 +41,10 @@ We are moving away from native support for Yup validation and begin to support o
 
 ### [Yup](https://github.com/jquense/yup) 
 
+Dead simple Object schema validation.
+
 [![npm](https://img.shields.io/bundlephobia/minzip/yup?style=for-the-badge)](https://bundlephobia.com/result?p=yup)
 
-Dead simple Object schema validation
 
 ```typescript jsx
 import React from 'react';
@@ -75,9 +76,9 @@ const App = () => {
 
 ### [Superstruct](https://github.com/ianstormtaylor/superstruct)
 
-[![npm](https://img.shields.io/bundlephobia/minzip/superstruct?style=for-the-badge)](https://bundlephobia.com/result?p=superstruct)
-
 A simple and composable way to validate data in JavaScript (or TypeScript).
+
+[![npm](https://img.shields.io/bundlephobia/minzip/superstruct?style=for-the-badge)](https://bundlephobia.com/result?p=superstruct)
   
 ```typescript jsx
 import React from 'react';
@@ -109,9 +110,9 @@ const App = () => {
 
 ### [Joi](https://github.com/hapijs/joi)
 
-[![npm](https://img.shields.io/bundlephobia/minzip/@hapi/joi?style=for-the-badge)](https://bundlephobia.com/result?p=@hapi/joi)
+The most powerful data validation library for JS.
 
-The most powerful data validation library for JS
+[![npm](https://img.shields.io/bundlephobia/minzip/@hapi/joi?style=for-the-badge)](https://bundlephobia.com/result?p=@hapi/joi)
   
 ```typescript jsx
 import React from 'react';
