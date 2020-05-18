@@ -28,11 +28,10 @@ We are moving away from native support for Yup validation and begin to support o
     
 ## API    
 
-`resolver(schema, config)`
+`resolver(schema: any, config?: any)`
 
 |  | type | Required | Description|
 |--|--|--|--|
-| resolver | `function` | | validation resolver function based on Yup/Joi/Superstruct |
 | schema | `object` | ✓| validation schema |
 | config | `object` | | validation schema configuration object |
 
