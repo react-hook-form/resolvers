@@ -28,7 +28,7 @@ We are moving away from native support for Yup validation and begin to support o
     
 ## API    
 
-`resolver(schema: any, config?: any)`
+`resolver(schema: object, config?: object)`
 
 |  | type | Required | Description|
 |--|--|--|--|
