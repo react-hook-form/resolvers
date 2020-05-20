@@ -10,11 +10,11 @@
 
 <div align="center">
 
-[![npm downloads](https://img.shields.io/npm/dm/react-hook-form-resolvers.svg?style=for-the-badge)](https://www.npmjs.com/package/react-hook-form-resolvers)
-[![npm](https://img.shields.io/npm/dt/react-hook-form-resolvers.svg?style=for-the-badge)](https://www.npmjs.com/package/react-hook-form-resolvers)
-[![npm](https://img.shields.io/bundlephobia/minzip/react-hook-form-resolvers?style=for-the-badge)](https://bundlephobia.com/result?p=react-hook-form-resolvers)
+[![npm downloads](https://img.shields.io/npm/dm/@hookform/resolvers.svg?style=for-the-badge)](https://www.npmjs.com/package/@hookform/resolvers)
+[![npm](https://img.shields.io/npm/dt/@hookform/resolvers.svg?style=for-the-badge)](https://www.npmjs.com/package/@hookform/resolvers)
+[![npm](https://img.shields.io/bundlephobia/minzip/@hookform/resolvers?style=for-the-badge)](https://bundlephobia.com/result?p=@hookform/resolvers)
 
-[![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=React+hooks+for+form+validation+without+the+hassle&url=https://github.com/bluebill1049/react-hook-form-resolvers)&nbsp;[![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/react-hook-form)
+[![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=React+hooks+for+form+validation+without+the+hassle&url=https://github.com/bluebill1049/@hookform/resolvers)&nbsp;[![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/react-hook-form)
 
 </div>
 
@@ -24,7 +24,7 @@ We are moving away from native support for Yup validation and begin to support o
 
 ## Install
 
-    $ npm install react-hook-form-resolvers
+    $ npm install @hookform/resolvers
     
 ## API    
 
@@ -48,7 +48,7 @@ Dead simple Object schema validation.
 ```typescript jsx
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from 'react-hook-form-resolvers';
+import { yupResolver } from '@hookform/resolvers';
 import yup as * from 'yup';
 
 const schema = yup.object().shape({
@@ -81,7 +81,7 @@ A simple and composable way to validate data in JavaScript (or TypeScript).
 ```typescript jsx
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { superstructResolver } from 'react-hook-form-resolvers';
+import { superstructResolver } from '@hookform/resolvers';
 import { struct } from 'superstruct';
 
 const schema = struct({
@@ -114,7 +114,7 @@ The most powerful data validation library for JS.
 ```typescript jsx
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { joiResolver } from 'react-hook-form-resolvers';
+import { joiResolver } from '@hookform/resolvers';
 import Joi from "@hapi/joi";
 
 const schema = Joi.object({
