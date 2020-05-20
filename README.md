@@ -24,7 +24,7 @@ We are moving away from native support for Yup validation and begin to support o
 
 ## Install
 
-    $ npm install @hookForm/resolvers
+    $ npm install react-hook-form-resolvers
     
 ## API    
 
@@ -48,7 +48,7 @@ Dead simple Object schema validation.
 ```typescript jsx
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookForm/resolvers';
+import { yupResolver } from 'react-hook-form-resolvers';
 import yup as * from 'yup';
 
 const schema = yup.object().shape({
