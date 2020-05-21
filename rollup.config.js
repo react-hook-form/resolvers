@@ -4,12 +4,12 @@ export function getConfig({
   tsconfig = './tsconfig.json',
   output = [
     {
-      file: `dist/$react-hook-form-resolvers.js`,
+      file: `dist/react-hook-form-resolvers.js`,
       format: 'cjs',
       exports: 'named',
     },
     {
-      file: `dist/$react-hook-form-resolvers.es.js`,
+      file: `dist/react-hook-form-resolvers.es.js`,
       format: 'esm',
     },
   ],
