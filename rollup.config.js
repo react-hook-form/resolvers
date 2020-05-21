@@ -1,16 +1,15 @@
 import typescript from 'rollup-plugin-typescript2';
-import pkg from './package.json';
 
 export function getConfig({
   tsconfig = './tsconfig.json',
   output = [
     {
-      file: `dist/${pkg.name}.js`,
+      file: `dist/$react-hook-form-resolvers.js`,
       format: 'cjs',
       exports: 'named',
     },
     {
-      file: `dist/${pkg.name}.es.js`,
+      file: `dist/$react-hook-form-resolvers.es.js`,
       format: 'esm',
     },
   ],
