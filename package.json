@@ -2,12 +2,12 @@
   "name": "@hookform/resolvers",
   "version": "0.0.3",
   "description": "React Hook Form validation resolvers: Yup, Joi, Superstruct and etc.",
-  "main": "dist/react-hook-form-resolvers.js",
-  "module": "dist/react-hook-form-resolvers.es.js",
+  "main": "dist/resolvers.js",
+  "module": "dist/resolvers.es.js",
   "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/react-hook-form/react-hook-form-resolvers.git"
+    "url": "git+ssh://git@github.com/react-hook-form/resolvers.git"
   },
   "publishConfig": {
     "access": "public"
@@ -46,7 +46,7 @@
     "react-hook-form": "6.0.0-beta.2"
   },
   "bugs": {
-    "url": "https://github.com/react-hook-form/react-hook-form-resolvers/issues"
+    "url": "https://github.com/react-hook-form/resolvers/issues"
   },
-  "homepage": "https://github.com/react-hook-form/react-hook-form-resolvers#readme"
+  "homepage": "https://github.com/react-hook-form/resolvers#readme"
 }
