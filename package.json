@@ -26,6 +26,9 @@
   },
   "devDependencies": {
     "@hapi/joi": "^17.1.1",
+    "@rollup/plugin-commonjs": "^13.0.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^8.0.1",
     "@types/hapi__joi": "^17.1.0",
     "@types/jest": "^25.1.2",
     "@types/yup": "^0.28.0",
@@ -35,15 +38,22 @@
     "jest": "^25.1.0",
     "prettier": "^1.19.1",
     "react": "^16.13.1",
-    "rollup": "^1.31.0",
+    "react-hook-form": "^6.0.0-rc.3",
+    "rollup": "^2.16.1",
+    "rollup-plugin-peer-deps-external": "^2.2.2",
+    "rollup-plugin-sourcemaps": "^0.6.2",
+    "rollup-plugin-terser": "^6.1.0",
     "rollup-plugin-typescript2": "^0.25.3",
     "superstruct": "^0.8.3",
     "ts-jest": "^25.2.0",
     "typescript": "^3.7.5",
     "yup": "^0.28.5"
   },
-  "dependencies": {
-    "react-hook-form": "6.0.0-beta.2"
+  "peerDependencies": {
+    "@hapi/joi": "*",
+    "react-hook-form": ">=6.0.0",
+    "superstruct": "*",
+    "yup": "*"
   },
   "bugs": {
     "url": "https://github.com/react-hook-form/resolvers/issues"

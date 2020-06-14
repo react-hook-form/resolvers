@@ -1,39 +1,61 @@
+import external from 'rollup-plugin-peer-deps-external';
+import json from '@rollup/plugin-json';
 import typescript from 'rollup-plugin-typescript2';
+import commonjs from '@rollup/plugin-commonjs';
+import resolve from '@rollup/plugin-node-resolve';
+import sourcemaps from 'rollup-plugin-sourcemaps';
+// import { terser } from 'rollup-plugin-terser';
+import pkg from './package.json';
 
-export function getConfig({
-  tsconfig = './tsconfig.json',
-  output = [
-    {
-      file: `dist/resolvers.js`,
-      format: 'cjs',
-      exports: 'named',
-    },
-    {
-      file: `dist/resolvers.es.js`,
-      format: 'esm',
-    },
-  ],
-} = {}) {
-  return {
+export default [
+  //   {
+  //     input: 'src/index.ts',
+  //     output: {
+  //       name: 'HookFormResolvers',
+  //       file: pkg.unpkg,
+  //       format: 'umd',
+  //       sourcemap: true,
+  //       globals: {
+  //         '@hapi/joi': 'joi',
+  //         'react-hook-form': 'ReactHookForm',
+  //         yup: 'Yup',
+  //       },
+  //     },
+  //     plugins: [
+  //       external(),
+  //       json(),
+  //       typescript({
+  //         clean: true,
+  //       }),
+  //       commonjs(),
+  //       resolve(),
+  //       sourcemaps(),
+  //       terser(),
+  //     ],
+  //   },
+  {
     input: 'src/index.ts',
-    external: [
-      'react',
-      'react-dom',
-      'react-hook-form',
-      'react-simple-animate',
-      'lodash/get',
-      'styled-components',
-      'lodash/isUndefined',
-      'lodash/isObject',
+    output: [
+      {
+        file: pkg.main,
+        format: 'cjs',
+        sourcemap: true,
+      },
+      {
+        file: pkg.module,
+        format: 'es',
+        sourcemap: true,
+      },
     ],
     plugins: [
+      external(),
+      json(),
       typescript({
-        tsconfig,
         clean: true,
       }),
+      commonjs(),
+      resolve(),
+      sourcemaps(),
     ],
-    output,
-  };
-}
-
-export default getConfig();
+  },
+];
