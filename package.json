@@ -24,7 +24,7 @@
     "lint:types": "tsc --noEmit",
     "test": "jest --runInBand",
     "test:watch": "npm run test -- --watchAll --coverage",
-    "prepublishOnly": "npm run lint && npm test && npm run build"
+    "prepublishOnly": "npm run lint && npm run lint:types && npm test && npm run build"
   },
   "keywords": [
     "scheme",
