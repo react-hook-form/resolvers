@@ -1,0 +1,33 @@
+name: CI
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+    paths-ignore:
+      - ".gitignore"
+      - ".npmignore"
+      - "*.md"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Lint
+        run: |
+          npm run lint:types
+          npm run lint
+      - name: Test
+        run: npm test
+        env:
+          CI: true
+      - name: Build
+        run: npm run build
