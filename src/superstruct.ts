@@ -20,7 +20,7 @@ const parseErrorSchema = (
                       currentPath,
                       validateAllFieldCriteria,
                       previous,
-                      type!,
+                      type || '',
                       message,
                     ),
                   }
@@ -30,7 +30,7 @@ const parseErrorSchema = (
                       type,
                       ...(validateAllFieldCriteria
                         ? {
-                            types: { [type!]: message || true },
+                            types: { [type || '']: message || true },
                           }
                         : {}),
                     },
