@@ -1,21 +1,13 @@
-import { appendErrors, transformToNestObject } from 'react-hook-form';
-
-type YupValidationError = {
-  inner: { path: string; message: string; type: string }[];
-  path: string;
-  message: string;
-  type: string;
-};
-
-type FieldValues = Record<string, any>;
+import { appendErrors, transformToNestObject, Resolver } from 'react-hook-form';
+import Yup from 'yup';
 
 const parseErrorSchema = (
-  error: YupValidationError,
+  error: Yup.ValidationError,
   validateAllFieldCriteria: boolean,
 ) =>
   Array.isArray(error.inner)
     ? error.inner.reduce(
-        (previous: FieldValues, { path, message, type }: FieldValues) => ({
+        (previous: Record<string, any>, { path, message, type }) => ({
           ...previous,
           ...(path
             ? previous[path] && validateAllFieldCriteria
@@ -48,16 +40,16 @@ const parseErrorSchema = (
       };
 
 export const yupResolver = (
-  validationSchema: any,
-  config: any = {
+  schema: Yup.ObjectSchema,
+  options: Yup.ValidateOptions = {
     abortEarly: false,
   },
-) => async (data: any, _: any = {}, validateAllFieldCriteria = false) => {
+): Resolver => async (values, _, validateAllFieldCriteria = false) => {
   try {
     return {
-      values: await validationSchema.validate(data, {
-        ...config,
-      }),
+      values: (await schema.validate(values, {
+        ...options,
+      })) as any,
       errors: {},
     };
   } catch (e) {

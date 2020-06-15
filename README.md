@@ -25,25 +25,23 @@ We are moving away from native support for Yup validation and begin to support o
 ## Install
 
     $ npm install @hookform/resolvers
-    
-## API    
 
-`resolver(schema: object, config?: object)`
+## API
 
-|  | type | Required | Description|
-|--|--|--|--|
-| schema | `object` | ✓| validation schema |
-| config | `object` | | validation schema configuration object |
+`resolver(schema: object, options?: object)`
 
+|         | type     | Required | Description                            |
+| ------- | -------- | -------- | -------------------------------------- |
+| schema  | `object` | ✓        | validation schema                      |
+| options | `object` |          | validation schema configuration object |
 
 ## Quickstart
 
-### [Yup](https://github.com/jquense/yup) 
+### [Yup](https://github.com/jquense/yup)
 
 Dead simple Object schema validation.
 
 [![npm](https://img.shields.io/bundlephobia/minzip/yup?style=for-the-badge)](https://bundlephobia.com/result?p=yup)
-
 
 ```typescript jsx
 import React from 'react';
@@ -65,7 +63,7 @@ const App = () => {
     <form onSubmit={handleSubmit(d => console.log(d))}>
       <input name="name" ref={register} />
       <input name="age" type="number" ref={register} />
-    
+
       <input type="submit" />
     </form>
   );
@@ -77,7 +75,7 @@ const App = () => {
 A simple and composable way to validate data in JavaScript (or TypeScript).
 
 [![npm](https://img.shields.io/bundlephobia/minzip/superstruct?style=for-the-badge)](https://bundlephobia.com/result?p=superstruct)
-  
+
 ```typescript jsx
 import React from 'react';
 import { useForm } from 'react-hook-form';
@@ -95,10 +93,10 @@ const App = () => {
   });
 
   return (
-    <form onSubmit={handleSubmit(d => console.log(d))}>
+    <form onSubmit={handleSubmit((d) => console.log(d))}>
       <input name="name" ref={register} />
       <input name="age" type="number" ref={register} />
-    
+
       <input type="submit" />
     </form>
   );
@@ -110,15 +108,15 @@ const App = () => {
 The most powerful data validation library for JS.
 
 [![npm](https://img.shields.io/bundlephobia/minzip/@hapi/joi?style=for-the-badge)](https://bundlephobia.com/result?p=@hapi/joi)
-  
+
 ```typescript jsx
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers';
-import Joi from "@hapi/joi";
+import Joi from '@hapi/joi';
 
 const schema = Joi.object({
-  username: Joi.string().required()
+  username: Joi.string().required(),
 });
 
 const App = () => {
@@ -127,10 +125,10 @@ const App = () => {
   });
 
   return (
-    <form onSubmit={handleSubmit(d => console.log(d))}>
+    <form onSubmit={handleSubmit((d) => console.log(d))}>
       <input name="name" ref={register} />
       <input name="age" type="number" ref={register} />
-    
+
       <input type="submit" />
     </form>
   );

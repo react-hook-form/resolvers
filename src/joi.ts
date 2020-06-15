@@ -1,23 +1,14 @@
-import { appendErrors, transformToNestObject } from 'react-hook-form';
+import { appendErrors, transformToNestObject, Resolver } from 'react-hook-form';
 import Joi from '@hapi/joi';
 import convertArrayToPathName from './utils/convertArrayToPathName';
 
-type JoiError = {
-  details: any;
-};
-
-type FieldValues = Record<string, any>;
-
-type FieldError = {
-  path: (string | number)[];
-  message: string;
-  type: string;
-};
-
-const parseErrorSchema = (error: JoiError, validateAllFieldCriteria: boolean) =>
+const parseErrorSchema = (
+  error: Joi.ValidationError,
+  validateAllFieldCriteria: boolean,
+) =>
   Array.isArray(error.details)
     ? error.details.reduce(
-        (previous: FieldValues, { path, message = '', type }: FieldError) => {
+        (previous: Record<string, any>, { path, message = '', type }) => {
           const currentPath = convertArrayToPathName(path);
 
           return {
@@ -52,18 +43,16 @@ const parseErrorSchema = (error: JoiError, validateAllFieldCriteria: boolean) =>
     : [];
 
 export const joiResolver = (
-  validationSchema: Joi.Schema,
-  config: any = {
+  schema: Joi.Schema,
+  options: Joi.AsyncValidationOptions = {
     abortEarly: false,
   },
-) => async (data: any, _: any = {}, validateAllFieldCriteria = false) => {
+): Resolver => async (values, _, validateAllFieldCriteria = false) => {
   try {
-    const values = await validationSchema.validateAsync(data, {
-      ...config,
-    });
-
     return {
-      values,
+      values: await schema.validateAsync(values, {
+        ...options,
+      }),
       errors: {},
     };
   } catch (e) {

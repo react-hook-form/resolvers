@@ -1,25 +1,14 @@
-import { appendErrors, transformToNestObject } from 'react-hook-form';
+import { appendErrors, transformToNestObject, Resolver } from 'react-hook-form';
+import Superstruct from 'superstruct';
 import convertArrayToPathName from './utils/convertArrayToPathName';
 
-type SuperStructError = {
-  failures: any;
-};
-
-type FieldValues = Record<string, any>;
-
-type FieldError = {
-  path: (string | number)[];
-  message: string;
-  type: string;
-};
-
 const parseErrorSchema = (
-  error: SuperStructError,
+  error: Superstruct.StructError,
   validateAllFieldCriteria: boolean,
 ) =>
   Array.isArray(error.failures)
     ? error.failures.reduce(
-        (previous: FieldValues, { path, message = '', type }: FieldError) => {
+        (previous: Record<string, any>, { path, message = '', type }) => {
           const currentPath = convertArrayToPathName(path);
 
           return {
@@ -31,7 +20,7 @@ const parseErrorSchema = (
                       currentPath,
                       validateAllFieldCriteria,
                       previous,
-                      type,
+                      type!,
                       message,
                     ),
                   }
@@ -41,7 +30,7 @@ const parseErrorSchema = (
                       type,
                       ...(validateAllFieldCriteria
                         ? {
-                            types: { [type]: message || true },
+                            types: { [type!]: message || true },
                           }
                         : {}),
                     },
@@ -53,14 +42,12 @@ const parseErrorSchema = (
       )
     : [];
 
-export const superstructResolver = (validationSchema: any) => async (
-  data: any,
-  _: any = {},
-  validateAllFieldCriteria = false,
-) => {
+export const superstructResolver = (
+  schema: Superstruct.Struct,
+): Resolver => async (values, _, validateAllFieldCriteria = false) => {
   try {
     return {
-      values: validationSchema(data),
+      values: schema(values),
       errors: {},
     };
   } catch (e) {
