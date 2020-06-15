@@ -85,16 +85,16 @@ import { struct } from "superstruct";
 
 const schema = struct({
   name: "string",
-  age: "number"
+  age: "number",
 });
 
 const App = () => {
   const { register, handleSubmit } = useForm({
-    resolver: superstructResolver(schema)
+    resolver: superstructResolver(schema),
   });
 
   return (
-    <form onSubmit={handleSubmit(d => console.log(d))}>
+    <form onSubmit={handleSubmit((d) => console.log(d))}>
       <input name="name" ref={register} />
       <input name="age" type="number" ref={register} />
 
@@ -117,16 +117,16 @@ import { joiResolver } from "@hookform/resolvers";
 import Joi from "@hapi/joi";
 
 const schema = Joi.object({
-  username: Joi.string().required()
+  username: Joi.string().required(),
 });
 
 const App = () => {
   const { register, handleSubmit } = useForm({
-    resolver: joiResolver(schema)
+    resolver: joiResolver(schema),
   });
 
   return (
-    <form onSubmit={handleSubmit(d => console.log(d))}>
+    <form onSubmit={handleSubmit((d) => console.log(d))}>
       <input name="name" ref={register} />
       <input name="age" type="number" ref={register} />
 

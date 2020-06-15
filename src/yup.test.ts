@@ -96,15 +96,15 @@ describe('validateWithSchema', () => {
         validate: () => {
           throw errors;
         },
-      })({}),
+      } as any)({}),
     ).toMatchSnapshot();
   });
 
   it('should return empty object when validate pass', async () => {
     expect(
       await yupResolver({
-        validate: () => new Promise((resolve) => resolve()) as any,
-      })({}),
+        validate: () => new Promise((resolve) => resolve()),
+      } as any)({}),
     ).toEqual({
       errors: {},
       values: undefined,
