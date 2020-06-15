@@ -2,28 +2,51 @@
   "name": "@hookform/resolvers",
   "version": "0.0.3",
   "description": "React Hook Form validation resolvers: Yup, Joi, Superstruct and etc.",
-  "main": "dist/resolvers.js",
-  "module": "dist/resolvers.es.js",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "umd:main": "dist/index.umd.min.js",
+  "unpkg": "dist/index.umd.min.js",
+  "jsdelivr": "dist/index.umd.min.js",
+  "jsnext:main": "index.esm.js",
   "types": "dist/index.d.ts",
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/react-hook-form/resolvers.git"
-  },
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
   "publishConfig": {
     "access": "public"
   },
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "npm run clean && rollup -c",
+    "lint": "eslint '**/*.{js,ts}'",
+    "lint:fix": "npm run lint -- --fix",
+    "lint:types": "tsc --noEmit",
+    "test": "jest --runInBand",
+    "test:watch": "npm run test -- --watchAll --coverage",
+    "prepublishOnly": "npm run lint && npm test && npm run build"
+  },
+  "keywords": [
+    "scheme",
+    "validation",
+    "scheme-validation",
+    "hookform",
+    "react-hook-form",
+    "yup",
+    "joi",
+    "sperstruct",
+    "typescript"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/react-hook-form/resolvers.git"
+  },
   "author": "bluebill1049 <bluebill1049@hotmail.com>",
   "license": "MIT",
-  "scripts": {
-    "clean": "rm -rf dist",
-    "build": "rollup -c",
-    "prepublishOnly": "yarn lint && yarn test && yarn run clean && yarn build",
-    "test": "jest --runInBand",
-    "lint": "yarn lint:check --fix && yarn prettier",
-    "prettier": "prettier --write './src/**/*.ts' './src/**/*.tsx' --config ./.prettierrc",
-    "lint:check": "eslint ./src --ext .jsx,.ts --ignore-pattern *.test.ts --report-unused-disable-directives",
-    "test:watch": "yarn test -- --watchAll --coverage"
+  "bugs": {
+    "url": "https://github.com/react-hook-form/resolvers/issues"
   },
+  "homepage": "https://github.com/react-hook-form/resolvers#readme",
   "devDependencies": {
     "@hapi/joi": "^17.1.1",
     "@rollup/plugin-commonjs": "^13.0.0",
@@ -35,10 +58,15 @@
     "@typescript-eslint/eslint-plugin": "^2.18.0",
     "@typescript-eslint/parser": "^2.18.0",
     "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "husky": "^4.2.5",
     "jest": "^25.1.0",
+    "lint-staged": "^10.2.10",
     "prettier": "^1.19.1",
     "react": "^16.13.1",
     "react-hook-form": "^6.0.0-rc.3",
+    "rimraf": "^3.0.2",
     "rollup": "^2.16.1",
     "rollup-plugin-peer-deps-external": "^2.2.2",
     "rollup-plugin-sourcemaps": "^0.6.2",
@@ -55,8 +83,18 @@
     "superstruct": "*",
     "yup": "*"
   },
-  "bugs": {
-    "url": "https://github.com/react-hook-form/resolvers/issues"
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint:types && lint-staged"
+    }
   },
-  "homepage": "https://github.com/react-hook-form/resolvers#readme"
+  "lint-staged": {
+    "*.{js,ts}": [
+      "npm run lint:fix"
+    ],
+    "*.{md,json}": [
+      "prettier --write",
+      "git add"
+    ]
+  }
 }

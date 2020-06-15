@@ -4,35 +4,35 @@ import typescript from 'rollup-plugin-typescript2';
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import sourcemaps from 'rollup-plugin-sourcemaps';
-// import { terser } from 'rollup-plugin-terser';
+import { terser } from 'rollup-plugin-terser';
 import pkg from './package.json';
 
 export default [
-  //   {
-  //     input: 'src/index.ts',
-  //     output: {
-  //       name: 'HookFormResolvers',
-  //       file: pkg.unpkg,
-  //       format: 'umd',
-  //       sourcemap: true,
-  //       globals: {
-  //         '@hapi/joi': 'joi',
-  //         'react-hook-form': 'ReactHookForm',
-  //         yup: 'Yup',
-  //       },
-  //     },
-  //     plugins: [
-  //       external(),
-  //       json(),
-  //       typescript({
-  //         clean: true,
-  //       }),
-  //       commonjs(),
-  //       resolve(),
-  //       sourcemaps(),
-  //       terser(),
-  //     ],
-  //   },
+  {
+    input: 'src/index.ts',
+    output: {
+      name: 'HookFormResolvers',
+      file: pkg.unpkg,
+      format: 'umd',
+      sourcemap: true,
+      globals: {
+        '@hapi/joi': 'joi',
+        'react-hook-form': 'ReactHookForm',
+        yup: 'Yup',
+      },
+    },
+    plugins: [
+      external(),
+      json(),
+      typescript({
+        clean: true,
+      }),
+      commonjs(),
+      resolve(),
+      sourcemaps(),
+      terser(),
+    ],
+  },
   {
     input: 'src/index.ts',
     output: [

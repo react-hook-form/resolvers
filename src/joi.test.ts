@@ -10,11 +10,11 @@ const schema = Joi.object({
 
   password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')),
 
-  repeat_password: Joi.ref('password'),
+  repeatPassword: Joi.ref('password'),
 
-  access_token: [Joi.string(), Joi.number()],
+  accessToken: [Joi.string(), Joi.number()],
 
-  birth_year: Joi.number()
+  birthYear: Joi.number()
     .integer()
     .min(1900)
     .max(2013),
@@ -27,7 +27,7 @@ const schema = Joi.object({
 
 describe('joiResolver', () => {
   it('should return correct value', async () => {
-    const data = { username: 'abc', birth_year: 1994 };
+    const data = { username: 'abc', birthYear: 1994 };
     expect(await joiResolver(schema)(data)).toEqual({
       values: data,
       errors: {},

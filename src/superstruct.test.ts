@@ -4,7 +4,7 @@ import { superstructResolver } from './superstruct';
 const Article = struct({
   id: 'number',
   title: 'string',
-  is_published: 'boolean?',
+  isPublished: 'boolean?',
   tags: ['string'],
   author: {
     id: 'number',
