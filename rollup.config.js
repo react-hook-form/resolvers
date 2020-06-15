@@ -16,9 +16,7 @@ export default [
       format: 'umd',
       sourcemap: true,
       globals: {
-        '@hapi/joi': 'joi',
         'react-hook-form': 'ReactHookForm',
-        yup: 'Yup',
       },
     },
     plugins: [

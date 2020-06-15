@@ -78,10 +78,7 @@
     "yup": "^0.29.1"
   },
   "peerDependencies": {
-    "@hapi/joi": "*",
-    "react-hook-form": ">=6.0.0",
-    "superstruct": "*",
-    "yup": "*"
+    "react-hook-form": ">=6.0.0"
   },
   "husky": {
     "hooks": {
