@@ -39,12 +39,16 @@ const parseErrorSchema = (
         [error.path]: { message: error.message, type: error.type },
       };
 
-export const yupResolver = (
+export const yupResolver = <TFieldValues extends Record<string, any>>(
   schema: Yup.ObjectSchema,
   options: Yup.ValidateOptions = {
     abortEarly: false,
   },
-): Resolver => async (values, _, validateAllFieldCriteria = false) => {
+): Resolver<TFieldValues> => async (
+  values,
+  _,
+  validateAllFieldCriteria = false,
+) => {
   try {
     return {
       values: (await schema.validate(values, {

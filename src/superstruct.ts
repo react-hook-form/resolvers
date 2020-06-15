@@ -42,9 +42,13 @@ const parseErrorSchema = (
       )
     : [];
 
-export const superstructResolver = (
+export const superstructResolver = <TFieldValues extends Record<string, any>>(
   schema: Superstruct.Struct,
-): Resolver => async (values, _, validateAllFieldCriteria = false) => {
+): Resolver<TFieldValues> => async (
+  values,
+  _,
+  validateAllFieldCriteria = false,
+) => {
   try {
     return {
       values: schema(values),

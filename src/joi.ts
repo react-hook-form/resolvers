@@ -42,12 +42,16 @@ const parseErrorSchema = (
       )
     : [];
 
-export const joiResolver = (
+export const joiResolver = <TFieldValues extends Record<string, any>>(
   schema: Joi.Schema,
   options: Joi.AsyncValidationOptions = {
     abortEarly: false,
   },
-): Resolver => async (values, _, validateAllFieldCriteria = false) => {
+): Resolver<TFieldValues> => async (
+  values,
+  _,
+  validateAllFieldCriteria = false,
+) => {
   try {
     return {
       values: await schema.validateAsync(values, {
