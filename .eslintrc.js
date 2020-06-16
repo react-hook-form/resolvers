@@ -12,13 +12,6 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
-    'prettier/prettier': [
-      'error',
-      {
-        singleQuote: true,
-        trailingComma: 'all',
-      },
-    ],
     curly: 'error',
     '@typescript-eslint/indent': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
