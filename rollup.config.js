@@ -11,7 +11,7 @@ export default [
   {
     input: 'src/index.ts',
     output: {
-      name: 'HookFormResolvers',
+      name: 'ReactHookFormResolvers',
       file: pkg.unpkg,
       format: 'umd',
       sourcemap: true,
