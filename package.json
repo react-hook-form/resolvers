@@ -46,7 +46,7 @@
   "bugs": {
     "url": "https://github.com/react-hook-form/resolvers/issues"
   },
-  "homepage": "https://github.com/react-hook-form/resolvers#readme",
+  "homepage": "https://react-hook-form.com",
   "devDependencies": {
     "@hapi/joi": "^17.1.1",
     "@rollup/plugin-commonjs": "^13.0.0",
