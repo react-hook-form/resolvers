@@ -1,6 +1,6 @@
 {
   "name": "@hookform/resolvers",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "React Hook Form validation resolvers: Yup, Joi, Superstruct and etc.",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
