@@ -43,14 +43,10 @@ const errors = {
 
 const schema = yup.object().shape({
   name: yup.string().required(),
-  age: yup
-    .number()
-    .required()
-    .positive()
-    .integer(),
+  age: yup.number().required().positive().integer(),
   email: yup.string().email(),
   website: yup.string().url(),
-  createdOn: yup.date().default(function() {
+  createdOn: yup.date().default(function () {
     return new Date();
   }),
   foo: yup
@@ -100,15 +96,15 @@ describe('validateWithSchema', () => {
         validate: () => {
           throw errors;
         },
-      })({}),
+      } as any)({}),
     ).toMatchSnapshot();
   });
 
   it('should return empty object when validate pass', async () => {
     expect(
       await yupResolver({
-        validate: () => new Promise(resolve => resolve()) as any,
-      })({}),
+        validate: () => new Promise((resolve) => resolve()),
+      } as any)({}),
     ).toEqual({
       errors: {},
       values: undefined,

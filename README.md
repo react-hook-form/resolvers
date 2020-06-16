@@ -14,8 +14,6 @@
 [![npm](https://img.shields.io/npm/dt/@hookform/resolvers.svg?style=for-the-badge)](https://www.npmjs.com/package/@hookform/resolvers)
 [![npm](https://img.shields.io/bundlephobia/minzip/@hookform/resolvers?style=for-the-badge)](https://bundlephobia.com/result?p=@hookform/resolvers)
 
-[![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=React+hooks+for+form+validation+without+the+hassle&url=https://github.com/bluebill1049/@hookform/resolvers)&nbsp;[![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/react-hook-form)
-
 </div>
 
 ## Goal
@@ -25,25 +23,23 @@ We are moving away from native support for Yup validation and begin to support o
 ## Install
 
     $ npm install @hookform/resolvers
-    
-## API    
+
+## API
 
 `resolver(schema: object, config?: object)`
 
-|  | type | Required | Description|
-|--|--|--|--|
-| schema | `object` | ✓| validation schema |
-| config | `object` | | validation schema configuration object |
-
+|        | type     | Required | Description                            |
+| ------ | -------- | -------- | -------------------------------------- |
+| schema | `object` | ✓        | validation schema                      |
+| config | `object` |          | validation schema configuration object |
 
 ## Quickstart
 
-### [Yup](https://github.com/jquense/yup) 
+### [Yup](https://github.com/jquense/yup)
 
 Dead simple Object schema validation.
 
 [![npm](https://img.shields.io/bundlephobia/minzip/yup?style=for-the-badge)](https://bundlephobia.com/result?p=yup)
-
 
 ```typescript jsx
 import React from 'react';
@@ -65,7 +61,7 @@ const App = () => {
     <form onSubmit={handleSubmit(d => console.log(d))}>
       <input name="name" ref={register} />
       <input name="age" type="number" ref={register} />
-    
+
       <input type="submit" />
     </form>
   );
@@ -77,16 +73,16 @@ const App = () => {
 A simple and composable way to validate data in JavaScript (or TypeScript).
 
 [![npm](https://img.shields.io/bundlephobia/minzip/superstruct?style=for-the-badge)](https://bundlephobia.com/result?p=superstruct)
-  
+
 ```typescript jsx
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import { superstructResolver } from '@hookform/resolvers';
-import { struct } from 'superstruct';
+import React from "react";
+import { useForm } from "react-hook-form";
+import { superstructResolver } from "@hookform/resolvers";
+import { struct } from "superstruct";
 
 const schema = struct({
-  name: 'string',
-  age: 'number',
+  name: "string",
+  age: "number",
 });
 
 const App = () => {
@@ -95,10 +91,10 @@ const App = () => {
   });
 
   return (
-    <form onSubmit={handleSubmit(d => console.log(d))}>
+    <form onSubmit={handleSubmit((d) => console.log(d))}>
       <input name="name" ref={register} />
       <input name="age" type="number" ref={register} />
-    
+
       <input type="submit" />
     </form>
   );
@@ -110,15 +106,15 @@ const App = () => {
 The most powerful data validation library for JS.
 
 [![npm](https://img.shields.io/bundlephobia/minzip/@hapi/joi?style=for-the-badge)](https://bundlephobia.com/result?p=@hapi/joi)
-  
+
 ```typescript jsx
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers';
+import React from "react";
+import { useForm } from "react-hook-form";
+import { joiResolver } from "@hookform/resolvers";
 import Joi from "@hapi/joi";
 
 const schema = Joi.object({
-  username: Joi.string().required()
+  username: Joi.string().required(),
 });
 
 const App = () => {
@@ -127,10 +123,10 @@ const App = () => {
   });
 
   return (
-    <form onSubmit={handleSubmit(d => console.log(d))}>
+    <form onSubmit={handleSubmit((d) => console.log(d))}>
       <input name="name" ref={register} />
       <input name="age" type="number" ref={register} />
-    
+
       <input type="submit" />
     </form>
   );
