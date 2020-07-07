@@ -75,14 +75,14 @@ A simple and composable way to validate data in JavaScript (or TypeScript).
 [![npm](https://img.shields.io/bundlephobia/minzip/superstruct?style=for-the-badge)](https://bundlephobia.com/result?p=superstruct)
 
 ```typescript jsx
-import React from "react";
-import { useForm } from "react-hook-form";
-import { superstructResolver } from "@hookform/resolvers";
-import { struct } from "superstruct";
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { superstructResolver } from '@hookform/resolvers';
+import { struct } from 'superstruct';
 
 const schema = struct({
-  name: "string",
-  age: "number",
+  name: 'string',
+  age: 'number',
 });
 
 const App = () => {
@@ -108,10 +108,10 @@ The most powerful data validation library for JS.
 [![npm](https://img.shields.io/bundlephobia/minzip/@hapi/joi?style=for-the-badge)](https://bundlephobia.com/result?p=@hapi/joi)
 
 ```typescript jsx
-import React from "react";
-import { useForm } from "react-hook-form";
-import { joiResolver } from "@hookform/resolvers";
-import Joi from "@hapi/joi";
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers';
+import Joi from '@hapi/joi';
 
 const schema = Joi.object({
   username: Joi.string().required(),
@@ -120,6 +120,39 @@ const schema = Joi.object({
 const App = () => {
   const { register, handleSubmit } = useForm({
     resolver: joiResolver(schema),
+  });
+
+  return (
+    <form onSubmit={handleSubmit((d) => console.log(d))}>
+      <input name="name" ref={register} />
+      <input name="age" type="number" ref={register} />
+
+      <input type="submit" />
+    </form>
+  );
+};
+```
+
+### [Nope](https://github.com/bvego/nope-validator)
+
+A small, simple and fast JS validator. Like, wow thats fast. 🚀
+
+[![npm](https://img.shields.io/bundlephobia/minzip/nope-validator?style=for-the-badge)](https://bundlephobia.com/result?p=nope-validator)
+
+```typescript jsx
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { nopeResolver } from '@hookform/resolvers';
+import Nope from 'nope-resolver';
+
+const User = Nope.object().shape({
+  username: Nope.string().required(),
+  age: Nope.number().required(),
+});
+
+const App = () => {
+  const { register, handleSubmit } = useForm({
+    resolver: nopeResolver(User),
   });
 
   return (
