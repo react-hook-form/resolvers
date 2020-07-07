@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`nopeResolver should return errors 1`] = `
+Object {
+  "errors": Object {
+    "tags": Object {
+      "message": "One or more elements are of invalid type",
+    },
+  },
+  "values": Object {},
+}
+`;
