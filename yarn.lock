@@ -3229,6 +3229,11 @@ node-notifier@^7.0.0:
     uuid "^7.0.3"
     which "^2.0.2"
 
+nope-validator@^0.11.3:
+  version "0.11.3"
+  resolved "https://registry.yarnpkg.com/nope-validator/-/nope-validator-0.11.3.tgz#e58f4d67e8d5c7f29f0429de9db8d25e8c1fbf2a"
+  integrity sha512-O/XLm+qDhE+t3gktk5keloOs4wZaPYb3jxmdZ6jiIpXv8MFmKthLN9CPBK21vZYzCXtEODj+sU3jx8xeDUjRXg==
+
 normalize-package-data@^2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/normalize-package-data/-/normalize-package-data-2.5.0.tgz#e66db1838b200c1dfc233225d12cb36520e234a8"
