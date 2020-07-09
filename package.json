@@ -7,7 +7,7 @@
   "umd:main": "dist/index.umd.min.js",
   "unpkg": "dist/index.umd.min.js",
   "jsdelivr": "dist/index.umd.min.js",
-  "jsnext:main": "index.esm.js",
+  "jsnext:main": "dist/index.esm.js",
   "types": "dist/index.d.ts",
   "sideEffects": false,
   "files": [
