@@ -42,8 +42,6 @@ export function createRollupConfig(options) {
       name: umdName,
       sourcemap: true,
       globals: {
-        react: 'React',
-        'react-dom': 'ReactDOM',
         'react-hook-form': 'ReactHookForm',
       },
       exports: 'named',
