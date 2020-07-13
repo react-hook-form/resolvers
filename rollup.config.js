@@ -1,59 +1,43 @@
-import external from 'rollup-plugin-peer-deps-external';
-import json from '@rollup/plugin-json';
-import typescript from 'rollup-plugin-typescript2';
-import commonjs from '@rollup/plugin-commonjs';
-import resolve from '@rollup/plugin-node-resolve';
-import sourcemaps from 'rollup-plugin-sourcemaps';
-import { terser } from 'rollup-plugin-terser';
+import { createRollupConfig } from './rollup/createRollupConfig';
 import pkg from './package.json';
 
-export default [
+const name = 'index';
+const umdName = 'ReactHookFormResolvers';
+const options = [
   {
-    input: 'src/index.ts',
-    output: {
-      name: 'ReactHookFormResolvers',
-      file: pkg.unpkg,
-      format: 'umd',
-      sourcemap: true,
-      globals: {
-        'react-hook-form': 'ReactHookForm',
-      },
-    },
-    plugins: [
-      external(),
-      json(),
-      typescript({
-        clean: true,
-      }),
-      commonjs(),
-      resolve(),
-      sourcemaps(),
-      terser(),
-    ],
+    name,
+    umdName,
+    format: 'cjs',
+    env: 'development',
+    input: pkg.source,
   },
   {
-    input: 'src/index.ts',
-    output: [
-      {
-        file: pkg.main,
-        format: 'cjs',
-        sourcemap: true,
-      },
-      {
-        file: pkg.module,
-        format: 'es',
-        sourcemap: true,
-      },
-    ],
-    plugins: [
-      external(),
-      json(),
-      typescript({
-        clean: true,
-      }),
-      commonjs(),
-      resolve(),
-      sourcemaps(),
-    ],
+    name,
+    umdName,
+    format: 'cjs',
+    env: 'production',
+    input: pkg.source,
+  },
+  {
+    name,
+    umdName,
+    format: 'esm',
+    input: pkg.source,
+  },
+  {
+    name,
+    umdName,
+    format: 'umd',
+    env: 'development',
+    input: pkg.source,
+  },
+  {
+    name,
+    umdName,
+    format: 'umd',
+    env: 'production',
+    input: pkg.source,
   },
 ];
+
+export default options.map((option) => createRollupConfig(option));
