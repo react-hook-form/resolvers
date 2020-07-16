@@ -46,12 +46,13 @@ export const yupResolver = <TFieldValues extends Record<string, any>>(
   },
 ): Resolver<TFieldValues> => async (
   values,
-  _,
+  context,
   validateAllFieldCriteria = false,
 ) => {
   try {
     return {
       values: (await schema.validate(values, {
+        context,
         ...options,
       })) as any,
       errors: {},
