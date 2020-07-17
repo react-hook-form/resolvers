@@ -87,6 +87,26 @@ describe('yupResolver', () => {
     };
     expect(await yupResolver(schema)(data)).toMatchSnapshot();
   });
+
+  it('should pass down the yup context', async () => {
+    const data = { name: 'eric' };
+    const context = { min: true };
+    const schemaWithContext = yup.object().shape({
+      name: yup
+        .string()
+        .required()
+        .when('$min', (min: boolean, schema: yup.StringSchema) => {
+          return min ? schema.min(6) : schema;
+        }),
+    });
+    schemaWithContext.validate = jest.fn().mockResolvedValue({});
+    await yupResolver(schemaWithContext)(data, context);
+    expect(schemaWithContext.validate).toHaveBeenCalled();
+    expect(schemaWithContext.validate).toHaveBeenCalledWith(data, {
+      abortEarly: false,
+      context,
+    });
+  });
 });
 
 describe('validateWithSchema', () => {
@@ -109,5 +129,29 @@ describe('validateWithSchema', () => {
       errors: {},
       values: undefined,
     });
+  });
+
+  it('should return an error based on the user context', async () => {
+    const data = { name: 'eric' };
+    const schemaWithContext = yup.object().shape({
+      name: yup
+        .string()
+        .required()
+        .when('$min', (min: boolean, schema: yup.StringSchema) => {
+          return min ? schema.min(6) : schema;
+        }),
+    });
+    expect(await yupResolver(schemaWithContext)(data, { min: true }))
+      .toMatchInlineSnapshot(`
+      Object {
+        "errors": Object {
+          "name": Object {
+            "message": "name must be at least 6 characters",
+            "type": "min",
+          },
+        },
+        "values": Object {},
+      }
+    `);
   });
 });
