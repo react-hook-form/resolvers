@@ -40,7 +40,7 @@ const parseErrorSchema = (
       };
 
 export const yupResolver = <TFieldValues extends Record<string, any>>(
-  schema: Yup.ObjectSchema,
+  schema: Yup.ObjectSchema | Yup.Lazy,
   options: Yup.ValidateOptions = {
     abortEarly: false,
   },
