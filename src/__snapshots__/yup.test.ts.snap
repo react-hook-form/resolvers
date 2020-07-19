@@ -6,26 +6,42 @@ Object {
     "age": Object {
       "message": "age is a required field",
       "type": "required",
+      "types": Object {
+        "required": "age is a required field",
+      },
     },
     "name": Object {
       "message": "name is a required field",
       "type": "required",
+      "types": Object {
+        "min": "name is a min field",
+      },
     },
   },
   "values": Object {},
 }
 `;
 
-exports[`yupResolver should get errors 1`] = `
+exports[`yupResolver errors should get errors with validate all criteria fields 1`] = `
 Object {
   "errors": Object {
     "age": Object {
       "message": "age must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"test\\"\`).",
       "type": "typeError",
+      "types": Object {
+        "typeError": Array [
+          "age must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"test\\"\`).",
+        ],
+      },
     },
     "createdOn": Object {
       "message": "createdOn must be a \`date\` type, but the final value was: \`Invalid Date\`.",
       "type": "typeError",
+      "types": Object {
+        "typeError": Array [
+          "createdOn must be a \`date\` type, but the final value was: \`Invalid Date\`.",
+        ],
+      },
     },
     "foo": Array [
       Object {
@@ -33,9 +49,75 @@ Object {
           "message": "foo[0].loose must be a \`boolean\` type, but the final value was: \`null\`.
  If \\"null\\" is intended as an empty value be sure to mark the schema as \`.nullable()\`",
           "type": "typeError",
+          "types": Object {
+            "typeError": Array [
+              "foo[0].loose must be a \`boolean\` type, but the final value was: \`null\`.
+ If \\"null\\" is intended as an empty value be sure to mark the schema as \`.nullable()\`",
+            ],
+          },
         },
       },
     ],
+    "password": Object {
+      "message": "password is a required field",
+      "type": "required",
+      "types": Object {
+        "matches": Array [
+          "Special",
+          "Number",
+          "Uppercase",
+          "Lowercase",
+        ],
+        "min": Array [
+          "password must be at least 8 characters",
+        ],
+        "required": Array [
+          "password is a required field",
+        ],
+      },
+    },
+  },
+  "values": Object {},
+}
+`;
+
+exports[`yupResolver errors should get errors without validate all criteria fields 1`] = `
+Object {
+  "errors": Object {
+    "age": Object {
+      "message": "age must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"test\\"\`).",
+      "type": "typeError",
+      "types": Object {
+        "typeError": "age must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"test\\"\`).",
+      },
+    },
+    "createdOn": Object {
+      "message": "createdOn must be a \`date\` type, but the final value was: \`Invalid Date\`.",
+      "type": "typeError",
+      "types": Object {
+        "typeError": "createdOn must be a \`date\` type, but the final value was: \`Invalid Date\`.",
+      },
+    },
+    "foo": Array [
+      Object {
+        "loose": Object {
+          "message": "foo[0].loose must be a \`boolean\` type, but the final value was: \`null\`.
+ If \\"null\\" is intended as an empty value be sure to mark the schema as \`.nullable()\`",
+          "type": "typeError",
+          "types": Object {
+            "typeError": "foo[0].loose must be a \`boolean\` type, but the final value was: \`null\`.
+ If \\"null\\" is intended as an empty value be sure to mark the schema as \`.nullable()\`",
+          },
+        },
+      },
+    ],
+    "password": Object {
+      "message": "password is a required field",
+      "type": "required",
+      "types": Object {
+        "required": "password is a required field",
+      },
+    },
   },
   "values": Object {},
 }

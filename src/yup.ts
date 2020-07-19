@@ -1,43 +1,44 @@
-import { appendErrors, transformToNestObject, Resolver } from 'react-hook-form';
+import { Resolver, transformToNestObject } from 'react-hook-form';
+import { FieldError, FieldErrors } from 'react-hook-form/dist/types/form';
+import { DeepMap } from 'react-hook-form/dist/types/utils';
 import Yup from 'yup';
 
-const parseErrorSchema = (
+const parseErrorSchema = <TFieldValues extends Record<string, any>>(
   error: Yup.ValidationError,
   validateAllFieldCriteria: boolean,
-) =>
-  Array.isArray(error.inner)
-    ? error.inner.reduce(
-        (previous: Record<string, any>, { path, message, type }) => ({
-          ...previous,
-          ...(path
-            ? previous[path] && validateAllFieldCriteria
-              ? {
-                  [path]: appendErrors(
-                    path,
-                    validateAllFieldCriteria,
-                    previous,
-                    type,
-                    message,
-                  ),
-                }
-              : {
-                  [path]: previous[path] || {
-                    message,
-                    type,
-                    ...(validateAllFieldCriteria
-                      ? {
-                          types: { [type]: message || true },
-                        }
-                      : {}),
-                  },
-                }
-            : {}),
-        }),
+): DeepMap<TFieldValues, FieldError> =>
+  Array.isArray(error.inner) && error.inner.length
+    ? error.inner.reduce<FieldErrors<TFieldValues>>(
+        (previous, { path, message, type }) => {
+          const previousPath = previous[path] as FieldErrors | undefined;
+          const previousTypes = validateAllFieldCriteria
+            ? previousPath?.types || []
+            : {};
+          return {
+            ...previous,
+            [path]: {
+              ...(previous[path] || {
+                message,
+                type,
+                types: previousTypes,
+              }),
+              types: {
+                ...previousTypes,
+                [type]: validateAllFieldCriteria
+                  ? [message, ...(previousTypes[type] || [])]
+                  : message,
+              },
+            },
+          };
+        },
         {},
       )
-    : {
-        [error.path]: { message: error.message, type: error.type },
-      };
+    : ({
+        [error.path]: {
+          message: error.message,
+          type: error.type,
+        },
+      } as DeepMap<TFieldValues, FieldError>);
 
 export const yupResolver = <TFieldValues extends Record<string, any>>(
   schema: Yup.ObjectSchema | Yup.Lazy,

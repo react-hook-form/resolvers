@@ -45,6 +45,14 @@ const schema = yup.object().shape({
   name: yup.string().required(),
   age: yup.number().required().positive().integer(),
   email: yup.string().email(),
+  password: yup
+    .string()
+    .required()
+    .min(8)
+    .matches(RegExp('(.*[a-z].*)'), 'Lowercase')
+    .matches(RegExp('(.*[A-Z].*)'), 'Uppercase')
+    .matches(RegExp('(.*\\d.*)'), 'Number')
+    .matches(RegExp('[!@#$%^&*(),.?":{}|<>]'), 'Special'),
   website: yup.string().url(),
   createdOn: yup.date().default(function () {
     return new Date();
@@ -64,6 +72,7 @@ describe('yupResolver', () => {
     const data = {
       name: 'jimmy',
       age: '24',
+      password: '[}tehk6Uor',
       createdOn: '2014-09-23T19:25:25Z',
       foo: [{ yup: true }],
     };
@@ -72,20 +81,101 @@ describe('yupResolver', () => {
       values: {
         name: 'jimmy',
         age: 24,
+        password: '[}tehk6Uor',
         foo: [{ yup: true }],
         createdOn: new Date('2014-09-23T19:25:25Z'),
       },
     });
   });
 
-  it('should get errors', async () => {
-    const data = {
-      name: 2,
-      age: 'test',
-      createdOn: null,
-      foo: [{ loose: null }],
-    };
-    expect(await yupResolver(schema)(data)).toMatchSnapshot();
+  describe('errors', () => {
+    it('should get errors with validate all criteria fields', async () => {
+      const data = {
+        name: 2,
+        age: 'test',
+        password: '',
+        createdOn: null,
+        foo: [{ loose: null }],
+      };
+      const resolve = await yupResolver(schema)(data, {}, true);
+      expect(resolve).toMatchSnapshot();
+      expect(resolve.errors['age'].types).toMatchInlineSnapshot(`
+          Object {
+            "typeError": Array [
+              "age must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"test\\"\`).",
+            ],
+          }
+        `);
+      expect(resolve.errors['createdOn'].types).toMatchInlineSnapshot(`
+        Object {
+          "typeError": Array [
+            "createdOn must be a \`date\` type, but the final value was: \`Invalid Date\`.",
+          ],
+        }
+      `);
+      expect(resolve.errors['password'].types).toMatchInlineSnapshot(`
+          Object {
+            "matches": Array [
+              "Special",
+              "Number",
+              "Uppercase",
+              "Lowercase",
+            ],
+            "min": Array [
+              "password must be at least 8 characters",
+            ],
+            "required": Array [
+              "password is a required field",
+            ],
+          }
+        `);
+    });
+
+    it('should get errors without validate all criteria fields', async () => {
+      const data = {
+        name: 2,
+        age: 'test',
+        createdOn: null,
+        foo: [{ loose: null }],
+      };
+      const resolve = await yupResolver(schema)(data);
+      expect(await yupResolver(schema)(data)).toMatchSnapshot();
+      expect(resolve.errors['age'].types).toMatchInlineSnapshot(`
+        Object {
+          "typeError": "age must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"test\\"\`).",
+        }
+      `);
+      expect(resolve.errors['createdOn'].types).toMatchInlineSnapshot(`
+        Object {
+          "typeError": "createdOn must be a \`date\` type, but the final value was: \`Invalid Date\`.",
+        }
+      `);
+      expect(resolve.errors['password'].types).toMatchInlineSnapshot(`
+        Object {
+          "required": "password is a required field",
+        }
+      `);
+    });
+
+    it('should get error if yup errors has no inner errors', async () => {
+      const data = {
+        name: 2,
+        age: 'test',
+        createdOn: null,
+        foo: [{ loose: null }],
+      };
+      const resolve = await yupResolver(schema, {
+        abortEarly: true,
+      })(data);
+      expect(resolve.errors).toMatchInlineSnapshot(`
+        Object {
+          "createdOn": Object {
+            "message": "createdOn must be a \`date\` type, but the final value was: \`Invalid Date\`.",
+            "type": "typeError",
+          },
+        }
+      `);
+    });
   });
 
   it('should pass down the yup context', async () => {
