@@ -238,6 +238,9 @@ describe('validateWithSchema', () => {
           "name": Object {
             "message": "name must be at least 6 characters",
             "type": "min",
+            "types": Object {
+              "min": "name must be at least 6 characters",
+            },
           },
         },
         "values": Object {},
