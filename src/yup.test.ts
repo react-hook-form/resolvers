@@ -99,36 +99,30 @@ describe('yupResolver', () => {
       };
       const resolve = await yupResolver(schema)(data, {}, true);
       expect(resolve).toMatchSnapshot();
-      expect(resolve.errors['age'].types).toMatchInlineSnapshot(`
-          Object {
-            "typeError": Array [
-              "age must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"test\\"\`).",
-            ],
-          }
-        `);
-      expect(resolve.errors['createdOn'].types).toMatchInlineSnapshot(`
+      expect(resolve.errors.age.types).toMatchInlineSnapshot(`
         Object {
-          "typeError": Array [
-            "createdOn must be a \`date\` type, but the final value was: \`Invalid Date\`.",
-          ],
+          "typeError": "age must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"test\\"\`).",
         }
       `);
-      expect(resolve.errors['password'].types).toMatchInlineSnapshot(`
-          Object {
-            "matches": Array [
-              "Special",
-              "Number",
-              "Uppercase",
-              "Lowercase",
-            ],
-            "min": Array [
-              "password must be at least 8 characters",
-            ],
-            "required": Array [
-              "password is a required field",
-            ],
-          }
-        `);
+      expect(resolve.errors.createdOn.types).toMatchInlineSnapshot(`
+        Object {
+          "typeError": "createdOn must be a \`date\` type, but the final value was: \`Invalid Date\`.",
+        }
+      `);
+      expect(resolve.errors.password.types).toMatchInlineSnapshot(`
+        Object {
+          "matches": Array [
+            "Lowercase",
+            "Uppercase",
+            "Number",
+            "Special",
+          ],
+          "min": Array [
+            "password must be at least 8 characters",
+          ],
+          "required": "password is a required field",
+        }
+      `);
     });
 
     it('should get errors without validate all criteria fields', async () => {
@@ -140,21 +134,9 @@ describe('yupResolver', () => {
       };
       const resolve = await yupResolver(schema)(data);
       expect(await yupResolver(schema)(data)).toMatchSnapshot();
-      expect(resolve.errors['age'].types).toMatchInlineSnapshot(`
-        Object {
-          "typeError": "age must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"test\\"\`).",
-        }
-      `);
-      expect(resolve.errors['createdOn'].types).toMatchInlineSnapshot(`
-        Object {
-          "typeError": "createdOn must be a \`date\` type, but the final value was: \`Invalid Date\`.",
-        }
-      `);
-      expect(resolve.errors['password'].types).toMatchInlineSnapshot(`
-        Object {
-          "required": "password is a required field",
-        }
-      `);
+      expect(resolve.errors.age.types).toMatchInlineSnapshot(`undefined`);
+      expect(resolve.errors.createdOn.types).toMatchInlineSnapshot(`undefined`);
+      expect(resolve.errors.password.types).toMatchInlineSnapshot(`undefined`);
     });
 
     it('should get error if yup errors has no inner errors', async () => {
@@ -167,14 +149,7 @@ describe('yupResolver', () => {
       const resolve = await yupResolver(schema, {
         abortEarly: true,
       })(data);
-      expect(resolve.errors).toMatchInlineSnapshot(`
-        Object {
-          "createdOn": Object {
-            "message": "createdOn must be a \`date\` type, but the final value was: \`Invalid Date\`.",
-            "type": "typeError",
-          },
-        }
-      `);
+      expect(resolve.errors).toMatchInlineSnapshot(`Object {}`);
     });
   });
 
@@ -238,9 +213,6 @@ describe('validateWithSchema', () => {
           "name": Object {
             "message": "name must be at least 6 characters",
             "type": "min",
-            "types": Object {
-              "min": "name must be at least 6 characters",
-            },
           },
         },
         "values": Object {},
