@@ -26,9 +26,9 @@ const parseErrorSchema = (
                             previous[path].types[type]
                               ? [
                                   ...[].concat(previous[path].types[type]),
-                                  message || true,
+                                  message,
                                 ]
-                              : message || true,
+                              : message,
                         },
                       }
                     : {}),
