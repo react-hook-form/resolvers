@@ -117,9 +117,7 @@ describe('yupResolver', () => {
             "Number",
             "Special",
           ],
-          "min": Array [
-            "password must be at least 8 characters",
-          ],
+          "min": "password must be at least 8 characters",
           "required": "password is a required field",
         }
       `);

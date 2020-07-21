@@ -16,10 +16,12 @@ const parseErrorSchema = (
                     ...previous[path],
                     types: {
                       ...((previous[path] && previous[path].types) || {}),
-                      [type]: [
-                        ...[].concat(previous[path].types[type] || []),
-                        message || true,
-                      ],
+                      [type]: previous[path].types[type]
+                        ? [
+                            ...[].concat(previous[path].types[type]),
+                            message || true,
+                          ]
+                        : message || true,
                     },
                   },
                 }
