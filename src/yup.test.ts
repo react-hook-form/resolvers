@@ -147,7 +147,14 @@ describe('yupResolver', () => {
       const resolve = await yupResolver(schema, {
         abortEarly: true,
       })(data);
-      expect(resolve.errors).toMatchInlineSnapshot(`Object {}`);
+      expect(resolve.errors).toMatchInlineSnapshot(`
+        Object {
+          "createdOn": Object {
+            "message": "createdOn must be a \`date\` type, but the final value was: \`Invalid Date\`.",
+            "type": "typeError",
+          },
+        }
+      `);
     });
   });
 

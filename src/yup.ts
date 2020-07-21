@@ -5,7 +5,7 @@ const parseErrorSchema = (
   error: Yup.ValidationError,
   validateAllFieldCriteria: boolean,
 ) =>
-  Array.isArray(error.inner)
+  Array.isArray(error.inner) && error.inner.length
     ? error.inner.reduce(
         (previous: Record<string, any>, { path, message, type }) => ({
           ...previous,
