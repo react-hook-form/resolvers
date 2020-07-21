@@ -10,32 +10,30 @@ const parseErrorSchema = (
         (previous: Record<string, any>, { path, message, type }) => ({
           ...previous,
           ...(path
-            ? previous[path] && validateAllFieldCriteria
-              ? {
-                  [path]: {
-                    ...previous[path],
-                    types: {
-                      ...((previous[path] && previous[path].types) || {}),
-                      [type]: previous[path].types[type]
-                        ? [
-                            ...[].concat(previous[path].types[type]),
-                            message || true,
-                          ]
-                        : message || true,
-                    },
-                  },
-                }
-              : {
-                  [path]: previous[path] || {
+            ? {
+                [path]: {
+                  ...(previous[path] || {
                     message,
                     type,
-                    ...(validateAllFieldCriteria
-                      ? {
-                          types: { [type]: message || true },
-                        }
-                      : {}),
-                  },
-                }
+                  }),
+                  ...(validateAllFieldCriteria
+                    ? {
+                        types: {
+                          ...((previous[path] && previous[path].types) || {}),
+                          [type]:
+                            previous[path] &&
+                            previous[path].types &&
+                            previous[path].types[type]
+                              ? [
+                                  ...[].concat(previous[path].types[type]),
+                                  message || true,
+                                ]
+                              : message || true,
+                        },
+                      }
+                    : {}),
+                },
+              }
             : {}),
         }),
         {},
