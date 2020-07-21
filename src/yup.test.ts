@@ -99,6 +99,13 @@ describe('yupResolver', () => {
       };
       const resolve = await yupResolver(schema)(data, {}, true);
       expect(resolve).toMatchSnapshot();
+      expect(resolve.errors['foo[0].loose']).toBeDefined();
+      expect(resolve.errors['foo[0].loose'].types).toMatchInlineSnapshot(`
+        Object {
+          "typeError": "foo[0].loose must be a \`boolean\` type, but the final value was: \`null\`.
+         If \\"null\\" is intended as an empty value be sure to mark the schema as \`.nullable()\`",
+        }
+      `);
       expect(resolve.errors.age.types).toMatchInlineSnapshot(`
         Object {
           "typeError": "age must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"test\\"\`).",
@@ -132,6 +139,7 @@ describe('yupResolver', () => {
       };
       const resolve = await yupResolver(schema)(data);
       expect(await yupResolver(schema)(data)).toMatchSnapshot();
+      expect(resolve.errors['foo[0].loose']).toBeUndefined();
       expect(resolve.errors.age.types).toBeUndefined();
       expect(resolve.errors.createdOn.types).toBeUndefined();
       expect(resolve.errors.password.types).toBeUndefined();

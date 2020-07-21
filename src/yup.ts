@@ -58,11 +58,12 @@ export const yupResolver = <TFieldValues extends Record<string, any>>(
       errors: {},
     };
   } catch (e) {
+    const parsedErrors = parseErrorSchema(e, validateAllFieldCriteria);
     return {
       values: {},
-      errors: transformToNestObject(
-        parseErrorSchema(e, validateAllFieldCriteria),
-      ),
+      errors: validateAllFieldCriteria
+        ? parsedErrors
+        : transformToNestObject(parsedErrors),
     };
   }
 };
