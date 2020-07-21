@@ -7,35 +7,32 @@ const parseErrorSchema = (
 ) =>
   Array.isArray(error.inner) && error.inner.length
     ? error.inner.reduce(
-        (previous: Record<string, any>, { path, message, type }) => ({
-          ...previous,
-          ...(path
-            ? {
-                [path]: {
-                  ...(previous[path] || {
-                    message,
-                    type,
-                  }),
-                  ...(validateAllFieldCriteria
-                    ? {
-                        types: {
-                          ...((previous[path] && previous[path].types) || {}),
-                          [type]:
-                            previous[path] &&
-                            previous[path].types &&
-                            previous[path].types[type]
-                              ? [
-                                  ...[].concat(previous[path].types[type]),
-                                  message,
-                                ]
+        (previous: Record<string, any>, { path, message, type }) => {
+          const previousTypes = (previous[path] && previous[path].types) || {};
+          return {
+            ...previous,
+            ...(path
+              ? {
+                  [path]: {
+                    ...(previous[path] || {
+                      message,
+                      type,
+                    }),
+                    ...(validateAllFieldCriteria
+                      ? {
+                          types: {
+                            ...previousTypes,
+                            [type]: previousTypes[type]
+                              ? [...[].concat(previousTypes[type]), message]
                               : message,
-                        },
-                      }
-                    : {}),
-                },
-              }
-            : {}),
-        }),
+                          },
+                        }
+                      : {}),
+                  },
+                }
+              : {}),
+          };
+        },
         {},
       )
     : {
