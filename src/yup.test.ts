@@ -132,9 +132,9 @@ describe('yupResolver', () => {
       };
       const resolve = await yupResolver(schema)(data);
       expect(await yupResolver(schema)(data)).toMatchSnapshot();
-      expect(resolve.errors.age.types).toMatchInlineSnapshot(`undefined`);
-      expect(resolve.errors.createdOn.types).toMatchInlineSnapshot(`undefined`);
-      expect(resolve.errors.password.types).toMatchInlineSnapshot(`undefined`);
+      expect(resolve.errors.age.types).toBeUndefined();
+      expect(resolve.errors.createdOn.types).toBeUndefined();
+      expect(resolve.errors.password.types).toBeUndefined();
     });
 
     it('should get error if yup errors has no inner errors', async () => {
