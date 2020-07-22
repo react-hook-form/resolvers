@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import * as yup from 'yup';
 import { yupResolver } from './yup';
 
@@ -88,6 +89,27 @@ describe('yupResolver', () => {
     });
   });
 
+  it('should pass down the yup context', async () => {
+    const data = { name: 'eric' };
+    const context = { min: true };
+    const schemaWithContext = yup.object().shape({
+      name: yup
+        .string()
+        .required()
+        .when('$min', (min: boolean, schema: yup.StringSchema) => {
+          return min ? schema.min(6) : schema;
+        }),
+    });
+    schemaWithContext.validate = jest.fn().mockResolvedValue({});
+    await yupResolver(schemaWithContext)(data, context);
+    expect(schemaWithContext.validate).toHaveBeenCalled();
+    expect(schemaWithContext.validate).toHaveBeenCalledWith(data, {
+      abortEarly: false,
+      context,
+    });
+    (schemaWithContext.validate as jest.Mock).mockClear();
+  });
+
   describe('errors', () => {
     it('should get errors with validate all criteria fields', async () => {
       const data = {
@@ -164,25 +186,22 @@ describe('yupResolver', () => {
         }
       `);
     });
-  });
 
-  it('should pass down the yup context', async () => {
-    const data = { name: 'eric' };
-    const context = { min: true };
-    const schemaWithContext = yup.object().shape({
-      name: yup
-        .string()
-        .required()
-        .when('$min', (min: boolean, schema: yup.StringSchema) => {
-          return min ? schema.min(6) : schema;
-        }),
-    });
-    schemaWithContext.validate = jest.fn().mockResolvedValue({});
-    await yupResolver(schemaWithContext)(data, context);
-    expect(schemaWithContext.validate).toHaveBeenCalled();
-    expect(schemaWithContext.validate).toHaveBeenCalledWith(data, {
-      abortEarly: false,
-      context,
+    it('should return an empty error result if inner yup validation error has no path', async () => {
+      const data = { name: '' };
+      const schemaWithContext = yup.object().shape({
+        name: yup.string().required(),
+      });
+      schemaWithContext.validate = jest.fn().mockRejectedValue({
+        inner: [{ path: '', message: 'error1', type: 'required' }],
+      } as yup.ValidationError);
+      const result = await yupResolver(schemaWithContext)(data);
+      expect(result).toMatchInlineSnapshot(`
+        Object {
+          "errors": Object {},
+          "values": Object {},
+        }
+      `);
     });
   });
 });
@@ -231,5 +250,31 @@ describe('validateWithSchema', () => {
         "values": Object {},
       }
     `);
+  });
+
+  it('should show a warning log if yup context is used instead only on dev environment', async () => {
+    console.warn = jest.fn();
+    process.env.NODE_ENV = 'development';
+    await yupResolver(
+      {} as any,
+      { context: { noContext: true } } as yup.ValidateOptions,
+    )({});
+    expect(console.warn).toHaveBeenCalledWith(
+      "You should not used the yup options context. Please, use the 'useForm' context object instead",
+    );
+    process.env.NODE_ENV = 'test';
+    (console.warn as jest.Mock).mockClear();
+  });
+
+  it('should not show warning log if yup context is used instead only on production environment', async () => {
+    console.warn = jest.fn();
+    process.env.NODE_ENV = 'production';
+    await yupResolver(
+      {} as any,
+      { context: { noContext: true } } as yup.ValidateOptions,
+    )({});
+    expect(console.warn).not.toHaveBeenCalled();
+    process.env.NODE_ENV = 'test';
+    (console.warn as jest.Mock).mockClear();
   });
 });

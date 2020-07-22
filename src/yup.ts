@@ -41,7 +41,7 @@ const parseErrorSchema = (
 
 export const yupResolver = <TFieldValues extends Record<string, any>>(
   schema: Yup.ObjectSchema | Yup.Lazy,
-  options: Yup.ValidateOptions = {
+  options: Omit<Yup.ValidateOptions, 'context'> = {
     abortEarly: false,
   },
 ): Resolver<TFieldValues> => async (
@@ -50,10 +50,19 @@ export const yupResolver = <TFieldValues extends Record<string, any>>(
   validateAllFieldCriteria = false,
 ) => {
   try {
+    if (
+      (options as Yup.ValidateOptions).context &&
+      process.env.NODE_ENV === 'development'
+    ) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        "You should not used the yup options context. Please, use the 'useForm' context object instead",
+      );
+    }
     return {
       values: (await schema.validate(values, {
-        context,
         ...options,
+        context,
       })) as any,
       errors: {},
     };
