@@ -18,7 +18,7 @@
 
 ## Goal
 
-We are moving away from native support for Yup validation and begin to support others schema validation after React Hook Form v6.
+We are moving away from native support for Yup validation. We are now supporting other schema validation after React Hook Form v6.
 
 ## Install
 
