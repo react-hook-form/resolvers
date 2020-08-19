@@ -187,7 +187,7 @@ describe('yupResolver', () => {
       `);
     });
 
-    it('should return an empty error result if inner yup validation error has no path', async () => {
+    it('should return an error result if inner yup validation error has no path', async () => {
       const data = { name: '' };
       const schemaWithContext = yup.object().shape({
         name: yup.string().required(),
@@ -196,12 +196,7 @@ describe('yupResolver', () => {
         inner: [{ path: '', message: 'error1', type: 'required' }],
       } as yup.ValidationError);
       const result = await yupResolver(schemaWithContext)(data);
-      expect(result).toMatchInlineSnapshot(`
-        Object {
-          "errors": Object {},
-          "values": Object {},
-        }
-      `);
+      expect(result).toMatchSnapshot();
     });
   });
 });
@@ -276,5 +271,23 @@ describe('validateWithSchema', () => {
     expect(console.warn).not.toHaveBeenCalled();
     process.env.NODE_ENV = 'test';
     (console.warn as jest.Mock).mockClear();
+  });
+
+  it('should return correct error message with using yup.test', async () => {
+    const output = await yupResolver(
+      yup
+        .object({
+          name: yup.string(),
+          email: yup.string(),
+        })
+        .test('name', 'Email or name are required', function (value) {
+          return value.name || value.email;
+        }),
+    )({ name: '', email: '' });
+
+    expect(output).toEqual({
+      values: {},
+      errors: { name: { message: 'Email or name are required', type: 'name' } },
+    });
   });
 });

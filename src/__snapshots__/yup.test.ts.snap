@@ -89,3 +89,15 @@ Object {
   "values": Object {},
 }
 `;
+
+exports[`yupResolver errors should return an error result if inner yup validation error has no path 1`] = `
+Object {
+  "errors": Object {
+    "required": Object {
+      "message": "error1",
+      "type": "required",
+    },
+  },
+  "values": Object {},
+}
+`;

@@ -9,12 +9,14 @@ const parseErrorSchema = (
     ? error.inner.reduce(
         (previous: Record<string, any>, { path, message, type }) => {
           const previousTypes = (previous[path] && previous[path].types) || {};
+          const key = path || type;
+
           return {
             ...previous,
-            ...(path
+            ...(key
               ? {
-                  [path]: {
-                    ...(previous[path] || {
+                  [key]: {
+                    ...(previous[key] || {
                       message,
                       type,
                     }),
