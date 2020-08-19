@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "sourceMap": true,
-    "module": "esnext",
-    "target": "es5",
+    "module": "es2015",
+    "target": "es2017",
     "moduleResolution": "node",
     "outDir": "./dist",
     "jsx": "react",
