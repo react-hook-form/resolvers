@@ -38,6 +38,14 @@ const options = [
     env: 'production',
     input: pkg.source,
   },
+  {
+    name,
+    umdName,
+    format: 'esm',
+    formatName: 'ie11',
+    input: pkg.source,
+    tsconfig: './tsconfig.ie11.json',
+  },
 ];
 
 export default options.map((option) => createRollupConfig(option));
