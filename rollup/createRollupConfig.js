@@ -12,7 +12,7 @@ import { safePackageName } from './safePackageName';
 import { pascalcase } from './pascalcase';
 import pkg from '../package.json';
 
-export function createRollupConfig(options) {
+export function createRollupConfig(options, callback) {
   const name = options.name || safePackageName(pkg.name);
   const umdName = options.umdName || pascalcase(safePackageName(pkg.name));
   const shouldMinify = options.minify || options.env === 'production';
@@ -34,7 +34,7 @@ export function createRollupConfig(options) {
     .filter(Boolean)
     .join('.');
 
-  return {
+  const config = {
     input: options.input,
     output: {
       file: outputName,
@@ -72,7 +72,8 @@ export function createRollupConfig(options) {
             drop_console: true,
           },
         }),
-      options.plugins,
-    ],
+    ].filter(Boolean),
   };
+
+  return callback ? callback(config) : config;
 }
