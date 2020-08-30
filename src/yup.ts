@@ -1,4 +1,4 @@
-import { Resolver, transformToNestObject } from 'react-hook-form';
+import { Resolver, transformToNestObject, FieldValues } from 'react-hook-form';
 import Yup from 'yup';
 
 const parseErrorSchema = (
@@ -41,7 +41,7 @@ const parseErrorSchema = (
         [error.path]: { message: error.message, type: error.type },
       };
 
-export const yupResolver = <TFieldValues extends Record<string, any>>(
+export const yupResolver = <TFieldValues extends FieldValues>(
   schema: Yup.ObjectSchema | Yup.Lazy,
   options: Omit<Yup.ValidateOptions, 'context'> = {
     abortEarly: false,
