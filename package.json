@@ -69,7 +69,7 @@
     "lint-staged": "^10.2.10",
     "prettier": "^2.0.5",
     "react": "^16.13.1",
-    "react-hook-form": "^6.0.0-rc.4",
+    "react-hook-form": "^6.7.0",
     "rimraf": "^3.0.2",
     "rollup": "^2.16.1",
     "rollup-plugin-peer-deps-external": "^2.2.2",
@@ -82,7 +82,7 @@
     "yup": "^0.29.1"
   },
   "peerDependencies": {
-    "react-hook-form": ">=6.0.0"
+    "react-hook-form": ">=6.6.0"
   },
   "husky": {
     "hooks": {
