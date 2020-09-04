@@ -75,14 +75,14 @@ A simple and composable way to validate data in JavaScript (or TypeScript).
 [![npm](https://img.shields.io/bundlephobia/minzip/superstruct?style=for-the-badge)](https://bundlephobia.com/result?p=superstruct)
 
 ```typescript jsx
-import React from "react";
-import { useForm } from "react-hook-form";
-import { superstructResolver } from "@hookform/resolvers";
-import { struct } from "superstruct";
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { superstructResolver } from '@hookform/resolvers';
+import { struct } from 'superstruct';
 
 const schema = struct({
-  name: "string",
-  age: "number",
+  name: 'string',
+  age: 'number',
 });
 
 const App = () => {
@@ -108,10 +108,10 @@ The most powerful data validation library for JS.
 [![npm](https://img.shields.io/bundlephobia/minzip/@hapi/joi?style=for-the-badge)](https://bundlephobia.com/result?p=@hapi/joi)
 
 ```typescript jsx
-import React from "react";
-import { useForm } from "react-hook-form";
-import { joiResolver } from "@hookform/resolvers";
-import Joi from "@hapi/joi";
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers';
+import Joi from '@hapi/joi';
 
 const schema = Joi.object({
   username: Joi.string().required(),
@@ -126,6 +126,54 @@ const App = () => {
     <form onSubmit={handleSubmit((d) => console.log(d))}>
       <input name="name" ref={register} />
       <input name="age" type="number" ref={register} />
+
+      <input type="submit" />
+    </form>
+  );
+};
+```
+
+### [Json Schema](http://json-schema.org/)
+
+The most standard way to validate JSON (implemented by [ajv](https://github.com/ajv-validator/ajv))
+
+[![npm](https://img.shields.io/bundlephobia/minzip/ajv@6.12.4?style=for-the-badge)](https://bundlephobia.com/result?p=ajv@6.12.4)
+
+```typescript jsx
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { jsonSchemaResolver } from '@hookform/resolvers';
+import type { JSONSchema7 } from 'json-schema';
+
+const schema: JSONSchema7 = {
+  type: 'object',
+  properties: {
+    name: {
+      type: 'string',
+      pattern: '[a-zA-Z]',
+      minLength: 3,
+    },
+    age: {
+      type: 'integer',
+      minimum: 0,
+    },
+    email: {
+      type: 'string',
+      format: 'email',
+    },
+  },
+};
+
+const App = () => {
+  const { register, handleSubmit } = useForm({
+    resolver: jsonSchemaResolver(schema),
+  });
+
+  return (
+    <form onSubmit={handleSubmit((d) => console.log(d))}>
+      <input name="name" ref={register} />
+      <input name="age" type="number" ref={register} />
+      <input name="email" type="email" ref={register} />
 
       <input type="submit" />
     </form>
