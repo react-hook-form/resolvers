@@ -45,7 +45,7 @@ Dead simple Object schema validation.
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers';
-import yup as * from 'yup';
+import * as yup from 'yup';
 
 const schema = yup.object().shape({
   name: yup.string().required(),
@@ -58,7 +58,7 @@ const App = () => {
   });
 
   return (
-    <form onSubmit={handleSubmit(d => console.log(d))}>
+    <form onSubmit={handleSubmit((d) => console.log(d))}>
       <input name="name" ref={register} />
       <input name="age" type="number" ref={register} />
 
@@ -142,10 +142,9 @@ The most standard way to validate JSON (implemented by [ajv](https://github.com/
 ```typescript jsx
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { jsonSchemaResolver } from '@hookform/resolvers';
-import type { JSONSchema7 } from 'json-schema';
+import { JSONSchema, jsonSchemaResolver } from '@hookform/resolvers';
 
-const schema: JSONSchema7 = {
+const schema: JSONSchema = {
   type: 'object',
   properties: {
     name: {
@@ -186,7 +185,7 @@ const App = () => {
 Thanks goes to all our backers! [[Become a backer](https://opencollective.com/react-hook-form#backer)].
 
 <a href="https://opencollective.com/react-hook-form#backers">
-    <img src="https://opencollective.com/react-hook-form/backers.svg?width=950" />
+    <img src="https://opencollective.com/react-hook-form/backers.svg?width=950" alt="Backers" />
 </a>
 
 ## Organizations
@@ -194,7 +193,7 @@ Thanks goes to all our backers! [[Become a backer](https://opencollective.com/re
 Thanks goes to these wonderful organizations! [[Contribute](https://opencollective.com/react-hook-form/contribute)].
 
 <a href="https://github.com/react-hook-form/react-hook-form/graphs/contributors">
-    <img src="https://opencollective.com/react-hook-form/organizations.svg?width=950" />
+    <img src="https://opencollective.com/react-hook-form/organizations.svg?width=950" alt="Contributor Organizations" />
 </a>
 
 ## Contributors
@@ -202,5 +201,5 @@ Thanks goes to these wonderful organizations! [[Contribute](https://opencollecti
 Thanks goes to these wonderful people! [[Become a contributor](CONTRIBUTING.md)].
 
 <a href="https://github.com/react-hook-form/react-hook-form/graphs/contributors">
-    <img src="https://opencollective.com/react-hook-form/contributors.svg?width=950" />
+    <img src="https://opencollective.com/react-hook-form/contributors.svg?width=950" alt="Contributors" />
 </a>

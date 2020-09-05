@@ -1,5 +1,5 @@
 import { appendErrors, Resolver, transformToNestObject } from 'react-hook-form';
-import Ajv, { ErrorObject, ValidateFunction } from 'ajv';
+import Ajv, { ErrorObject, Options } from 'ajv';
 import type { JSONSchema4, JSONSchema6, JSONSchema7 } from 'json-schema';
 import {
   FieldError,
@@ -8,7 +8,9 @@ import {
   ResolverSuccess,
 } from 'react-hook-form/dist/types/form';
 
-type JSONSchema = JSONSchema4 | JSONSchema6 | JSONSchema7;
+export type JSONSchema = (JSONSchema4 | JSONSchema6 | JSONSchema7) & {
+  $async?: boolean;
+};
 
 const parseErrorSchema = <TFieldValues extends Record<string, any>>(
   validationError: Array<ErrorObject> | null | undefined,
@@ -18,10 +20,9 @@ const parseErrorSchema = <TFieldValues extends Record<string, any>>(
     ? validationError.reduce(
         (
           previous: FieldErrors<TFieldValues>,
-          { dataPath, keyword, message = '', propertyName = '' },
+          { dataPath, keyword, message },
         ) => {
-          const path =
-            dataPath.replace(/\//g, '.').replace(/^\./, '') || propertyName;
+          const path = dataPath.replace(/\//g, '.').replace(/^\./, '');
           return {
             ...previous,
             ...(path
@@ -55,24 +56,45 @@ const parseErrorSchema = <TFieldValues extends Record<string, any>>(
       )
     : {};
 
+export interface JsonSchemaOptions {
+  ajvOptions?: Omit<Options, 'allErrors' | 'validateSchema' | 'transpile'>;
+}
+
 export const jsonSchemaResolver = <TFieldValues extends Record<string, any>>(
   validationSchema: JSONSchema,
+  options: JsonSchemaOptions = {},
 ): Resolver<TFieldValues> => {
-  const validate: ValidateFunction | undefined =
-    validationSchema && typeof validationSchema === 'object'
-      ? (() => {
-          const ajv = new Ajv({ allErrors: true });
-          return ajv.compile(validationSchema);
-        })()
-      : undefined;
-
-  if (!validate) {
+  if (!validationSchema || typeof validationSchema !== 'object') {
     throw new Error('Invalid AJV schema or validation function');
   }
 
+  const async =
+    options.ajvOptions?.async === true ||
+    [true, 'true'].includes((validationSchema as any).$async);
+  const ajv = new Ajv({
+    ...options.ajvOptions,
+    async,
+    allErrors: true,
+    validateSchema: true,
+    transpile: undefined,
+  });
+  const validate = ajv.compile(validationSchema);
+
   return async (data, _, validateAllFieldCriteria = false) => {
-    const valid = validate(data) as boolean;
-    const errors = validate.errors;
+    let valid: boolean;
+    let errors: Ajv.ErrorObject[] | null | undefined = null;
+    if (async) {
+      try {
+        const tmp = await validate(data);
+        valid = tmp === data;
+      } catch (e) {
+        valid = false;
+        errors = e.errors;
+      }
+    } else {
+      valid = validate(data) as boolean;
+      errors = validate.errors;
+    }
 
     return valid
       ? ({
