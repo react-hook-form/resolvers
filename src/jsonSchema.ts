@@ -1,5 +1,6 @@
 import { appendErrors, Resolver, transformToNestObject } from 'react-hook-form';
-import Ajv, { ErrorObject, Options } from 'ajv';
+import * as Ajv from 'ajv';
+import { ErrorObject, Options } from 'ajv';
 import type { JSONSchema4, JSONSchema6, JSONSchema7 } from 'json-schema';
 import {
   FieldError,
