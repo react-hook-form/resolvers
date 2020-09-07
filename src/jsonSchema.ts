@@ -9,9 +9,7 @@ import {
   ResolverSuccess,
 } from 'react-hook-form/dist/types/form';
 
-export type JSONSchema = (JSONSchema4 | JSONSchema6 | JSONSchema7) & {
-  $async?: boolean;
-};
+export type JSONSchema = JSONSchema4 | JSONSchema6 | JSONSchema7;
 
 const parseErrorSchema = <TFieldValues extends Record<string, any>>(
   validationError: Array<ErrorObject> | null | undefined,
@@ -58,7 +56,10 @@ const parseErrorSchema = <TFieldValues extends Record<string, any>>(
     : {};
 
 export interface JsonSchemaOptions {
-  ajvOptions?: Omit<Options, 'allErrors' | 'validateSchema' | 'transpile'>;
+  ajvOptions?: Omit<
+    Options,
+    'allErrors' | 'async' | 'validateSchema' | 'transpile'
+  >;
 }
 
 export const jsonSchemaResolver = <TFieldValues extends Record<string, any>>(
@@ -69,12 +70,9 @@ export const jsonSchemaResolver = <TFieldValues extends Record<string, any>>(
     throw new Error('Invalid AJV schema or validation function');
   }
 
-  const async =
-    options.ajvOptions?.async === true ||
-    [true, 'true'].includes((validationSchema as any).$async);
   const ajv = new Ajv({
     ...options.ajvOptions,
-    async,
+    async: false,
     allErrors: true,
     validateSchema: true,
     transpile: undefined,
@@ -82,20 +80,8 @@ export const jsonSchemaResolver = <TFieldValues extends Record<string, any>>(
   const validate = ajv.compile(validationSchema);
 
   return async (data, _, validateAllFieldCriteria = false) => {
-    let valid: boolean;
-    let errors: Ajv.ErrorObject[] | null | undefined = null;
-    if (async) {
-      try {
-        const tmp = await validate(data);
-        valid = tmp === data;
-      } catch (e) {
-        valid = false;
-        errors = e.errors;
-      }
-    } else {
-      valid = validate(data) as boolean;
-      errors = validate.errors;
-    }
+    const valid = validate(data) as boolean;
+    const errors = validate.errors;
 
     return valid
       ? ({

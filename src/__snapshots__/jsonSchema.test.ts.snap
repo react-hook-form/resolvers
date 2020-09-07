@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ajvResolver async should get errors on invalid data 1`] = `
+exports[`ajvResolver should get errors on invalid data 1`] = `
 Object {
   "errors": Object {
     "age": Object {
@@ -27,31 +27,6 @@ Object {
 }
 `;
 
-exports[`ajvResolver async should throw when an invalid schema object is provided 1`] = `"schema is invalid: data.type should be equal to one of the allowed values, data.type should be array, data.type should match some schema in anyOf"`;
+exports[`ajvResolver should throw when an invalid schema object is provided 1`] = `"schema is invalid: data.type should be equal to one of the allowed values, data.type should be array, data.type should match some schema in anyOf"`;
 
-exports[`ajvResolver async should throw when an invalid schema param is provided to ajv 1`] = `"Invalid AJV schema or validation function"`;
-
-exports[`ajvResolver sync should get errors on invalid data 1`] = `
-Object {
-  "errors": Object {
-    "age": Object {
-      "message": "should be integer",
-      "type": "type",
-    },
-    "hobbies": Array [
-      undefined,
-      Object {
-        "description": Object {
-          "message": "should NOT be shorter than 3 characters",
-          "type": "minLength",
-        },
-      },
-    ],
-  },
-  "values": Object {},
-}
-`;
-
-exports[`ajvResolver sync should throw when an invalid schema object is provided 1`] = `"schema is invalid: data.type should be equal to one of the allowed values, data.type should be array, data.type should match some schema in anyOf"`;
-
-exports[`ajvResolver sync should throw when an invalid schema param is provided to ajv 1`] = `"Invalid AJV schema or validation function"`;
+exports[`ajvResolver should throw when an invalid schema param is provided to ajv 1`] = `"Invalid AJV schema or validation function"`;

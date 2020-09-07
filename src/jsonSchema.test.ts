@@ -1,6 +1,6 @@
 import { JSONSchema, jsonSchemaResolver } from './jsonSchema';
 
-const syncSchema: JSONSchema = {
+const schema: JSONSchema = {
   type: 'object',
   properties: {
     name: {
@@ -33,123 +33,59 @@ const syncSchema: JSONSchema = {
   required: ['name', 'age', 'email', 'hobbies'],
 };
 
-const asyncSchema: JSONSchema = {
-  ...syncSchema,
-  $async: true,
-};
-
 describe('ajvResolver', () => {
-  describe('sync', () => {
-    it('should get values when there is no error', async () => {
-      const data = {
-        name: 'jimmy',
-        age: 24,
-        email: 'jimmy@jimmy.com',
-        hobbies: [
-          {
-            description: 'tennis',
-          },
-        ],
-      };
-      expect(await jsonSchemaResolver(syncSchema)(data)).toEqual({
-        values: data,
-        errors: {},
-      });
-    });
-
-    it('should get errors on invalid data', async () => {
-      const data = {
-        name: 'jimmy',
-        age: '24',
-        email: 'jimmy@jimmy.com',
-        hobbies: [
-          {
-            description: 'tennis',
-          },
-          {
-            description: 'ab',
-          },
-        ],
-      };
-
-      expect(await jsonSchemaResolver(syncSchema)(data)).toMatchSnapshot();
-    });
-
-    it('should throw when an invalid schema object is provided', async () => {
-      expect(() => {
-        jsonSchemaResolver({
-          ...syncSchema,
-          type: 'o' as any,
-        });
-      }).toThrowErrorMatchingSnapshot();
-    });
-
-    it('should throw when an invalid schema param is provided to ajv', async () => {
-      expect(() => {
-        jsonSchemaResolver(jsonSchemaResolver as any);
-      }).toThrowErrorMatchingSnapshot();
+  it('should get values when there is no error', async () => {
+    const data = {
+      name: 'jimmy',
+      age: 24,
+      email: 'jimmy@jimmy.com',
+      hobbies: [
+        {
+          description: 'tennis',
+        },
+      ],
+    };
+    expect(await jsonSchemaResolver(schema)(data)).toEqual({
+      values: data,
+      errors: {},
     });
   });
-  describe('async', () => {
-    it('should get values when there is no error', async () => {
-      const data = {
-        name: 'jimmy',
-        age: 24,
-        email: 'jimmy@jimmy.com',
-        hobbies: [
-          {
-            description: 'tennis',
-          },
-        ],
-      };
-      expect(await jsonSchemaResolver(asyncSchema)(data)).toEqual({
-        values: data,
-        errors: {},
-      });
-    });
 
-    it('should get errors on invalid data', async () => {
-      const data = {
-        name: 'jimmy',
-        age: '24',
-        email: 'jimmy@jimmy.com',
-        hobbies: [
-          {
-            description: 'tennis',
-          },
-          {
-            description: 'ab',
-          },
-        ],
-      };
+  it('should get errors on invalid data', async () => {
+    const data = {
+      name: 'jimmy',
+      age: '24',
+      email: 'jimmy@jimmy.com',
+      hobbies: [
+        {
+          description: 'tennis',
+        },
+        {
+          description: 'ab',
+        },
+      ],
+    };
 
-      expect(
-        await jsonSchemaResolver(asyncSchema, { ajvOptions: {} })(
-          data,
-          undefined,
-          true,
-        ),
-      ).toMatchSnapshot();
-    });
+    expect(
+      await jsonSchemaResolver(schema, {})(data, undefined, true),
+    ).toMatchSnapshot();
+  });
 
-    it('should throw when an invalid schema object is provided', async () => {
-      expect(() => {
-        jsonSchemaResolver(
-          {
-            ...syncSchema,
-            type: 'o' as any,
-          },
-          {},
-        );
-      }).toThrowErrorMatchingSnapshot();
-    });
+  it('should throw when an invalid schema object is provided', async () => {
+    expect(() => {
+      jsonSchemaResolver(
+        {
+          ...schema,
+          type: 'o' as any,
+        },
+        { ajvOptions: {} },
+      );
+    }).toThrowErrorMatchingSnapshot();
+  });
 
-    it('should throw when an invalid schema param is provided to ajv', async () => {
-      expect(() => {
-        jsonSchemaResolver(jsonSchemaResolver as any, {
-          ajvOptions: { async: true },
-        });
-      }).toThrowErrorMatchingSnapshot();
-    });
+  it('should throw when an invalid schema param is provided to ajv', async () => {
+    expect(() => {
+      jsonSchemaResolver(jsonSchemaResolver as any);
+    }).toThrowErrorMatchingSnapshot();
   });
 });
