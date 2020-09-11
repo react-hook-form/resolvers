@@ -72,9 +72,7 @@ export const yupResolver = <TFieldValues extends FieldValues>(
     const parsedErrors = parseErrorSchema(e, validateAllFieldCriteria);
     return {
       values: {},
-      errors: validateAllFieldCriteria
-        ? parsedErrors
-        : transformToNestObject(parsedErrors),
+      errors: transformToNestObject(parsedErrors),
     };
   }
 };
