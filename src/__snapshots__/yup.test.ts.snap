@@ -33,15 +33,19 @@ Object {
         "typeError": "createdOn must be a \`date\` type, but the final value was: \`Invalid Date\`.",
       },
     },
-    "foo[0].loose": Object {
-      "message": "foo[0].loose must be a \`boolean\` type, but the final value was: \`null\`.
+    "foo": Array [
+      Object {
+        "loose": Object {
+          "message": "foo[0].loose must be a \`boolean\` type, but the final value was: \`null\`.
  If \\"null\\" is intended as an empty value be sure to mark the schema as \`.nullable()\`",
-      "type": "typeError",
-      "types": Object {
-        "typeError": "foo[0].loose must be a \`boolean\` type, but the final value was: \`null\`.
+          "type": "typeError",
+          "types": Object {
+            "typeError": "foo[0].loose must be a \`boolean\` type, but the final value was: \`null\`.
  If \\"null\\" is intended as an empty value be sure to mark the schema as \`.nullable()\`",
+          },
+        },
       },
-    },
+    ],
     "password": Object {
       "message": "password is a required field",
       "type": "required",
