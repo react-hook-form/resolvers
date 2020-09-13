@@ -45,7 +45,7 @@ Dead simple Object schema validation.
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers';
-import yup as * from 'yup';
+import * as yup from 'yup';
 
 const schema = yup.object().shape({
   name: yup.string().required(),
