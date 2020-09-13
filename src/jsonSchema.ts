@@ -1,8 +1,8 @@
+import * as Ajv from 'ajv';
 import { appendErrors, Resolver, transformToNestObject } from 'react-hook-form';
-//import * as Ajv from 'ajv';
-import Ajv, { ErrorObject, Options } from 'ajv';
+import type { ErrorObject, Options, ValidateFunction } from 'ajv';
 import type { JSONSchema4, JSONSchema6, JSONSchema7 } from 'json-schema';
-import {
+import type {
   FieldError,
   FieldErrors,
   ResolverError,
@@ -21,7 +21,7 @@ const parseErrorSchema = <TFieldValues extends Record<string, any>>(
           previous: FieldErrors<TFieldValues>,
           { dataPath, keyword, message },
         ) => {
-          const path = dataPath.replace(/\//g, '.').replace(/^\./, '');
+          const path = dataPath.replace(/^\./, '');
           return {
             ...previous,
             ...(path
@@ -70,16 +70,32 @@ export const jsonSchemaResolver = <TFieldValues extends Record<string, any>>(
     throw new Error('Invalid AJV schema or validation function');
   }
 
-  const ajv = new Ajv({
-    ...options.ajvOptions,
-    async: false,
-    allErrors: true,
-    validateSchema: true,
-    transpile: undefined,
-  });
-  const validate = ajv.compile(validationSchema);
+  let allErrors = false;
+  let validate: ValidateFunction | undefined;
 
-  return async (data, _, validateAllFieldCriteria = false) => {
+  const getValidator = (
+    validateAllFieldCriteria: boolean,
+  ): ValidateFunction => {
+    // compile only if necessary. otherwise return the memoized validation function
+    if (!validate || allErrors !== validateAllFieldCriteria) {
+      allErrors = validateAllFieldCriteria;
+      validate = new Ajv({
+        ...options.ajvOptions,
+        async: false,
+        allErrors,
+        validateSchema: true,
+        transpile: undefined,
+      }).compile(validationSchema);
+    }
+
+    return validate;
+  };
+
+  // compile the validator right away so there is an exception if the schema is invalid
+  getValidator(allErrors);
+
+  return async (data, _, validateAllFieldCriteria = allErrors) => {
+    const validate = getValidator(validateAllFieldCriteria);
     const valid = validate(data) as boolean;
     const errors = validate.errors;
 
