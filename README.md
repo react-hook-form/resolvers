@@ -58,7 +58,7 @@ const App = () => {
   });
 
   return (
-    <form onSubmit={handleSubmit(d => console.log(d))}>
+    <form onSubmit={handleSubmit((d) => console.log(d))}>
       <input name="name" ref={register} />
       <input name="age" type="number" ref={register} />
 
@@ -75,14 +75,14 @@ A simple and composable way to validate data in JavaScript (or TypeScript).
 [![npm](https://img.shields.io/bundlephobia/minzip/superstruct?style=for-the-badge)](https://bundlephobia.com/result?p=superstruct)
 
 ```typescript jsx
-import React from "react";
-import { useForm } from "react-hook-form";
-import { superstructResolver } from "@hookform/resolvers";
-import { struct } from "superstruct";
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { superstructResolver } from '@hookform/resolvers';
+import { struct } from 'superstruct';
 
 const schema = struct({
-  name: "string",
-  age: "number",
+  name: 'string',
+  age: 'number',
 });
 
 const App = () => {
@@ -108,10 +108,10 @@ The most powerful data validation library for JS.
 [![npm](https://img.shields.io/bundlephobia/minzip/@hapi/joi?style=for-the-badge)](https://bundlephobia.com/result?p=@hapi/joi)
 
 ```typescript jsx
-import React from "react";
-import { useForm } from "react-hook-form";
-import { joiResolver } from "@hookform/resolvers";
-import Joi from "@hapi/joi";
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers';
+import Joi from '@hapi/joi';
 
 const schema = Joi.object({
   username: Joi.string().required(),
@@ -133,12 +133,59 @@ const App = () => {
 };
 ```
 
+### [Json Schema](http://json-schema.org/)
+
+The most standard way to validate JSON (implemented by [ajv](https://github.com/ajv-validator/ajv))
+
+[![npm](https://img.shields.io/bundlephobia/minzip/ajv@6.12.4?style=for-the-badge)](https://bundlephobia.com/result?p=ajv@6.12.4)
+
+```typescript jsx
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { JSONSchema, jsonSchemaResolver } from '@hookform/resolvers';
+
+const schema: JSONSchema = {
+  type: 'object',
+  properties: {
+    name: {
+      type: 'string',
+      pattern: '[a-zA-Z]',
+      minLength: 3,
+    },
+    age: {
+      type: 'integer',
+      minimum: 0,
+    },
+    email: {
+      type: 'string',
+      format: 'email',
+    },
+  },
+};
+
+const App = () => {
+  const { register, handleSubmit } = useForm({
+    resolver: jsonSchemaResolver(schema),
+  });
+
+  return (
+    <form onSubmit={handleSubmit((d) => console.log(d))}>
+      <input name="name" ref={register} />
+      <input name="age" type="number" ref={register} />
+      <input name="email" type="email" ref={register} />
+
+      <input type="submit" />
+    </form>
+  );
+};
+```
+
 ## Backers
 
 Thanks goes to all our backers! [[Become a backer](https://opencollective.com/react-hook-form#backer)].
 
 <a href="https://opencollective.com/react-hook-form#backers">
-    <img src="https://opencollective.com/react-hook-form/backers.svg?width=950" />
+    <img src="https://opencollective.com/react-hook-form/backers.svg?width=950" alt="Backers" />
 </a>
 
 ## Organizations
@@ -146,7 +193,7 @@ Thanks goes to all our backers! [[Become a backer](https://opencollective.com/re
 Thanks goes to these wonderful organizations! [[Contribute](https://opencollective.com/react-hook-form/contribute)].
 
 <a href="https://github.com/react-hook-form/react-hook-form/graphs/contributors">
-    <img src="https://opencollective.com/react-hook-form/organizations.svg?width=950" />
+    <img src="https://opencollective.com/react-hook-form/organizations.svg?width=950" alt="Contributor Organizations" />
 </a>
 
 ## Contributors
@@ -154,5 +201,5 @@ Thanks goes to these wonderful organizations! [[Contribute](https://opencollecti
 Thanks goes to these wonderful people! [[Become a contributor](CONTRIBUTING.md)].
 
 <a href="https://github.com/react-hook-form/react-hook-form/graphs/contributors">
-    <img src="https://opencollective.com/react-hook-form/contributors.svg?width=950" />
+    <img src="https://opencollective.com/react-hook-form/contributors.svg?width=950" alt="Contributors" />
 </a>
