@@ -22,8 +22,8 @@ Object {
       "type": "invalid_type",
     },
     "password": Object {
-      "message": "Invalid",
-      "type": "invalid_string",
+      "message": "Should be at least 8 characters",
+      "type": "too_small",
     },
     "tags": Array [
       Object {
@@ -74,8 +74,8 @@ Object {
       "type": "invalid_type",
     },
     "password": Object {
-      "message": "Invalid",
-      "type": "invalid_string",
+      "message": "Should be at least 8 characters",
+      "type": "too_small",
     },
     "tags": Array [
       Object {
@@ -134,10 +134,11 @@ Object {
       },
     },
     "password": Object {
-      "message": "Invalid",
-      "type": "invalid_string",
+      "message": "Should be at least 8 characters",
+      "type": "too_small",
       "types": Object {
         "invalid_string": "Invalid",
+        "too_small": "Should be at least 8 characters",
       },
     },
     "tags": Array [

@@ -22,11 +22,6 @@ const parseErrorSchema = (
     (previous, { path, message, code: type }) => {
       const currentPath = convertArrayToPathName(path);
 
-      previous[currentPath] = {
-        message,
-        type,
-      };
-
       return {
         ...previous,
         ...(path
@@ -36,7 +31,7 @@ const parseErrorSchema = (
                   currentPath,
                   validateAllFieldCriteria,
                   previous,
-                  type || '',
+                  type,
                   message,
                 ),
               }
@@ -46,7 +41,7 @@ const parseErrorSchema = (
                   type,
                   ...(validateAllFieldCriteria
                     ? {
-                        types: { [type || '']: message || true },
+                        types: { [type]: message || true },
                       }
                     : {}),
                 },
