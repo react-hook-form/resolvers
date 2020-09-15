@@ -59,7 +59,7 @@ const parseErrorSchema = (
 };
 
 export const zodResolver = <TFieldValues extends FieldValues>(
-  schema: Schema<any>,
+  schema: Schema<TFieldValues>,
   options?: ParseParams,
 ): Resolver<TFieldValues> => async (
   values,
