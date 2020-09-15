@@ -6,7 +6,7 @@ import {
   ResolverSuccess,
   transformToNestObject,
 } from 'react-hook-form';
-import { Schema, ZodError } from 'zod';
+import { Schema, ZodError, ZodTypeDef } from 'zod';
 import { ParseParams } from 'zod/lib/src/parser';
 import convertArrayToPathName from './utils/convertArrayToPathName';
 
@@ -53,8 +53,11 @@ const parseErrorSchema = (
   );
 };
 
-export const zodResolver = <TFieldValues extends FieldValues>(
-  schema: Schema<TFieldValues>,
+export const zodResolver = <
+  TFieldValues extends FieldValues,
+  TZodTypeDef extends ZodTypeDef
+>(
+  schema: Schema<TFieldValues, TZodTypeDef>,
   options?: ParseParams,
 ): Resolver<TFieldValues> => async (
   values,

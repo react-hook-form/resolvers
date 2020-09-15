@@ -50,7 +50,7 @@ describe('zodResolver', () => {
   });
 
   it('should get errors without validate all criteria fields', async () => {
-    const data = {
+    const data: any = {
       id: '2',
       tags: [2, true],
       author: {
@@ -67,7 +67,7 @@ describe('zodResolver', () => {
   });
 
   it('should get errors without validate all criteria fields', async () => {
-    const data = {
+    const data: any = {
       id: '2',
       tags: [2, true],
       author: {
@@ -83,7 +83,7 @@ describe('zodResolver', () => {
   });
 
   it('should get errors with zod error map', async () => {
-    const data = {
+    const data: any = {
       id: '2',
       tags: [2, true],
       author: {
