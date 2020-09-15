@@ -14,7 +14,7 @@ const parseErrorSchema = (
   zodError: ZodError,
   validateAllFieldCriteria: boolean,
 ) => {
-  if (!Array.isArray(zodError.errors) || zodError.isEmpty) {
+  if (zodError.isEmpty) {
     return {};
   }
 
