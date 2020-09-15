@@ -142,7 +142,10 @@ The most standard way to validate JSON (implemented by [ajv](https://github.com/
 ```typescript jsx
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { JSONSchema, jsonSchemaResolver } from '@hookform/resolvers';
+import { JSONSchema4, JSONSchema6, JSONSchema7 } from 'json-schema';
+import { jsonSchemaResolver } from '@hookform/resolvers';
+
+type JSONSchema = JSONSchema4 | JSONSchema6 | JSONSchema7;
 
 const schema: JSONSchema = {
   type: 'object',

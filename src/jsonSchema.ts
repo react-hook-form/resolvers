@@ -9,7 +9,7 @@ import type {
   ResolverSuccess,
 } from 'react-hook-form/dist/types/form';
 
-export type JSONSchema = JSONSchema4 | JSONSchema6 | JSONSchema7;
+type JSONSchema = JSONSchema4 | JSONSchema6 | JSONSchema7;
 
 const parseErrorSchema = <TFieldValues extends Record<string, any>>(
   validationError: Array<ErrorObject> | null | undefined,
