@@ -1,12 +1,11 @@
 import {
   appendErrors,
-  FieldValues,
   Resolver,
   ResolverError,
   ResolverSuccess,
   transformToNestObject,
 } from 'react-hook-form';
-import { Schema, ZodError, ZodTypeDef } from 'zod';
+import { ZodSchema, ZodError, TypeOf } from 'zod';
 import { ParseParams } from 'zod/lib/src/parser';
 import convertArrayToPathName from './utils/convertArrayToPathName';
 
@@ -53,13 +52,10 @@ const parseErrorSchema = (
   );
 };
 
-export const zodResolver = <
-  TFieldValues extends FieldValues,
-  TZodTypeDef extends ZodTypeDef
->(
-  schema: Schema<TFieldValues, TZodTypeDef>,
+export const zodResolver = <T extends ZodSchema<any, any>>(
+  schema: T,
   options?: ParseParams,
-): Resolver<TFieldValues> => async (
+): Resolver<TypeOf<T>> => async (
   values,
   _,
   validateAllFieldCriteria = false,
@@ -67,7 +63,7 @@ export const zodResolver = <
   const result = schema.safeParse(values, options);
 
   if (result.success) {
-    return { values: result.data, errors: {} } as ResolverSuccess<TFieldValues>;
+    return { values: result.data, errors: {} } as ResolverSuccess<TypeOf<T>>;
   }
 
   return {
@@ -75,5 +71,5 @@ export const zodResolver = <
     errors: transformToNestObject(
       parseErrorSchema(result.error, validateAllFieldCriteria),
     ),
-  } as ResolverError<TFieldValues>;
+  } as ResolverError<TypeOf<T>>;
 };
