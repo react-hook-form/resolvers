@@ -5,12 +5,12 @@ import {
   ResolverSuccess,
   transformToNestObject,
 } from 'react-hook-form';
-import { ZodSchema, ZodError, TypeOf } from 'zod';
+import * as z from 'zod';
 import { ParseParams } from 'zod/lib/src/parser';
 import convertArrayToPathName from './utils/convertArrayToPathName';
 
 const parseErrorSchema = (
-  zodError: ZodError,
+  zodError: z.ZodError,
   validateAllFieldCriteria: boolean,
 ) => {
   if (zodError.isEmpty) {
@@ -52,10 +52,10 @@ const parseErrorSchema = (
   );
 };
 
-export const zodResolver = <T extends ZodSchema<any, any>>(
+export const zodResolver = <T extends z.ZodSchema<any, any>>(
   schema: T,
   options?: ParseParams,
-): Resolver<TypeOf<T>> => async (
+): Resolver<z.infer<T>> => async (
   values,
   _,
   validateAllFieldCriteria = false,
@@ -63,7 +63,7 @@ export const zodResolver = <T extends ZodSchema<any, any>>(
   const result = schema.safeParse(values, options);
 
   if (result.success) {
-    return { values: result.data, errors: {} } as ResolverSuccess<TypeOf<T>>;
+    return { values: result.data, errors: {} } as ResolverSuccess<z.infer<T>>;
   }
 
   return {
@@ -71,5 +71,5 @@ export const zodResolver = <T extends ZodSchema<any, any>>(
     errors: transformToNestObject(
       parseErrorSchema(result.error, validateAllFieldCriteria),
     ),
-  } as ResolverError<TypeOf<T>>;
+  } as ResolverError<z.infer<T>>;
 };
