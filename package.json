@@ -20,7 +20,7 @@
   "scripts": {
     "clean": "rimraf dist",
     "prebuild": "npm run clean",
-    "build": "node rollup/writeCjsEntryFile.js && rollup -c",
+    "build": "node rollup/writeDeclarationFiles.js && node rollup/writeCjsEntryFile.js && rollup -c",
     "lint": "eslint '**/*.{js,ts}'",
     "lint:fix": "npm run lint -- --fix",
     "lint:types": "tsc --noEmit",
