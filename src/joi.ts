@@ -1,4 +1,9 @@
-import { appendErrors, transformToNestObject, Resolver } from 'react-hook-form';
+import {
+  appendErrors,
+  transformToNestObject,
+  Resolver,
+  FieldValues,
+} from 'react-hook-form';
 import Joi from '@hapi/joi';
 import convertArrayToPathName from './utils/convertArrayToPathName';
 
@@ -42,7 +47,7 @@ const parseErrorSchema = (
       )
     : [];
 
-export const joiResolver = <TFieldValues extends Record<string, any>>(
+export const joiResolver = <TFieldValues extends FieldValues>(
   schema: Joi.Schema,
   options: Joi.AsyncValidationOptions = {
     abortEarly: false,

@@ -1,4 +1,9 @@
-import { appendErrors, transformToNestObject, Resolver } from 'react-hook-form';
+import {
+  appendErrors,
+  transformToNestObject,
+  Resolver,
+  FieldValues,
+} from 'react-hook-form';
 import Superstruct from 'superstruct';
 import convertArrayToPathName from './utils/convertArrayToPathName';
 
@@ -42,7 +47,7 @@ const parseErrorSchema = (
       )
     : [];
 
-export const superstructResolver = <TFieldValues extends Record<string, any>>(
+export const superstructResolver = <TFieldValues extends FieldValues>(
   schema: Superstruct.Struct,
 ): Resolver<TFieldValues> => async (
   values,

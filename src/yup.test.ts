@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import * as yup from 'yup';
 import { yupResolver } from './yup';
 
@@ -45,6 +46,14 @@ const schema = yup.object().shape({
   name: yup.string().required(),
   age: yup.number().required().positive().integer(),
   email: yup.string().email(),
+  password: yup
+    .string()
+    .required()
+    .min(8)
+    .matches(RegExp('(.*[a-z].*)'), 'Lowercase')
+    .matches(RegExp('(.*[A-Z].*)'), 'Uppercase')
+    .matches(RegExp('(.*\\d.*)'), 'Number')
+    .matches(RegExp('[!@#$%^&*(),.?":{}|<>]'), 'Special'),
   website: yup.string().url(),
   createdOn: yup.date().default(function () {
     return new Date();
@@ -64,6 +73,7 @@ describe('yupResolver', () => {
     const data = {
       name: 'jimmy',
       age: '24',
+      password: '[}tehk6Uor',
       createdOn: '2014-09-23T19:25:25Z',
       foo: [{ yup: true }],
     };
@@ -72,20 +82,122 @@ describe('yupResolver', () => {
       values: {
         name: 'jimmy',
         age: 24,
+        password: '[}tehk6Uor',
         foo: [{ yup: true }],
         createdOn: new Date('2014-09-23T19:25:25Z'),
       },
     });
   });
 
-  it('should get errors', async () => {
-    const data = {
-      name: 2,
-      age: 'test',
-      createdOn: null,
-      foo: [{ loose: null }],
-    };
-    expect(await yupResolver(schema)(data)).toMatchSnapshot();
+  it('should pass down the yup context', async () => {
+    const data = { name: 'eric' };
+    const context = { min: true };
+    const schemaWithContext = yup.object().shape({
+      name: yup
+        .string()
+        .required()
+        .when('$min', (min: boolean, schema: yup.StringSchema) => {
+          return min ? schema.min(6) : schema;
+        }),
+    });
+    schemaWithContext.validate = jest.fn().mockResolvedValue({});
+    await yupResolver(schemaWithContext)(data, context);
+    expect(schemaWithContext.validate).toHaveBeenCalled();
+    expect(schemaWithContext.validate).toHaveBeenCalledWith(data, {
+      abortEarly: false,
+      context,
+    });
+    (schemaWithContext.validate as jest.Mock).mockClear();
+  });
+
+  describe('errors', () => {
+    it('should get errors with validate all criteria fields', async () => {
+      const data = {
+        name: 2,
+        age: 'test',
+        password: '',
+        createdOn: null,
+        foo: [{ loose: null }],
+      };
+      const resolve = await yupResolver(schema)(data, {}, true);
+      expect(resolve).toMatchSnapshot();
+      expect(resolve.errors['foo'][0]['loose']).toBeDefined();
+      expect(resolve.errors['foo'][0]['loose'].types).toMatchInlineSnapshot(`
+        Object {
+          "typeError": "foo[0].loose must be a \`boolean\` type, but the final value was: \`null\`.
+         If \\"null\\" is intended as an empty value be sure to mark the schema as \`.nullable()\`",
+        }
+      `);
+      expect(resolve.errors.age.types).toMatchInlineSnapshot(`
+        Object {
+          "typeError": "age must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"test\\"\`).",
+        }
+      `);
+      expect(resolve.errors.createdOn.types).toMatchInlineSnapshot(`
+        Object {
+          "typeError": "createdOn must be a \`date\` type, but the final value was: \`Invalid Date\`.",
+        }
+      `);
+      expect(resolve.errors.password.types).toMatchInlineSnapshot(`
+        Object {
+          "matches": Array [
+            "Lowercase",
+            "Uppercase",
+            "Number",
+            "Special",
+          ],
+          "min": "password must be at least 8 characters",
+          "required": "password is a required field",
+        }
+      `);
+    });
+
+    it('should get errors without validate all criteria fields', async () => {
+      const data = {
+        name: 2,
+        age: 'test',
+        createdOn: null,
+        foo: [{ loose: null }],
+      };
+      const resolve = await yupResolver(schema)(data);
+      expect(await yupResolver(schema)(data)).toMatchSnapshot();
+      expect(resolve.errors['foo[0].loose']).toBeUndefined();
+      expect(resolve.errors.age.types).toBeUndefined();
+      expect(resolve.errors.createdOn.types).toBeUndefined();
+      expect(resolve.errors.password.types).toBeUndefined();
+    });
+
+    it('should get error if yup errors has no inner errors', async () => {
+      const data = {
+        name: 2,
+        age: 'test',
+        createdOn: null,
+        foo: [{ loose: null }],
+      };
+      const resolve = await yupResolver(schema, {
+        abortEarly: true,
+      })(data);
+      expect(resolve.errors).toMatchInlineSnapshot(`
+        Object {
+          "createdOn": Object {
+            "message": "createdOn must be a \`date\` type, but the final value was: \`Invalid Date\`.",
+            "type": "typeError",
+          },
+        }
+      `);
+    });
+
+    it('should return an error result if inner yup validation error has no path', async () => {
+      const data = { name: '' };
+      const schemaWithContext = yup.object().shape({
+        name: yup.string().required(),
+      });
+      schemaWithContext.validate = jest.fn().mockRejectedValue({
+        inner: [{ path: '', message: 'error1', type: 'required' }],
+      } as yup.ValidationError);
+      const result = await yupResolver(schemaWithContext)(data);
+      expect(result).toMatchSnapshot();
+    });
   });
 });
 
@@ -108,6 +220,74 @@ describe('validateWithSchema', () => {
     ).toEqual({
       errors: {},
       values: undefined,
+    });
+  });
+
+  it('should return an error based on the user context', async () => {
+    const data = { name: 'eric' };
+    const schemaWithContext = yup.object().shape({
+      name: yup
+        .string()
+        .required()
+        .when('$min', (min: boolean, schema: yup.StringSchema) => {
+          return min ? schema.min(6) : schema;
+        }),
+    });
+    expect(await yupResolver(schemaWithContext)(data, { min: true }))
+      .toMatchInlineSnapshot(`
+      Object {
+        "errors": Object {
+          "name": Object {
+            "message": "name must be at least 6 characters",
+            "type": "min",
+          },
+        },
+        "values": Object {},
+      }
+    `);
+  });
+
+  it('should show a warning log if yup context is used instead only on dev environment', async () => {
+    console.warn = jest.fn();
+    process.env.NODE_ENV = 'development';
+    await yupResolver(
+      {} as any,
+      { context: { noContext: true } } as yup.ValidateOptions,
+    )({});
+    expect(console.warn).toHaveBeenCalledWith(
+      "You should not used the yup options context. Please, use the 'useForm' context object instead",
+    );
+    process.env.NODE_ENV = 'test';
+    (console.warn as jest.Mock).mockClear();
+  });
+
+  it('should not show warning log if yup context is used instead only on production environment', async () => {
+    console.warn = jest.fn();
+    process.env.NODE_ENV = 'production';
+    await yupResolver(
+      {} as any,
+      { context: { noContext: true } } as yup.ValidateOptions,
+    )({});
+    expect(console.warn).not.toHaveBeenCalled();
+    process.env.NODE_ENV = 'test';
+    (console.warn as jest.Mock).mockClear();
+  });
+
+  it('should return correct error message with using yup.test', async () => {
+    const output = await yupResolver(
+      yup
+        .object({
+          name: yup.string(),
+          email: yup.string(),
+        })
+        .test('name', 'Email or name are required', function (value) {
+          return value.name || value.email;
+        }),
+    )({ name: '', email: '' });
+
+    expect(output).toEqual({
+      values: {},
+      errors: { name: { message: 'Email or name are required', type: 'name' } },
     });
   });
 });
