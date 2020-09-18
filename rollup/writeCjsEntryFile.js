@@ -20,14 +20,14 @@ if (process.env.NODE_ENV === 'production') {
 }
 `;
 
-  const dir = getOutputdir(tsconfig);
+  const dir = getOutputdir(tsconfig, 'cjs');
 
   const filename =
     formatName === 'cjs'
       ? [name, 'js'].join('.')
       : [name, formatName, 'js'].join('.');
 
-  return fs.outputFile(path.join(dir, 'cjs', filename), contents);
+  return fs.outputFile(path.join(dir, filename), contents);
 }
 
 writeCjsEntryFile('index');
