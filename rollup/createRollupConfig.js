@@ -1,5 +1,5 @@
-import ts from 'typescript';
 import path from 'path';
+import ts from 'typescript';
 import external from 'rollup-plugin-peer-deps-external';
 import json from '@rollup/plugin-json';
 import replace from '@rollup/plugin-replace';
@@ -8,61 +8,72 @@ import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import sourcemaps from 'rollup-plugin-sourcemaps';
 import { terser } from 'rollup-plugin-terser';
-import { safePackageName } from './safePackageName';
-import { pascalcase } from './pascalcase';
-import pkg from '../package.json';
 
 export function createRollupConfig(options, callback) {
-  const name = options.name || safePackageName(pkg.name);
-  const umdName = options.umdName || pascalcase(safePackageName(pkg.name));
-  const shouldMinify = options.minify || options.env === 'production';
-  const tsconfigPath = options.tsconfig || 'tsconfig.json';
-  const tsconfigJSON = ts.readConfigFile(tsconfigPath, ts.sys.readFile).config;
-  const tsCompilerOptions = ts.parseJsonConfigFileContent(
-    tsconfigJSON,
+  const {
+    env,
+    umdName,
+    format,
+    formatName,
+    tsconfig = 'tsconfig.json',
+    input,
+  } = options;
+  const shouldMinify = env === 'production';
+
+  const tsconfigPath = ts.findConfigFile(
+    process.cwd(),
+    ts.sys.fileExists,
+    tsconfig,
+  );
+  const tsconfigJson = ts.readConfigFile(tsconfigPath, ts.sys.readFile);
+  const tscompilerOptions = ts.parseJsonConfigFileContent(
+    tsconfigJson.config,
     ts.sys,
     './',
   ).options;
 
-  const outputName = [
-    path.join(tsCompilerOptions.outDir, name),
-    options.formatName || options.format,
-    options.env,
-    shouldMinify ? 'min' : '',
-    'js',
-  ]
+  const dir = path.join(tscompilerOptions.outDir, formatName || format);
+  const isUMDFormat = format === 'umd';
+
+  const entryFileNames = ['[name]', env, shouldMinify ? 'min' : '', 'js']
     .filter(Boolean)
     .join('.');
 
   const config = {
-    input: options.input,
+    input,
+    preserveModules: !isUMDFormat,
     output: {
-      file: outputName,
-      format: options.format,
+      dir,
+      format,
       name: umdName,
       sourcemap: true,
       globals: {
         'react-hook-form': 'ReactHookForm',
       },
       exports: 'named',
+      entryFileNames,
     },
     plugins: [
       external({
-        includeDependencies: options.format !== 'umd',
+        includeDependencies: !isUMDFormat,
       }),
       json(),
       typescript({
-        tsconfig: options.tsconfig,
+        tsconfig: tsconfigPath,
         clean: true,
       }),
-      resolve(),
-      options.format === 'umd' &&
+      resolve({
+        customResolveOptions: {
+          moduleDirectory: dir,
+        },
+      }),
+      isUMDFormat &&
         commonjs({
           include: /\/node_modules\//,
         }),
-      options.env !== undefined &&
+      env !== undefined &&
         replace({
-          'process.env.NODE_ENV': JSON.stringify(options.env),
+          'process.env.NODE_ENV': JSON.stringify(env),
         }),
       sourcemaps(),
       shouldMinify &&

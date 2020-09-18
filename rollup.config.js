@@ -44,7 +44,7 @@ const options = [
     format: 'esm',
     formatName: 'ie11',
     input: pkg.source,
-    tsconfig: './tsconfig.ie11.json',
+    tsconfig: 'tsconfig.ie11.json',
   },
 ];
 

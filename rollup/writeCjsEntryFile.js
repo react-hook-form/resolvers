@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const ts = require('typescript');
 const fs = require('fs-extra');
 const path = require('path');
 const pkg = require('../package.json');
+const getOutputdir = require('./getOutputDir');
 
 function writeCjsEntryFile(
   name = pkg.name,
@@ -20,19 +20,14 @@ if (process.env.NODE_ENV === 'production') {
 }
 `;
 
-  const tsconfigJSON = ts.readConfigFile(tsconfig, ts.sys.readFile).config;
-  const tsCompilerOptions = ts.parseJsonConfigFileContent(
-    tsconfigJSON,
-    ts.sys,
-    './',
-  ).options;
+  const dir = getOutputdir(tsconfig);
 
   const filename =
     formatName === 'cjs'
       ? [name, 'js'].join('.')
       : [name, formatName, 'js'].join('.');
 
-  return fs.outputFile(path.join(tsCompilerOptions.outDir, filename), contents);
+  return fs.outputFile(path.join(dir, 'cjs', filename), contents);
 }
 
 writeCjsEntryFile('index');
