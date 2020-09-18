@@ -19,5 +19,6 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-object-literal-type-assertion': 'off',
     'no-console': 'error',
+    '@typescript-eslint/ban-ts-comment': 'warn',
   },
 };

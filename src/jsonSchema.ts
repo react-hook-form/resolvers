@@ -1,8 +1,8 @@
 import * as Ajv from 'ajv';
 import { appendErrors, Resolver, transformToNestObject } from 'react-hook-form';
-import type { ErrorObject, Options, ValidateFunction } from 'ajv';
-import type { JSONSchema4, JSONSchema6, JSONSchema7 } from 'json-schema';
-import type {
+import { ErrorObject, Options, ValidateFunction } from 'ajv';
+import { JSONSchema4, JSONSchema6, JSONSchema7 } from 'json-schema';
+import {
   FieldError,
   FieldErrors,
   ResolverError,
@@ -79,7 +79,8 @@ export const jsonSchemaResolver = <TFieldValues extends Record<string, any>>(
     // compile only if necessary. otherwise return the memoized validation function
     if (!validate || allErrors !== validateAllFieldCriteria) {
       allErrors = validateAllFieldCriteria;
-      validate = new Ajv({
+      // @ts-ignore
+      validate = new Ajv.default({
         ...options.ajvOptions,
         async: false,
         allErrors,
@@ -88,6 +89,7 @@ export const jsonSchemaResolver = <TFieldValues extends Record<string, any>>(
       }).compile(validationSchema);
     }
 
+    // @ts-ignore
     return validate;
   };
 
