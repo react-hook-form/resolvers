@@ -65,6 +65,11 @@ export function createRollupConfig(options, callback) {
       typescript({
         tsconfig: tsconfigPath,
         clean: true,
+        tsconfigOverride: {
+          compilerOptions: {
+            declaration: isESMFormat,
+          },
+        },
       }),
       resolve({
         customResolveOptions: {
