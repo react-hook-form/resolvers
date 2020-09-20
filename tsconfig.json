@@ -7,7 +7,7 @@
     "outDir": "./dist",
     "jsx": "react",
     "skipLibCheck": true,
-    "declaration": false,
+    "declaration": true,
     "noEmit": true,
     "allowSyntheticDefaultImports": true,
     "lib": ["dom", "dom.iterable", "esnext"],

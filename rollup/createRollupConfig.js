@@ -32,8 +32,12 @@ export function createRollupConfig(options, callback) {
     './',
   ).options;
 
-  const dir = path.join(tscompilerOptions.outDir, formatName || format);
   const isUMDFormat = format === 'umd';
+  const isESMFormat = format === 'esm' && !formatName; // Exclude IE
+  const dir = path.join(
+    tscompilerOptions.outDir,
+    isESMFormat ? '.' : formatName || format,
+  );
 
   const entryFileNames = ['[name]', env, shouldMinify ? 'min' : '', 'js']
     .filter(Boolean)
