@@ -1,51 +1,43 @@
-import { createRollupConfig } from './rollup/createRollupConfig';
-import pkg from './package.json';
+import typescript from 'rollup-plugin-typescript2';
+import { terser } from 'rollup-plugin-terser';
+import resolve from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
 
-const name = 'index';
-const umdName = 'ReactHookFormResolvers';
-const options = [
-  {
-    name,
-    umdName,
-    format: 'cjs',
-    env: 'development',
-    input: pkg.source,
-  },
-  {
-    name,
-    umdName,
-    format: 'cjs',
-    env: 'production',
-    input: pkg.source,
-  },
-  {
-    name,
-    umdName,
-    format: 'esm',
-    input: pkg.source,
-  },
-  {
-    name,
-    umdName,
-    format: 'umd',
-    env: 'development',
-    input: pkg.source,
-  },
-  {
-    name,
-    umdName,
-    format: 'umd',
-    env: 'production',
-    input: pkg.source,
-  },
-  {
-    name,
-    umdName,
-    format: 'esm',
-    formatName: 'ie11',
-    input: pkg.source,
-    tsconfig: './tsconfig.ie11.json',
-  },
-];
+const dir = './dist/umd';
 
-export default options.map((option) => createRollupConfig(option));
+export default {
+  input: './src/index.ts',
+  output: {
+    dir,
+    name: 'ReactHookFormResolvers',
+    format: 'umd',
+    sourcemap: true,
+    globals: {
+      'react-hook-form': 'ReactHookForm',
+    },
+    exports: 'named',
+  },
+  external: ['react-hook-form'],
+  plugins: [
+    typescript({
+      clean: true,
+      tsconfigOverride: {
+        compilerOptions: { declaration: false, module: 'ESNext' },
+      },
+    }),
+    resolve({
+      customResolveOptions: {
+        moduleDirectory: dir,
+      },
+    }),
+    commonjs({
+      include: /\/node_modules\//,
+    }),
+    terser({
+      output: { comments: false },
+      compress: {
+        drop_console: true,
+      },
+    }),
+  ],
+};
