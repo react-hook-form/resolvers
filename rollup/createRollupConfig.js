@@ -2,49 +2,44 @@ import path from 'path';
 import ts from 'typescript';
 import external from 'rollup-plugin-peer-deps-external';
 import json from '@rollup/plugin-json';
-import replace from '@rollup/plugin-replace';
 import typescript from 'rollup-plugin-typescript2';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import sourcemaps from 'rollup-plugin-sourcemaps';
 import { terser } from 'rollup-plugin-terser';
+import multiEntry from '@rollup/plugin-multi-entry';
 
 export function createRollupConfig(options, callback) {
-  const {
-    env,
-    umdName,
-    format,
-    formatName,
-    tsconfig = 'tsconfig.json',
-    input,
-  } = options;
-  const shouldMinify = env === 'production';
+  const { umdName, format, formatName, tsconfig = 'tsconfig.json' } = options;
 
   const tsconfigPath = ts.findConfigFile(
     process.cwd(),
     ts.sys.fileExists,
     tsconfig,
   );
-  const tsconfigJson = ts.readConfigFile(tsconfigPath, ts.sys.readFile);
-  const tscompilerOptions = ts.parseJsonConfigFileContent(
-    tsconfigJson.config,
+  const tsconfigJsonFile = ts.readConfigFile(tsconfigPath, ts.sys.readFile);
+  const tsconfigJson = ts.parseJsonConfigFileContent(
+    tsconfigJsonFile.config,
     ts.sys,
     './',
-  ).options;
+  );
 
   const isUMDFormat = format === 'umd';
   const isESMFormat = format === 'esm' && !formatName; // Exclude IE
+  const include = tsconfigJson.raw.include[0];
   const dir = path.join(
-    tscompilerOptions.outDir,
+    tsconfigJson.options.outDir,
     isESMFormat ? '.' : formatName || format,
   );
 
-  const entryFileNames = ['[name]', env, shouldMinify ? 'min' : '', 'js']
-    .filter(Boolean)
-    .join('.');
-
   const config = {
-    input,
+    input: isUMDFormat
+      ? `${include}/index.ts`
+      : {
+          include: [`${include}/**/*.ts`],
+          exclude: tsconfigJson.raw.exclude,
+          entryFileName: '[name].js',
+        },
     preserveModules: !isUMDFormat,
     output: {
       dir,
@@ -55,9 +50,9 @@ export function createRollupConfig(options, callback) {
         'react-hook-form': 'ReactHookForm',
       },
       exports: 'named',
-      entryFileNames,
     },
     plugins: [
+      !isUMDFormat && multiEntry(),
       external({
         includeDependencies: !isUMDFormat,
       }),
@@ -80,18 +75,13 @@ export function createRollupConfig(options, callback) {
         commonjs({
           include: /\/node_modules\//,
         }),
-      env !== undefined &&
-        replace({
-          'process.env.NODE_ENV': JSON.stringify(env),
-        }),
       sourcemaps(),
-      shouldMinify &&
-        terser({
-          output: { comments: false },
-          compress: {
-            drop_console: true,
-          },
-        }),
+      terser({
+        output: { comments: false },
+        compress: {
+          drop_console: true,
+        },
+      }),
     ].filter(Boolean),
   };
 
