@@ -7,7 +7,13 @@
   "jsdelivr": "umd/index.js",
   "sideEffects": false,
   "files": [
-    "*"
+    "dist",
+    "yup.js",
+    "yup.d.ts",
+    "joi.js",
+    "joi.d.ts",
+    "superstruct.js",
+    "superstruct.d.ts"
   ],
   "publishConfig": {
     "access": "public"
@@ -15,7 +21,10 @@
   "scripts": {
     "clean": "rimraf dist",
     "prebuild": "npm run clean",
-    "build": "cpy package.json README.md dist/ && rollup -c",
+    "build": "run-p bundle bundle:ie11 bundle:umd",
+    "bundle": "tsc",
+    "bundle:ie11": "tsc --outDir dist/ie11 --downlevelIteration --target es5",
+    "bundle:umd": "rollup -c",
     "lint": "eslint '**/*.{js,ts}'",
     "lint:fix": "npm run lint -- --fix",
     "lint:types": "tsc --noEmit",
@@ -60,6 +69,7 @@
     "husky": "^4.2.5",
     "jest": "^26.0.1",
     "lint-staged": "^10.2.10",
+    "npm-run-all": "^4.1.5",
     "prettier": "^2.0.5",
     "react": "^16.13.1",
     "react-hook-form": "^6.7.0",
