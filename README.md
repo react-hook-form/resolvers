@@ -44,7 +44,7 @@ Dead simple Object schema validation.
 ```typescript jsx
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers';
+import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
 const schema = yup.object().shape({
@@ -105,7 +105,7 @@ A simple and composable way to validate data in JavaScript (or TypeScript).
 ```typescript jsx
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { superstructResolver } from '@hookform/resolvers';
+import { superstructResolver } from '@hookform/resolvers/superstruct';
 import { struct } from 'superstruct';
 
 const schema = struct({
@@ -138,7 +138,7 @@ The most powerful data validation library for JS.
 ```typescript jsx
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers';
+import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from '@hapi/joi';
 
 const schema = Joi.object({
