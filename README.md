@@ -79,13 +79,16 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
+
 const schema = z.object({
   username: z.string(),
 });
+
 const App = () => {
   const { register, handleSubmit } = useForm({
     resolver: zodResolver(schema),
   });
+  
   return (
     <form onSubmit={handleSubmit((d) => console.log(d))}>
       <input name="name" ref={register} />
