@@ -133,56 +133,6 @@ const App = () => {
 };
 ```
 
-### [Json Schema](http://json-schema.org/)
-
-The most standard way to validate JSON (implemented by [ajv](https://github.com/ajv-validator/ajv))
-
-[![npm](https://img.shields.io/bundlephobia/minzip/ajv@6.12.4?style=for-the-badge)](https://bundlephobia.com/result?p=ajv@6.12.4)
-
-```typescript jsx
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import { JSONSchema4, JSONSchema6, JSONSchema7 } from 'json-schema';
-import { jsonSchemaResolver } from '@hookform/resolvers';
-
-type JSONSchema = JSONSchema4 | JSONSchema6 | JSONSchema7;
-
-const schema: JSONSchema = {
-  type: 'object',
-  properties: {
-    name: {
-      type: 'string',
-      pattern: '[a-zA-Z]',
-      minLength: 3,
-    },
-    age: {
-      type: 'integer',
-      minimum: 0,
-    },
-    email: {
-      type: 'string',
-      format: 'email',
-    },
-  },
-};
-
-const App = () => {
-  const { register, handleSubmit } = useForm({
-    resolver: jsonSchemaResolver(schema),
-  });
-
-  return (
-    <form onSubmit={handleSubmit((d) => console.log(d))}>
-      <input name="name" ref={register} />
-      <input name="age" type="number" ref={register} />
-      <input name="email" type="email" ref={register} />
-
-      <input type="submit" />
-    </form>
-  );
-};
-```
-
 ### [Zod](https://github.com/vriad/zod)
 
 TypeScript-first schema validation with static type inference
@@ -192,7 +142,7 @@ TypeScript-first schema validation with static type inference
 ```typescript jsx
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers';
+import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 const schema = z.object({
   username: z.string(),
@@ -216,7 +166,7 @@ const App = () => {
 Thanks goes to all our backers! [[Become a backer](https://opencollective.com/react-hook-form#backer)].
 
 <a href="https://opencollective.com/react-hook-form#backers">
-    <img src="https://opencollective.com/react-hook-form/backers.svg?width=950" alt="Backers" />
+    <img src="https://opencollective.com/react-hook-form/backers.svg?width=950" />
 </a>
 
 ## Organizations
@@ -224,7 +174,7 @@ Thanks goes to all our backers! [[Become a backer](https://opencollective.com/re
 Thanks goes to these wonderful organizations! [[Contribute](https://opencollective.com/react-hook-form/contribute)].
 
 <a href="https://github.com/react-hook-form/react-hook-form/graphs/contributors">
-    <img src="https://opencollective.com/react-hook-form/organizations.svg?width=950" alt="Contributor Organizations" />
+    <img src="https://opencollective.com/react-hook-form/organizations.svg?width=950" />
 </a>
 
 ## Contributors
@@ -232,5 +182,5 @@ Thanks goes to these wonderful organizations! [[Contribute](https://opencollecti
 Thanks goes to these wonderful people! [[Become a contributor](CONTRIBUTING.md)].
 
 <a href="https://github.com/react-hook-form/react-hook-form/graphs/contributors">
-    <img src="https://opencollective.com/react-hook-form/contributors.svg?width=950" alt="Contributors" />
+    <img src="https://opencollective.com/react-hook-form/contributors.svg?width=950" />
 </a>

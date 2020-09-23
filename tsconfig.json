@@ -1,14 +1,14 @@
 {
   "compilerOptions": {
     "sourceMap": true,
-    "module": "es2015",
+    "module": "commonjs",
     "target": "es2017",
     "moduleResolution": "node",
     "outDir": "./dist",
     "jsx": "react",
     "skipLibCheck": true,
     "declaration": true,
-    "noEmit": true,
+    "noEmit": false,
     "allowSyntheticDefaultImports": true,
     "lib": ["dom", "dom.iterable", "esnext"],
     "strict": true,
@@ -16,8 +16,9 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "isolatedModules": true
   },
   "include": ["src"],
-  "exclude": ["src/**/*.test.js", "src/**/*.test.ts"]
+  "exclude": ["src/**/*.test.js", "src/**/*.test.ts", "src/index.ts"]
 }
