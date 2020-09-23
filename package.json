@@ -13,7 +13,9 @@
     "joi.js",
     "joi.d.ts",
     "superstruct.js",
-    "superstruct.d.ts"
+    "superstruct.d.ts",
+    "zod.js",
+    "zod.d.ts"
   ],
   "publishConfig": {
     "access": "public"
