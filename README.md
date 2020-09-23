@@ -68,6 +68,34 @@ const App = () => {
 };
 ```
 
+### [Zod](https://github.com/vriad/zod)
+
+TypeScript-first schema validation with static type inference
+
+[![npm](https://img.shields.io/bundlephobia/minzip/zod?style=for-the-badge)](https://bundlephobia.com/result?p=zod)
+
+```typescript jsx
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+const schema = z.object({
+  username: z.string(),
+});
+const App = () => {
+  const { register, handleSubmit } = useForm({
+    resolver: zodResolver(schema),
+  });
+  return (
+    <form onSubmit={handleSubmit((d) => console.log(d))}>
+      <input name="name" ref={register} />
+      <input name="age" type="number" ref={register} />
+      <input type="submit" />
+    </form>
+  );
+};
+```
+
 ### [Superstruct](https://github.com/ianstormtaylor/superstruct)
 
 A simple and composable way to validate data in JavaScript (or TypeScript).
@@ -127,34 +155,6 @@ const App = () => {
       <input name="name" ref={register} />
       <input name="age" type="number" ref={register} />
 
-      <input type="submit" />
-    </form>
-  );
-};
-```
-
-### [Zod](https://github.com/vriad/zod)
-
-TypeScript-first schema validation with static type inference
-
-[![npm](https://img.shields.io/bundlephobia/minzip/zod?style=for-the-badge)](https://bundlephobia.com/result?p=zod)
-
-```typescript jsx
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
-const schema = z.object({
-  username: z.string(),
-});
-const App = () => {
-  const { register, handleSubmit } = useForm({
-    resolver: zodResolver(schema),
-  });
-  return (
-    <form onSubmit={handleSubmit((d) => console.log(d))}>
-      <input name="name" ref={register} />
-      <input name="age" type="number" ref={register} />
       <input type="submit" />
     </form>
   );
