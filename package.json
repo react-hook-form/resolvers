@@ -1,7 +1,7 @@
 {
   "name": "@hookform/resolvers",
   "version": "1.0.0-rc.1",
-  "description": "React Hook Form validation resolvers: Yup, Joi, Superstruct and etc.",
+  "description": "React Hook Form validation resolvers: Yup, Joi, Superstruct, Zod and etc.",
   "umd:main": "umd/index.js",
   "unpkg": "umd/index.js",
   "jsdelivr": "umd/index.js",
@@ -13,7 +13,9 @@
     "joi.js",
     "joi.d.ts",
     "superstruct.js",
-    "superstruct.d.ts"
+    "superstruct.d.ts",
+    "zod.js",
+    "zod.d.ts"
   ],
   "publishConfig": {
     "access": "public"
@@ -42,7 +44,8 @@
     "yup",
     "joi",
     "sperstruct",
-    "typescript"
+    "typescript",
+    "zod"
   ],
   "repository": {
     "type": "git",
@@ -80,7 +83,8 @@
     "superstruct": "^0.8.3",
     "ts-jest": "^26.1.0",
     "typescript": "^3.7.5",
-    "yup": "^0.29.1"
+    "yup": "^0.29.1",
+    "zod": "^1.11.5"
   },
   "peerDependencies": {
     "react-hook-form": ">=6.6.0"

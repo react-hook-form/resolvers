@@ -44,7 +44,7 @@ Dead simple Object schema validation.
 ```typescript jsx
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers';
+import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
 const schema = yup.object().shape({
@@ -68,6 +68,34 @@ const App = () => {
 };
 ```
 
+### [Zod](https://github.com/vriad/zod)
+
+TypeScript-first schema validation with static type inference
+
+[![npm](https://img.shields.io/bundlephobia/minzip/zod?style=for-the-badge)](https://bundlephobia.com/result?p=zod)
+
+```typescript jsx
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+const schema = z.object({
+  username: z.string(),
+});
+const App = () => {
+  const { register, handleSubmit } = useForm({
+    resolver: zodResolver(schema),
+  });
+  return (
+    <form onSubmit={handleSubmit((d) => console.log(d))}>
+      <input name="name" ref={register} />
+      <input name="age" type="number" ref={register} />
+      <input type="submit" />
+    </form>
+  );
+};
+```
+
 ### [Superstruct](https://github.com/ianstormtaylor/superstruct)
 
 A simple and composable way to validate data in JavaScript (or TypeScript).
@@ -77,7 +105,7 @@ A simple and composable way to validate data in JavaScript (or TypeScript).
 ```typescript jsx
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { superstructResolver } from '@hookform/resolvers';
+import { superstructResolver } from '@hookform/resolvers/superstruct';
 import { struct } from 'superstruct';
 
 const schema = struct({
@@ -110,7 +138,7 @@ The most powerful data validation library for JS.
 ```typescript jsx
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers';
+import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from '@hapi/joi';
 
 const schema = Joi.object({

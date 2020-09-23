@@ -1,0 +1,177 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`zodResolver should get errors with zod error map 1`] = `
+Object {
+  "errors": Object {
+    "author": Object {
+      "id": Object {
+        "message": "Expected number, received string",
+        "type": "invalid_type",
+      },
+    },
+    "count": Object {
+      "message": "Value should be greater than 0",
+      "type": "too_small",
+    },
+    "date": Object {
+      "message": "Expected date, received string",
+      "type": "invalid_type",
+    },
+    "id": Object {
+      "message": "Expected number, received string",
+      "type": "invalid_type",
+    },
+    "password": Object {
+      "message": "Should be at least 8 characters",
+      "type": "too_small",
+    },
+    "tags": Array [
+      Object {
+        "message": "This ain't a string!",
+        "type": "invalid_type",
+      },
+      Object {
+        "message": "This ain't a string!",
+        "type": "invalid_type",
+      },
+    ],
+    "title": Object {
+      "message": "This ain't a string!",
+      "type": "invalid_type",
+    },
+    "url": Object {
+      "message": "This ain't a string!",
+      "type": "invalid_type",
+    },
+  },
+  "values": Object {},
+}
+`;
+
+exports[`zodResolver should get errors without validate all criteria fields 1`] = `
+Object {
+  "errors": Object {
+    "": Object {
+      "message": "Unrecognized key(s) in object: 'unknownProperty'",
+      "type": "unrecognized_keys",
+    },
+    "author": Object {
+      "id": Object {
+        "message": "Expected number, received string",
+        "type": "invalid_type",
+      },
+    },
+    "confirm": Object {
+      "message": "Passwords don't match",
+      "type": "custom_error",
+    },
+    "date": Object {
+      "message": "Expected date, received string",
+      "type": "invalid_type",
+    },
+    "id": Object {
+      "message": "Expected number, received string",
+      "type": "invalid_type",
+    },
+    "password": Object {
+      "message": "Should be at least 8 characters",
+      "type": "too_small",
+    },
+    "tags": Array [
+      Object {
+        "message": "Expected string, received number",
+        "type": "invalid_type",
+      },
+      Object {
+        "message": "Expected string, received boolean",
+        "type": "invalid_type",
+      },
+    ],
+    "title": Object {
+      "message": "Required",
+      "type": "invalid_type",
+    },
+    "url": Object {
+      "message": "Required",
+      "type": "invalid_type",
+    },
+  },
+  "values": Object {},
+}
+`;
+
+exports[`zodResolver should get errors without validate all criteria fields 2`] = `
+Object {
+  "errors": Object {
+    "author": Object {
+      "id": Object {
+        "message": "Expected number, received string",
+        "type": "invalid_type",
+        "types": Object {
+          "invalid_type": "Expected number, received string",
+        },
+      },
+    },
+    "count": Object {
+      "message": "Value should be greater than 0",
+      "type": "too_small",
+      "types": Object {
+        "too_small": "Value should be greater than 0",
+      },
+    },
+    "date": Object {
+      "message": "Expected date, received string",
+      "type": "invalid_type",
+      "types": Object {
+        "invalid_type": "Expected date, received string",
+      },
+    },
+    "id": Object {
+      "message": "Expected number, received string",
+      "type": "invalid_type",
+      "types": Object {
+        "invalid_type": "Expected number, received string",
+      },
+    },
+    "password": Object {
+      "message": "Should be at least 8 characters",
+      "type": "too_small",
+      "types": Object {
+        "invalid_string": "Invalid",
+        "too_small": "Should be at least 8 characters",
+      },
+    },
+    "tags": Array [
+      Object {
+        "message": "Expected string, received number",
+        "type": "invalid_type",
+        "types": Object {
+          "invalid_type": "Expected string, received number",
+        },
+      },
+      Object {
+        "message": "Expected string, received boolean",
+        "type": "invalid_type",
+        "types": Object {
+          "invalid_type": "Expected string, received boolean",
+        },
+      },
+    ],
+    "title": Object {
+      "message": "Required",
+      "type": "invalid_type",
+      "types": Object {
+        "invalid_type": "Required",
+      },
+    },
+    "url": Object {
+      "message": "Required",
+      "type": "invalid_type",
+      "types": Object {
+        "invalid_type": "Required",
+      },
+    },
+  },
+  "values": Object {},
+}
+`;
