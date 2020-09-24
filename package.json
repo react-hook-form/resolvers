@@ -1,6 +1,6 @@
 {
   "name": "@hookform/resolvers",
-  "version": "1.0.0-rc.1",
+  "version": "1.0.0-rc.2",
   "description": "React Hook Form validation resolvers: Yup, Joi, Superstruct, Zod and etc.",
   "umd:main": "umd/index.js",
   "unpkg": "umd/index.js",
