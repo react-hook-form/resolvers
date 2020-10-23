@@ -23,10 +23,7 @@
   "scripts": {
     "clean": "rimraf dist",
     "prebuild": "npm run clean",
-    "build": "run-p bundle bundle:ie11 bundle:umd",
-    "bundle": "tsc",
-    "bundle:ie11": "tsc --outDir dist/ie11 --downlevelIteration --target es5",
-    "bundle:umd": "rollup -c",
+    "build": "tsc && rollup -c",
     "lint": "eslint '**/*.{js,ts}'",
     "lint:fix": "npm run lint -- --fix",
     "lint:types": "tsc --noEmit",
