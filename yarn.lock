@@ -3184,6 +3184,14 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
+matched@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/matched/-/matched-5.0.0.tgz#4b10735a89f87b6f9bf457136472631e19df05d7"
+  integrity sha512-O0LCuxYYBNBjP2dmAg0i6PME0Mb0dvjulpMC0tTIeMRh6kXYsugOT5GOWpFkSzqjQjgOUs/eiyvpVhXdN2La4g==
+  dependencies:
+    glob "^7.1.6"
+    picomatch "^2.2.1"
+
 memorystream@^0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/memorystream/-/memorystream-0.3.1.tgz#86d7090b30ce455d63fbae12dda51a47ddcaf9b2"
@@ -3604,7 +3612,7 @@ performance-now@^2.1.0:
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
   integrity sha1-Ywn04OX6kT7BxpMHrjZLSzd8nns=
 
-picomatch@^2.0.4, picomatch@^2.0.5, picomatch@^2.2.2:
+picomatch@^2.0.4, picomatch@^2.0.5, picomatch@^2.2.1, picomatch@^2.2.2:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/picomatch/-/picomatch-2.2.2.tgz#21f333e9b6b8eaff02468f5146ea406d345f4dad"
   integrity sha512-q0M/9eZHzmr0AulXyPwNfZjtwZ/RBZlbN3K3CErVrk50T2ASYI7Bye0EvekFY3IP1Nt2DHu0re+V2ZHIpMkuWg==
