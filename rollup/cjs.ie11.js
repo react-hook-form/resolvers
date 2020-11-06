@@ -21,7 +21,7 @@ const config = {
       clean: true,
       tsconfigOverride: {
         compilerOptions: {
-          declaration: false,
+          declaration: true,
           module: 'ESNext',
           downlevelIteration: true,
           target: 'es5',
