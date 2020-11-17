@@ -4,7 +4,7 @@ import {
   Resolver,
   FieldValues,
 } from 'react-hook-form';
-import Joi from '@hapi/joi';
+import * as Joi from 'joi';
 import convertArrayToPathName from './utils/convertArrayToPathName';
 
 const parseErrorSchema = (
