@@ -88,7 +88,7 @@ const App = () => {
   const { register, handleSubmit } = useForm({
     resolver: zodResolver(schema),
   });
-  
+
   return (
     <form onSubmit={handleSubmit((d) => console.log(d))}>
       <input name="name" ref={register} />
@@ -132,17 +132,17 @@ const App = () => {
 };
 ```
 
-### [Joi](https://github.com/hapijs/joi)
+### [Joi](https://github.com/sideway/joi)
 
 The most powerful data validation library for JS.
 
-[![npm](https://img.shields.io/bundlephobia/minzip/@hapi/joi?style=for-the-badge)](https://bundlephobia.com/result?p=@hapi/joi)
+[![npm](https://img.shields.io/bundlephobia/minzip/joi?style=for-the-badge)](https://bundlephobia.com/result?p=joi)
 
 ```typescript jsx
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
-import Joi from '@hapi/joi';
+import Joi from 'joi';
 
 const schema = Joi.object({
   username: Joi.string().required(),

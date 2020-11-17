@@ -1,4 +1,4 @@
-import * as Joi from '@hapi/joi';
+import * as Joi from 'joi';
 import { joiResolver } from './joi';
 
 const schema = Joi.object({
