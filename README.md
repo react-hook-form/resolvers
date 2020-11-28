@@ -200,7 +200,7 @@ const validationSuite = vest.create((data = {}) => {
 
 const App = () => {
   const { register, handleSubmit, errors } = useForm({
-    resolver: vestResolver,
+    resolver: vestResolver(validationSuite),
   });
 
   return (
