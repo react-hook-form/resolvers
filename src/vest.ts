@@ -2,6 +2,8 @@ import { FieldValues, Resolver, transformToNestObject } from 'react-hook-form';
 
 type VestErrors = Record<string, string[]>;
 
+type ICreateResult = ReturnType<typeof vest.create>;
+
 const parseErrorSchema = (
   vestError: VestErrors,
   validateAllFieldCriteria: boolean,
