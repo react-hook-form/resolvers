@@ -164,7 +164,7 @@ const App = () => {
 
 The most powerful data validation library for JS.
 
-[![npm](https://img.shields.io/bundlephobia/minzip/vest?style=for-the-badge)](https://bundlephobia.com/result?p=joi)
+[![npm](https://img.shields.io/bundlephobia/minzip/vest?style=for-the-badge)](https://bundlephobia.com/result?p=vest)
 
 ```typescript jsx
 import * as React from 'react';
