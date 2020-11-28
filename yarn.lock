@@ -4750,6 +4750,11 @@ verror@1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 
+vest@^2.2.3:
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/vest/-/vest-2.2.3.tgz#ff8a9bfc10d17b93b1b4e834da01fc6530634ac4"
+  integrity sha512-t1JMJFTmxHXbh+Y6gFc9iEKOfFehgura1Q7ASQearngKw/aCjgRfVHwP2bltzHCMhzsB+qMT5djh4EUMQy+JeQ==
+
 w3c-hr-time@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/w3c-hr-time/-/w3c-hr-time-1.0.2.tgz#0a89cdf5cc15822df9c360543676963e0cc308cd"
