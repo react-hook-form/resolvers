@@ -28,7 +28,7 @@ const parseErrorSchema = (
 };
 
 export const vestResolver = <TFieldValues extends FieldValues>(
-  schema: any,
+  schema: ICreateResult,
   _: any = {},
   validateAllFieldCriteria = false,
 ): Resolver<TFieldValues> => async (values) => {
