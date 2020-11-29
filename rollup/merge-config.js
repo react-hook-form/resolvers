@@ -15,11 +15,7 @@ export default function mergeRollupConfig(config) {
       ...config.output,
     },
     plugins: [
-      resolve({
-        customResolveOptions: {
-          moduleDirectory: config.output.dir,
-        },
-      }),
+      resolve(),
       terser({
         output: { comments: false },
         compress: {
