@@ -1,4 +1,5 @@
 import { FieldValues, Resolver, transformToNestObject } from 'react-hook-form';
+import * as vest from 'vest';
 
 type VestErrors = Record<string, string[]>;
 
