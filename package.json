@@ -15,7 +15,9 @@
     "superstruct.js",
     "superstruct.d.ts",
     "zod.js",
-    "zod.d.ts"
+    "zod.d.ts",
+    "vest.js",
+    "vest.d.ts"
   ],
   "publishConfig": {
     "access": "public"
