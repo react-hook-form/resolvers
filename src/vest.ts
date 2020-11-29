@@ -38,7 +38,7 @@ export const vestResolver = <TFieldValues extends FieldValues>(
   const result = schema(values);
   const errors = result.getErrors();
 
-  if (!Object.keys(errors).length) {
+  if (!result.hasErrors()) {
     return { values: values as any, errors: {} };
   }
 
