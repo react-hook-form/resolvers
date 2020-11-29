@@ -162,7 +162,7 @@ const App = () => {
 
 ### [Vest](https://github.com/ealush/vest)
 
-The most powerful data validation library for JS.
+Vest 🦺 Declarative Validation Testing.
 
 [![npm](https://img.shields.io/bundlephobia/minzip/vest?style=for-the-badge)](https://bundlephobia.com/result?p=vest)
 
