@@ -1,5 +1,4 @@
 import { terser } from 'rollup-plugin-terser';
-import resolve from '@rollup/plugin-node-resolve';
 
 /**
  * Merge rollup config with base config
@@ -8,14 +7,13 @@ import resolve from '@rollup/plugin-node-resolve';
 export default function mergeRollupConfig(config) {
   return {
     ...config,
-    external: ['react-hook-form'],
+    external: ['react-hook-form'].concat(config.external || []),
     output: {
       sourcemap: true,
       exports: 'named',
       ...config.output,
     },
     plugins: [
-      resolve(),
       terser({
         output: { comments: false },
         compress: {
