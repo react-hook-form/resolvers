@@ -1,4 +1,5 @@
 import typescript from 'rollup-plugin-typescript2';
+import resolve from '@rollup/plugin-node-resolve';
 import mergeConfig from './merge-config';
 
 const dir = './dist/umd';
@@ -14,6 +15,7 @@ const config = {
     },
   },
   plugins: [
+    resolve(),
     typescript({
       clean: true,
       tsconfigOverride: {
