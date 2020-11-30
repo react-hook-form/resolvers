@@ -215,7 +215,7 @@ describe('validateWithSchema', () => {
   it('should return empty object when validate pass', async () => {
     expect(
       await yupResolver({
-        validate: () => new Promise((resolve) => resolve()),
+        validate: () => new Promise((resolve) => resolve(undefined)),
       } as any)({}),
     ).toEqual({
       errors: {},
@@ -281,7 +281,7 @@ describe('validateWithSchema', () => {
           email: yup.string(),
         })
         .test('name', 'Email or name are required', function (value) {
-          return value.name || value.email;
+          return value && (value.name || value.email);
         }),
     )({ name: '', email: '' });
 

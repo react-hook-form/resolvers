@@ -5,26 +5,26 @@ Object {
   "errors": Object {
     "author": Object {
       "id": Object {
-        "message": "",
+        "message": "Expected a number, but received: \\"test\\"",
         "type": "number",
       },
     },
     "id": Object {
-      "message": "",
+      "message": "Expected a number, but received: \\"2\\"",
       "type": "number",
     },
     "tags": Array [
       Object {
-        "message": "",
+        "message": "Expected a string, but received: 2",
         "type": "string",
       },
       Object {
-        "message": "",
+        "message": "Expected a string, but received: 3",
         "type": "string",
       },
     ],
     "title": Object {
-      "message": "",
+      "message": "Expected a string, but received: 2",
       "type": "string",
     },
   },
