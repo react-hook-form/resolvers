@@ -9,15 +9,8 @@ type Promisify = <T extends ICreateResult, K>(
   fn: T,
 ) => (args: K) => Promise<Vest.IVestResult>;
 
-const promisify: Promisify = (validatorFn) => (...args) => {
-  if (typeof validatorFn !== 'function') {
-    throw new Error('[vest/promisify]: Expected validatorFn to be a function.');
-  }
-
-  return new Promise((resolve) =>
-    validatorFn(...args).done(resolve as Vest.DoneCB),
-  );
-};
+const promisify: Promisify = (validatorFn) => (...args) =>
+  new Promise((resolve) => validatorFn(...args).done(resolve as Vest.DoneCB));
 
 const parseErrorSchema = (
   vestError: VestErrors,
