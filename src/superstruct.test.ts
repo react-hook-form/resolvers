@@ -1,14 +1,14 @@
-import { struct } from 'superstruct';
+import { object, number, string, boolean, array, optional } from 'superstruct';
 import { superstructResolver } from './superstruct';
 
-const Article = struct({
-  id: 'number',
-  title: 'string',
-  isPublished: 'boolean?',
-  tags: ['string'],
-  author: {
-    id: 'number',
-  },
+const Article = object({
+  id: number(),
+  title: string(),
+  isPublished: optional(boolean()),
+  tags: array(string()),
+  author: object({
+    id: number(),
+  }),
 });
 
 describe('superstructResolver', () => {
@@ -21,6 +21,7 @@ describe('superstructResolver', () => {
         id: 1,
       },
     };
+
     expect(await superstructResolver(Article)(data)).toEqual({
       values: data,
       errors: {},
@@ -36,6 +37,9 @@ describe('superstructResolver', () => {
         id: 'test',
       },
     };
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error - For testing purpose `id`'s type is wrong
     expect(await superstructResolver(Article)(data)).toMatchSnapshot();
   });
 });
