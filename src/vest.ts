@@ -1,9 +1,23 @@
 import { FieldValues, Resolver, transformToNestObject } from 'react-hook-form';
-import * as vest from 'vest';
+import * as Vest from 'vest';
 
 type VestErrors = Record<string, string[]>;
 
-type ICreateResult = ReturnType<typeof vest.create>;
+type ICreateResult = ReturnType<typeof Vest.create>;
+
+type Promisify = <T extends ICreateResult, K>(
+  fn: T,
+) => (args: K) => Promise<Vest.IVestResult>;
+
+const promisify: Promisify = (validatorFn) => (...args) => {
+  if (typeof validatorFn !== 'function') {
+    throw new Error('[vest/promisify]: Expected validatorFn to be a function.');
+  }
+
+  return new Promise((resolve) =>
+    validatorFn(...args).done(resolve as Vest.DoneCB),
+  );
+};
 
 const parseErrorSchema = (
   vestError: VestErrors,
@@ -35,7 +49,8 @@ export const vestResolver = <TFieldValues extends FieldValues>(
   _: any = {},
   validateAllFieldCriteria = false,
 ): Resolver<TFieldValues> => async (values) => {
-  const result = schema(values);
+  const validateSchema = promisify(schema);
+  const result = await validateSchema(values);
   const errors = result.getErrors();
 
   if (!result.hasErrors()) {
