@@ -6,21 +6,18 @@ type VestErrors = Record<string, string[]>;
 type ICreateResult = ReturnType<typeof vest.create>;
 
 const parseErrorSchema = (
-  values,
-  result,
+  vestError: VestErrors,
   validateAllFieldCriteria: boolean,
 ) => {
-  return Object.keys(values).reduce((prev, fieldName) => {
-	const fieldErrors = result.getErrors(fieldName);
-	// future: const fieldWarnings = result.getWarnings(fieldName);
+  return Object.entries(vestError).reduce((prev, [key, value]) => {
     return {
       ...prev,
-      [fieldName]: {
+      [key]: {
         type: '',
-        message: fieldErrors[0],
+        message: value[0],
         ...(validateAllFieldCriteria
           ? {
-              types: fieldErrors.reduce((prev, message, index) => {
+              types: value.reduce((prev, message, index) => {
                 return {
                   ...prev,
                   [index]: message,
