@@ -73,28 +73,36 @@ TypeScript-first schema validation with static type inference
 
 [![npm](https://img.shields.io/bundlephobia/minzip/zod?style=for-the-badge)](https://bundlephobia.com/result?p=zod)
 
-```typescript jsx
+> ⚠️ Example below uses the `valueAsNumber`, which requires `react-hook-form` v6.12.0 (released Nov 28, 2020) or later.
+
+```tsx
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 
 const schema = z.object({
-  username: z.string(),
+  name: z.string().nonempty({ message: 'Required' }),
+  age: z.number().min(10),
 });
 
 const App = () => {
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit, errors } = useForm({
     resolver: zodResolver(schema),
   });
 
   return (
     <form onSubmit={handleSubmit((d) => console.log(d))}>
-      <input name="username" ref={register} />
+      <input name="name" ref={register} />
+      {errors.name?.message && <p>{errors.name?.message}</p>}
+      <input name="age" type="number" ref={register({ valueAsNumber: true })} />
+      {errors.age?.message && <p>{errors.age?.message}</p>}
       <input type="submit" />
     </form>
   );
 };
+
+export default App;
 ```
 
 ### [Superstruct](https://github.com/ianstormtaylor/superstruct)
