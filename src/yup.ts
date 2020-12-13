@@ -1,4 +1,4 @@
-import { Resolver, transformToNestObject, FieldValues } from 'react-hook-form';
+import { Resolver, transformToNestObject } from 'react-hook-form';
 import Yup from 'yup';
 
 const parseErrorSchema = (
@@ -8,6 +8,8 @@ const parseErrorSchema = (
   Array.isArray(error.inner) && error.inner.length
     ? error.inner.reduce(
         (previous: Record<string, any>, { path, message, type }) => {
+          // eslint-disable-next-line
+          // @ts-ignore
           const previousTypes = (previous[path] && previous[path].types) || {};
           const key = path || type;
 
@@ -24,8 +26,12 @@ const parseErrorSchema = (
                       ? {
                           types: {
                             ...previousTypes,
+                            // eslint-disable-next-line
+                            // @ts-ignore
                             [type]: previousTypes[type]
-                              ? [...[].concat(previousTypes[type]), message]
+                              ? // eslint-disable-next-line
+          // @ts-ignore
+                                [...[].concat(previousTypes[type]), message]
                               : message,
                           },
                         }
@@ -38,24 +44,27 @@ const parseErrorSchema = (
         {},
       )
     : {
+        // eslint-disable-next-line
+      // @ts-ignore
         [error.path]: { message: error.message, type: error.type },
       };
 
-export const yupResolver = <TFieldValues extends FieldValues>(
-  schema: Yup.ObjectSchema | Yup.Lazy,
-  options: Omit<Yup.ValidateOptions, 'context'> = {
+type ValidateOptions<T extends Yup.ObjectSchema<any>> = Parameters<
+  T['validate']
+>[1];
+
+export const yupResolver = <T extends Yup.ObjectSchema<any>>(
+  schema: T,
+  options: ValidateOptions<T> = {
     abortEarly: false,
   },
-): Resolver<TFieldValues> => async (
+): Resolver<Yup.InferType<T>> => async (
   values,
   context,
   validateAllFieldCriteria = false,
 ) => {
   try {
-    if (
-      (options as Yup.ValidateOptions).context &&
-      process.env.NODE_ENV === 'development'
-    ) {
+    if (options.context && process.env.NODE_ENV === 'development') {
       // eslint-disable-next-line no-console
       console.warn(
         "You should not used the yup options context. Please, use the 'useForm' context object instead",

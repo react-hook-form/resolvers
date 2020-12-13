@@ -105,3 +105,15 @@ Object {
   "values": Object {},
 }
 `;
+
+exports[`yupResolver should pass down the yup context 1`] = `
+Object {
+  "errors": Object {
+    "name": Object {
+      "message": "name must be at least 6 characters",
+      "type": "min",
+    },
+  },
+  "values": Object {},
+}
+`;
