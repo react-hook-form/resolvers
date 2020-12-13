@@ -277,7 +277,7 @@ describe('validateWithSchema', () => {
     process.env.NODE_ENV = 'test';
   });
 
-  it('should return custom error message', async () => {
+  it('should return correct error message with using yup.test', async () => {
     const output = await yupResolver(
       yup
         .object({
