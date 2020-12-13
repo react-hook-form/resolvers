@@ -49,11 +49,11 @@ const parseErrorSchema = (
         [error.path]: { message: error.message, type: error.type },
       };
 
-type ValidateOptions<T extends Yup.ObjectSchema<any>> = Parameters<
+type ValidateOptions<T extends Yup.AnyObjectSchema> = Parameters<
   T['validate']
 >[1];
 
-export const yupResolver = <T extends Yup.ObjectSchema<any>>(
+export const yupResolver = <T extends Yup.AnyObjectSchema>(
   schema: T,
   options: ValidateOptions<T> = {
     abortEarly: false,
