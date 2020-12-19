@@ -124,8 +124,8 @@ describe('yupResolver', () => {
       // @ts-expect-error
       const output = await yupResolver(schema)(data, {}, true);
       expect(output).toMatchSnapshot();
-      expect(output.errors['foo'][0]['loose']).toBeDefined();
-      expect(output.errors['foo'][0]['loose'].types).toMatchInlineSnapshot(`
+      expect(output.errors['foo']?.[0]?.['loose']).toBeDefined();
+      expect(output.errors['foo']?.[0]?.['loose'].types).toMatchInlineSnapshot(`
         Object {
           "typeError": "foo[0].loose must be a \`boolean\` type, but the final value was: \`null\`.
          If \\"null\\" is intended as an empty value be sure to mark the schema as \`.nullable()\`",
@@ -167,7 +167,7 @@ describe('yupResolver', () => {
       const output = await yupResolver(schema)(data);
       expect(output).toMatchSnapshot();
       expect(output.errors['foo[0].loose']).toBeUndefined();
-      expect(output.errors.age.types).toBeUndefined();
+      expect(output.errors.age?.types).toBeUndefined();
       expect(output.errors.createdOn.types).toBeUndefined();
       expect(output.errors.password.types).toBeUndefined();
     });
@@ -182,7 +182,7 @@ describe('yupResolver', () => {
       const output = await yupResolver(schema, {
         abortEarly: true,
         // @ts-expect-error
-      })(data);
+      })(data, undefined, true);
 
       expect(output.errors).toMatchInlineSnapshot(`
         Object {
@@ -213,21 +213,17 @@ describe('yupResolver', () => {
 
 describe('validateWithSchema', () => {
   it('should return undefined when no error reported', async () => {
-    expect(
-      await yupResolver({
-        validate: () => {
-          throw errors;
-        },
-      } as any)({}),
-    ).toMatchSnapshot();
+    const schema = yup.object();
+    jest.spyOn(schema, 'validate').mockRejectedValueOnce(errors);
+
+    expect(await yupResolver(schema)({})).toMatchSnapshot();
   });
 
   it('should return empty object when validate pass', async () => {
-    expect(
-      await yupResolver({
-        validate: () => new Promise((resolve) => resolve(undefined)),
-      } as any)({}),
-    ).toEqual({
+    const schema = yup.object();
+    jest.spyOn(schema, 'validate').mockResolvedValueOnce(undefined);
+
+    expect(await yupResolver(schema)({})).toEqual({
       errors: {},
       values: undefined,
     });
@@ -262,7 +258,8 @@ describe('validateWithSchema', () => {
   it('should show a warning log if yup context is used instead only on dev environment', async () => {
     jest.spyOn(console, 'warn').mockImplementation(jest.fn);
     process.env.NODE_ENV = 'development';
-    await yupResolver({} as any, { context: { noContext: true } })({});
+
+    await yupResolver(yup.object(), { context: { noContext: true } })({});
     expect(console.warn).toHaveBeenCalledWith(
       "You should not used the yup options context. Please, use the 'useForm' context object instead",
     );
@@ -272,7 +269,8 @@ describe('validateWithSchema', () => {
   it('should not show warning log if yup context is used instead only on production environment', async () => {
     jest.spyOn(console, 'warn').mockImplementation(jest.fn);
     process.env.NODE_ENV = 'production';
-    await yupResolver({} as any, { context: { noContext: true } })({});
+
+    await yupResolver(yup.object(), { context: { noContext: true } })({});
     expect(console.warn).not.toHaveBeenCalled();
     process.env.NODE_ENV = 'test';
   });
