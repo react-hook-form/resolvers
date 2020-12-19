@@ -61,7 +61,6 @@ const App = () => {
     <form onSubmit={handleSubmit((d) => console.log(d))}>
       <input name="name" ref={register} />
       <input name="age" type="number" ref={register} />
-
       <input type="submit" />
     </form>
   );
@@ -132,7 +131,6 @@ const App = () => {
     <form onSubmit={handleSubmit((d) => console.log(d))}>
       <input name="name" ref={register} />
       <input name="age" type="number" ref={register} />
-
       <input type="submit" />
     </form>
   );
@@ -164,7 +162,59 @@ const App = () => {
     <form onSubmit={handleSubmit((d) => console.log(d))}>
       <input name="name" ref={register} />
       <input name="age" type="number" ref={register} />
+      <input type="submit" />
+    </form>
+  );
+};
+```
 
+### [Vest](https://github.com/ealush/vest)
+
+Vest 🦺 Declarative Validation Testing.
+
+[![npm](https://img.shields.io/bundlephobia/minzip/vest?style=for-the-badge)](https://bundlephobia.com/result?p=vest)
+
+```typescript jsx
+import * as React from 'react';
+import { useForm } from 'react-hook-form';
+import { vestResolver } from '@hookform/resolvers/vest';
+import vest, { test, enforce } from 'vest';
+
+const validationSuite = vest.create((data = {}) => {
+  test('username', 'Username is required', () => {
+    enforce(data.username).isNotEmpty();
+  });
+
+  test('username', 'Must be longer than 3 chars', () => {
+    enforce(data.username).longerThan(3);
+  });
+
+  test('password', 'Password is required', () => {
+    enforce(data.password).isNotEmpty();
+  });
+
+  test('password', 'Password must be at least 5 chars', () => {
+    enforce(data.password).longerThanOrEquals(5);
+  });
+
+  test('password', 'Password must contain a digit', () => {
+    enforce(data.password).matches(/[0-9]/);
+  });
+
+  test('password', 'Password must contain a symbol', () => {
+    enforce(data.password).matches(/[^A-Za-z0-9]/);
+  });
+});
+
+const App = () => {
+  const { register, handleSubmit, errors } = useForm({
+    resolver: vestResolver(validationSuite),
+  });
+
+  return (
+    <form onSubmit={handleSubmit((data) => console.log(data))}>
+      <input type="text" name="username" ref={register} />
+      <input type="text" name="password" ref={register} />
       <input type="submit" />
     </form>
   );
