@@ -1,5 +1,10 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { Resolver, transformToNestObject } from 'react-hook-form';
+import {
+  Resolver,
+  ResolverError,
+  ResolverSuccess,
+  transformToNestObject,
+} from 'react-hook-form';
 import Yup from 'yup';
 
 /**
@@ -75,17 +80,17 @@ export const yupResolver = <T extends Yup.AnyObjectSchema>(
       );
     }
     return {
-      values: (await schema.validate(values, {
+      values: await schema.validate(values, {
         ...options,
         context,
-      })) as any,
+      }),
       errors: {},
-    };
+    } as ResolverSuccess<Yup.InferType<T>>;
   } catch (e) {
     const parsedErrors = parseErrorSchema(e, validateAllFieldCriteria);
     return {
       values: {},
       errors: transformToNestObject(parsedErrors),
-    };
+    } as ResolverError<Yup.InferType<T>>;
   }
 };
