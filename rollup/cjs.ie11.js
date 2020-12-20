@@ -19,9 +19,7 @@ const config = {
   },
   plugins: [
     resolve({
-      customResolveOptions: {
-        moduleDirectory: dir,
-      },
+      moduleDirectories: [dir],
     }),
     commonjs(),
     typescript({
