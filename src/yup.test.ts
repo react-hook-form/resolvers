@@ -121,27 +121,32 @@ describe('yupResolver', () => {
         foo: [{ loose: null }],
       };
 
-      // @ts-expect-error
-      const output = await yupResolver(schema)(data, {}, true);
+      const output = await yupResolver(schema)(
+        // @ts-expect-error
+        data,
+        {},
+        true,
+      );
       expect(output).toMatchSnapshot();
       expect(output.errors['foo']?.[0]?.['loose']).toBeDefined();
-      expect(output.errors['foo']?.[0]?.['loose'].types).toMatchInlineSnapshot(`
+      expect(output.errors['foo']?.[0]?.['loose']?.types)
+        .toMatchInlineSnapshot(`
         Object {
           "typeError": "foo[0].loose must be a \`boolean\` type, but the final value was: \`null\`.
          If \\"null\\" is intended as an empty value be sure to mark the schema as \`.nullable()\`",
         }
       `);
-      expect(output.errors.age.types).toMatchInlineSnapshot(`
+      expect(output.errors.age?.types).toMatchInlineSnapshot(`
         Object {
           "typeError": "age must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"test\\"\`).",
         }
       `);
-      expect(output.errors.createdOn.types).toMatchInlineSnapshot(`
+      expect(output.errors.createdOn?.types).toMatchInlineSnapshot(`
         Object {
           "typeError": "createdOn must be a \`date\` type, but the final value was: \`Invalid Date\`.",
         }
       `);
-      expect(output.errors.password.types).toMatchInlineSnapshot(`
+      expect(output.errors.password?.types).toMatchInlineSnapshot(`
         Object {
           "matches": Array [
             "Lowercase",
@@ -166,10 +171,9 @@ describe('yupResolver', () => {
       // @ts-expect-error
       const output = await yupResolver(schema)(data);
       expect(output).toMatchSnapshot();
-      expect(output.errors['foo[0].loose']).toBeUndefined();
       expect(output.errors.age?.types).toBeUndefined();
-      expect(output.errors.createdOn.types).toBeUndefined();
-      expect(output.errors.password.types).toBeUndefined();
+      expect(output.errors.createdOn?.types).toBeUndefined();
+      expect(output.errors.password?.types).toBeUndefined();
     });
 
     it('should get error if yup errors has no inner errors', async () => {
@@ -221,12 +225,13 @@ describe('validateWithSchema', () => {
 
   it('should return empty object when validate pass', async () => {
     const schema = yup.object();
-    jest.spyOn(schema, 'validate').mockResolvedValueOnce(undefined);
 
-    expect(await yupResolver(schema)({})).toEqual({
-      errors: {},
-      values: undefined,
-    });
+    expect(await yupResolver(schema)({})).toMatchInlineSnapshot(`
+      Object {
+        "errors": Object {},
+        "values": Object {},
+      }
+    `);
   });
 
   it('should return an error based on the user context', async () => {
