@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* eslint-disable no-console, @typescript-eslint/ban-ts-comment */
 import * as yup from 'yup';
 import { yupResolver } from './yup';
 
@@ -42,7 +42,7 @@ const errors = {
   ],
 };
 
-const schema = yup.object().shape({
+const schema = yup.object({
   name: yup.string().required(),
   age: yup.number().required().positive().integer(),
   email: yup.string().email(),
@@ -72,27 +72,23 @@ describe('yupResolver', () => {
   it('should get values', async () => {
     const data = {
       name: 'jimmy',
-      age: '24',
+      age: 24,
+      email: 'jimmy@mail.com',
       password: '[}tehk6Uor',
-      createdOn: '2014-09-23T19:25:25Z',
-      foo: [{ yup: true }],
+      website: 'https://react-hook-form.com/',
+      createdOn: new Date('2014-09-23T19:25:25Z'),
+      foo: [{ loose: true }],
     };
     expect(await yupResolver(schema)(data)).toEqual({
       errors: {},
-      values: {
-        name: 'jimmy',
-        age: 24,
-        password: '[}tehk6Uor',
-        foo: [{ yup: true }],
-        createdOn: new Date('2014-09-23T19:25:25Z'),
-      },
+      values: data,
     });
   });
 
   it('should pass down the yup context', async () => {
     const data = { name: 'eric' };
     const context = { min: true };
-    const schemaWithContext = yup.object().shape({
+    const schemaWithContext = yup.object({
       name: yup
         .string()
         .required()
@@ -100,14 +96,19 @@ describe('yupResolver', () => {
           return min ? schema.min(6) : schema;
         }),
     });
-    schemaWithContext.validate = jest.fn().mockResolvedValue({});
-    await yupResolver(schemaWithContext)(data, context);
-    expect(schemaWithContext.validate).toHaveBeenCalled();
-    expect(schemaWithContext.validate).toHaveBeenCalledWith(data, {
-      abortEarly: false,
-      context,
-    });
-    (schemaWithContext.validate as jest.Mock).mockClear();
+
+    const schemaSpyValidate = jest.spyOn(schemaWithContext, 'validate');
+
+    const output = await yupResolver(schemaWithContext)(data, context);
+    expect(schemaSpyValidate).toHaveBeenCalledTimes(1);
+    expect(schemaSpyValidate).toHaveBeenCalledWith(
+      data,
+      expect.objectContaining({
+        abortEarly: false,
+        context,
+      }),
+    );
+    expect(output).toMatchSnapshot();
   });
 
   describe('errors', () => {
@@ -119,26 +120,33 @@ describe('yupResolver', () => {
         createdOn: null,
         foo: [{ loose: null }],
       };
-      const resolve = await yupResolver(schema)(data, {}, true);
-      expect(resolve).toMatchSnapshot();
-      expect(resolve.errors['foo'][0]['loose']).toBeDefined();
-      expect(resolve.errors['foo'][0]['loose'].types).toMatchInlineSnapshot(`
+
+      const output = await yupResolver(schema)(
+        // @ts-expect-error
+        data,
+        {},
+        true,
+      );
+      expect(output).toMatchSnapshot();
+      expect(output.errors['foo']?.[0]?.['loose']).toBeDefined();
+      expect(output.errors['foo']?.[0]?.['loose']?.types)
+        .toMatchInlineSnapshot(`
         Object {
           "typeError": "foo[0].loose must be a \`boolean\` type, but the final value was: \`null\`.
          If \\"null\\" is intended as an empty value be sure to mark the schema as \`.nullable()\`",
         }
       `);
-      expect(resolve.errors.age.types).toMatchInlineSnapshot(`
+      expect(output.errors.age?.types).toMatchInlineSnapshot(`
         Object {
           "typeError": "age must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"test\\"\`).",
         }
       `);
-      expect(resolve.errors.createdOn.types).toMatchInlineSnapshot(`
+      expect(output.errors.createdOn?.types).toMatchInlineSnapshot(`
         Object {
           "typeError": "createdOn must be a \`date\` type, but the final value was: \`Invalid Date\`.",
         }
       `);
-      expect(resolve.errors.password.types).toMatchInlineSnapshot(`
+      expect(output.errors.password?.types).toMatchInlineSnapshot(`
         Object {
           "matches": Array [
             "Lowercase",
@@ -159,12 +167,13 @@ describe('yupResolver', () => {
         createdOn: null,
         foo: [{ loose: null }],
       };
-      const resolve = await yupResolver(schema)(data);
-      expect(await yupResolver(schema)(data)).toMatchSnapshot();
-      expect(resolve.errors['foo[0].loose']).toBeUndefined();
-      expect(resolve.errors.age.types).toBeUndefined();
-      expect(resolve.errors.createdOn.types).toBeUndefined();
-      expect(resolve.errors.password.types).toBeUndefined();
+
+      // @ts-expect-error
+      const output = await yupResolver(schema)(data);
+      expect(output).toMatchSnapshot();
+      expect(output.errors.age?.types).toBeUndefined();
+      expect(output.errors.createdOn?.types).toBeUndefined();
+      expect(output.errors.password?.types).toBeUndefined();
     });
 
     it('should get error if yup errors has no inner errors', async () => {
@@ -174,10 +183,12 @@ describe('yupResolver', () => {
         createdOn: null,
         foo: [{ loose: null }],
       };
-      const resolve = await yupResolver(schema, {
+      const output = await yupResolver(schema, {
         abortEarly: true,
-      })(data);
-      expect(resolve.errors).toMatchInlineSnapshot(`
+        // @ts-expect-error
+      })(data, undefined, true);
+
+      expect(output.errors).toMatchInlineSnapshot(`
         Object {
           "createdOn": Object {
             "message": "createdOn must be a \`date\` type, but the final value was: \`Invalid Date\`.",
@@ -192,35 +203,35 @@ describe('yupResolver', () => {
       const schemaWithContext = yup.object().shape({
         name: yup.string().required(),
       });
-      schemaWithContext.validate = jest.fn().mockRejectedValue({
+
+      jest.spyOn(schemaWithContext, 'validate').mockRejectedValueOnce({
         inner: [{ path: '', message: 'error1', type: 'required' }],
-      } as yup.ValidationError);
-      const result = await yupResolver(schemaWithContext)(data);
-      expect(result).toMatchSnapshot();
+      });
+
+      // @ts-expect-error
+      const output = await yupResolver(schemaWithContext)(data);
+      expect(output).toMatchSnapshot();
     });
   });
 });
 
 describe('validateWithSchema', () => {
   it('should return undefined when no error reported', async () => {
-    expect(
-      await yupResolver({
-        validate: () => {
-          throw errors;
-        },
-      } as any)({}),
-    ).toMatchSnapshot();
+    const schema = yup.object();
+    jest.spyOn(schema, 'validate').mockRejectedValueOnce(errors);
+
+    expect(await yupResolver(schema)({})).toMatchSnapshot();
   });
 
   it('should return empty object when validate pass', async () => {
-    expect(
-      await yupResolver({
-        validate: () => new Promise((resolve) => resolve(undefined)),
-      } as any)({}),
-    ).toEqual({
-      errors: {},
-      values: undefined,
-    });
+    const schema = yup.object();
+
+    expect(await yupResolver(schema)({})).toMatchInlineSnapshot(`
+      Object {
+        "errors": Object {},
+        "values": Object {},
+      }
+    `);
   });
 
   it('should return an error based on the user context', async () => {
@@ -233,6 +244,8 @@ describe('validateWithSchema', () => {
           return min ? schema.min(6) : schema;
         }),
     });
+
+    // @ts-expect-error
     expect(await yupResolver(schemaWithContext)(data, { min: true }))
       .toMatchInlineSnapshot(`
       Object {
@@ -248,29 +261,23 @@ describe('validateWithSchema', () => {
   });
 
   it('should show a warning log if yup context is used instead only on dev environment', async () => {
-    console.warn = jest.fn();
+    jest.spyOn(console, 'warn').mockImplementation(jest.fn);
     process.env.NODE_ENV = 'development';
-    await yupResolver(
-      {} as any,
-      { context: { noContext: true } } as yup.ValidateOptions,
-    )({});
+
+    await yupResolver(yup.object(), { context: { noContext: true } })({});
     expect(console.warn).toHaveBeenCalledWith(
       "You should not used the yup options context. Please, use the 'useForm' context object instead",
     );
     process.env.NODE_ENV = 'test';
-    (console.warn as jest.Mock).mockClear();
   });
 
   it('should not show warning log if yup context is used instead only on production environment', async () => {
-    console.warn = jest.fn();
+    jest.spyOn(console, 'warn').mockImplementation(jest.fn);
     process.env.NODE_ENV = 'production';
-    await yupResolver(
-      {} as any,
-      { context: { noContext: true } } as yup.ValidateOptions,
-    )({});
+
+    await yupResolver(yup.object(), { context: { noContext: true } })({});
     expect(console.warn).not.toHaveBeenCalled();
     process.env.NODE_ENV = 'test';
-    (console.warn as jest.Mock).mockClear();
   });
 
   it('should return correct error message with using yup.test', async () => {
@@ -280,9 +287,11 @@ describe('validateWithSchema', () => {
           name: yup.string(),
           email: yup.string(),
         })
-        .test('name', 'Email or name are required', function (value) {
-          return value && (value.name || value.email);
-        }),
+        .test(
+          'name',
+          'Email or name are required',
+          (value) => !!(value && (value.name || value.email)),
+        ),
     )({ name: '', email: '' });
 
     expect(output).toEqual({

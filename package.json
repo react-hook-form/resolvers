@@ -81,9 +81,9 @@
     "rollup-plugin-typescript2": "^0.29.0",
     "superstruct": "^0.13.1",
     "ts-jest": "^26.4.4",
+    "yup": "^0.32.8",
     "typescript": "^4.1.3",
     "vest": "^2.2.3",
-    "yup": "^0.31.0",
     "zod": "^1.11.11"
   },
   "peerDependencies": {
