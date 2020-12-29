@@ -4,6 +4,7 @@
   "description": "React Hook Form validation resolvers: Yup, Joi, Superstruct, Zod and etc.",
   "umd:main": "umd/index.js",
   "unpkg": "umd/index.js",
+  "module": "esm/index.js",
   "jsdelivr": "umd/index.js",
   "sideEffects": false,
   "files": [
