@@ -7,25 +7,29 @@ on:
 
 jobs:
   release:
+    name: Release
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout Repo
+        uses: actions/checkout@master
         with:
+          # This makes Actions fetch all Git history so that Changesets can generate changelogs with the correct commits
           fetch-depth: 0
 
-      - name: Use Node.js 12.x
-        uses: actions/setup-node@v1
+      - name: Setup Node.js 12.x
+        uses: actions/setup-node@master
         with:
-          version: 12.x
+          node-version: 12.x
 
       - name: Install Dependencies
-        run: npm i
+        run: yarn --frozen-lockfile
 
       - name: Create Release Pull Request or Publish to npm
+        id: changesets
         uses: changesets/action@master
         with:
-          publish: npm run release
+          # This expects you to have a script called release which does a build for your packages and calls changeset publish
+          publish: yarn release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
