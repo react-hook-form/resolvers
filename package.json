@@ -32,8 +32,7 @@
     "test": "jest --runInBand",
     "test:watch": "npm run test -- --watchAll --coverage",
     "postversion": "git push && git push origin v$npm_package_version",
-    "prepublishOnly": "npm run lint && npm run lint:types && npm test && npm run build",
-    "release": "yarn build && changeset publish"
+    "prepublishOnly": "npm run lint && npm run lint:types && npm test && npm run build"
   },
   "keywords": [
     "scheme",
@@ -58,8 +57,6 @@
   },
   "homepage": "https://react-hook-form.com",
   "devDependencies": {
-    "@changesets/changelog-github": "^0.2.7",
-    "@changesets/cli": "^2.12.0",
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-node-resolve": "^11.0.1",
     "@types/jest": "^26.0.19",
