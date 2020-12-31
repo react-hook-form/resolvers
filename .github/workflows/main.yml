@@ -4,33 +4,58 @@ on:
     branches:
       - master
   pull_request:
-    branches:
-      - master
     paths-ignore:
-      - ".gitignore"
-      - ".npmignore"
-      - "*.md"
+      - '.gitignore'
+      - '.npmignore'
+      - '*.md'
+
 jobs:
   build:
+    name: Lint, and test on Node ${{ matrix.node }} and ${{ matrix.os }}
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [12.x]
+
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Use Node ${{ matrix.node }}
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
+          node-version: ${{ matrix.node }}
+
+      - name: Install deps and build (with cache)
+        uses: bahmutov/npm-install@v1
+
       - name: Lint
         run: |
-          npm run lint:types
-          npm run lint
+          yarn lint
+          yarn lint:types
+
       - name: Test
-        run: npm test
-        env:
-          CI: true
+        run: yarn test --ci
+
       - name: Build
-        run: npm run build
+        run: yarn build
+
+  publish-module:
+    name: 'Publish Module to NPM on Node ${{ matrix.node }} and ${{ matrix.os }}'
+    needs: build
+    if: github.repository == 'react-hook-form/resolvers' && (github.ref =='refs/heads/master')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: 'Use Node ${{ matrix.node }}'
+        uses: actions/setup-node@v1
+        with:
+          node-version: '${{ matrix.node }}'
+          registry-url: 'https://registry.npmjs.org/'
+      - name: Install dependencies
+        uses: bahmutov/npm-install@v1
+      - name: Build
+        run: yarn build
+      - name: Publish
+        run: npx semantic-release
+        env:
+          NODE_AUTH_TOKEN: '${{secrets.NPM_TOKEN}}'
+          GITHUB_TOKEN: '${{secrets.GITHUB_TOKEN}}'
