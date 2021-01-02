@@ -1,15 +1,10 @@
 module.exports = {
-  roots: ['<rootDir>/src'],
-  transform: {
-    '^.+\\.tsx?$': 'ts-jest',
-  },
-  globals: {
-    'ts-jest': {
-      tsconfig: 'tsconfig.jest.json',
-    },
-  },
+  preset: 'ts-jest',
+  testEnvironment: 'node',
   restoreMocks: true,
-  testMatch: ['**/?(*.)+(spec|test).ts?(x)'],
+  testMatch: ['**/__tests__/**/*.+(js|jsx|ts|tsx)'],
   transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$'],
-  moduleFileExtensions: ['ts', 'tsx', 'js'],
+  moduleNameMapper: {
+    '^@hookform/resolvers$': '<rootDir>/src',
+  },
 };
