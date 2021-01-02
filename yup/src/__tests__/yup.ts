@@ -1,6 +1,6 @@
 /* eslint-disable no-console, @typescript-eslint/ban-ts-comment */
 import * as yup from 'yup';
-import { yupResolver } from './yup';
+import { yupResolver } from '..';
 
 const errors = {
   name: 'ValidationError',

@@ -1,4 +1,4 @@
-export default (paths: (string | number)[]): string =>
+export const convertArrayToPathName = (paths: (string | number)[]): string =>
   paths
     .reduce(
       (previous, path: string | number, index): string =>

@@ -1,5 +1,5 @@
 import * as z from 'zod';
-import { zodResolver } from './zod';
+import { zodResolver } from '..';
 
 const schema = z
   .object({

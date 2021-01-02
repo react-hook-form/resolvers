@@ -1,4 +1,4 @@
-import convertArrayToPathName from './convertArrayToPathName';
+import { convertArrayToPathName } from '..';
 
 describe('convertArrayToPathName', () => {
   it('should convert into path name', () => {

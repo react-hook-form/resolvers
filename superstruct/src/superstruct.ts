@@ -6,7 +6,8 @@ import {
   ResolverError,
 } from 'react-hook-form';
 import { StructError, validate, Struct, Infer } from 'superstruct';
-import convertArrayToPathName from './utils/convertArrayToPathName';
+// @ts-expect-error maybe fixed after the first publish ?
+import { convertArrayToPathName } from '@hookform/resolvers';
 
 const parseErrorSchema = (
   error: StructError,

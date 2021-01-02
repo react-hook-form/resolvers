@@ -1,5 +1,5 @@
 import { object, number, string, boolean, array, optional } from 'superstruct';
-import { superstructResolver } from './superstruct';
+import { superstructResolver } from '..';
 
 const Article = object({
   id: number(),

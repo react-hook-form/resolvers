@@ -1,5 +1,5 @@
 import * as vest from 'vest';
-import { vestResolver } from './vest';
+import { vestResolver } from '..';
 
 const validationSuite = vest.create('form', (data: any = {}) => {
   vest.test('username', 'Username is required', () => {

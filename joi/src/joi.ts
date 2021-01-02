@@ -5,7 +5,8 @@ import {
   FieldValues,
 } from 'react-hook-form';
 import * as Joi from 'joi';
-import convertArrayToPathName from './utils/convertArrayToPathName';
+// @ts-expect-error maybe fixed after the first publish ?
+import { convertArrayToPathName } from '@hookform/resolvers';
 
 const parseErrorSchema = (
   error: Joi.ValidationError,

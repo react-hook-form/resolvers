@@ -1,5 +1,5 @@
 import * as Joi from 'joi';
-import { joiResolver } from './joi';
+import { joiResolver } from '..';
 
 const schema = Joi.object({
   username: Joi.string().alphanum().min(3).max(30).required(),

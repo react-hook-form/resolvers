@@ -7,7 +7,8 @@ import {
 } from 'react-hook-form';
 import * as z from 'zod';
 import { ParseParams } from 'zod/lib/src/parser';
-import convertArrayToPathName from './utils/convertArrayToPathName';
+// @ts-expect-error maybe fixed after the first publish ?
+import { convertArrayToPathName } from '@hookform/resolvers';
 
 const parseErrorSchema = (
   zodError: z.ZodError,
