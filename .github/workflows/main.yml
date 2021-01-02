@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - master
+      - beta
   pull_request:
     paths-ignore:
       - '.gitignore'
@@ -40,7 +41,7 @@ jobs:
   publish-module:
     name: 'Publish Module to NPM on Node ${{ matrix.node }} and ${{ matrix.os }}'
     needs: build
-    if: github.repository == 'react-hook-form/resolvers' && (github.ref =='refs/heads/master')
+    if: github.repository == 'react-hook-form/resolvers'  && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/beta')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
