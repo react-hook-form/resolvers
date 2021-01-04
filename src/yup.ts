@@ -1,10 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import {
-  Resolver,
-  ResolverError,
-  ResolverSuccess,
-  transformToNestObject,
-} from 'react-hook-form';
+import { Resolver, transformToNestObject, FieldValues } from 'react-hook-form';
 import Yup from 'yup';
 
 /**
@@ -62,12 +57,12 @@ type ValidateOptions<T extends Yup.AnyObjectSchema> = Parameters<
   T['validate']
 >[1];
 
-export const yupResolver = <T extends Yup.AnyObjectSchema>(
-  schema: T,
-  options: ValidateOptions<T> = {
+export const yupResolver = <TFieldValues extends FieldValues>(
+  schema: Yup.AnyObjectSchema,
+  options: ValidateOptions<Yup.AnyObjectSchema> = {
     abortEarly: false,
   },
-): Resolver<Yup.InferType<T>> => async (
+): Resolver<TFieldValues> => async (
   values,
   context,
   validateAllFieldCriteria = false,
@@ -85,12 +80,12 @@ export const yupResolver = <T extends Yup.AnyObjectSchema>(
         context,
       }),
       errors: {},
-    } as ResolverSuccess<Yup.InferType<T>>;
+    };
   } catch (e) {
     const parsedErrors = parseErrorSchema(e, validateAllFieldCriteria);
     return {
       values: {},
       errors: transformToNestObject(parsedErrors),
-    } as ResolverError<Yup.InferType<T>>;
+    };
   }
 };
