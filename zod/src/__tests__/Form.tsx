@@ -10,7 +10,7 @@ const schema = Zod.object({
   password: Zod.string().nonempty({ message: 'password field is required' }),
 });
 
-type FormData = Zod.infer<typeof schema>;
+type FormData = Zod.infer<typeof schema> & { unusedProperty: string };
 
 interface Props {
   onSubmit: (data: FormData) => void;
