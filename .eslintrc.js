@@ -19,4 +19,10 @@ module.exports = {
     '@typescript-eslint/no-object-literal-type-assertion': 'off',
     'no-console': 'error',
   },
+  overrides: [
+    {
+      files: ['config/*.js'],
+      rules: { '@typescript-eslint/no-var-requires': 'off' },
+    },
+  ],
 };
