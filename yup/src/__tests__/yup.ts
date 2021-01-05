@@ -121,12 +121,7 @@ describe('yupResolver', () => {
         foo: [{ loose: null }],
       };
 
-      const output = await yupResolver(schema)(
-        // @ts-expect-error
-        data,
-        {},
-        true,
-      );
+      const output = await yupResolver(schema)(data, {}, true);
       expect(output).toMatchSnapshot();
       expect(output.errors['foo']?.[0]?.['loose']).toBeDefined();
       expect(output.errors['foo']?.[0]?.['loose']?.types)
@@ -168,7 +163,6 @@ describe('yupResolver', () => {
         foo: [{ loose: null }],
       };
 
-      // @ts-expect-error
       const output = await yupResolver(schema)(data);
       expect(output).toMatchSnapshot();
       expect(output.errors.age?.types).toBeUndefined();
@@ -185,7 +179,6 @@ describe('yupResolver', () => {
       };
       const output = await yupResolver(schema, {
         abortEarly: true,
-        // @ts-expect-error
       })(data, undefined, true);
 
       expect(output.errors).toMatchInlineSnapshot(`
@@ -208,7 +201,6 @@ describe('yupResolver', () => {
         inner: [{ path: '', message: 'error1', type: 'required' }],
       });
 
-      // @ts-expect-error
       const output = await yupResolver(schemaWithContext)(data);
       expect(output).toMatchSnapshot();
     });
@@ -245,7 +237,6 @@ describe('validateWithSchema', () => {
         }),
     });
 
-    // @ts-expect-error
     expect(await yupResolver(schemaWithContext)(data, { min: true }))
       .toMatchInlineSnapshot(`
       Object {
