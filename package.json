@@ -88,11 +88,6 @@
   "peerDependencies": {
     "react-hook-form": ">=6.6.0"
   },
-  "release": {
-    "branches": [
-      "master"
-    ]
-  },
   "husky": {
     "hooks": {
       "pre-commit": "yarn lint:types && lint-staged"
