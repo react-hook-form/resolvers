@@ -1,45 +1,72 @@
-import { object, number, string, boolean, array, optional } from 'superstruct';
+import {
+  object,
+  number,
+  string,
+  optional,
+  pattern,
+  size,
+  union,
+  min,
+  max,
+  Infer,
+  define,
+  array,
+  boolean,
+} from 'superstruct';
 import { superstructResolver } from '..';
 
-const Article = object({
-  id: number(),
-  title: string(),
-  isPublished: optional(boolean()),
+const Password = define('Password', (value, ctx) =>
+  value === ctx.branch[0].password);
+
+const schema = object({
+  username: size(pattern(string(), /^\w+$/), 3, 30),
+  password: pattern(string(), /^[a-zA-Z0-9]{3,30}/),
+  repeatPassword: Password,
+  accessToken: optional(union([string(), number()])),
+  birthYear: optional(max(min(number(), 1900), 2013)),
+  email: optional(pattern(string(), /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)),
   tags: array(string()),
-  author: object({
-    id: number(),
-  }),
+  enabled: boolean(),
 });
 
 describe('superstructResolver', () => {
-  it('should return correct value', async () => {
-    const data = {
-      id: 2,
-      title: 'test',
-      tags: ['news', 'features'],
-      author: {
-        id: 1,
-      },
+  it('should return values from superstructResolver when validation pass', async () => {
+    const data: Infer<typeof schema> = {
+      username: 'Doe',
+      password: 'Password123',
+      repeatPassword: 'Password123',
+      birthYear: 2000,
+      email: 'john@doe.com',
+      tags: ['tag1', 'tag2'],
+      enabled: true,
     };
 
-    expect(await superstructResolver(Article)(data)).toEqual({
-      values: data,
-      errors: {},
-    });
+    const result = await superstructResolver(schema)(data);
+
+    expect(result).toEqual({ errors: {}, values: data });
   });
 
-  it('should return errors', async () => {
+  it('should return a single error from superstructResolver when validation fails', async () => {
     const data = {
-      id: '2',
-      title: 2,
-      tags: [2, 3],
-      author: {
-        id: 'test',
-      },
+      password: '___',
+      email: '',
+      birthYear: 'birthYear',
     };
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error - For testing purpose `id`'s type is wrong
-    expect(await superstructResolver(Article)(data)).toMatchSnapshot();
+    const result = await superstructResolver(schema)(data);
+
+    expect(result).toMatchSnapshot();
+  });
+
+  it('should return all the errors from superstructResolver when validation fails with `validateAllFieldCriteria` set to true', async () => {
+    const data = {
+      password: '___',
+      email: '',
+      birthYear: 'birthYear',
+    };
+
+    const result = await superstructResolver(schema)(data, undefined, true);
+
+    expect(result).toMatchSnapshot();
   });
 });

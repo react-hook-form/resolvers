@@ -31,7 +31,7 @@ const validationSuite = vest.create('form', (data: any = {}) => {
   });
 });
 
-describe('vest', () => {
+describe('zodResolver', () => {
   it('should return values from vestResolver when validation pass', async () => {
     const data = {
       username: 'asdda',
@@ -85,7 +85,7 @@ describe('vest', () => {
       },
     };
 
-    expect(await vestResolver(validationSuite, {}, true)(data, {})).toEqual({
+    expect(await vestResolver(validationSuite, {})(data, {}, true)).toEqual({
       values: {},
       errors: {
         username: {

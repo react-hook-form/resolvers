@@ -1,13 +1,6 @@
-import { FieldValues, Resolver, transformToNestObject } from 'react-hook-form';
+import { transformToNestObject } from 'react-hook-form';
 import * as Vest from 'vest';
-
-type VestErrors = Record<string, string[]>;
-
-type ICreateResult = ReturnType<typeof Vest.create>;
-
-type Promisify = <T extends ICreateResult, K>(
-  fn: T,
-) => (args: K) => Promise<Vest.IVestResult>;
+import type { Promisify, VestErrors, Resolver } from './types';
 
 const promisify: Promisify = (validatorFn) => (...args) =>
   new Promise((resolve) => validatorFn(...args).done(resolve as Vest.DoneCB));
@@ -37,11 +30,11 @@ const parseErrorSchema = (
   }, {});
 };
 
-export const vestResolver = <TFieldValues extends FieldValues>(
-  schema: ICreateResult,
-  _: any = {},
+export const vestResolver: Resolver = (schema, _ = {}) => async (
+  values,
+  _context,
   validateAllFieldCriteria = false,
-): Resolver<TFieldValues> => async (values) => {
+) => {
   const validateSchema = promisify(schema);
   const result = await validateSchema(values);
   const errors = result.getErrors();

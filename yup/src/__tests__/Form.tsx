@@ -10,7 +10,7 @@ const schema = Yup.object({
   password: Yup.string().required(),
 });
 
-type FormData = Yup.InferType<typeof schema>;
+type FormData = Yup.InferType<typeof schema> & { unusedProperty: string };
 
 interface Props {
   onSubmit: (data: FormData) => void;
