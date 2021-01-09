@@ -31,7 +31,7 @@ const validationSuite = vest.create('form', (data: any = {}) => {
   });
 });
 
-describe('zodResolver', () => {
+describe('vestResolver', () => {
   it('should return values from vestResolver when validation pass', async () => {
     const data = {
       username: 'asdda',
