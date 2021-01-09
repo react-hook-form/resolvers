@@ -3,120 +3,58 @@ import { zodResolver } from '..';
 
 const schema = z
   .object({
-    id: z.number(),
-    title: z.string(),
-    isPublished: z.boolean().optional(),
+    username: z.string().regex(/^\w+$/).min(3).max(30),
+    password: z.string().regex(/^[a-zA-Z0-9]{3,30}/),
+    repeatPassword: z.string(),
+    accessToken: z.union([z.string(), z.number()]).optional(),
+    birthYear: z.number().min(1900).max(2013).optional(),
+    email: z.string().email().optional(),
     tags: z.array(z.string()),
-    author: z.object({
-      id: z.number(),
-    }),
-    count: z.number().positive().int(),
-    date: z.date(),
-    url: z.string().url(),
-    password: z
-      .string()
-      .min(8)
-      .regex(RegExp('(.*[a-z].*)'))
-      .regex(RegExp('(.*[A-Z].*)'))
-      .regex(RegExp('(.*\\d.*)'))
-      .regex(RegExp('[!@#$%^&*(),.?":{}|<>]')),
-    confirm: z.string(),
+    enabled: z.boolean(),
   })
-  .refine((data) => data.password === data.confirm, {
+  .refine((data) => data.password === data.repeatPassword, {
     message: "Passwords don't match",
     path: ['confirm'], // set path of error
   });
 
 describe('zodResolver', () => {
-  it('should get values', async () => {
+  it('should return values from zodResolver when validation pass', async () => {
+    const data: z.infer<typeof schema> = {
+      username: 'Doe',
+      password: 'Password123',
+      repeatPassword: 'Password123',
+      birthYear: 2000,
+      email: 'john@doe.com',
+      tags: ['tag1', 'tag2'],
+      enabled: true,
+    };
+
+    const result = await zodResolver(schema)(data);
+
+    expect(result).toEqual({ errors: {}, values: data });
+  });
+
+  it('should return a single error from zodResolver when validation fails', async () => {
     const data = {
-      id: 2,
-      title: 'test',
-      tags: ['news', 'features'],
-      author: {
-        id: 1,
-      },
-      count: 4,
-      date: new Date(),
-      url: 'https://github.com/react-hook-form/resolvers',
-      password: '[}tehk6Uor',
-      confirm: '[}tehk6Uor',
+      password: '___',
+      email: '',
+      birthYear: 'birthYear',
     };
 
-    expect(await zodResolver(schema)(data)).toEqual({
-      values: data,
-      errors: {},
-    });
+    const result = await zodResolver(schema)(data);
+
+    expect(result).toMatchSnapshot();
   });
 
-  it('should get errors without validate all criteria fields', async () => {
-    const data: any = {
-      id: '2',
-      tags: [2, true],
-      author: {
-        id: '1',
-      },
-      count: 1,
-      date: 'date',
-      password: 'R',
-      confirm: 'A',
-      unknownProperty: '',
+  it('should return all the errors from zodResolver when validation fails with `validateAllFieldCriteria` set to true', async () => {
+    const data = {
+      password: '___',
+      email: '',
+      birthYear: 'birthYear',
     };
 
-    expect(await zodResolver(schema)(data)).toMatchSnapshot();
-  });
+    const result = await zodResolver(schema)(data, undefined, true);
 
-  it('should get errors without validate all criteria fields', async () => {
-    const data: any = {
-      id: '2',
-      tags: [2, true],
-      author: {
-        id: '1',
-      },
-      count: -5,
-      date: 'date',
-      password: 'R',
-      confirm: 'R',
-    };
-
-    expect(await zodResolver(schema)(data, undefined, true)).toMatchSnapshot();
-  });
-
-  it('should get errors with zod error map', async () => {
-    const data: any = {
-      id: '2',
-      tags: [2, true],
-      author: {
-        id: '1',
-      },
-      count: -5,
-      date: 'date',
-      password: 'R',
-      confirm: 'R',
-    };
-
-    const errorMap: z.ZodErrorMap = (error, ctx) => {
-      if (error.message) {
-        return { message: error.message };
-      }
-
-      switch (error.code) {
-        case z.ZodErrorCode.invalid_type:
-          if (error.expected === 'string') {
-            return { message: `This ain't a string!` };
-          }
-          break;
-        case z.ZodErrorCode.custom_error:
-          const params = error.params || {};
-          if (params.myField) {
-            return { message: `Bad input: ${params.myField}` };
-          }
-          break;
-      }
-
-      return { message: ctx.defaultError };
-    };
-
-    expect(await zodResolver(schema, { errorMap })(data)).toMatchSnapshot();
+    expect(result).toMatchSnapshot();
   });
 });

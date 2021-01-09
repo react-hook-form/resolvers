@@ -1,14 +1,8 @@
-import {
-  appendErrors,
-  Resolver,
-  ResolverError,
-  ResolverSuccess,
-  transformToNestObject,
-} from 'react-hook-form';
+import { appendErrors, transformToNestObject } from 'react-hook-form';
 import * as z from 'zod';
-import { ParseParams } from 'zod/lib/src/parser';
 // @ts-expect-error maybe fixed after the first publish ?
 import { convertArrayToPathName } from '@hookform/resolvers';
+import type { Resolver } from './types';
 
 const parseErrorSchema = (
   zodError: z.ZodError,
@@ -53,10 +47,7 @@ const parseErrorSchema = (
   );
 };
 
-export const zodResolver = <T extends z.ZodSchema<any, any>>(
-  schema: T,
-  options?: ParseParams,
-): Resolver<z.infer<T>> => async (
+export const zodResolver: Resolver = (schema, options) => async (
   values,
   _,
   validateAllFieldCriteria = false,
@@ -64,7 +55,7 @@ export const zodResolver = <T extends z.ZodSchema<any, any>>(
   const result = schema.safeParse(values, options);
 
   if (result.success) {
-    return { values: result.data, errors: {} } as ResolverSuccess<z.infer<T>>;
+    return { values: result.data, errors: {} };
   }
 
   return {
@@ -72,5 +63,5 @@ export const zodResolver = <T extends z.ZodSchema<any, any>>(
     errors: transformToNestObject(
       parseErrorSchema(result.error, validateAllFieldCriteria),
     ),
-  } as ResolverError<z.infer<T>>;
+  };
 };

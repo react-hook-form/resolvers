@@ -1,100 +1,67 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`validateWithSchema should return undefined when no error reported 1`] = `
+exports[`yupResolver should return a single error from yupResolver when validation fails 1`] = `
 Object {
   "errors": Object {
-    "age": Object {
-      "message": "age is a required field",
+    "birthYear": Object {
+      "message": "birthYear must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"birthYear\\"\`).",
+      "type": "typeError",
+    },
+    "password": Object {
+      "message": "password must match the following: \\"/^[a-zA-Z0-9]{3,30}/\\"",
+      "type": "matches",
+    },
+    "username": Object {
+      "message": "username is a required field",
       "type": "required",
     },
+  },
+  "values": Object {},
+}
+`;
+
+exports[`yupResolver should return all the errors from yupResolver when validation fails with \`validateAllFieldCriteria\` set to true 1`] = `
+Object {
+  "errors": Object {
+    "birthYear": Object {
+      "message": "birthYear must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"birthYear\\"\`).",
+      "type": "typeError",
+      "types": Object {
+        "typeError": "birthYear must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"birthYear\\"\`).",
+      },
+    },
+    "password": Object {
+      "message": "password must match the following: \\"/^[a-zA-Z0-9]{3,30}/\\"",
+      "type": "matches",
+      "types": Object {
+        "matches": "password must match the following: \\"/^[a-zA-Z0-9]{3,30}/\\"",
+      },
+    },
+    "username": Object {
+      "message": "username is a required field",
+      "type": "required",
+      "types": Object {
+        "required": "username is a required field",
+      },
+    },
+  },
+  "values": Object {},
+}
+`;
+
+exports[`yupResolver should return an error from yupResolver when validation fails and pass down the yup context 1`] = `
+Object {
+  "errors": Object {
     "name": Object {
-      "message": "name is a required field",
-      "type": "required",
+      "message": "name must be at least 6 characters",
+      "type": "min",
     },
   },
   "values": Object {},
 }
 `;
 
-exports[`yupResolver errors should get errors with validate all criteria fields 1`] = `
-Object {
-  "errors": Object {
-    "age": Object {
-      "message": "age must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"test\\"\`).",
-      "type": "typeError",
-      "types": Object {
-        "typeError": "age must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"test\\"\`).",
-      },
-    },
-    "createdOn": Object {
-      "message": "createdOn must be a \`date\` type, but the final value was: \`Invalid Date\`.",
-      "type": "typeError",
-      "types": Object {
-        "typeError": "createdOn must be a \`date\` type, but the final value was: \`Invalid Date\`.",
-      },
-    },
-    "foo": Array [
-      Object {
-        "loose": Object {
-          "message": "foo[0].loose must be a \`boolean\` type, but the final value was: \`null\`.
- If \\"null\\" is intended as an empty value be sure to mark the schema as \`.nullable()\`",
-          "type": "typeError",
-          "types": Object {
-            "typeError": "foo[0].loose must be a \`boolean\` type, but the final value was: \`null\`.
- If \\"null\\" is intended as an empty value be sure to mark the schema as \`.nullable()\`",
-          },
-        },
-      },
-    ],
-    "password": Object {
-      "message": "password is a required field",
-      "type": "required",
-      "types": Object {
-        "matches": Array [
-          "Lowercase",
-          "Uppercase",
-          "Number",
-          "Special",
-        ],
-        "min": "password must be at least 8 characters",
-        "required": "password is a required field",
-      },
-    },
-  },
-  "values": Object {},
-}
-`;
-
-exports[`yupResolver errors should get errors without validate all criteria fields 1`] = `
-Object {
-  "errors": Object {
-    "age": Object {
-      "message": "age must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"test\\"\`).",
-      "type": "typeError",
-    },
-    "createdOn": Object {
-      "message": "createdOn must be a \`date\` type, but the final value was: \`Invalid Date\`.",
-      "type": "typeError",
-    },
-    "foo": Array [
-      Object {
-        "loose": Object {
-          "message": "foo[0].loose must be a \`boolean\` type, but the final value was: \`null\`.
- If \\"null\\" is intended as an empty value be sure to mark the schema as \`.nullable()\`",
-          "type": "typeError",
-        },
-      },
-    ],
-    "password": Object {
-      "message": "password is a required field",
-      "type": "required",
-    },
-  },
-  "values": Object {},
-}
-`;
-
-exports[`yupResolver errors should return an error result if inner yup validation error has no path 1`] = `
+exports[`yupResolver should return an error result if inner yup validation error has no path 1`] = `
 Object {
   "errors": Object {
     "required": Object {
@@ -106,12 +73,12 @@ Object {
 }
 `;
 
-exports[`yupResolver should pass down the yup context 1`] = `
+exports[`yupResolver should return correct error message with using yup.test 1`] = `
 Object {
   "errors": Object {
     "name": Object {
-      "message": "name must be at least 6 characters",
-      "type": "min",
+      "message": "Email or name are required",
+      "type": "name",
     },
   },
   "values": Object {},

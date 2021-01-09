@@ -2,90 +2,63 @@
 import * as yup from 'yup';
 import { yupResolver } from '..';
 
-const errors = {
-  name: 'ValidationError',
-  value: { createdOn: '2019-03-27T04:05:51.503Z' },
-  path: undefined,
-  type: undefined,
-  errors: ['name is a required field', 'age is a required field'],
-  inner: [
-    {
-      name: 'ValidationError',
-      value: undefined,
-      path: 'name',
-      type: 'required',
-      errors: [],
-      inner: [],
-      message: 'name is a required field',
-      params: [],
-    },
-    {
-      name: 'ValidationError',
-      value: undefined,
-      path: 'name',
-      type: 'min',
-      errors: [],
-      inner: [],
-      message: 'name is a min field',
-      params: [],
-    },
-    {
-      name: 'ValidationError',
-      value: undefined,
-      path: 'age',
-      type: 'required',
-      errors: [],
-      inner: [],
-      message: 'age is a required field',
-      params: [],
-    },
-  ],
-};
-
 const schema = yup.object({
-  name: yup.string().required(),
-  age: yup.number().required().positive().integer(),
-  email: yup.string().email(),
+  username: yup.string().matches(/^\w+$/).min(3).max(30).required(),
   password: yup
     .string()
-    .required()
-    .min(8)
-    .matches(RegExp('(.*[a-z].*)'), 'Lowercase')
-    .matches(RegExp('(.*[A-Z].*)'), 'Uppercase')
-    .matches(RegExp('(.*\\d.*)'), 'Number')
-    .matches(RegExp('[!@#$%^&*(),.?":{}|<>]'), 'Special'),
-  website: yup.string().url(),
-  createdOn: yup.date().default(function () {
-    return new Date();
-  }),
-  foo: yup
-    .array()
-    .required()
-    .of(
-      yup.object({
-        loose: yup.boolean(),
-      }),
-    ),
+    .matches(/^[a-zA-Z0-9]{3,30}/)
+    .required(),
+  repeatPassword: yup.ref('password'),
+  accessToken: yup.string(),
+  birthYear: yup.number().min(1900).max(2013),
+  email: yup.string().email(),
+  tags: yup.array(yup.string()),
+  enabled: yup.boolean(),
 });
 
 describe('yupResolver', () => {
-  it('should get values', async () => {
-    const data = {
-      name: 'jimmy',
-      age: 24,
-      email: 'jimmy@mail.com',
-      password: '[}tehk6Uor',
-      website: 'https://react-hook-form.com/',
-      createdOn: new Date('2014-09-23T19:25:25Z'),
-      foo: [{ loose: true }],
+  it('should return values from yupResolver when validation pass', async () => {
+    const data: yup.InferType<typeof schema> = {
+      username: 'Doe',
+      password: 'Password123',
+      repeatPassword: 'Password123',
+      birthYear: 2000,
+      email: 'john@doe.com',
+      tags: ['tag1', 'tag2'],
+      enabled: true,
+      accessToken: 'accessToken',
     };
-    expect(await yupResolver(schema)(data)).toEqual({
-      errors: {},
-      values: data,
-    });
+
+    const result = await yupResolver(schema)(data);
+
+    expect(result).toEqual({ errors: {}, values: data });
   });
 
-  it('should pass down the yup context', async () => {
+  it('should return a single error from yupResolver when validation fails', async () => {
+    const data = {
+      password: '___',
+      email: '',
+      birthYear: 'birthYear',
+    };
+
+    const result = await yupResolver(schema)(data);
+
+    expect(result).toMatchSnapshot();
+  });
+
+  it('should return all the errors from yupResolver when validation fails with `validateAllFieldCriteria` set to true', async () => {
+    const data = {
+      password: '___',
+      email: '',
+      birthYear: 'birthYear',
+    };
+
+    const result = await yupResolver(schema)(data, undefined, true);
+
+    expect(result).toMatchSnapshot();
+  });
+
+  it('should return an error from yupResolver when validation fails and pass down the yup context', async () => {
     const data = { name: 'eric' };
     const context = { min: true };
     const schemaWithContext = yup.object({
@@ -99,7 +72,7 @@ describe('yupResolver', () => {
 
     const schemaSpyValidate = jest.spyOn(schemaWithContext, 'validate');
 
-    const output = await yupResolver(schemaWithContext)(data, context);
+    const result = await yupResolver(schemaWithContext)(data, context);
     expect(schemaSpyValidate).toHaveBeenCalledTimes(1);
     expect(schemaSpyValidate).toHaveBeenCalledWith(
       data,
@@ -108,147 +81,20 @@ describe('yupResolver', () => {
         context,
       }),
     );
-    expect(output).toMatchSnapshot();
+    expect(result).toMatchSnapshot();
   });
 
-  describe('errors', () => {
-    it('should get errors with validate all criteria fields', async () => {
-      const data = {
-        name: 2,
-        age: 'test',
-        password: '',
-        createdOn: null,
-        foo: [{ loose: null }],
-      };
-
-      const output = await yupResolver(schema)(data, {}, true);
-      expect(output).toMatchSnapshot();
-      expect(output.errors['foo']?.[0]?.['loose']).toBeDefined();
-      expect(output.errors['foo']?.[0]?.['loose']?.types)
-        .toMatchInlineSnapshot(`
-        Object {
-          "typeError": "foo[0].loose must be a \`boolean\` type, but the final value was: \`null\`.
-         If \\"null\\" is intended as an empty value be sure to mark the schema as \`.nullable()\`",
-        }
-      `);
-      expect(output.errors.age?.types).toMatchInlineSnapshot(`
-        Object {
-          "typeError": "age must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"test\\"\`).",
-        }
-      `);
-      expect(output.errors.createdOn?.types).toMatchInlineSnapshot(`
-        Object {
-          "typeError": "createdOn must be a \`date\` type, but the final value was: \`Invalid Date\`.",
-        }
-      `);
-      expect(output.errors.password?.types).toMatchInlineSnapshot(`
-        Object {
-          "matches": Array [
-            "Lowercase",
-            "Uppercase",
-            "Number",
-            "Special",
-          ],
-          "min": "password must be at least 8 characters",
-          "required": "password is a required field",
-        }
-      `);
+  it('should return an error result if inner yup validation error has no path', async () => {
+    const yupSchema = yup.object({
+      name: yup.string().required(),
     });
 
-    it('should get errors without validate all criteria fields', async () => {
-      const data = {
-        name: 2,
-        age: 'test',
-        createdOn: null,
-        foo: [{ loose: null }],
-      };
-
-      const output = await yupResolver(schema)(data);
-      expect(output).toMatchSnapshot();
-      expect(output.errors.age?.types).toBeUndefined();
-      expect(output.errors.createdOn?.types).toBeUndefined();
-      expect(output.errors.password?.types).toBeUndefined();
+    jest.spyOn(yupSchema, 'validate').mockRejectedValueOnce({
+      inner: [{ message: 'error1', type: 'required' }],
     });
 
-    it('should get error if yup errors has no inner errors', async () => {
-      const data = {
-        name: 2,
-        age: 'test',
-        createdOn: null,
-        foo: [{ loose: null }],
-      };
-      const output = await yupResolver(schema, {
-        abortEarly: true,
-      })(data, undefined, true);
-
-      expect(output.errors).toMatchInlineSnapshot(`
-        Object {
-          "createdOn": Object {
-            "message": "createdOn must be a \`date\` type, but the final value was: \`Invalid Date\`.",
-            "type": "typeError",
-          },
-        }
-      `);
-    });
-
-    it('should return an error result if inner yup validation error has no path', async () => {
-      const data = { name: '' };
-      const schemaWithContext = yup.object().shape({
-        name: yup.string().required(),
-      });
-
-      jest.spyOn(schemaWithContext, 'validate').mockRejectedValueOnce({
-        inner: [{ path: '', message: 'error1', type: 'required' }],
-      });
-
-      const output = await yupResolver(schemaWithContext)(data);
-      expect(output).toMatchSnapshot();
-    });
-  });
-});
-
-describe('validateWithSchema', () => {
-  it('should return undefined when no error reported', async () => {
-    const schema = yup.object();
-    jest.spyOn(schema, 'validate').mockRejectedValueOnce(errors);
-
-    expect(await yupResolver(schema)({})).toMatchSnapshot();
-  });
-
-  it('should return empty object when validate pass', async () => {
-    const schema = yup.object();
-
-    expect(await yupResolver(schema)({})).toMatchInlineSnapshot(`
-      Object {
-        "errors": Object {},
-        "values": Object {},
-      }
-    `);
-  });
-
-  it('should return an error based on the user context', async () => {
-    const data = { name: 'eric' };
-    const schemaWithContext = yup.object().shape({
-      name: yup
-        .string()
-        .required()
-        .when('$min', (min: boolean, schema: yup.StringSchema) => {
-          return min ? schema.min(6) : schema;
-        }),
-    });
-
-    expect(await yupResolver(schemaWithContext)(data, { min: true }))
-      .toMatchInlineSnapshot(`
-      Object {
-        "errors": Object {
-          "name": Object {
-            "message": "name must be at least 6 characters",
-            "type": "min",
-          },
-        },
-        "values": Object {},
-      }
-    `);
+    const result = await yupResolver(yupSchema)({ name: '' });
+    expect(result).toMatchSnapshot();
   });
 
   it('should show a warning log if yup context is used instead only on dev environment', async () => {
@@ -262,7 +108,7 @@ describe('validateWithSchema', () => {
     process.env.NODE_ENV = 'test';
   });
 
-  it('should not show warning log if yup context is used instead only on production environment', async () => {
+  it('should not show a warning log if yup context is used instead only on production environment', async () => {
     jest.spyOn(console, 'warn').mockImplementation(jest.fn);
     process.env.NODE_ENV = 'production';
 
@@ -272,7 +118,7 @@ describe('validateWithSchema', () => {
   });
 
   it('should return correct error message with using yup.test', async () => {
-    const output = await yupResolver(
+    const result = await yupResolver(
       yup
         .object({
           name: yup.string(),
@@ -285,9 +131,6 @@ describe('validateWithSchema', () => {
         ),
     )({ name: '', email: '' });
 
-    expect(output).toEqual({
-      values: {},
-      errors: { name: { message: 'Email or name are required', type: 'name' } },
-    });
+    expect(result).toMatchSnapshot();
   });
 });

@@ -1,13 +1,8 @@
-import {
-  appendErrors,
-  transformToNestObject,
-  Resolver,
-  ResolverSuccess,
-  ResolverError,
-} from 'react-hook-form';
-import { StructError, validate, Struct, Infer } from 'superstruct';
+import { appendErrors, transformToNestObject } from 'react-hook-form';
+import { StructError, validate } from 'superstruct';
 // @ts-expect-error maybe fixed after the first publish ?
 import { convertArrayToPathName } from '@hookform/resolvers';
+import { Resolver } from './types';
 
 const parseErrorSchema = (
   error: StructError,
@@ -45,12 +40,11 @@ const parseErrorSchema = (
       };
     }, {});
 
-type Options = Parameters<typeof validate>[2];
-
-export const superstructResolver = <T extends Struct<any, any>>(
-  schema: T,
-  options?: Options,
-): Resolver<Infer<T>> => (values, _, validateAllFieldCriteria = false) => {
+export const superstructResolver: Resolver = (schema, options) => async (
+  values,
+  _context,
+  validateAllFieldCriteria = false,
+) => {
   const [errors, result] = validate(values, schema, options);
 
   if (errors != null) {
@@ -59,11 +53,11 @@ export const superstructResolver = <T extends Struct<any, any>>(
       errors: transformToNestObject(
         parseErrorSchema(errors, validateAllFieldCriteria),
       ),
-    } as ResolverError<Infer<T>>;
+    };
   }
 
   return {
     values: result,
     errors: {},
-  } as ResolverSuccess<Infer<T>>;
+  };
 };

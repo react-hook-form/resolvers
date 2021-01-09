@@ -1,12 +1,8 @@
-import {
-  appendErrors,
-  transformToNestObject,
-  Resolver,
-  FieldValues,
-} from 'react-hook-form';
+import { appendErrors, transformToNestObject } from 'react-hook-form';
 import * as Joi from 'joi';
 // @ts-expect-error maybe fixed after the first publish ?
 import { convertArrayToPathName } from '@hookform/resolvers';
+import { Resolver } from './types';
 
 const parseErrorSchema = (
   error: Joi.ValidationError,
@@ -48,16 +44,12 @@ const parseErrorSchema = (
       )
     : [];
 
-export const joiResolver = <TFieldValues extends FieldValues>(
-  schema: Joi.Schema,
-  options: Joi.AsyncValidationOptions = {
+export const joiResolver: Resolver = (
+  schema,
+  options = {
     abortEarly: false,
   },
-): Resolver<TFieldValues> => async (
-  values,
-  _,
-  validateAllFieldCriteria = false,
-) => {
+) => async (values, _, validateAllFieldCriteria = false) => {
   try {
     return {
       values: await schema.validateAsync(values, {

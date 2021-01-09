@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { FieldValues, Resolver, transformToNestObject } from 'react-hook-form';
+import { transformToNestObject } from 'react-hook-form';
 import Yup from 'yup';
+import { Resolver } from './types';
 
 /**
  * From 0.32.0, Yup add TypeScript support and `path` typing is optional that's why we have `@ts-expect-error`
@@ -53,20 +54,12 @@ const parseErrorSchema = (
       };
 };
 
-type ValidateOptions<T extends Yup.AnyObjectSchema> = Parameters<
-  T['validate']
->[1];
-
-export const yupResolver = <TFieldValues extends FieldValues>(
-  schema: Yup.AnyObjectSchema,
-  options: ValidateOptions<Yup.AnyObjectSchema> = {
+export const yupResolver: Resolver = (
+  schema,
+  options = {
     abortEarly: false,
   },
-): Resolver<TFieldValues> => async (
-  values,
-  context,
-  validateAllFieldCriteria = false,
-) => {
+) => async (values, context, validateAllFieldCriteria = false) => {
   try {
     if (options.context && process.env.NODE_ENV === 'development') {
       // eslint-disable-next-line no-console
@@ -74,6 +67,7 @@ export const yupResolver = <TFieldValues extends FieldValues>(
         "You should not used the yup options context. Please, use the 'useForm' context object instead",
       );
     }
+
     return {
       values: await schema.validate(values, {
         ...options,
@@ -83,6 +77,7 @@ export const yupResolver = <TFieldValues extends FieldValues>(
     };
   } catch (e) {
     const parsedErrors = parseErrorSchema(e, validateAllFieldCriteria);
+
     return {
       values: {},
       errors: transformToNestObject(parsedErrors),
