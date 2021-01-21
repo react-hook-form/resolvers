@@ -29,8 +29,11 @@ describe('zodResolver', () => {
       enabled: true,
     };
 
+    const schemaSpy = jest.spyOn(schema, 'parseAsync');
+
     const result = await zodResolver(schema)(data);
 
+    expect(schemaSpy).toHaveBeenCalledTimes(1);
     expect(result).toEqual({ errors: {}, values: data });
   });
 
@@ -45,8 +48,13 @@ describe('zodResolver', () => {
       enabled: true,
     };
 
+    const schemaSpy = jest.spyOn(schema, 'parse');
+    const schemaAsyncSpy = jest.spyOn(schema, 'parseAsync');
+
     const result = await zodResolver(schema, undefined, { mode: 'sync' })(data);
 
+    expect(schemaSpy).toHaveBeenCalledTimes(1);
+    expect(schemaAsyncSpy).not.toHaveBeenCalled();
     expect(result).toEqual({ errors: {}, values: data });
   });
 
@@ -69,8 +77,13 @@ describe('zodResolver', () => {
       birthYear: 'birthYear',
     };
 
+    const schemaSpy = jest.spyOn(schema, 'parse');
+    const schemaAsyncSpy = jest.spyOn(schema, 'parseAsync');
+
     const result = await zodResolver(schema, undefined, { mode: 'sync' })(data);
 
+    expect(schemaSpy).toHaveBeenCalledTimes(1);
+    expect(schemaAsyncSpy).not.toHaveBeenCalled();
     expect(result).toMatchSnapshot();
   });
 
