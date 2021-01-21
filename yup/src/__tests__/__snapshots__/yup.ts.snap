@@ -69,6 +69,35 @@ Object {
 }
 `;
 
+exports[`yupResolver should return all the errors from yupResolver when validation fails with \`validateAllFieldCriteria\` set to true and \`mode: sync\` 1`] = `
+Object {
+  "errors": Object {
+    "birthYear": Object {
+      "message": "birthYear must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"birthYear\\"\`).",
+      "type": "typeError",
+      "types": Object {
+        "typeError": "birthYear must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"birthYear\\"\`).",
+      },
+    },
+    "password": Object {
+      "message": "password must match the following: \\"/^[a-zA-Z0-9]{3,30}/\\"",
+      "type": "matches",
+      "types": Object {
+        "matches": "password must match the following: \\"/^[a-zA-Z0-9]{3,30}/\\"",
+      },
+    },
+    "username": Object {
+      "message": "username is a required field",
+      "type": "required",
+      "types": Object {
+        "required": "username is a required field",
+      },
+    },
+  },
+  "values": Object {},
+}
+`;
+
 exports[`yupResolver should return an error from yupResolver when validation fails and pass down the yup context 1`] = `
 Object {
   "errors": Object {

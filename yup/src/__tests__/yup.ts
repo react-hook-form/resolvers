@@ -51,13 +51,13 @@ describe('yupResolver', () => {
       accessToken: 'accessToken',
     };
 
-    const schemaSpy = jest.spyOn(schema, 'validateSync');
-    const schemaAsyncSpy = jest.spyOn(schema, 'validate');
+    const validateSyncSpy = jest.spyOn(schema, 'validateSync');
+    const validateSpy = jest.spyOn(schema, 'validate');
 
     const result = await yupResolver(schema, undefined, { mode: 'sync' })(data);
 
-    expect(schemaSpy).toHaveBeenCalledTimes(1);
-    expect(schemaAsyncSpy).not.toHaveBeenCalled();
+    expect(validateSyncSpy).toHaveBeenCalledTimes(1);
+    expect(validateSpy).not.toHaveBeenCalled();
     expect(result).toEqual({ errors: {}, values: data });
   });
 
@@ -80,13 +80,13 @@ describe('yupResolver', () => {
       birthYear: 'birthYear',
     };
 
-    const schemaSpy = jest.spyOn(schema, 'validateSync');
-    const schemaAsyncSpy = jest.spyOn(schema, 'validate');
+    const validateSyncSpy = jest.spyOn(schema, 'validateSync');
+    const validateSpy = jest.spyOn(schema, 'validate');
 
     const result = await yupResolver(schema, undefined, { mode: 'sync' })(data);
 
-    expect(schemaSpy).toHaveBeenCalledTimes(1);
-    expect(schemaAsyncSpy).not.toHaveBeenCalled();
+    expect(validateSyncSpy).toHaveBeenCalledTimes(1);
+    expect(validateSpy).not.toHaveBeenCalled();
     expect(result).toMatchSnapshot();
   });
 
@@ -98,6 +98,22 @@ describe('yupResolver', () => {
     };
 
     const result = await yupResolver(schema)(data, undefined, true);
+
+    expect(result).toMatchSnapshot();
+  });
+
+  it('should return all the errors from yupResolver when validation fails with `validateAllFieldCriteria` set to true and `mode: sync`', async () => {
+    const data = {
+      password: '___',
+      email: '',
+      birthYear: 'birthYear',
+    };
+
+    const result = await yupResolver(schema, undefined, { mode: 'sync' })(
+      data,
+      undefined,
+      true,
+    );
 
     expect(result).toMatchSnapshot();
   });
@@ -114,11 +130,11 @@ describe('yupResolver', () => {
         }),
     });
 
-    const schemaSpyValidate = jest.spyOn(schemaWithContext, 'validate');
+    const validateSpy = jest.spyOn(schemaWithContext, 'validate');
 
     const result = await yupResolver(schemaWithContext)(data, context);
-    expect(schemaSpyValidate).toHaveBeenCalledTimes(1);
-    expect(schemaSpyValidate).toHaveBeenCalledWith(
+    expect(validateSpy).toHaveBeenCalledTimes(1);
+    expect(validateSpy).toHaveBeenCalledWith(
       data,
       expect.objectContaining({
         abortEarly: false,
