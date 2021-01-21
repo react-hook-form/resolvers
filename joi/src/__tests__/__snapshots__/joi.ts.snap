@@ -34,12 +34,33 @@ Object {
 
 exports[`joiResolver should return a single error from joiResolver with \`mode: sync\` when validation fails 1`] = `
 Object {
-  "errors": Object {},
-  "values": Object {
-    "birthYear": "birthYear",
-    "email": "",
-    "password": "___",
+  "errors": Object {
+    "birthYear": Object {
+      "message": "\\"birthYear\\" must be a number",
+      "type": "number.base",
+    },
+    "email": Object {
+      "message": "\\"email\\" is not allowed to be empty",
+      "type": "string.empty",
+    },
+    "enabled": Object {
+      "message": "\\"enabled\\" is required",
+      "type": "any.required",
+    },
+    "password": Object {
+      "message": "\\"password\\" with value \\"___\\" fails to match the required pattern: /^[a-zA-Z0-9]{3,30}$/",
+      "type": "string.pattern.base",
+    },
+    "tags": Object {
+      "message": "\\"tags\\" is required",
+      "type": "any.required",
+    },
+    "username": Object {
+      "message": "\\"username\\" is required",
+      "type": "any.required",
+    },
   },
+  "values": Object {},
 }
 `;
 

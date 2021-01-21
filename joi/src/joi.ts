@@ -56,10 +56,10 @@ export const joiResolver: Resolver = (
     if (mode === 'async') {
       result = await schema.validateAsync(values, schemaOptions);
     } else {
-      const { value, errors } = schema.validate(values, schemaOptions);
+      const { value, error } = schema.validate(values, schemaOptions);
 
-      if (errors) {
-        throw errors;
+      if (error) {
+        throw error;
       }
 
       result = value;
