@@ -109,4 +109,20 @@ describe('joiResolver', () => {
 
     expect(result).toMatchSnapshot();
   });
+
+  it('should return all the errors from joiResolver when validation fails with `validateAllFieldCriteria` set to true', async () => {
+    const data = {
+      password: '___',
+      email: '',
+      birthYear: 'birthYear',
+    };
+
+    const result = await joiResolver(schema, undefined, { mode: 'sync' })(
+      data,
+      undefined,
+      true,
+    );
+
+    expect(result).toMatchSnapshot();
+  });
 });
