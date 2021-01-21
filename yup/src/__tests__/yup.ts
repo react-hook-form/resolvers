@@ -29,8 +29,35 @@ describe('yupResolver', () => {
       accessToken: 'accessToken',
     };
 
+    const schemaSpy = jest.spyOn(schema, 'validate');
+    const schemaSyncSpy = jest.spyOn(schema, 'validateSync');
+
     const result = await yupResolver(schema)(data);
 
+    expect(schemaSpy).toHaveBeenCalledTimes(1);
+    expect(schemaSyncSpy).not.toHaveBeenCalled();
+    expect(result).toEqual({ errors: {}, values: data });
+  });
+
+  it('should return values from yupResolver with `mode: sync` when validation pass', async () => {
+    const data: yup.InferType<typeof schema> = {
+      username: 'Doe',
+      password: 'Password123',
+      repeatPassword: 'Password123',
+      birthYear: 2000,
+      email: 'john@doe.com',
+      tags: ['tag1', 'tag2'],
+      enabled: true,
+      accessToken: 'accessToken',
+    };
+
+    const schemaSpy = jest.spyOn(schema, 'validateSync');
+    const schemaAsyncSpy = jest.spyOn(schema, 'validate');
+
+    const result = await yupResolver(schema, undefined, { mode: 'sync' })(data);
+
+    expect(schemaSpy).toHaveBeenCalledTimes(1);
+    expect(schemaAsyncSpy).not.toHaveBeenCalled();
     expect(result).toEqual({ errors: {}, values: data });
   });
 
@@ -43,6 +70,23 @@ describe('yupResolver', () => {
 
     const result = await yupResolver(schema)(data);
 
+    expect(result).toMatchSnapshot();
+  });
+
+  it('should return a single error from yupResolver with `mode: sync` when validation fails', async () => {
+    const data = {
+      password: '___',
+      email: '',
+      birthYear: 'birthYear',
+    };
+
+    const schemaSpy = jest.spyOn(schema, 'validateSync');
+    const schemaAsyncSpy = jest.spyOn(schema, 'validate');
+
+    const result = await yupResolver(schema, undefined, { mode: 'sync' })(data);
+
+    expect(schemaSpy).toHaveBeenCalledTimes(1);
+    expect(schemaAsyncSpy).not.toHaveBeenCalled();
     expect(result).toMatchSnapshot();
   });
 
