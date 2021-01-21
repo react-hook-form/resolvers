@@ -47,21 +47,24 @@ const parseErrorSchema = (
   );
 };
 
-export const zodResolver: Resolver = (schema, options) => async (
-  values,
-  _,
-  validateAllFieldCriteria = false,
-) => {
-  const result = schema.safeParse(values, options);
+export const zodResolver: Resolver = (
+  schema,
+  schemaOptions,
+  { mode } = { mode: 'async' },
+) => async (values, _, validateAllFieldCriteria = false) => {
+  try {
+    const result =
+      mode === 'async'
+        ? await schema.parseAsync(values, schemaOptions)
+        : schema.parse(values, schemaOptions);
 
-  if (result.success) {
-    return { values: result.data, errors: {} };
+    return { values: result, errors: {} };
+  } catch (error) {
+    return {
+      values: {},
+      errors: transformToNestObject(
+        parseErrorSchema(error, validateAllFieldCriteria),
+      ),
+    };
   }
-
-  return {
-    values: {},
-    errors: transformToNestObject(
-      parseErrorSchema(result.error, validateAllFieldCriteria),
-    ),
-  };
 };

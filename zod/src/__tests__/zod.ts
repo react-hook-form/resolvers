@@ -34,6 +34,22 @@ describe('zodResolver', () => {
     expect(result).toEqual({ errors: {}, values: data });
   });
 
+  it('should return values from zodResolver with `mode: sync` when validation pass', async () => {
+    const data: z.infer<typeof schema> = {
+      username: 'Doe',
+      password: 'Password123',
+      repeatPassword: 'Password123',
+      birthYear: 2000,
+      email: 'john@doe.com',
+      tags: ['tag1', 'tag2'],
+      enabled: true,
+    };
+
+    const result = await zodResolver(schema, undefined, { mode: 'sync' })(data);
+
+    expect(result).toEqual({ errors: {}, values: data });
+  });
+
   it('should return a single error from zodResolver when validation fails', async () => {
     const data = {
       password: '___',
@@ -42,6 +58,18 @@ describe('zodResolver', () => {
     };
 
     const result = await zodResolver(schema)(data);
+
+    expect(result).toMatchSnapshot();
+  });
+
+  it('should return a single error from zodResolver with `mode: sync` when validation fails', async () => {
+    const data = {
+      password: '___',
+      email: '',
+      birthYear: 'birthYear',
+    };
+
+    const result = await zodResolver(schema, undefined, { mode: 'sync' })(data);
 
     expect(result).toMatchSnapshot();
   });

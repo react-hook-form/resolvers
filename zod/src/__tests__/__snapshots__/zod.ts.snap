@@ -40,6 +40,46 @@ Object {
 }
 `;
 
+exports[`zodResolver should return a single error from zodResolver with \`mode: sync\` when validation fails 1`] = `
+Object {
+  "errors": Object {
+    "birthYear": Object {
+      "message": "Invalid input",
+      "type": "invalid_union",
+    },
+    "confirm": Object {
+      "message": "Passwords don't match",
+      "type": "custom_error",
+    },
+    "email": Object {
+      "message": "Invalid email",
+      "type": "invalid_string",
+    },
+    "enabled": Object {
+      "message": "Required",
+      "type": "invalid_type",
+    },
+    "password": Object {
+      "message": "Invalid",
+      "type": "invalid_string",
+    },
+    "repeatPassword": Object {
+      "message": "Required",
+      "type": "invalid_type",
+    },
+    "tags": Object {
+      "message": "Required",
+      "type": "invalid_type",
+    },
+    "username": Object {
+      "message": "Required",
+      "type": "invalid_type",
+    },
+  },
+  "values": Object {},
+}
+`;
+
 exports[`zodResolver should return all the errors from zodResolver when validation fails with \`validateAllFieldCriteria\` set to true 1`] = `
 Object {
   "errors": Object {
