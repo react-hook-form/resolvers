@@ -59,6 +59,7 @@ export const yupResolver: Resolver = (
   options = {
     abortEarly: false,
   },
+  { mode } = { mode: 'async' },
 ) => async (values, context, validateAllFieldCriteria = false) => {
   try {
     if (options.context && process.env.NODE_ENV === 'development') {
@@ -68,11 +69,19 @@ export const yupResolver: Resolver = (
       );
     }
 
+    const result =
+      mode === 'async'
+        ? await schema.validate(values, {
+            ...options,
+            context,
+          })
+        : schema.validateSync(values, {
+            ...options,
+            context,
+          });
+
     return {
-      values: await schema.validate(values, {
-        ...options,
-        context,
-      }),
+      values: result,
       errors: {},
     };
   } catch (e) {

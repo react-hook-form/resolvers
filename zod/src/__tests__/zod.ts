@@ -29,8 +29,11 @@ describe('zodResolver', () => {
       enabled: true,
     };
 
+    const parseAsyncSpy = jest.spyOn(schema, 'parseAsync');
+
     const result = await zodResolver(schema)(data);
 
+    expect(parseAsyncSpy).toHaveBeenCalledTimes(1);
     expect(result).toEqual({ errors: {}, values: data });
   });
 
@@ -45,8 +48,13 @@ describe('zodResolver', () => {
       enabled: true,
     };
 
+    const parseSpy = jest.spyOn(schema, 'parse');
+    const parseAsyncSpy = jest.spyOn(schema, 'parseAsync');
+
     const result = await zodResolver(schema, undefined, { mode: 'sync' })(data);
 
+    expect(parseSpy).toHaveBeenCalledTimes(1);
+    expect(parseAsyncSpy).not.toHaveBeenCalled();
     expect(result).toEqual({ errors: {}, values: data });
   });
 
@@ -69,8 +77,13 @@ describe('zodResolver', () => {
       birthYear: 'birthYear',
     };
 
+    const parseSpy = jest.spyOn(schema, 'parse');
+    const parseAsyncSpy = jest.spyOn(schema, 'parseAsync');
+
     const result = await zodResolver(schema, undefined, { mode: 'sync' })(data);
 
+    expect(parseSpy).toHaveBeenCalledTimes(1);
+    expect(parseAsyncSpy).not.toHaveBeenCalled();
     expect(result).toMatchSnapshot();
   });
 
@@ -82,6 +95,22 @@ describe('zodResolver', () => {
     };
 
     const result = await zodResolver(schema)(data, undefined, true);
+
+    expect(result).toMatchSnapshot();
+  });
+
+  it('should return all the errors from zodResolver when validation fails with `validateAllFieldCriteria` set to true and `mode: sync`', async () => {
+    const data = {
+      password: '___',
+      email: '',
+      birthYear: 'birthYear',
+    };
+
+    const result = await zodResolver(schema, undefined, { mode: 'sync' })(
+      data,
+      undefined,
+      true,
+    );
 
     expect(result).toMatchSnapshot();
   });
