@@ -40,7 +40,23 @@ describe('vestResolver', () => {
         data: 'test',
       },
     };
-    expect(await vestResolver(validationSuite)(data, {})).toEqual({
+    expect(await vestResolver(validationSuite)(data)).toEqual({
+      values: data,
+      errors: {},
+    });
+  });
+
+  it('should return values from vestResolver with `mode: sync` when validation pass', async () => {
+    const data = {
+      username: 'asdda',
+      password: 'asddfg123!',
+      deepObject: {
+        data: 'test',
+      },
+    };
+    expect(
+      await vestResolver(validationSuite, undefined, { mode: 'sync' })(data),
+    ).toEqual({
       values: data,
       errors: {},
     });
@@ -55,25 +71,21 @@ describe('vestResolver', () => {
       },
     };
 
-    expect(await vestResolver(validationSuite)(data, {})).toEqual({
-      values: {},
-      errors: {
-        username: {
-          type: '',
-          message: 'Username is required',
-        },
-        password: {
-          type: '',
-          message: 'Password must be at least 5 chars',
-        },
-        deepObject: {
-          data: {
-            type: '',
-            message: 'deepObject.data is required',
-          },
-        },
+    expect(await vestResolver(validationSuite)(data)).toMatchSnapshot();
+  });
+
+  it('should return single error message from vestResolver when validation fails and validateAllFieldCriteria set to false and `mode: sync`', async () => {
+    const data = {
+      username: '',
+      password: 'a',
+      deepObject: {
+        data: '',
       },
-    });
+    };
+
+    expect(
+      await vestResolver(validationSuite, undefined, { mode: 'sync' })(data),
+    ).toMatchSnapshot();
   });
 
   it('should return all the error messages from vestResolver when validation fails and validateAllFieldCriteria set to true', async () => {
@@ -85,36 +97,26 @@ describe('vestResolver', () => {
       },
     };
 
-    expect(await vestResolver(validationSuite, {})(data, {}, true)).toEqual({
-      values: {},
-      errors: {
-        username: {
-          type: '',
-          message: 'Username is required',
-          types: {
-            0: 'Username is required',
-            1: 'Must be longer than 3 chars',
-          },
-        },
-        password: {
-          type: '',
-          message: 'Password must be at least 5 chars',
-          types: {
-            0: 'Password must be at least 5 chars',
-            1: 'Password must contain a digit',
-            2: 'Password must contain a symbol',
-          },
-        },
-        deepObject: {
-          data: {
-            type: '',
-            message: 'deepObject.data is required',
-            types: {
-              0: 'deepObject.data is required',
-            },
-          },
-        },
+    expect(
+      await vestResolver(validationSuite)(data, {}, true),
+    ).toMatchSnapshot();
+  });
+
+  it('should return all the error messages from vestResolver when validation fails and validateAllFieldCriteria set to true and `mode: sync`', async () => {
+    const data = {
+      username: '',
+      password: 'a',
+      deepObject: {
+        data: '',
       },
-    });
+    };
+
+    expect(
+      await vestResolver(validationSuite, undefined, { mode: 'sync' })(
+        data,
+        {},
+        true,
+      ),
+    ).toMatchSnapshot();
   });
 });

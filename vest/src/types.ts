@@ -9,7 +9,8 @@ export type ICreateResult = ReturnType<typeof Vest.create>;
 
 export type Resolver = (
   schema: ICreateResult,
-  options?: any,
+  schemaOptions?: never,
+  resolverOptions?: { mode: 'async' | 'sync' },
 ) => <TFieldValues extends FieldValues, TContext>(
   values: UnpackNestedValue<TFieldValues>,
   context?: TContext,
@@ -17,7 +18,3 @@ export type Resolver = (
 ) => Promise<ResolverResult<TFieldValues>>;
 
 export type VestErrors = Record<string, string[]>;
-
-export type Promisify = <T extends ICreateResult, K>(
-  fn: T,
-) => (args: K) => Promise<Vest.IVestResult>;
