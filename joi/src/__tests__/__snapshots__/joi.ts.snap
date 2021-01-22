@@ -32,7 +32,89 @@ Object {
 }
 `;
 
+exports[`joiResolver should return a single error from joiResolver with \`mode: sync\` when validation fails 1`] = `
+Object {
+  "errors": Object {
+    "birthYear": Object {
+      "message": "\\"birthYear\\" must be a number",
+      "type": "number.base",
+    },
+    "email": Object {
+      "message": "\\"email\\" is not allowed to be empty",
+      "type": "string.empty",
+    },
+    "enabled": Object {
+      "message": "\\"enabled\\" is required",
+      "type": "any.required",
+    },
+    "password": Object {
+      "message": "\\"password\\" with value \\"___\\" fails to match the required pattern: /^[a-zA-Z0-9]{3,30}$/",
+      "type": "string.pattern.base",
+    },
+    "tags": Object {
+      "message": "\\"tags\\" is required",
+      "type": "any.required",
+    },
+    "username": Object {
+      "message": "\\"username\\" is required",
+      "type": "any.required",
+    },
+  },
+  "values": Object {},
+}
+`;
+
 exports[`joiResolver should return all the errors from joiResolver when validation fails with \`validateAllFieldCriteria\` set to true 1`] = `
+Object {
+  "errors": Object {
+    "birthYear": Object {
+      "message": "\\"birthYear\\" must be a number",
+      "type": "number.base",
+      "types": Object {
+        "number.base": "\\"birthYear\\" must be a number",
+      },
+    },
+    "email": Object {
+      "message": "\\"email\\" is not allowed to be empty",
+      "type": "string.empty",
+      "types": Object {
+        "string.empty": "\\"email\\" is not allowed to be empty",
+      },
+    },
+    "enabled": Object {
+      "message": "\\"enabled\\" is required",
+      "type": "any.required",
+      "types": Object {
+        "any.required": "\\"enabled\\" is required",
+      },
+    },
+    "password": Object {
+      "message": "\\"password\\" with value \\"___\\" fails to match the required pattern: /^[a-zA-Z0-9]{3,30}$/",
+      "type": "string.pattern.base",
+      "types": Object {
+        "string.pattern.base": "\\"password\\" with value \\"___\\" fails to match the required pattern: /^[a-zA-Z0-9]{3,30}$/",
+      },
+    },
+    "tags": Object {
+      "message": "\\"tags\\" is required",
+      "type": "any.required",
+      "types": Object {
+        "any.required": "\\"tags\\" is required",
+      },
+    },
+    "username": Object {
+      "message": "\\"username\\" is required",
+      "type": "any.required",
+      "types": Object {
+        "any.required": "\\"username\\" is required",
+      },
+    },
+  },
+  "values": Object {},
+}
+`;
+
+exports[`joiResolver should return all the errors from joiResolver when validation fails with \`validateAllFieldCriteria\` set to true and \`mode: sync\` 1`] = `
 Object {
   "errors": Object {
     "birthYear": Object {

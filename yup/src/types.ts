@@ -9,7 +9,8 @@ type Options<T extends Yup.AnyObjectSchema> = Parameters<T['validate']>[1];
 
 export type Resolver = <T extends Yup.AnyObjectSchema>(
   schema: T,
-  options?: Options<T>,
+  schemaOptions?: Options<T>,
+  resolverOptions?: { mode: 'async' | 'sync' },
 ) => <TFieldValues extends FieldValues, TContext>(
   values: UnpackNestedValue<TFieldValues>,
   context?: TContext,

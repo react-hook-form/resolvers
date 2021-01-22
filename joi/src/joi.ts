@@ -46,15 +46,27 @@ const parseErrorSchema = (
 
 export const joiResolver: Resolver = (
   schema,
-  options = {
+  schemaOptions = {
     abortEarly: false,
   },
+  { mode } = { mode: 'async' },
 ) => async (values, _, validateAllFieldCriteria = false) => {
   try {
+    let result;
+    if (mode === 'async') {
+      result = await schema.validateAsync(values, schemaOptions);
+    } else {
+      const { value, error } = schema.validate(values, schemaOptions);
+
+      if (error) {
+        throw error;
+      }
+
+      result = value;
+    }
+
     return {
-      values: await schema.validateAsync(values, {
-        ...options,
-      }),
+      values: result,
       errors: {},
     };
   } catch (e) {
