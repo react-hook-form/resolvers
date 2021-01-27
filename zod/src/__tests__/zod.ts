@@ -31,7 +31,7 @@ describe('zodResolver', () => {
 
     const parseAsyncSpy = jest.spyOn(schema, 'parseAsync');
 
-    const result = await zodResolver(schema)(data);
+    const result = await zodResolver(schema)(data, undefined, { fields: {} });
 
     expect(parseAsyncSpy).toHaveBeenCalledTimes(1);
     expect(result).toEqual({ errors: {}, values: data });
@@ -51,7 +51,11 @@ describe('zodResolver', () => {
     const parseSpy = jest.spyOn(schema, 'parse');
     const parseAsyncSpy = jest.spyOn(schema, 'parseAsync');
 
-    const result = await zodResolver(schema, undefined, { mode: 'sync' })(data);
+    const result = await zodResolver(schema, undefined, { mode: 'sync' })(
+      data,
+      undefined,
+      { fields: {} },
+    );
 
     expect(parseSpy).toHaveBeenCalledTimes(1);
     expect(parseAsyncSpy).not.toHaveBeenCalled();
@@ -65,7 +69,7 @@ describe('zodResolver', () => {
       birthYear: 'birthYear',
     };
 
-    const result = await zodResolver(schema)(data);
+    const result = await zodResolver(schema)(data, undefined, { fields: {} });
 
     expect(result).toMatchSnapshot();
   });
@@ -80,7 +84,11 @@ describe('zodResolver', () => {
     const parseSpy = jest.spyOn(schema, 'parse');
     const parseAsyncSpy = jest.spyOn(schema, 'parseAsync');
 
-    const result = await zodResolver(schema, undefined, { mode: 'sync' })(data);
+    const result = await zodResolver(schema, undefined, { mode: 'sync' })(
+      data,
+      undefined,
+      { fields: {} },
+    );
 
     expect(parseSpy).toHaveBeenCalledTimes(1);
     expect(parseAsyncSpy).not.toHaveBeenCalled();
@@ -94,7 +102,10 @@ describe('zodResolver', () => {
       birthYear: 'birthYear',
     };
 
-    const result = await zodResolver(schema)(data, undefined, true);
+    const result = await zodResolver(schema)(data, undefined, {
+      fields: {},
+      criteriaMode: 'all',
+    });
 
     expect(result).toMatchSnapshot();
   });
@@ -109,7 +120,10 @@ describe('zodResolver', () => {
     const result = await zodResolver(schema, undefined, { mode: 'sync' })(
       data,
       undefined,
-      true,
+      {
+        fields: {},
+        criteriaMode: 'all',
+      },
     );
 
     expect(result).toMatchSnapshot();

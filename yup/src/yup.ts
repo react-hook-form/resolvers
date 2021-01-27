@@ -60,7 +60,7 @@ export const yupResolver: Resolver = (
     abortEarly: false,
   },
   { mode } = { mode: 'async' },
-) => async (values, context, validateAllFieldCriteria = false) => {
+) => async (values, context, { criteriaMode }) => {
   try {
     if (options.context && process.env.NODE_ENV === 'development') {
       // eslint-disable-next-line no-console
@@ -85,7 +85,7 @@ export const yupResolver: Resolver = (
       errors: {},
     };
   } catch (e) {
-    const parsedErrors = parseErrorSchema(e, validateAllFieldCriteria);
+    const parsedErrors = parseErrorSchema(e, criteriaMode === 'all');
 
     return {
       values: {},

@@ -41,7 +41,9 @@ describe('superstructResolver', () => {
       enabled: true,
     };
 
-    const result = await superstructResolver(schema)(data);
+    const result = await superstructResolver(schema)(data, undefined, {
+      fields: {},
+    });
 
     expect(result).toEqual({ errors: {}, values: data });
   });
@@ -53,7 +55,9 @@ describe('superstructResolver', () => {
       birthYear: 'birthYear',
     };
 
-    const result = await superstructResolver(schema)(data);
+    const result = await superstructResolver(schema)(data, undefined, {
+      fields: {},
+    });
 
     expect(result).toMatchSnapshot();
   });
@@ -65,7 +69,10 @@ describe('superstructResolver', () => {
       birthYear: 'birthYear',
     };
 
-    const result = await superstructResolver(schema)(data, undefined, true);
+    const result = await superstructResolver(schema)(data, undefined, {
+      fields: {},
+      criteriaMode: 'all',
+    });
 
     expect(result).toMatchSnapshot();
   });

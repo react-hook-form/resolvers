@@ -1,5 +1,6 @@
 import {
   FieldValues,
+  ResolverOptions,
   ResolverResult,
   UnpackNestedValue,
 } from 'react-hook-form';
@@ -9,9 +10,9 @@ type Options = Parameters<typeof validate>[2];
 
 export type Resolver = <T extends Struct<any, any>>(
   schema: T,
-  options?: Options,
+  factoryOtions?: Options,
 ) => <TFieldValues extends FieldValues, TContext>(
   values: UnpackNestedValue<TFieldValues>,
-  context?: TContext,
-  validateAllFieldCriteria?: boolean,
+  context: TContext | undefined,
+  options: ResolverOptions<TFieldValues>,
 ) => Promise<ResolverResult<TFieldValues>>;

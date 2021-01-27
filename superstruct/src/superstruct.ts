@@ -43,7 +43,7 @@ const parseErrorSchema = (
 export const superstructResolver: Resolver = (schema, options) => async (
   values,
   _context,
-  validateAllFieldCriteria = false,
+  { criteriaMode },
 ) => {
   const [errors, result] = validate(values, schema, options);
 
@@ -51,7 +51,7 @@ export const superstructResolver: Resolver = (schema, options) => async (
     return {
       values: {},
       errors: transformToNestObject(
-        parseErrorSchema(errors, validateAllFieldCriteria),
+        parseErrorSchema(errors, criteriaMode === 'all'),
       ),
     };
   }
