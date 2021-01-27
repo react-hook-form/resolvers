@@ -129,7 +129,7 @@
     "prettier": "^2.2.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-hook-form": "^6.14.2",
+    "react-hook-form": "^7.0.0-alpha.0",
     "semantic-release": "^17.3.6",
     "superstruct": "^0.13.3",
     "ts-jest": "^26.4.4",
@@ -139,7 +139,7 @@
     "zod": "^1.11.11"
   },
   "peerDependencies": {
-    "react-hook-form": ">=6.6.0"
+    "react-hook-form": "^7.0.0"
   },
   "husky": {
     "hooks": {
