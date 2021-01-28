@@ -1,5 +1,6 @@
 import {
   FieldValues,
+  ResolverOptions,
   ResolverResult,
   UnpackNestedValue,
 } from 'react-hook-form';
@@ -10,9 +11,9 @@ type Options<T extends Yup.AnyObjectSchema> = Parameters<T['validate']>[1];
 export type Resolver = <T extends Yup.AnyObjectSchema>(
   schema: T,
   schemaOptions?: Options<T>,
-  resolverOptions?: { mode: 'async' | 'sync' },
+  factoryOptions?: { mode: 'async' | 'sync' },
 ) => <TFieldValues extends FieldValues, TContext>(
   values: UnpackNestedValue<TFieldValues>,
-  context?: TContext,
-  validateAllFieldCriteria?: boolean,
+  context: TContext | undefined,
+  options: ResolverOptions<TFieldValues>,
 ) => Promise<ResolverResult<TFieldValues>>;

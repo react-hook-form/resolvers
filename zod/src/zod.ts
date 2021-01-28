@@ -51,7 +51,7 @@ export const zodResolver: Resolver = (
   schema,
   schemaOptions,
   { mode } = { mode: 'async' },
-) => async (values, _, validateAllFieldCriteria = false) => {
+) => async (values, _, { criteriaMode }) => {
   try {
     const result =
       mode === 'async'
@@ -63,7 +63,7 @@ export const zodResolver: Resolver = (
     return {
       values: {},
       errors: transformToNestObject(
-        parseErrorSchema(error, validateAllFieldCriteria),
+        parseErrorSchema(error, criteriaMode === 'all'),
       ),
     };
   }

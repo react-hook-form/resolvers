@@ -32,7 +32,7 @@ describe('yupResolver', () => {
     const schemaSpy = jest.spyOn(schema, 'validate');
     const schemaSyncSpy = jest.spyOn(schema, 'validateSync');
 
-    const result = await yupResolver(schema)(data);
+    const result = await yupResolver(schema)(data, undefined, { fields: {} });
 
     expect(schemaSpy).toHaveBeenCalledTimes(1);
     expect(schemaSyncSpy).not.toHaveBeenCalled();
@@ -54,7 +54,11 @@ describe('yupResolver', () => {
     const validateSyncSpy = jest.spyOn(schema, 'validateSync');
     const validateSpy = jest.spyOn(schema, 'validate');
 
-    const result = await yupResolver(schema, undefined, { mode: 'sync' })(data);
+    const result = await yupResolver(schema, undefined, { mode: 'sync' })(
+      data,
+      undefined,
+      { fields: {} },
+    );
 
     expect(validateSyncSpy).toHaveBeenCalledTimes(1);
     expect(validateSpy).not.toHaveBeenCalled();
@@ -68,7 +72,7 @@ describe('yupResolver', () => {
       birthYear: 'birthYear',
     };
 
-    const result = await yupResolver(schema)(data);
+    const result = await yupResolver(schema)(data, undefined, { fields: {} });
 
     expect(result).toMatchSnapshot();
   });
@@ -83,7 +87,11 @@ describe('yupResolver', () => {
     const validateSyncSpy = jest.spyOn(schema, 'validateSync');
     const validateSpy = jest.spyOn(schema, 'validate');
 
-    const result = await yupResolver(schema, undefined, { mode: 'sync' })(data);
+    const result = await yupResolver(schema, undefined, { mode: 'sync' })(
+      data,
+      undefined,
+      { fields: {} },
+    );
 
     expect(validateSyncSpy).toHaveBeenCalledTimes(1);
     expect(validateSpy).not.toHaveBeenCalled();
@@ -97,7 +105,10 @@ describe('yupResolver', () => {
       birthYear: 'birthYear',
     };
 
-    const result = await yupResolver(schema)(data, undefined, true);
+    const result = await yupResolver(schema)(data, undefined, {
+      fields: {},
+      criteriaMode: 'all',
+    });
 
     expect(result).toMatchSnapshot();
   });
@@ -112,7 +123,10 @@ describe('yupResolver', () => {
     const result = await yupResolver(schema, undefined, { mode: 'sync' })(
       data,
       undefined,
-      true,
+      {
+        fields: {},
+        criteriaMode: 'all',
+      },
     );
 
     expect(result).toMatchSnapshot();
@@ -132,7 +146,9 @@ describe('yupResolver', () => {
 
     const validateSpy = jest.spyOn(schemaWithContext, 'validate');
 
-    const result = await yupResolver(schemaWithContext)(data, context);
+    const result = await yupResolver(schemaWithContext)(data, context, {
+      fields: {},
+    });
     expect(validateSpy).toHaveBeenCalledTimes(1);
     expect(validateSpy).toHaveBeenCalledWith(
       data,
@@ -153,7 +169,9 @@ describe('yupResolver', () => {
       inner: [{ message: 'error1', type: 'required' }],
     });
 
-    const result = await yupResolver(yupSchema)({ name: '' });
+    const result = await yupResolver(yupSchema)({ name: '' }, undefined, {
+      fields: {},
+    });
     expect(result).toMatchSnapshot();
   });
 
@@ -161,7 +179,13 @@ describe('yupResolver', () => {
     jest.spyOn(console, 'warn').mockImplementation(jest.fn);
     process.env.NODE_ENV = 'development';
 
-    await yupResolver(yup.object(), { context: { noContext: true } })({});
+    await yupResolver(yup.object(), { context: { noContext: true } })(
+      {},
+      undefined,
+      {
+        fields: {},
+      },
+    );
     expect(console.warn).toHaveBeenCalledWith(
       "You should not used the yup options context. Please, use the 'useForm' context object instead",
     );
@@ -172,7 +196,11 @@ describe('yupResolver', () => {
     jest.spyOn(console, 'warn').mockImplementation(jest.fn);
     process.env.NODE_ENV = 'production';
 
-    await yupResolver(yup.object(), { context: { noContext: true } })({});
+    await yupResolver(yup.object(), { context: { noContext: true } })(
+      {},
+      undefined,
+      { fields: {} },
+    );
     expect(console.warn).not.toHaveBeenCalled();
     process.env.NODE_ENV = 'test';
   });
@@ -189,7 +217,7 @@ describe('yupResolver', () => {
           'Email or name are required',
           (value) => !!(value && (value.name || value.email)),
         ),
-    )({ name: '', email: '' });
+    )({ name: '', email: '' }, undefined, { fields: {} });
 
     expect(result).toMatchSnapshot();
   });

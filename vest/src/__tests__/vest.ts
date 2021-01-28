@@ -40,7 +40,9 @@ describe('vestResolver', () => {
         data: 'test',
       },
     };
-    expect(await vestResolver(validationSuite)(data)).toEqual({
+    expect(
+      await vestResolver(validationSuite)(data, undefined, { fields: {} }),
+    ).toEqual({
       values: data,
       errors: {},
     });
@@ -55,7 +57,11 @@ describe('vestResolver', () => {
       },
     };
     expect(
-      await vestResolver(validationSuite, undefined, { mode: 'sync' })(data),
+      await vestResolver(validationSuite, undefined, { mode: 'sync' })(
+        data,
+        undefined,
+        { fields: {} },
+      ),
     ).toEqual({
       values: data,
       errors: {},
@@ -71,7 +77,9 @@ describe('vestResolver', () => {
       },
     };
 
-    expect(await vestResolver(validationSuite)(data)).toMatchSnapshot();
+    expect(
+      await vestResolver(validationSuite)(data, undefined, { fields: {} }),
+    ).toMatchSnapshot();
   });
 
   it('should return single error message from vestResolver when validation fails and validateAllFieldCriteria set to false and `mode: sync`', async () => {
@@ -84,7 +92,11 @@ describe('vestResolver', () => {
     };
 
     expect(
-      await vestResolver(validationSuite, undefined, { mode: 'sync' })(data),
+      await vestResolver(validationSuite, undefined, { mode: 'sync' })(
+        data,
+        undefined,
+        { fields: {} },
+      ),
     ).toMatchSnapshot();
   });
 
@@ -98,7 +110,11 @@ describe('vestResolver', () => {
     };
 
     expect(
-      await vestResolver(validationSuite)(data, {}, true),
+      await vestResolver(validationSuite)(
+        data,
+        {},
+        { fields: {}, criteriaMode: 'all' },
+      ),
     ).toMatchSnapshot();
   });
 
@@ -115,7 +131,7 @@ describe('vestResolver', () => {
       await vestResolver(validationSuite, undefined, { mode: 'sync' })(
         data,
         {},
-        true,
+        { fields: {}, criteriaMode: 'all' },
       ),
     ).toMatchSnapshot();
   });

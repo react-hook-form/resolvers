@@ -41,7 +41,7 @@ describe('joiResolver', () => {
     const validateAsyncSpy = jest.spyOn(schema, 'validateAsync');
     const validateSpy = jest.spyOn(schema, 'validate');
 
-    const result = await joiResolver(schema)(data);
+    const result = await joiResolver(schema)(data, undefined, { fields: {} });
 
     expect(validateSpy).not.toHaveBeenCalled();
     expect(validateAsyncSpy).toHaveBeenCalledTimes(1);
@@ -62,7 +62,11 @@ describe('joiResolver', () => {
     const validateAsyncSpy = jest.spyOn(schema, 'validateAsync');
     const validateSpy = jest.spyOn(schema, 'validate');
 
-    const result = await joiResolver(schema, undefined, { mode: 'sync' })(data);
+    const result = await joiResolver(schema, undefined, { mode: 'sync' })(
+      data,
+      undefined,
+      { fields: {} },
+    );
 
     expect(validateAsyncSpy).not.toHaveBeenCalled();
     expect(validateSpy).toHaveBeenCalledTimes(1);
@@ -76,7 +80,7 @@ describe('joiResolver', () => {
       birthYear: 'birthYear',
     };
 
-    const result = await joiResolver(schema)(data);
+    const result = await joiResolver(schema)(data, undefined, { fields: {} });
 
     expect(result).toMatchSnapshot();
   });
@@ -91,7 +95,11 @@ describe('joiResolver', () => {
     const validateAsyncSpy = jest.spyOn(schema, 'validateAsync');
     const validateSpy = jest.spyOn(schema, 'validate');
 
-    const result = await joiResolver(schema, undefined, { mode: 'sync' })(data);
+    const result = await joiResolver(schema, undefined, { mode: 'sync' })(
+      data,
+      undefined,
+      { fields: {} },
+    );
 
     expect(validateAsyncSpy).not.toHaveBeenCalled();
     expect(validateSpy).toHaveBeenCalledTimes(1);
@@ -105,7 +113,10 @@ describe('joiResolver', () => {
       birthYear: 'birthYear',
     };
 
-    const result = await joiResolver(schema)(data, undefined, true);
+    const result = await joiResolver(schema)(data, undefined, {
+      fields: {},
+      criteriaMode: 'all',
+    });
 
     expect(result).toMatchSnapshot();
   });
@@ -120,7 +131,10 @@ describe('joiResolver', () => {
     const result = await joiResolver(schema, undefined, { mode: 'sync' })(
       data,
       undefined,
-      true,
+      {
+        fields: {},
+        criteriaMode: 'all',
+      },
     );
 
     expect(result).toMatchSnapshot();

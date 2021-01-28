@@ -32,7 +32,7 @@ export const vestResolver: Resolver = (
   schema,
   _,
   { mode } = { mode: 'async' },
-) => async (values, _context, validateAllFieldCriteria = false) => {
+) => async (values, _context, { criteriaMode }) => {
   let result: IVestResult | DraftResult;
   if (mode === 'async') {
     const validateSchema = promisify(schema);
@@ -50,7 +50,7 @@ export const vestResolver: Resolver = (
   return {
     values: {},
     errors: transformToNestObject(
-      parseErrorSchema(errors, validateAllFieldCriteria),
+      parseErrorSchema(errors, criteriaMode === 'all'),
     ),
   };
 };

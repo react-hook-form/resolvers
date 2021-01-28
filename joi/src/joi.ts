@@ -50,7 +50,7 @@ export const joiResolver: Resolver = (
     abortEarly: false,
   },
   { mode } = { mode: 'async' },
-) => async (values, _, validateAllFieldCriteria = false) => {
+) => async (values, _, { criteriaMode }) => {
   try {
     let result;
     if (mode === 'async') {
@@ -73,7 +73,7 @@ export const joiResolver: Resolver = (
     return {
       values: {},
       errors: transformToNestObject(
-        parseErrorSchema(e, validateAllFieldCriteria),
+        parseErrorSchema(e, criteriaMode === 'all'),
       ),
     };
   }
