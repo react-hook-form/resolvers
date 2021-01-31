@@ -10,6 +10,13 @@ const schema = z
     author: z.object({
       id: z.number(),
     }),
+    likedUsers: z
+      .array(
+        z.object({
+          id: z.number(),
+        }),
+      )
+      .optional(),
     count: z.number().positive().int(),
     date: z.date(),
     url: z.string().url(),
@@ -36,6 +43,7 @@ describe('zodResolver', () => {
       author: {
         id: 1,
       },
+      likedUsers: [{ id: 1 }],
       count: 4,
       date: new Date(),
       url: 'https://github.com/react-hook-form/resolvers',
@@ -73,6 +81,7 @@ describe('zodResolver', () => {
       author: {
         id: '1',
       },
+      likedUsers: [{ id: '1' }],
       count: -5,
       date: 'date',
       password: 'R',
