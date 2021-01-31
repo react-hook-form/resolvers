@@ -133,6 +133,23 @@ Object {
         "invalid_type": "Expected number, received string",
       },
     },
+    "likedUsers": Object {
+      "0": Object {
+        "id": Object {
+          "message": "Expected number, received string",
+          "type": "invalid_type",
+          "types": Object {
+            "invalid_type": "Expected number, received string",
+          },
+        },
+      },
+      "message": "Invalid input",
+      "type": "invalid_union",
+      "types": Object {
+        "invalid_type": "Expected undefined, received array",
+        "invalid_union": "Invalid input",
+      },
+    },
     "password": Object {
       "message": "Should be at least 8 characters",
       "type": "too_small",

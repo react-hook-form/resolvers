@@ -17,39 +17,48 @@ const parseErrorSchema = (
     return {};
   }
 
-  return zodError.errors.reduce<Record<string, any>>(
-    (previous, { path, message, code: type }) => {
-      const currentPath = convertArrayToPathName(path);
+  const errors = [...zodError.errors];
+  let previous: Record<string, any> = {};
 
-      return {
-        ...previous,
-        ...(path
-          ? previous[currentPath] && validateAllFieldCriteria
-            ? {
-                [currentPath]: appendErrors(
-                  currentPath,
-                  validateAllFieldCriteria,
-                  previous,
-                  type,
-                  message,
-                ),
-              }
-            : {
-                [currentPath]: previous[currentPath] || {
-                  message,
-                  type,
-                  ...(validateAllFieldCriteria
-                    ? {
-                        types: { [type]: message || true },
-                      }
-                    : {}),
-                },
-              }
-          : {}),
-      };
-    },
-    {},
-  );
+  for (const error of errors) {
+    const { path, message, code: type } = error;
+    const currentPath = convertArrayToPathName(path);
+
+    if ('unionErrors' in error) {
+      for (const subErrors of error.unionErrors.map((e) => e.errors)) {
+        errors.push(...subErrors);
+      }
+    }
+
+    previous = {
+      ...previous,
+      ...(path
+        ? previous[currentPath] && validateAllFieldCriteria
+          ? {
+              [currentPath]: appendErrors(
+                currentPath,
+                validateAllFieldCriteria,
+                previous,
+                type,
+                message,
+              ),
+            }
+          : {
+              [currentPath]: previous[currentPath] || {
+                message,
+                type,
+                ...(validateAllFieldCriteria
+                  ? {
+                      types: { [type]: message || true },
+                    }
+                  : {}),
+              },
+            }
+        : {}),
+    };
+  }
+
+  return previous;
 };
 
 export const zodResolver = <T extends z.ZodSchema<any, any>>(
