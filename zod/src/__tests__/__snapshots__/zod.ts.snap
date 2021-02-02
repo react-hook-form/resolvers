@@ -19,6 +19,20 @@ Object {
       "message": "Required",
       "type": "invalid_type",
     },
+    "like": Object {
+      "0": Object {
+        "id": Object {
+          "message": "Expected number, received string",
+          "type": "invalid_type",
+        },
+        "name": Object {
+          "message": "Required",
+          "type": "invalid_type",
+        },
+      },
+      "message": "Invalid input",
+      "type": "invalid_union",
+    },
     "password": Object {
       "message": "Invalid",
       "type": "invalid_string",
@@ -59,6 +73,20 @@ Object {
       "message": "Required",
       "type": "invalid_type",
     },
+    "like": Object {
+      "0": Object {
+        "id": Object {
+          "message": "Expected number, received string",
+          "type": "invalid_type",
+        },
+        "name": Object {
+          "message": "Required",
+          "type": "invalid_type",
+        },
+      },
+      "message": "Invalid input",
+      "type": "invalid_union",
+    },
     "password": Object {
       "message": "Invalid",
       "type": "invalid_string",
@@ -87,6 +115,7 @@ Object {
       "message": "Invalid input",
       "type": "invalid_union",
       "types": Object {
+        "invalid_type": "Expected undefined, received string",
         "invalid_union": "Invalid input",
       },
     },
@@ -109,6 +138,30 @@ Object {
       "type": "invalid_type",
       "types": Object {
         "invalid_type": "Required",
+      },
+    },
+    "like": Object {
+      "0": Object {
+        "id": Object {
+          "message": "Expected number, received string",
+          "type": "invalid_type",
+          "types": Object {
+            "invalid_type": "Expected number, received string",
+          },
+        },
+        "name": Object {
+          "message": "Required",
+          "type": "invalid_type",
+          "types": Object {
+            "invalid_type": "Required",
+          },
+        },
+      },
+      "message": "Invalid input",
+      "type": "invalid_union",
+      "types": Object {
+        "invalid_type": "Expected undefined, received array",
+        "invalid_union": "Invalid input",
       },
     },
     "password": Object {
@@ -151,6 +204,7 @@ Object {
       "message": "Invalid input",
       "type": "invalid_union",
       "types": Object {
+        "invalid_type": "Expected undefined, received string",
         "invalid_union": "Invalid input",
       },
     },
@@ -173,6 +227,30 @@ Object {
       "type": "invalid_type",
       "types": Object {
         "invalid_type": "Required",
+      },
+    },
+    "like": Object {
+      "0": Object {
+        "id": Object {
+          "message": "Expected number, received string",
+          "type": "invalid_type",
+          "types": Object {
+            "invalid_type": "Expected number, received string",
+          },
+        },
+        "name": Object {
+          "message": "Required",
+          "type": "invalid_type",
+          "types": Object {
+            "invalid_type": "Required",
+          },
+        },
+      },
+      "message": "Invalid input",
+      "type": "invalid_union",
+      "types": Object {
+        "invalid_type": "Expected undefined, received array",
+        "invalid_union": "Invalid input",
       },
     },
     "password": Object {
