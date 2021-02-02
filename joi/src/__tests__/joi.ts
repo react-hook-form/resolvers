@@ -139,4 +139,29 @@ describe('joiResolver', () => {
 
     expect(result).toMatchSnapshot();
   });
+
+  it('should return values from joiResolver when validation pass and pass down the Joi context', async () => {
+    const data: Data = {
+      username: 'Doe',
+      password: 'Password123',
+      repeatPassword: 'Password123',
+      birthYear: 2000,
+      email: 'john@doe.com',
+      tags: ['tag1', 'tag2'],
+      enabled: true,
+    };
+    const context = { value: 'context' };
+    const validateAsyncSpy = jest.spyOn(schema, 'validateAsync');
+    const validateSpy = jest.spyOn(schema, 'validate');
+
+    const result = await joiResolver(schema)(data, context, { fields: {} });
+
+    expect(validateSpy).not.toHaveBeenCalled();
+    expect(validateAsyncSpy).toHaveBeenCalledTimes(1);
+    expect(validateAsyncSpy).toHaveBeenCalledWith(data, {
+      abortEarly: false,
+      context,
+    });
+    expect(result).toEqual({ errors: {}, values: data });
+  });
 });

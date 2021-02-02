@@ -50,13 +50,19 @@ export const joiResolver: Resolver = (
     abortEarly: false,
   },
   { mode } = { mode: 'async' },
-) => async (values, _, { criteriaMode }) => {
+) => async (values, context, { criteriaMode }) => {
   try {
     let result;
     if (mode === 'async') {
-      result = await schema.validateAsync(values, schemaOptions);
+      result = await schema.validateAsync(values, {
+        ...schemaOptions,
+        context,
+      });
     } else {
-      const { value, error } = schema.validate(values, schemaOptions);
+      const { value, error } = schema.validate(values, {
+        ...schemaOptions,
+        context,
+      });
 
       if (error) {
         throw error;
