@@ -54,13 +54,14 @@ export const joiResolver = <TFieldValues extends FieldValues>(
   },
 ): Resolver<TFieldValues> => async (
   values,
-  _,
+  context,
   validateAllFieldCriteria = false,
 ) => {
   try {
     return {
       values: await schema.validateAsync(values, {
         ...options,
+        context,
       }),
       errors: {},
     };

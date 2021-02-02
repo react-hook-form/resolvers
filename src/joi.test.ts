@@ -30,4 +30,20 @@ describe('joiResolver', () => {
   it('should return errors', async () => {
     expect(await joiResolver(schema)({})).toMatchSnapshot();
   });
+
+  it('should validate with context', async () => {
+    const schemaSpy = jest.spyOn(schema, 'validateAsync');
+    const context = { value: 'context' };
+
+    const data = { username: 'abc', birthYear: 1994 };
+    expect(await joiResolver(schema)(data, context)).toEqual({
+      values: data,
+      errors: {},
+    });
+
+    expect(schemaSpy).toHaveBeenCalledWith(data, {
+      abortEarly: false,
+      context,
+    });
+  });
 });
