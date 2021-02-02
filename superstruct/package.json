@@ -12,6 +12,7 @@
   "license": "MIT",
   "peerDependencies": {
     "react-hook-form": ">=6.6.0",
-    "@hookform/resolvers": "^1.0.0"
+    "@hookform/resolvers": "^1.0.0",
+    "superstruct": ">+0.12.0"
   }
 }

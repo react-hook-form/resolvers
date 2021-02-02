@@ -15,6 +15,18 @@ Object {
       "message": "Expected a value of type \`boolean\`, but received: \`undefined\`",
       "type": "boolean",
     },
+    "like": Array [
+      Object {
+        "id": Object {
+          "message": "Expected a number, but received: \\"z\\"",
+          "type": "number",
+        },
+        "name": Object {
+          "message": "Expected a string, but received: undefined",
+          "type": "string",
+        },
+      },
+    ],
     "password": Object {
       "message": "Expected a string matching \`/^[a-zA-Z0-9]{3,30}/\` but received \\"___\\"",
       "type": "string",
@@ -30,63 +42,6 @@ Object {
     "username": Object {
       "message": "Expected a string, but received: undefined",
       "type": "string",
-    },
-  },
-  "values": Object {},
-}
-`;
-
-exports[`superstructResolver should return all the errors from superstructResolver when validation fails with \`validateAllFieldCriteria\` set to true 1`] = `
-Object {
-  "errors": Object {
-    "birthYear": Object {
-      "message": "Expected a number, but received: \\"birthYear\\"",
-      "type": "number",
-      "types": Object {
-        "number": "Expected a number, but received: \\"birthYear\\"",
-      },
-    },
-    "email": Object {
-      "message": "Expected a string matching \`/^[\\\\w-\\\\.]+@([\\\\w-]+\\\\.)+[\\\\w-]{2,4}$/\` but received \\"\\"",
-      "type": "string",
-      "types": Object {
-        "string": "Expected a string matching \`/^[\\\\w-\\\\.]+@([\\\\w-]+\\\\.)+[\\\\w-]{2,4}$/\` but received \\"\\"",
-      },
-    },
-    "enabled": Object {
-      "message": "Expected a value of type \`boolean\`, but received: \`undefined\`",
-      "type": "boolean",
-      "types": Object {
-        "boolean": "Expected a value of type \`boolean\`, but received: \`undefined\`",
-      },
-    },
-    "password": Object {
-      "message": "Expected a string matching \`/^[a-zA-Z0-9]{3,30}/\` but received \\"___\\"",
-      "type": "string",
-      "types": Object {
-        "string": "Expected a string matching \`/^[a-zA-Z0-9]{3,30}/\` but received \\"___\\"",
-      },
-    },
-    "repeatPassword": Object {
-      "message": "Expected a value of type \`Password\`, but received: \`undefined\`",
-      "type": "Password",
-      "types": Object {
-        "Password": "Expected a value of type \`Password\`, but received: \`undefined\`",
-      },
-    },
-    "tags": Object {
-      "message": "Expected an array value, but received: undefined",
-      "type": "array",
-      "types": Object {
-        "array": "Expected an array value, but received: undefined",
-      },
-    },
-    "username": Object {
-      "message": "Expected a string, but received: undefined",
-      "type": "string",
-      "types": Object {
-        "string": "Expected a string, but received: undefined",
-      },
     },
   },
   "values": Object {},
