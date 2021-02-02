@@ -1,6 +1,5 @@
 import { appendErrors, transformToNestObject } from 'react-hook-form';
 import { StructError, validate } from 'superstruct';
-// @ts-expect-error maybe fixed after the first publish ?
 import { convertArrayToPathName } from '@hookform/resolvers';
 import { Resolver } from './types';
 
