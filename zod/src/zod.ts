@@ -1,6 +1,6 @@
-import { appendErrors, transformToNestObject } from 'react-hook-form';
+import { appendErrors } from 'react-hook-form';
 import * as z from 'zod';
-import { convertArrayToPathName } from '@hookform/resolvers';
+import { convertArrayToPathName, toNestObject } from '@hookform/resolvers';
 import type { Resolver } from './types';
 
 const parseErrorSchema = (
@@ -61,9 +61,7 @@ export const zodResolver: Resolver = (
   } catch (error) {
     return {
       values: {},
-      errors: transformToNestObject(
-        parseErrorSchema(error, criteriaMode === 'all'),
-      ),
+      errors: toNestObject(parseErrorSchema(error, criteriaMode === 'all')),
     };
   }
 };
