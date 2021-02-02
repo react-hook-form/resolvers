@@ -1,4 +1,4 @@
-import { transformToNestObject } from 'react-hook-form';
+import { toNestObject } from '@hookform/resolvers';
 import promisify from 'vest/promisify';
 import { DraftResult, IVestResult } from 'vest/vestResult';
 import type { VestErrors, Resolver } from './types';
@@ -49,8 +49,6 @@ export const vestResolver: Resolver = (
 
   return {
     values: {},
-    errors: transformToNestObject(
-      parseErrorSchema(errors, criteriaMode === 'all'),
-    ),
+    errors: toNestObject(parseErrorSchema(errors, criteriaMode === 'all')),
   };
 };
