@@ -1,6 +1,5 @@
 import { appendErrors, transformToNestObject } from 'react-hook-form';
 import * as z from 'zod';
-// @ts-expect-error maybe fixed after the first publish ?
 import { convertArrayToPathName } from '@hookform/resolvers';
 import type { Resolver } from './types';
 
