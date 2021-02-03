@@ -20,6 +20,15 @@ Object {
       "ref": undefined,
       "type": "any.required",
     },
+    "like": Array [
+      Object {
+        "id": Object {
+          "message": "\\"like[0].id\\" must be a number",
+          "ref": undefined,
+          "type": "number.base",
+        },
+      },
+    ],
     "password": Object {
       "message": "\\"password\\" with value \\"___\\" fails to match the required pattern: /^[a-zA-Z0-9]{3,30}$/",
       "ref": Object {
@@ -64,6 +73,15 @@ Object {
       "ref": undefined,
       "type": "any.required",
     },
+    "like": Array [
+      Object {
+        "id": Object {
+          "message": "\\"like[0].id\\" must be a number",
+          "ref": undefined,
+          "type": "number.base",
+        },
+      },
+    ],
     "password": Object {
       "message": "\\"password\\" with value \\"___\\" fails to match the required pattern: /^[a-zA-Z0-9]{3,30}$/",
       "ref": Object {
@@ -117,6 +135,18 @@ Object {
         "any.required": "\\"enabled\\" is required",
       },
     },
+    "like": Array [
+      Object {
+        "id": Object {
+          "message": "\\"like[0].id\\" must be a number",
+          "ref": undefined,
+          "type": "number.base",
+          "types": Object {
+            "number.base": "\\"like[0].id\\" must be a number",
+          },
+        },
+      },
+    ],
     "password": Object {
       "message": "\\"password\\" with value \\"___\\" fails to match the required pattern: /^[a-zA-Z0-9]{3,30}$/",
       "ref": Object {
@@ -179,6 +209,18 @@ Object {
         "any.required": "\\"enabled\\" is required",
       },
     },
+    "like": Array [
+      Object {
+        "id": Object {
+          "message": "\\"like[0].id\\" must be a number",
+          "ref": undefined,
+          "type": "number.base",
+          "types": Object {
+            "number.base": "\\"like[0].id\\" must be a number",
+          },
+        },
+      },
+    ],
     "password": Object {
       "message": "\\"password\\" with value \\"___\\" fails to match the required pattern: /^[a-zA-Z0-9]{3,30}$/",
       "ref": Object {

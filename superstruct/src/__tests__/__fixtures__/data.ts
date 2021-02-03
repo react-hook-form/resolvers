@@ -27,6 +27,7 @@ export const schema = object({
   email: optional(pattern(string(), /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)),
   tags: array(string()),
   enabled: boolean(),
+  like: optional(array(object({ id: number(), name: size(string(), 4) }))),
 });
 
 export const validData: Infer<typeof schema> = {
@@ -37,12 +38,19 @@ export const validData: Infer<typeof schema> = {
   email: 'john@doe.com',
   tags: ['tag1', 'tag2'],
   enabled: true,
+  like: [
+    {
+      id: 1,
+      name: 'name',
+    },
+  ],
 };
 
 export const invalidData = {
   password: '___',
   email: '',
   birthYear: 'birthYear',
+  like: [{ id: 'z' }],
 };
 
 export const fields: Record<InternalFieldName, Field['_f']> = {

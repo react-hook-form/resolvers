@@ -13,6 +13,12 @@ export const schema = yup.object({
   email: yup.string().email(),
   tags: yup.array(yup.string()),
   enabled: yup.boolean(),
+  like: yup.array().of(
+    yup.object({
+      id: yup.number().required(),
+      name: yup.string().length(4).required(),
+    }),
+  ),
 });
 
 export const validData: yup.InferType<typeof schema> = {
@@ -24,12 +30,19 @@ export const validData: yup.InferType<typeof schema> = {
   tags: ['tag1', 'tag2'],
   enabled: true,
   accessToken: 'accessToken',
+  like: [
+    {
+      id: 1,
+      name: 'name',
+    },
+  ],
 };
 
 export const invalidData = {
   password: '___',
   email: '',
   birthYear: 'birthYear',
+  like: [{ id: 'z' }],
 };
 
 export const fields: Record<InternalFieldName, Field['_f']> = {

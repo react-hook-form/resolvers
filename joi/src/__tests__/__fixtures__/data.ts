@@ -14,6 +14,9 @@ export const schema = Joi.object({
   }),
   tags: Joi.array().items(Joi.string()).required(),
   enabled: Joi.boolean().required(),
+  like: Joi.array()
+    .items(Joi.object({ id: Joi.number(), name: Joi.string().length(4) }))
+    .optional(),
 });
 
 interface Data {
@@ -25,6 +28,7 @@ interface Data {
   email?: string;
   tags: string[];
   enabled: boolean;
+  like: { id: number; name: string }[];
 }
 
 export const validData: Data = {
@@ -35,12 +39,19 @@ export const validData: Data = {
   email: 'john@doe.com',
   tags: ['tag1', 'tag2'],
   enabled: true,
+  like: [
+    {
+      id: 1,
+      name: 'name',
+    },
+  ],
 };
 
 export const invalidData = {
   password: '___',
   email: '',
   birthYear: 'birthYear',
+  like: [{ id: 'z' }],
 };
 
 export const fields: Record<InternalFieldName, Field['_f']> = {

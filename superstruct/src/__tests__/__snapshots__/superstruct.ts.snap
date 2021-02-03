@@ -20,6 +20,20 @@ Object {
       "ref": undefined,
       "type": "boolean",
     },
+    "like": Array [
+      Object {
+        "id": Object {
+          "message": "Expected a number, but received: \\"z\\"",
+          "ref": undefined,
+          "type": "number",
+        },
+        "name": Object {
+          "message": "Expected a string, but received: undefined",
+          "ref": undefined,
+          "type": "string",
+        },
+      },
+    ],
     "password": Object {
       "message": "Expected a string matching \`/^[a-zA-Z0-9]{3,30}/\` but received \\"___\\"",
       "ref": Object {
@@ -78,6 +92,26 @@ Object {
         "boolean": "Expected a value of type \`boolean\`, but received: \`undefined\`",
       },
     },
+    "like": Array [
+      Object {
+        "id": Object {
+          "message": "Expected a number, but received: \\"z\\"",
+          "ref": undefined,
+          "type": "number",
+          "types": Object {
+            "number": "Expected a number, but received: \\"z\\"",
+          },
+        },
+        "name": Object {
+          "message": "Expected a string, but received: undefined",
+          "ref": undefined,
+          "type": "string",
+          "types": Object {
+            "string": "Expected a string, but received: undefined",
+          },
+        },
+      },
+    ],
     "password": Object {
       "message": "Expected a string matching \`/^[a-zA-Z0-9]{3,30}/\` but received \\"___\\"",
       "ref": Object {

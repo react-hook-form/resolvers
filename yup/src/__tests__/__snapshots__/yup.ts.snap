@@ -8,6 +8,20 @@ Object {
       "ref": undefined,
       "type": "typeError",
     },
+    "like": Array [
+      Object {
+        "id": Object {
+          "message": "like[0].id must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"z\\"\`).",
+          "ref": undefined,
+          "type": "typeError",
+        },
+        "name": Object {
+          "message": "like[0].name is a required field",
+          "ref": undefined,
+          "type": "required",
+        },
+      },
+    ],
     "password": Object {
       "message": "password must match the following: \\"/^[a-zA-Z0-9]{3,30}/\\"",
       "ref": Object {
@@ -35,6 +49,20 @@ Object {
       "ref": undefined,
       "type": "typeError",
     },
+    "like": Array [
+      Object {
+        "id": Object {
+          "message": "like[0].id must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"z\\"\`).",
+          "ref": undefined,
+          "type": "typeError",
+        },
+        "name": Object {
+          "message": "like[0].name is a required field",
+          "ref": undefined,
+          "type": "required",
+        },
+      },
+    ],
     "password": Object {
       "message": "password must match the following: \\"/^[a-zA-Z0-9]{3,30}/\\"",
       "ref": Object {
@@ -65,6 +93,26 @@ Object {
         "typeError": "birthYear must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"birthYear\\"\`).",
       },
     },
+    "like": Array [
+      Object {
+        "id": Object {
+          "message": "like[0].id must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"z\\"\`).",
+          "ref": undefined,
+          "type": "typeError",
+          "types": Object {
+            "typeError": "like[0].id must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"z\\"\`).",
+          },
+        },
+        "name": Object {
+          "message": "like[0].name is a required field",
+          "ref": undefined,
+          "type": "required",
+          "types": Object {
+            "required": "like[0].name is a required field",
+          },
+        },
+      },
+    ],
     "password": Object {
       "message": "password must match the following: \\"/^[a-zA-Z0-9]{3,30}/\\"",
       "ref": Object {
@@ -101,6 +149,26 @@ Object {
         "typeError": "birthYear must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"birthYear\\"\`).",
       },
     },
+    "like": Array [
+      Object {
+        "id": Object {
+          "message": "like[0].id must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"z\\"\`).",
+          "ref": undefined,
+          "type": "typeError",
+          "types": Object {
+            "typeError": "like[0].id must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"z\\"\`).",
+          },
+        },
+        "name": Object {
+          "message": "like[0].name is a required field",
+          "ref": undefined,
+          "type": "required",
+          "types": Object {
+            "required": "like[0].name is a required field",
+          },
+        },
+      },
+    ],
     "password": Object {
       "message": "password must match the following: \\"/^[a-zA-Z0-9]{3,30}/\\"",
       "ref": Object {
