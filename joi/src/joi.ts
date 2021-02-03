@@ -1,5 +1,5 @@
 import { appendErrors } from 'react-hook-form';
-import { toNestObject } from '@hookform/resolvers';
+import { toNestError } from '@hookform/resolvers';
 import * as Joi from 'joi';
 import { convertArrayToPathName } from '@hookform/resolvers';
 import { Resolver } from './types';
@@ -78,7 +78,7 @@ export const joiResolver: Resolver = (
   } catch (e) {
     return {
       values: {},
-      errors: toNestObject(parseErrorSchema(e, criteriaMode === 'all'), fields),
+      errors: toNestError(parseErrorSchema(e, criteriaMode === 'all'), fields),
     };
   }
 };

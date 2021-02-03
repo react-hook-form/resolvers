@@ -1,5 +1,5 @@
 import { Field, FieldError, InternalFieldName } from 'react-hook-form';
-import { toNestObject } from '../toNestObject';
+import { toNestError } from '../toNestError';
 
 test('transforms flat object to nested object', () => {
   const flatObject: Record<string, FieldError> = {
@@ -22,7 +22,7 @@ test('transforms flat object to nested object', () => {
     },
   } as any) as Record<InternalFieldName, Field['_f']>;
 
-  expect(toNestObject(flatObject, fields)).toMatchInlineSnapshot(`
+  expect(toNestError(flatObject, fields)).toMatchInlineSnapshot(`
     Object {
       "n": Object {
         "test": Object {

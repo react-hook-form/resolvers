@@ -1,4 +1,4 @@
-import { toNestObject } from '@hookform/resolvers';
+import { toNestError } from '@hookform/resolvers';
 import promisify from 'vest/promisify';
 import { DraftResult, IVestResult } from 'vest/vestResult';
 import type { VestErrors, Resolver } from './types';
@@ -49,7 +49,7 @@ export const vestResolver: Resolver = (
 
   return {
     values: {},
-    errors: toNestObject(
+    errors: toNestError(
       parseErrorSchema(errors, criteriaMode === 'all'),
       fields,
     ),

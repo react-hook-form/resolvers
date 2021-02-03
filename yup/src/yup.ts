@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import Yup from 'yup';
-import { toNestObject } from '@hookform/resolvers';
+import { toNestError } from '@hookform/resolvers';
 import { Resolver } from './types';
 
 /**
@@ -89,7 +89,7 @@ export const yupResolver: Resolver = (
 
     return {
       values: {},
-      errors: toNestObject(parsedErrors, fields),
+      errors: toNestError(parsedErrors, fields),
     };
   }
 };

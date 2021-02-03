@@ -1,5 +1,5 @@
 import { appendErrors } from 'react-hook-form';
-import { toNestObject } from '@hookform/resolvers';
+import { toNestError } from '@hookform/resolvers';
 
 import { StructError, validate } from 'superstruct';
 import { convertArrayToPathName } from '@hookform/resolvers';
@@ -51,7 +51,7 @@ export const superstructResolver: Resolver = (schema, options) => async (
   if (errors != null) {
     return {
       values: {},
-      errors: toNestObject(
+      errors: toNestError(
         parseErrorSchema(errors, criteriaMode === 'all'),
         fields,
       ),

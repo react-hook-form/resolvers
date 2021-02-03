@@ -7,7 +7,7 @@ import {
   InternalFieldName,
 } from 'react-hook-form';
 
-export const toNestObject = <TFieldValues>(
+export const toNestError = <TFieldValues>(
   errors: Record<string, FieldError>,
   fields: Record<InternalFieldName, Field['_f']>,
 ): FieldErrors<TFieldValues> => {
