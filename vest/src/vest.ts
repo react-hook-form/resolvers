@@ -1,57 +1,45 @@
 import { toNestError } from '@hookform/resolvers';
+import { FieldError } from 'react-hook-form';
 import promisify from 'vest/promisify';
-import { DraftResult, IVestResult } from 'vest/vestResult';
 import type { VestErrors, Resolver } from './types';
 
 const parseErrorSchema = (
   vestError: VestErrors,
   validateAllFieldCriteria: boolean,
 ) => {
-  return Object.entries(vestError).reduce((prev, [key, value]) => {
-    return {
-      ...prev,
-      [key]: {
-        type: '',
-        message: value[0],
-        ...(validateAllFieldCriteria
-          ? {
-              types: value.reduce((prev, message, index) => {
-                return {
-                  ...prev,
-                  [index]: message,
-                };
-              }, {}),
-            }
-          : {}),
-      },
-    };
-  }, {});
+  const errors: Record<string, FieldError> = {};
+  for (const path in vestError) {
+    if (!errors[path]) {
+      errors[path] = { message: vestError[path][0], type: '' };
+    }
+
+    if (validateAllFieldCriteria) {
+      errors[path].types = vestError[path].reduce<Record<number, string>>(
+        (acc, message, index) => (acc[index] = message) && acc,
+        {},
+      );
+    }
+  }
+  return errors;
 };
 
 export const vestResolver: Resolver = (
   schema,
   _,
-  { mode } = { mode: 'async' },
-) => async (values, _context, { criteriaMode, fields }) => {
-  let result: IVestResult | DraftResult;
-  if (mode === 'async') {
-    const validateSchema = promisify(schema);
-    result = await validateSchema(values);
-  } else {
-    result = schema(values);
-  }
+  resolverOptions = {},
+) => async (values, _context, options) => {
+  const result =
+    resolverOptions.mode === 'sync'
+      ? schema(values)
+      : await promisify(schema)(values);
 
-  const errors = result.getErrors();
-
-  if (!result.hasErrors()) {
-    return { values, errors: {} };
-  }
-
-  return {
-    values: {},
-    errors: toNestError(
-      parseErrorSchema(errors, criteriaMode === 'all'),
-      fields,
-    ),
-  };
+  return result.hasErrors()
+    ? {
+        values: {},
+        errors: toNestError(
+          parseErrorSchema(result.getErrors(), options.criteriaMode === 'all'),
+          options.fields,
+        ),
+      }
+    : { values, errors: {} };
 };
