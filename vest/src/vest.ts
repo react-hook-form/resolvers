@@ -1,4 +1,4 @@
-import { toNestObject } from '@hookform/resolvers';
+import { toNestError } from '@hookform/resolvers';
 import promisify from 'vest/promisify';
 import { DraftResult, IVestResult } from 'vest/vestResult';
 import type { VestErrors, Resolver } from './types';
@@ -32,7 +32,7 @@ export const vestResolver: Resolver = (
   schema,
   _,
   { mode } = { mode: 'async' },
-) => async (values, _context, { criteriaMode }) => {
+) => async (values, _context, { criteriaMode, fields }) => {
   let result: IVestResult | DraftResult;
   if (mode === 'async') {
     const validateSchema = promisify(schema);
@@ -49,6 +49,9 @@ export const vestResolver: Resolver = (
 
   return {
     values: {},
-    errors: toNestObject(parseErrorSchema(errors, criteriaMode === 'all')),
+    errors: toNestError(
+      parseErrorSchema(errors, criteriaMode === 'all'),
+      fields,
+    ),
   };
 };

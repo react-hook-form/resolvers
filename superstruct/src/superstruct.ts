@@ -1,4 +1,4 @@
-import { toNestObject } from '@hookform/resolvers';
+import { toNestError } from '@hookform/resolvers';
 import { FieldError } from 'react-hook-form';
 
 import { StructError, validate } from 'superstruct';
@@ -14,11 +14,17 @@ const parseErrorSchema = (error: StructError) =>
     {},
   );
 
-export const superstructResolver: Resolver = (schema, options) => (values) => {
-  const result = validate(values, schema, options);
+export const superstructResolver: Resolver = (schema, resolverOptions) => (
+  values,
+  _,
+  options,
+) => {
+  const result = validate(values, schema, resolverOptions);
 
   return {
     values: result[1] || {},
-    errors: result[0] ? toNestObject(parseErrorSchema(result[0])) : {},
+    errors: result[0]
+      ? toNestError(parseErrorSchema(result[0]), options.fields)
+      : {},
   };
 };

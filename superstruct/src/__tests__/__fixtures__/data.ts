@@ -1,3 +1,4 @@
+import { Field, InternalFieldName } from 'react-hook-form';
 import {
   object,
   number,
@@ -50,4 +51,23 @@ export const invalidData = {
   email: '',
   birthYear: 'birthYear',
   like: [{ id: 'z' }],
+};
+
+export const fields: Record<InternalFieldName, Field['_f']> = {
+  username: {
+    ref: { name: 'username' },
+    name: 'username',
+  },
+  password: {
+    ref: { name: 'password' },
+    name: 'password',
+  },
+  email: {
+    ref: { name: 'email' },
+    name: 'email',
+  },
+  birthday: {
+    ref: { name: 'birthday' },
+    name: 'birthday',
+  },
 };

@@ -1,67 +1,65 @@
-import { appendErrors } from 'react-hook-form';
+import { appendErrors, FieldError } from 'react-hook-form';
 import * as z from 'zod';
-import { convertArrayToPathName, toNestObject } from '@hookform/resolvers';
+import { toNestError } from '@hookform/resolvers';
 import type { Resolver } from './types';
 
 const parseErrorSchema = (
-  zodError: z.ZodError,
+  zodErrors: z.ZodSuberror[],
   validateAllFieldCriteria: boolean,
 ) => {
-  if (zodError.isEmpty) {
-    return {};
+  const errors: Record<string, FieldError> = {};
+  for (; zodErrors.length; ) {
+    const error = zodErrors[0];
+    const { code, message, path } = error;
+    const _path = path.join('.');
+
+    if (!errors[_path]) {
+      errors[_path] = { message, type: code };
+    }
+
+    if ('unionErrors' in error) {
+      error.unionErrors.forEach((unionError) =>
+        unionError.errors.forEach((e) => zodErrors.push(e)),
+      );
+    }
+
+    if (validateAllFieldCriteria) {
+      errors[_path] = appendErrors(
+        _path,
+        validateAllFieldCriteria,
+        errors,
+        code,
+        message,
+      ) as FieldError;
+    }
+
+    zodErrors.shift();
   }
 
-  return zodError.errors.reduce<Record<string, any>>(
-    (previous, { path, message, code: type }) => {
-      const currentPath = convertArrayToPathName(path);
-
-      return {
-        ...previous,
-        ...(path
-          ? previous[currentPath] && validateAllFieldCriteria
-            ? {
-                [currentPath]: appendErrors(
-                  currentPath,
-                  validateAllFieldCriteria,
-                  previous,
-                  type,
-                  message,
-                ),
-              }
-            : {
-                [currentPath]: previous[currentPath] || {
-                  message,
-                  type,
-                  ...(validateAllFieldCriteria
-                    ? {
-                        types: { [type]: message || true },
-                      }
-                    : {}),
-                },
-              }
-          : {}),
-      };
-    },
-    {},
-  );
+  return errors;
 };
 
 export const zodResolver: Resolver = (
   schema,
   schemaOptions,
-  { mode } = { mode: 'async' },
-) => async (values, _, { criteriaMode }) => {
+  resolverOptions = {},
+) => async (values, _, options) => {
   try {
-    const result =
-      mode === 'async'
-        ? await schema.parseAsync(values, schemaOptions)
-        : schema.parse(values, schemaOptions);
-
-    return { values: result, errors: {} };
+    return {
+      errors: {},
+      values: await schema[
+        resolverOptions.mode === 'sync' ? 'parse' : 'parseAsync'
+      ](values, schemaOptions),
+    };
   } catch (error) {
     return {
       values: {},
-      errors: toNestObject(parseErrorSchema(error, criteriaMode === 'all')),
+      errors: error.isEmpty
+        ? {}
+        : toNestError(
+            parseErrorSchema(error.errors, options.criteriaMode === 'all'),
+            options.fields,
+          ),
     };
   }
 };

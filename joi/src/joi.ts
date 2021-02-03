@@ -1,5 +1,5 @@
 import { appendErrors } from 'react-hook-form';
-import { toNestObject } from '@hookform/resolvers';
+import { toNestError } from '@hookform/resolvers';
 import * as Joi from 'joi';
 import { convertArrayToPathName } from '@hookform/resolvers';
 import { Resolver } from './types';
@@ -50,13 +50,19 @@ export const joiResolver: Resolver = (
     abortEarly: false,
   },
   { mode } = { mode: 'async' },
-) => async (values, _, { criteriaMode }) => {
+) => async (values, context, { criteriaMode, fields }) => {
   try {
     let result;
     if (mode === 'async') {
-      result = await schema.validateAsync(values, schemaOptions);
+      result = await schema.validateAsync(values, {
+        ...schemaOptions,
+        context,
+      });
     } else {
-      const { value, error } = schema.validate(values, schemaOptions);
+      const { value, error } = schema.validate(values, {
+        ...schemaOptions,
+        context,
+      });
 
       if (error) {
         throw error;
@@ -72,7 +78,7 @@ export const joiResolver: Resolver = (
   } catch (e) {
     return {
       values: {},
-      errors: toNestObject(parseErrorSchema(e, criteriaMode === 'all')),
+      errors: toNestError(parseErrorSchema(e, criteriaMode === 'all'), fields),
     };
   }
 };
