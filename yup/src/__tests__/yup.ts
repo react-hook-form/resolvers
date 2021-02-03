@@ -1,97 +1,50 @@
 /* eslint-disable no-console, @typescript-eslint/ban-ts-comment */
 import * as yup from 'yup';
 import { yupResolver } from '..';
-
-const schema = yup.object({
-  username: yup.string().matches(/^\w+$/).min(3).max(30).required(),
-  password: yup
-    .string()
-    .matches(/^[a-zA-Z0-9]{3,30}/)
-    .required(),
-  repeatPassword: yup.ref('password'),
-  accessToken: yup.string(),
-  birthYear: yup.number().min(1900).max(2013),
-  email: yup.string().email(),
-  tags: yup.array(yup.string()),
-  enabled: yup.boolean(),
-});
+import { schema, validData, fields, invalidData } from './__fixtures__/data';
 
 describe('yupResolver', () => {
   it('should return values from yupResolver when validation pass', async () => {
-    const data: yup.InferType<typeof schema> = {
-      username: 'Doe',
-      password: 'Password123',
-      repeatPassword: 'Password123',
-      birthYear: 2000,
-      email: 'john@doe.com',
-      tags: ['tag1', 'tag2'],
-      enabled: true,
-      accessToken: 'accessToken',
-    };
-
     const schemaSpy = jest.spyOn(schema, 'validate');
     const schemaSyncSpy = jest.spyOn(schema, 'validateSync');
 
-    const result = await yupResolver(schema)(data, undefined, { fields: {} });
+    const result = await yupResolver(schema)(validData, undefined, {
+      fields,
+    });
 
     expect(schemaSpy).toHaveBeenCalledTimes(1);
     expect(schemaSyncSpy).not.toHaveBeenCalled();
-    expect(result).toEqual({ errors: {}, values: data });
+    expect(result).toEqual({ errors: {}, values: validData });
   });
 
   it('should return values from yupResolver with `mode: sync` when validation pass', async () => {
-    const data: yup.InferType<typeof schema> = {
-      username: 'Doe',
-      password: 'Password123',
-      repeatPassword: 'Password123',
-      birthYear: 2000,
-      email: 'john@doe.com',
-      tags: ['tag1', 'tag2'],
-      enabled: true,
-      accessToken: 'accessToken',
-    };
-
     const validateSyncSpy = jest.spyOn(schema, 'validateSync');
     const validateSpy = jest.spyOn(schema, 'validate');
 
-    const result = await yupResolver(schema, undefined, { mode: 'sync' })(
-      data,
-      undefined,
-      { fields: {} },
-    );
+    const result = await yupResolver(schema, undefined, {
+      mode: 'sync',
+    })(validData, undefined, { fields });
 
     expect(validateSyncSpy).toHaveBeenCalledTimes(1);
     expect(validateSpy).not.toHaveBeenCalled();
-    expect(result).toEqual({ errors: {}, values: data });
+    expect(result).toEqual({ errors: {}, values: validData });
   });
 
   it('should return a single error from yupResolver when validation fails', async () => {
-    const data = {
-      password: '___',
-      email: '',
-      birthYear: 'birthYear',
-    };
-
-    const result = await yupResolver(schema)(data, undefined, { fields: {} });
+    const result = await yupResolver(schema)(invalidData, undefined, {
+      fields,
+    });
 
     expect(result).toMatchSnapshot();
   });
 
   it('should return a single error from yupResolver with `mode: sync` when validation fails', async () => {
-    const data = {
-      password: '___',
-      email: '',
-      birthYear: 'birthYear',
-    };
-
     const validateSyncSpy = jest.spyOn(schema, 'validateSync');
     const validateSpy = jest.spyOn(schema, 'validate');
 
-    const result = await yupResolver(schema, undefined, { mode: 'sync' })(
-      data,
-      undefined,
-      { fields: {} },
-    );
+    const result = await yupResolver(schema, undefined, {
+      mode: 'sync',
+    })(invalidData, undefined, { fields });
 
     expect(validateSyncSpy).toHaveBeenCalledTimes(1);
     expect(validateSpy).not.toHaveBeenCalled();
@@ -99,14 +52,8 @@ describe('yupResolver', () => {
   });
 
   it('should return all the errors from yupResolver when validation fails with `validateAllFieldCriteria` set to true', async () => {
-    const data = {
-      password: '___',
-      email: '',
-      birthYear: 'birthYear',
-    };
-
-    const result = await yupResolver(schema)(data, undefined, {
-      fields: {},
+    const result = await yupResolver(schema)(invalidData, undefined, {
+      fields,
       criteriaMode: 'all',
     });
 
@@ -114,17 +61,11 @@ describe('yupResolver', () => {
   });
 
   it('should return all the errors from yupResolver when validation fails with `validateAllFieldCriteria` set to true and `mode: sync`', async () => {
-    const data = {
-      password: '___',
-      email: '',
-      birthYear: 'birthYear',
-    };
-
     const result = await yupResolver(schema, undefined, { mode: 'sync' })(
-      data,
+      invalidData,
       undefined,
       {
-        fields: {},
+        fields,
         criteriaMode: 'all',
       },
     );
@@ -147,7 +88,7 @@ describe('yupResolver', () => {
     const validateSpy = jest.spyOn(schemaWithContext, 'validate');
 
     const result = await yupResolver(schemaWithContext)(data, context, {
-      fields: {},
+      fields,
     });
     expect(validateSpy).toHaveBeenCalledTimes(1);
     expect(validateSpy).toHaveBeenCalledWith(
@@ -170,7 +111,7 @@ describe('yupResolver', () => {
     });
 
     const result = await yupResolver(yupSchema)({ name: '' }, undefined, {
-      fields: {},
+      fields,
     });
     expect(result).toMatchSnapshot();
   });
@@ -183,7 +124,7 @@ describe('yupResolver', () => {
       {},
       undefined,
       {
-        fields: {},
+        fields,
       },
     );
     expect(console.warn).toHaveBeenCalledWith(
@@ -199,7 +140,7 @@ describe('yupResolver', () => {
     await yupResolver(yup.object(), { context: { noContext: true } })(
       {},
       undefined,
-      { fields: {} },
+      { fields },
     );
     expect(console.warn).not.toHaveBeenCalled();
     process.env.NODE_ENV = 'test';
@@ -217,7 +158,7 @@ describe('yupResolver', () => {
           'Email or name are required',
           (value) => !!(value && (value.name || value.email)),
         ),
-    )({ name: '', email: '' }, undefined, { fields: {} });
+    )({ name: '', email: '' }, undefined, { fields });
 
     expect(result).toMatchSnapshot();
   });

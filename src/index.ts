@@ -1,2 +1,2 @@
 export * from './convertArrayToPathName';
-export * from './toNestObject';
+export * from './toNestError';

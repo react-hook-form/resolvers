@@ -5,14 +5,35 @@ Object {
   "errors": Object {
     "birthYear": Object {
       "message": "birthYear must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"birthYear\\"\`).",
+      "ref": undefined,
       "type": "typeError",
     },
+    "like": Array [
+      Object {
+        "id": Object {
+          "message": "like[0].id must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"z\\"\`).",
+          "ref": undefined,
+          "type": "typeError",
+        },
+        "name": Object {
+          "message": "like[0].name is a required field",
+          "ref": undefined,
+          "type": "required",
+        },
+      },
+    ],
     "password": Object {
       "message": "password must match the following: \\"/^[a-zA-Z0-9]{3,30}/\\"",
+      "ref": Object {
+        "name": "password",
+      },
       "type": "matches",
     },
     "username": Object {
       "message": "username is a required field",
+      "ref": Object {
+        "name": "username",
+      },
       "type": "required",
     },
   },
@@ -25,14 +46,35 @@ Object {
   "errors": Object {
     "birthYear": Object {
       "message": "birthYear must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"birthYear\\"\`).",
+      "ref": undefined,
       "type": "typeError",
     },
+    "like": Array [
+      Object {
+        "id": Object {
+          "message": "like[0].id must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"z\\"\`).",
+          "ref": undefined,
+          "type": "typeError",
+        },
+        "name": Object {
+          "message": "like[0].name is a required field",
+          "ref": undefined,
+          "type": "required",
+        },
+      },
+    ],
     "password": Object {
       "message": "password must match the following: \\"/^[a-zA-Z0-9]{3,30}/\\"",
+      "ref": Object {
+        "name": "password",
+      },
       "type": "matches",
     },
     "username": Object {
       "message": "username is a required field",
+      "ref": Object {
+        "name": "username",
+      },
       "type": "required",
     },
   },
@@ -45,13 +87,37 @@ Object {
   "errors": Object {
     "birthYear": Object {
       "message": "birthYear must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"birthYear\\"\`).",
+      "ref": undefined,
       "type": "typeError",
       "types": Object {
         "typeError": "birthYear must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"birthYear\\"\`).",
       },
     },
+    "like": Array [
+      Object {
+        "id": Object {
+          "message": "like[0].id must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"z\\"\`).",
+          "ref": undefined,
+          "type": "typeError",
+          "types": Object {
+            "typeError": "like[0].id must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"z\\"\`).",
+          },
+        },
+        "name": Object {
+          "message": "like[0].name is a required field",
+          "ref": undefined,
+          "type": "required",
+          "types": Object {
+            "required": "like[0].name is a required field",
+          },
+        },
+      },
+    ],
     "password": Object {
       "message": "password must match the following: \\"/^[a-zA-Z0-9]{3,30}/\\"",
+      "ref": Object {
+        "name": "password",
+      },
       "type": "matches",
       "types": Object {
         "matches": "password must match the following: \\"/^[a-zA-Z0-9]{3,30}/\\"",
@@ -59,6 +125,9 @@ Object {
     },
     "username": Object {
       "message": "username is a required field",
+      "ref": Object {
+        "name": "username",
+      },
       "type": "required",
       "types": Object {
         "required": "username is a required field",
@@ -74,13 +143,37 @@ Object {
   "errors": Object {
     "birthYear": Object {
       "message": "birthYear must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"birthYear\\"\`).",
+      "ref": undefined,
       "type": "typeError",
       "types": Object {
         "typeError": "birthYear must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"birthYear\\"\`).",
       },
     },
+    "like": Array [
+      Object {
+        "id": Object {
+          "message": "like[0].id must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"z\\"\`).",
+          "ref": undefined,
+          "type": "typeError",
+          "types": Object {
+            "typeError": "like[0].id must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"z\\"\`).",
+          },
+        },
+        "name": Object {
+          "message": "like[0].name is a required field",
+          "ref": undefined,
+          "type": "required",
+          "types": Object {
+            "required": "like[0].name is a required field",
+          },
+        },
+      },
+    ],
     "password": Object {
       "message": "password must match the following: \\"/^[a-zA-Z0-9]{3,30}/\\"",
+      "ref": Object {
+        "name": "password",
+      },
       "type": "matches",
       "types": Object {
         "matches": "password must match the following: \\"/^[a-zA-Z0-9]{3,30}/\\"",
@@ -88,6 +181,9 @@ Object {
     },
     "username": Object {
       "message": "username is a required field",
+      "ref": Object {
+        "name": "username",
+      },
       "type": "required",
       "types": Object {
         "required": "username is a required field",
@@ -103,6 +199,7 @@ Object {
   "errors": Object {
     "name": Object {
       "message": "name must be at least 6 characters",
+      "ref": undefined,
       "type": "min",
     },
   },
@@ -115,6 +212,7 @@ Object {
   "errors": Object {
     "required": Object {
       "message": "error1",
+      "ref": undefined,
       "type": "required",
     },
   },
@@ -127,6 +225,7 @@ Object {
   "errors": Object {
     "name": Object {
       "message": "Email or name are required",
+      "ref": undefined,
       "type": "name",
     },
   },

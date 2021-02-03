@@ -1,6 +1,6 @@
 import { appendErrors, FieldError } from 'react-hook-form';
 import * as z from 'zod';
-import { toNestObject } from '@hookform/resolvers';
+import { toNestError } from '@hookform/resolvers';
 import type { Resolver } from './types';
 
 const parseErrorSchema = (
@@ -56,8 +56,9 @@ export const zodResolver: Resolver = (
       values: {},
       errors: error.isEmpty
         ? {}
-        : toNestObject(
+        : toNestError(
             parseErrorSchema(error.errors, options.criteriaMode === 'all'),
+            options.fields,
           ),
     };
   }

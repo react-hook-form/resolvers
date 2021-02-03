@@ -1,105 +1,48 @@
-import * as Joi from 'joi';
 import { joiResolver } from '..';
-
-const schema = Joi.object({
-  username: Joi.string().alphanum().min(3).max(30).required(),
-  password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
-  repeatPassword: Joi.ref('password'),
-  accessToken: [Joi.string(), Joi.number()],
-  birthYear: Joi.number().integer().min(1900).max(2013),
-  email: Joi.string().email({
-    minDomainSegments: 2,
-    tlds: { allow: ['com', 'net'] },
-  }),
-  tags: Joi.array().items(Joi.string()).required(),
-  enabled: Joi.boolean().required(),
-});
-
-interface Data {
-  username: string;
-  password: string;
-  repeatPassword: string;
-  accessToken?: number | string;
-  birthYear?: number;
-  email?: string;
-  tags: string[];
-  enabled: boolean;
-}
+import { schema, validData, fields, invalidData } from './__fixtures__/data';
 
 describe('joiResolver', () => {
   it('should return values from joiResolver when validation pass', async () => {
-    const data: Data = {
-      username: 'Doe',
-      password: 'Password123',
-      repeatPassword: 'Password123',
-      birthYear: 2000,
-      email: 'john@doe.com',
-      tags: ['tag1', 'tag2'],
-      enabled: true,
-    };
-
     const validateAsyncSpy = jest.spyOn(schema, 'validateAsync');
     const validateSpy = jest.spyOn(schema, 'validate');
 
-    const result = await joiResolver(schema)(data, undefined, { fields: {} });
+    const result = await joiResolver(schema)(validData, undefined, {
+      fields,
+    });
 
     expect(validateSpy).not.toHaveBeenCalled();
     expect(validateAsyncSpy).toHaveBeenCalledTimes(1);
-    expect(result).toEqual({ errors: {}, values: data });
+    expect(result).toEqual({ errors: {}, values: validData });
   });
 
   it('should return values from joiResolver with `mode: sync` when validation pass', async () => {
-    const data: Data = {
-      username: 'Doe',
-      password: 'Password123',
-      repeatPassword: 'Password123',
-      birthYear: 2000,
-      email: 'john@doe.com',
-      tags: ['tag1', 'tag2'],
-      enabled: true,
-    };
-
     const validateAsyncSpy = jest.spyOn(schema, 'validateAsync');
     const validateSpy = jest.spyOn(schema, 'validate');
 
-    const result = await joiResolver(schema, undefined, { mode: 'sync' })(
-      data,
-      undefined,
-      { fields: {} },
-    );
+    const result = await joiResolver(schema, undefined, {
+      mode: 'sync',
+    })(validData, undefined, { fields });
 
     expect(validateAsyncSpy).not.toHaveBeenCalled();
     expect(validateSpy).toHaveBeenCalledTimes(1);
-    expect(result).toEqual({ errors: {}, values: data });
+    expect(result).toEqual({ errors: {}, values: validData });
   });
 
   it('should return a single error from joiResolver when validation fails', async () => {
-    const data = {
-      password: '___',
-      email: '',
-      birthYear: 'birthYear',
-    };
-
-    const result = await joiResolver(schema)(data, undefined, { fields: {} });
+    const result = await joiResolver(schema)(invalidData, undefined, {
+      fields,
+    });
 
     expect(result).toMatchSnapshot();
   });
 
   it('should return a single error from joiResolver with `mode: sync` when validation fails', async () => {
-    const data = {
-      password: '___',
-      email: '',
-      birthYear: 'birthYear',
-    };
-
     const validateAsyncSpy = jest.spyOn(schema, 'validateAsync');
     const validateSpy = jest.spyOn(schema, 'validate');
 
-    const result = await joiResolver(schema, undefined, { mode: 'sync' })(
-      data,
-      undefined,
-      { fields: {} },
-    );
+    const result = await joiResolver(schema, undefined, {
+      mode: 'sync',
+    })(invalidData, undefined, { fields });
 
     expect(validateAsyncSpy).not.toHaveBeenCalled();
     expect(validateSpy).toHaveBeenCalledTimes(1);
@@ -107,14 +50,8 @@ describe('joiResolver', () => {
   });
 
   it('should return all the errors from joiResolver when validation fails with `validateAllFieldCriteria` set to true', async () => {
-    const data = {
-      password: '___',
-      email: '',
-      birthYear: 'birthYear',
-    };
-
-    const result = await joiResolver(schema)(data, undefined, {
-      fields: {},
+    const result = await joiResolver(schema)(invalidData, undefined, {
+      fields,
       criteriaMode: 'all',
     });
 
@@ -122,17 +59,11 @@ describe('joiResolver', () => {
   });
 
   it('should return all the errors from joiResolver when validation fails with `validateAllFieldCriteria` set to true and `mode: sync`', async () => {
-    const data = {
-      password: '___',
-      email: '',
-      birthYear: 'birthYear',
-    };
-
     const result = await joiResolver(schema, undefined, { mode: 'sync' })(
-      data,
+      invalidData,
       undefined,
       {
-        fields: {},
+        fields,
         criteriaMode: 'all',
       },
     );
@@ -141,27 +72,18 @@ describe('joiResolver', () => {
   });
 
   it('should return values from joiResolver when validation pass and pass down the Joi context', async () => {
-    const data: Data = {
-      username: 'Doe',
-      password: 'Password123',
-      repeatPassword: 'Password123',
-      birthYear: 2000,
-      email: 'john@doe.com',
-      tags: ['tag1', 'tag2'],
-      enabled: true,
-    };
     const context = { value: 'context' };
     const validateAsyncSpy = jest.spyOn(schema, 'validateAsync');
     const validateSpy = jest.spyOn(schema, 'validate');
 
-    const result = await joiResolver(schema)(data, context, { fields: {} });
+    const result = await joiResolver(schema)(validData, context, { fields });
 
     expect(validateSpy).not.toHaveBeenCalled();
     expect(validateAsyncSpy).toHaveBeenCalledTimes(1);
-    expect(validateAsyncSpy).toHaveBeenCalledWith(data, {
+    expect(validateAsyncSpy).toHaveBeenCalledWith(validData, {
       abortEarly: false,
       context,
     });
-    expect(result).toEqual({ errors: {}, values: data });
+    expect(result).toEqual({ errors: {}, values: validData });
   });
 });

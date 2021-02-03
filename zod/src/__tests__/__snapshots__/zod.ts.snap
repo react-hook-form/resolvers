@@ -5,48 +5,65 @@ Object {
   "errors": Object {
     "birthYear": Object {
       "message": "Invalid input",
+      "ref": undefined,
       "type": "invalid_union",
     },
     "confirm": Object {
       "message": "Passwords don't match",
+      "ref": undefined,
       "type": "custom_error",
     },
     "email": Object {
       "message": "Invalid email",
+      "ref": Object {
+        "name": "email",
+      },
       "type": "invalid_string",
     },
     "enabled": Object {
       "message": "Required",
+      "ref": undefined,
       "type": "invalid_type",
     },
     "like": Object {
       "0": Object {
         "id": Object {
           "message": "Expected number, received string",
+          "ref": undefined,
           "type": "invalid_type",
         },
         "name": Object {
           "message": "Required",
+          "ref": undefined,
           "type": "invalid_type",
         },
       },
       "message": "Invalid input",
+      "ref": undefined,
       "type": "invalid_union",
     },
     "password": Object {
       "message": "Invalid",
+      "ref": Object {
+        "name": "password",
+      },
       "type": "invalid_string",
     },
     "repeatPassword": Object {
       "message": "Required",
+      "ref": undefined,
       "type": "invalid_type",
     },
     "tags": Object {
       "message": "Required",
+      "ref": undefined,
       "type": "invalid_type",
     },
     "username": Object {
       "message": "Required",
+      "ref": Object {
+        "name": "username",
+      },
       "type": "invalid_type",
     },
   },
@@ -59,48 +76,65 @@ Object {
   "errors": Object {
     "birthYear": Object {
       "message": "Invalid input",
+      "ref": undefined,
       "type": "invalid_union",
     },
     "confirm": Object {
       "message": "Passwords don't match",
+      "ref": undefined,
       "type": "custom_error",
     },
     "email": Object {
       "message": "Invalid email",
+      "ref": Object {
+        "name": "email",
+      },
       "type": "invalid_string",
     },
     "enabled": Object {
       "message": "Required",
+      "ref": undefined,
       "type": "invalid_type",
     },
     "like": Object {
       "0": Object {
         "id": Object {
           "message": "Expected number, received string",
+          "ref": undefined,
           "type": "invalid_type",
         },
         "name": Object {
           "message": "Required",
+          "ref": undefined,
           "type": "invalid_type",
         },
       },
       "message": "Invalid input",
+      "ref": undefined,
       "type": "invalid_union",
     },
     "password": Object {
       "message": "Invalid",
+      "ref": Object {
+        "name": "password",
+      },
       "type": "invalid_string",
     },
     "repeatPassword": Object {
       "message": "Required",
+      "ref": undefined,
       "type": "invalid_type",
     },
     "tags": Object {
       "message": "Required",
+      "ref": undefined,
       "type": "invalid_type",
     },
     "username": Object {
       "message": "Required",
+      "ref": Object {
+        "name": "username",
+      },
       "type": "invalid_type",
     },
   },
@@ -113,6 +147,7 @@ Object {
   "errors": Object {
     "birthYear": Object {
       "message": "Invalid input",
+      "ref": undefined,
       "type": "invalid_union",
       "types": Object {
         "invalid_type": "Expected undefined, received string",
@@ -121,6 +156,7 @@ Object {
     },
     "confirm": Object {
       "message": "Passwords don't match",
+      "ref": undefined,
       "type": "custom_error",
       "types": Object {
         "custom_error": "Passwords don't match",
@@ -128,6 +164,9 @@ Object {
     },
     "email": Object {
       "message": "Invalid email",
+      "ref": Object {
+        "name": "email",
+      },
       "type": "invalid_string",
       "types": Object {
         "invalid_string": "Invalid email",
@@ -135,6 +174,7 @@ Object {
     },
     "enabled": Object {
       "message": "Required",
+      "ref": undefined,
       "type": "invalid_type",
       "types": Object {
         "invalid_type": "Required",
@@ -144,6 +184,7 @@ Object {
       "0": Object {
         "id": Object {
           "message": "Expected number, received string",
+          "ref": undefined,
           "type": "invalid_type",
           "types": Object {
             "invalid_type": "Expected number, received string",
@@ -151,6 +192,7 @@ Object {
         },
         "name": Object {
           "message": "Required",
+          "ref": undefined,
           "type": "invalid_type",
           "types": Object {
             "invalid_type": "Required",
@@ -158,6 +200,7 @@ Object {
         },
       },
       "message": "Invalid input",
+      "ref": undefined,
       "type": "invalid_union",
       "types": Object {
         "invalid_type": "Expected undefined, received array",
@@ -166,6 +209,9 @@ Object {
     },
     "password": Object {
       "message": "Invalid",
+      "ref": Object {
+        "name": "password",
+      },
       "type": "invalid_string",
       "types": Object {
         "invalid_string": "Invalid",
@@ -173,6 +219,7 @@ Object {
     },
     "repeatPassword": Object {
       "message": "Required",
+      "ref": undefined,
       "type": "invalid_type",
       "types": Object {
         "invalid_type": "Required",
@@ -180,6 +227,7 @@ Object {
     },
     "tags": Object {
       "message": "Required",
+      "ref": undefined,
       "type": "invalid_type",
       "types": Object {
         "invalid_type": "Required",
@@ -187,6 +235,9 @@ Object {
     },
     "username": Object {
       "message": "Required",
+      "ref": Object {
+        "name": "username",
+      },
       "type": "invalid_type",
       "types": Object {
         "invalid_type": "Required",
@@ -202,6 +253,7 @@ Object {
   "errors": Object {
     "birthYear": Object {
       "message": "Invalid input",
+      "ref": undefined,
       "type": "invalid_union",
       "types": Object {
         "invalid_type": "Expected undefined, received string",
@@ -210,6 +262,7 @@ Object {
     },
     "confirm": Object {
       "message": "Passwords don't match",
+      "ref": undefined,
       "type": "custom_error",
       "types": Object {
         "custom_error": "Passwords don't match",
@@ -217,6 +270,9 @@ Object {
     },
     "email": Object {
       "message": "Invalid email",
+      "ref": Object {
+        "name": "email",
+      },
       "type": "invalid_string",
       "types": Object {
         "invalid_string": "Invalid email",
@@ -224,6 +280,7 @@ Object {
     },
     "enabled": Object {
       "message": "Required",
+      "ref": undefined,
       "type": "invalid_type",
       "types": Object {
         "invalid_type": "Required",
@@ -233,6 +290,7 @@ Object {
       "0": Object {
         "id": Object {
           "message": "Expected number, received string",
+          "ref": undefined,
           "type": "invalid_type",
           "types": Object {
             "invalid_type": "Expected number, received string",
@@ -240,6 +298,7 @@ Object {
         },
         "name": Object {
           "message": "Required",
+          "ref": undefined,
           "type": "invalid_type",
           "types": Object {
             "invalid_type": "Required",
@@ -247,6 +306,7 @@ Object {
         },
       },
       "message": "Invalid input",
+      "ref": undefined,
       "type": "invalid_union",
       "types": Object {
         "invalid_type": "Expected undefined, received array",
@@ -255,6 +315,9 @@ Object {
     },
     "password": Object {
       "message": "Invalid",
+      "ref": Object {
+        "name": "password",
+      },
       "type": "invalid_string",
       "types": Object {
         "invalid_string": "Invalid",
@@ -262,6 +325,7 @@ Object {
     },
     "repeatPassword": Object {
       "message": "Required",
+      "ref": undefined,
       "type": "invalid_type",
       "types": Object {
         "invalid_type": "Required",
@@ -269,6 +333,7 @@ Object {
     },
     "tags": Object {
       "message": "Required",
+      "ref": undefined,
       "type": "invalid_type",
       "types": Object {
         "invalid_type": "Required",
@@ -276,6 +341,9 @@ Object {
     },
     "username": Object {
       "message": "Required",
+      "ref": Object {
+        "name": "username",
+      },
       "type": "invalid_type",
       "types": Object {
         "invalid_type": "Required",
