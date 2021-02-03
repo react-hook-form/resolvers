@@ -1,11 +1,24 @@
-import { set, FieldError, FieldErrors } from 'react-hook-form';
+import {
+  set,
+  get,
+  FieldError,
+  FieldErrors,
+  Field,
+  InternalFieldName,
+} from 'react-hook-form';
 
 export const toNestObject = <TFieldValues>(
   errors: Record<string, FieldError>,
+  fields: Record<InternalFieldName, Field['_f']>,
 ): FieldErrors<TFieldValues> => {
   const fieldErrors: FieldErrors<TFieldValues> = {};
   for (const path in errors) {
-    set(fieldErrors, path, errors[path]);
+    const field = get(fields, path) as Field['_f'] | undefined;
+    set(
+      fieldErrors,
+      path,
+      Object.assign(errors[path], { ref: field && field.ref }),
+    );
   }
 
   return fieldErrors;
