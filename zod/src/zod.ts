@@ -58,6 +58,7 @@ export const zodResolver: Resolver = (
         ? {}
         : toNestObject(
             parseErrorSchema(error.errors, options.criteriaMode === 'all'),
+            options.fields,
           ),
     };
   }

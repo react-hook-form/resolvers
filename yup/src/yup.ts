@@ -60,7 +60,7 @@ export const yupResolver: Resolver = (
     abortEarly: false,
   },
   { mode } = { mode: 'async' },
-) => async (values, context, { criteriaMode }) => {
+) => async (values, context, { criteriaMode, fields }) => {
   try {
     if (options.context && process.env.NODE_ENV === 'development') {
       // eslint-disable-next-line no-console
@@ -89,7 +89,7 @@ export const yupResolver: Resolver = (
 
     return {
       values: {},
-      errors: toNestObject(parsedErrors),
+      errors: toNestObject(parsedErrors, fields),
     };
   }
 };

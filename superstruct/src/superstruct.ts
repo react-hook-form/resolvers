@@ -44,14 +44,17 @@ const parseErrorSchema = (
 export const superstructResolver: Resolver = (schema, options) => async (
   values,
   _context,
-  { criteriaMode },
+  { criteriaMode, fields },
 ) => {
   const [errors, result] = validate(values, schema, options);
 
   if (errors != null) {
     return {
       values: {},
-      errors: toNestObject(parseErrorSchema(errors, criteriaMode === 'all')),
+      errors: toNestObject(
+        parseErrorSchema(errors, criteriaMode === 'all'),
+        fields,
+      ),
     };
   }
 
