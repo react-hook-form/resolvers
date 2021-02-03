@@ -17,13 +17,4 @@ describe('superstructResolver', () => {
 
     expect(result).toMatchSnapshot();
   });
-
-  it('should return all the errors from superstructResolver when validation fails with `validateAllFieldCriteria` set to true', async () => {
-    const result = await superstructResolver(schema)(invalidData, undefined, {
-      fields,
-      criteriaMode: 'all',
-    });
-
-    expect(result).toMatchSnapshot();
-  });
 });

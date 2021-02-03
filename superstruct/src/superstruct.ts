@@ -1,65 +1,30 @@
-import { appendErrors } from 'react-hook-form';
+import { FieldError } from 'react-hook-form';
 import { toNestError } from '@hookform/resolvers';
 
 import { StructError, validate } from 'superstruct';
-import { convertArrayToPathName } from '@hookform/resolvers';
 import { Resolver } from './types';
 
-const parseErrorSchema = (
-  error: StructError,
-  validateAllFieldCriteria: boolean,
-) =>
-  error
-    .failures()
-    .reduce((previous: Record<string, any>, { path, message = '', type }) => {
-      const currentPath = convertArrayToPathName(path);
-      return {
-        ...previous,
-        ...(path
-          ? previous[currentPath] && validateAllFieldCriteria
-            ? {
-                [currentPath]: appendErrors(
-                  currentPath,
-                  validateAllFieldCriteria,
-                  previous,
-                  type || '',
-                  message,
-                ),
-              }
-            : {
-                [currentPath]: previous[currentPath] || {
-                  message,
-                  type,
-                  ...(validateAllFieldCriteria
-                    ? {
-                        types: { [type || '']: message || true },
-                      }
-                    : {}),
-                },
-              }
-          : {}),
-      };
-    }, {});
+const parseErrorSchema = (error: StructError) =>
+  error.failures().reduce<Record<string, FieldError>>(
+    (previous, error) =>
+      (previous[error.path.join('.')] = {
+        message: error.message,
+        type: error.type,
+      }) && previous,
+    {},
+  );
 
-export const superstructResolver: Resolver = (schema, options) => async (
+export const superstructResolver: Resolver = (schema, resolverOptions) => (
   values,
-  _context,
-  { criteriaMode, fields },
+  _,
+  options,
 ) => {
-  const [errors, result] = validate(values, schema, options);
-
-  if (errors != null) {
-    return {
-      values: {},
-      errors: toNestError(
-        parseErrorSchema(errors, criteriaMode === 'all'),
-        fields,
-      ),
-    };
-  }
+  const result = validate(values, schema, resolverOptions);
 
   return {
-    values: result,
-    errors: {},
+    values: result[1] || {},
+    errors: result[0]
+      ? toNestError(parseErrorSchema(result[0]), options.fields)
+      : {},
   };
 };

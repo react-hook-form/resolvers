@@ -15,4 +15,4 @@ export type Resolver = <T extends Struct<any, any>>(
   values: UnpackNestedValue<TFieldValues>,
   context: TContext | undefined,
   options: ResolverOptions<TFieldValues>,
-) => Promise<ResolverResult<TFieldValues>>;
+) => ResolverResult<TFieldValues>;
