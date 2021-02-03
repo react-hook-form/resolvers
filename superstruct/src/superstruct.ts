@@ -1,5 +1,5 @@
-import { toNestError } from '@hookform/resolvers';
 import { FieldError } from 'react-hook-form';
+import { toNestError } from '@hookform/resolvers';
 
 import { StructError, validate } from 'superstruct';
 import { Resolver } from './types';
