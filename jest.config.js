@@ -3,7 +3,6 @@ module.exports = {
   testEnvironment: 'jsdom',
   restoreMocks: true,
   testMatch: ['**/__tests__/**/*.+(js|jsx|ts|tsx)'],
-  testPathIgnorePatterns: ['/__fixtures__/'],
   transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$'],
   testPathIgnorePatterns: ['/__fixtures__/'],
   moduleNameMapper: {
