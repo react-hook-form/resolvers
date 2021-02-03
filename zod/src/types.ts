@@ -10,7 +10,7 @@ import type { ParseParams } from 'zod/lib/src/parser';
 export type Resolver = <T extends z.ZodSchema<any, any>>(
   schema: T,
   schemaOptions?: ParseParams,
-  factoryOptions?: { mode: 'async' | 'sync' },
+  factoryOptions?: { mode?: 'async' | 'sync' },
 ) => <TFieldValues extends FieldValues, TContext>(
   values: UnpackNestedValue<TFieldValues>,
   context: TContext | undefined,
