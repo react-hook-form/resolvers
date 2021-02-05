@@ -15,7 +15,9 @@ export const schema = Joi.object({
   tags: Joi.array().items(Joi.string()).required(),
   enabled: Joi.boolean().required(),
   like: Joi.array()
-    .items(Joi.object({ id: Joi.number(), name: Joi.string().length(4) }))
+    .items(
+      Joi.object({ id: Joi.number(), name: Joi.string().length(4).regex(/a/) }),
+    )
     .optional(),
 });
 
@@ -51,7 +53,7 @@ export const invalidData = {
   password: '___',
   email: '',
   birthYear: 'birthYear',
-  like: [{ id: 'z' }],
+  like: [{ id: 'z', name: 'r' }],
 };
 
 export const fields: Record<InternalFieldName, Field['_f']> = {
