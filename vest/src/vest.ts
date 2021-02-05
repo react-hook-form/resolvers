@@ -31,14 +31,14 @@ const parseErrorSchema = (
 export const vestResolver: Resolver = (
   schema,
   _,
-  { mode } = { mode: 'async' },
+  resolverOptions = {},
 ) => async (values, _context, { criteriaMode, fields }) => {
   let result: IVestResult | DraftResult;
-  if (mode === 'async') {
+  if (resolverOptions.mode === 'sync') {
+    result = schema(values);
+  } else {
     const validateSchema = promisify(schema);
     result = await validateSchema(values);
-  } else {
-    result = schema(values);
   }
 
   const errors = result.getErrors();
