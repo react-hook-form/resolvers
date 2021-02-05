@@ -11,6 +11,7 @@
   "types": "dist/index.d.ts",
   "license": "MIT",
   "peerDependencies": {
-    "react-hook-form": ">=6.6.0"
+    "react-hook-form": ">=6.6.0",
+    "@hookform/resolvers": ">=2.0.0"
   }
 }

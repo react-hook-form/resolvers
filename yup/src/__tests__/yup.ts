@@ -101,21 +101,6 @@ describe('yupResolver', () => {
     expect(result).toMatchSnapshot();
   });
 
-  it('should return an error result if inner yup validation error has no path', async () => {
-    const yupSchema = yup.object({
-      name: yup.string().required(),
-    });
-
-    jest.spyOn(yupSchema, 'validate').mockRejectedValueOnce({
-      inner: [{ message: 'error1', type: 'required' }],
-    });
-
-    const result = await yupResolver(yupSchema)({ name: '' }, undefined, {
-      fields,
-    });
-    expect(result).toMatchSnapshot();
-  });
-
   it('should show a warning log if yup context is used instead only on dev environment', async () => {
     jest.spyOn(console, 'warn').mockImplementation(jest.fn);
     process.env.NODE_ENV = 'development';
