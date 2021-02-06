@@ -207,23 +207,10 @@ Object {
 }
 `;
 
-exports[`yupResolver should return an error result if inner yup validation error has no path 1`] = `
-Object {
-  "errors": Object {
-    "required": Object {
-      "message": "error1",
-      "ref": undefined,
-      "type": "required",
-    },
-  },
-  "values": Object {},
-}
-`;
-
 exports[`yupResolver should return correct error message with using yup.test 1`] = `
 Object {
   "errors": Object {
-    "name": Object {
+    "": Object {
       "message": "Email or name are required",
       "ref": undefined,
       "type": "name",

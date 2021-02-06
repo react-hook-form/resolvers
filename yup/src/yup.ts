@@ -1,95 +1,65 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import Yup from 'yup';
 import { toNestError } from '@hookform/resolvers';
+import { appendErrors, FieldError } from 'react-hook-form';
 import { Resolver } from './types';
 
 /**
- * From 0.32.0, Yup add TypeScript support and `path` typing is optional that's why we have `@ts-expect-error`
- * FYI: `path`: a string, indicating where there error was thrown. `path` is empty at the root level.
- * react-hook-form's values are object so path is defined
+ * Why `path!` ? because it could be `undefined` in some case
  * https://github.com/jquense/yup#validationerrorerrors-string--arraystring-value-any-path-string
  */
 const parseErrorSchema = (
   error: Yup.ValidationError,
   validateAllFieldCriteria: boolean,
 ) => {
-  return Array.isArray(error.inner) && error.inner.length
-    ? error.inner.reduce(
-        (previous: Record<string, any>, { path, message, type }) => {
-          // @ts-expect-error
-          const previousTypes = (previous[path] && previous[path].types) || {};
-          const key = path || type;
+  return error.inner.reduce<Record<string, FieldError>>((previous, error) => {
+    if (!previous[error.path!]) {
+      previous[error.path!] = { message: error.message, type: error.type! };
+    }
 
-          return {
-            ...previous,
-            ...(key
-              ? {
-                  [key]: {
-                    ...(previous[key] || {
-                      message,
-                      type,
-                    }),
-                    ...(validateAllFieldCriteria
-                      ? {
-                          types: {
-                            ...previousTypes,
-                            // @ts-expect-error
-                            [type]: previousTypes[type]
-                              ? // @ts-expect-error
-                                [...[].concat(previousTypes[type]), message]
-                              : message,
-                          },
-                        }
-                      : {}),
-                  },
-                }
-              : {}),
-          };
-        },
-        {},
-      )
-    : {
-        // @ts-expect-error
-        [error.path]: { message: error.message, type: error.type },
-      };
+    if (validateAllFieldCriteria) {
+      previous[error.path!] = appendErrors(
+        error.path!,
+        validateAllFieldCriteria,
+        previous,
+        error.type!,
+        error.message,
+      ) as FieldError;
+    }
+
+    return previous;
+  }, {});
 };
 
 export const yupResolver: Resolver = (
   schema,
-  options = {
+  schemaOptions = {
     abortEarly: false,
   },
-  { mode } = { mode: 'async' },
-) => async (values, context, { criteriaMode, fields }) => {
+  resolverOptions = {},
+) => async (values, context, options) => {
   try {
-    if (options.context && process.env.NODE_ENV === 'development') {
+    if (schemaOptions.context && process.env.NODE_ENV === 'development') {
       // eslint-disable-next-line no-console
       console.warn(
         "You should not used the yup options context. Please, use the 'useForm' context object instead",
       );
     }
 
-    const result =
-      mode === 'async'
-        ? await schema.validate(values, {
-            ...options,
-            context,
-          })
-        : schema.validateSync(values, {
-            ...options,
-            context,
-          });
+    const result = await schema[
+      resolverOptions.mode === 'sync' ? 'validateSync' : 'validate'
+    ](values, Object.assign(Object.assign({}, schemaOptions), { context }));
 
     return {
       values: result,
       errors: {},
     };
   } catch (e) {
-    const parsedErrors = parseErrorSchema(e, criteriaMode === 'all');
-
     return {
       values: {},
-      errors: toNestError(parsedErrors, fields),
+      errors: toNestError(
+        parseErrorSchema(e, options.criteriaMode === 'all'),
+        options.fields,
+      ),
     };
   }
 };
