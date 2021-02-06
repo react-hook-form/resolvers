@@ -1,84 +1,63 @@
-import { appendErrors } from 'react-hook-form';
+import { appendErrors, FieldError } from 'react-hook-form';
 import { toNestError } from '@hookform/resolvers';
-import * as Joi from 'joi';
-import { convertArrayToPathName } from '@hookform/resolvers';
+import type { ValidationError } from 'joi';
 import { Resolver } from './types';
 
 const parseErrorSchema = (
-  error: Joi.ValidationError,
+  error: ValidationError,
   validateAllFieldCriteria: boolean,
 ) =>
-  Array.isArray(error.details)
-    ? error.details.reduce(
-        (previous: Record<string, any>, { path, message = '', type }) => {
-          const currentPath = convertArrayToPathName(path);
+  error.details.length
+    ? error.details.reduce<Record<string, FieldError>>((previous, error) => {
+        const _path = error.path.join('.');
 
-          return {
-            ...previous,
-            ...(path
-              ? previous[currentPath] && validateAllFieldCriteria
-                ? {
-                    [currentPath]: appendErrors(
-                      currentPath,
-                      validateAllFieldCriteria,
-                      previous,
-                      type,
-                      message,
-                    ),
-                  }
-                : {
-                    [currentPath]: previous[currentPath] || {
-                      message,
-                      type,
-                      ...(validateAllFieldCriteria
-                        ? {
-                            types: { [type]: message || true },
-                          }
-                        : {}),
-                    },
-                  }
-              : {}),
-          };
-        },
-        {},
-      )
-    : [];
+        if (!previous[_path]) {
+          previous[_path] = { message: error.message, type: error.type };
+        }
+
+        if (validateAllFieldCriteria) {
+          previous[_path] = appendErrors(
+            _path,
+            validateAllFieldCriteria,
+            previous,
+            error.type,
+            error.message,
+          ) as FieldError;
+        }
+
+        return previous;
+      }, {})
+    : {};
 
 export const joiResolver: Resolver = (
   schema,
   schemaOptions = {
     abortEarly: false,
   },
-  { mode } = { mode: 'async' },
-) => async (values, context, { criteriaMode, fields }) => {
-  try {
-    let result;
-    if (mode === 'async') {
-      result = await schema.validateAsync(values, {
-        ...schemaOptions,
-        context,
-      });
-    } else {
-      const { value, error } = schema.validate(values, {
-        ...schemaOptions,
-        context,
-      });
+  resolverOptions = {},
+) => async (values, context, options) => {
+  const _schemaOptions = Object.assign(Object.assign({}, schemaOptions), {
+    context,
+  });
 
-      if (error) {
-        throw error;
-      }
-
-      result = value;
+  let result: Record<string, any> = {};
+  if (resolverOptions.mode === 'sync') {
+    result = schema.validate(values, _schemaOptions);
+  } else {
+    try {
+      result.value = await schema.validateAsync(values, _schemaOptions);
+    } catch (e) {
+      result.error = e;
     }
-
-    return {
-      values: result,
-      errors: {},
-    };
-  } catch (e) {
-    return {
-      values: {},
-      errors: toNestError(parseErrorSchema(e, criteriaMode === 'all'), fields),
-    };
   }
+
+  return {
+    values: result.error ? {} : result.value,
+    errors: result.error
+      ? toNestError(
+          parseErrorSchema(result.error, options.criteriaMode === 'all'),
+          options.fields,
+        )
+      : {},
+  };
 };

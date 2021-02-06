@@ -27,6 +27,11 @@ Object {
           "ref": undefined,
           "type": "number.base",
         },
+        "name": Object {
+          "message": "\\"like[0].name\\" length must be 4 characters long",
+          "ref": undefined,
+          "type": "string.length",
+        },
       },
     ],
     "password": Object {
@@ -79,6 +84,11 @@ Object {
           "message": "\\"like[0].id\\" must be a number",
           "ref": undefined,
           "type": "number.base",
+        },
+        "name": Object {
+          "message": "\\"like[0].name\\" length must be 4 characters long",
+          "ref": undefined,
+          "type": "string.length",
         },
       },
     ],
@@ -143,6 +153,15 @@ Object {
           "type": "number.base",
           "types": Object {
             "number.base": "\\"like[0].id\\" must be a number",
+          },
+        },
+        "name": Object {
+          "message": "\\"like[0].name\\" length must be 4 characters long",
+          "ref": undefined,
+          "type": "string.length",
+          "types": Object {
+            "string.length": "\\"like[0].name\\" length must be 4 characters long",
+            "string.pattern.base": "\\"like[0].name\\" with value \\"r\\" fails to match the required pattern: /a/",
           },
         },
       },
@@ -217,6 +236,15 @@ Object {
           "type": "number.base",
           "types": Object {
             "number.base": "\\"like[0].id\\" must be a number",
+          },
+        },
+        "name": Object {
+          "message": "\\"like[0].name\\" length must be 4 characters long",
+          "ref": undefined,
+          "type": "string.length",
+          "types": Object {
+            "string.length": "\\"like[0].name\\" length must be 4 characters long",
+            "string.pattern.base": "\\"like[0].name\\" with value \\"r\\" fails to match the required pattern: /a/",
           },
         },
       },

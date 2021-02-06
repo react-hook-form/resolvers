@@ -9,7 +9,7 @@ import type { AsyncValidationOptions, Schema } from 'joi';
 export type Resolver = <T extends Schema>(
   schema: T,
   schemaOptions?: AsyncValidationOptions,
-  factoryOptions?: { mode: 'async' | 'sync' },
+  factoryOptions?: { mode?: 'async' | 'sync' },
 ) => <TFieldValues extends FieldValues, TContext>(
   values: UnpackNestedValue<TFieldValues>,
   context: TContext | undefined,
