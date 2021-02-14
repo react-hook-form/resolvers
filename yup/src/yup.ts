@@ -47,7 +47,7 @@ export const yupResolver: Resolver = (
 
     const result = await schema[
       resolverOptions.mode === 'sync' ? 'validateSync' : 'validate'
-    ](values, Object.assign(Object.assign({}, schemaOptions), { context }));
+    ](values, Object.assign({}, schemaOptions, { context }));
 
     return {
       values: result,

@@ -36,7 +36,7 @@ export const joiResolver: Resolver = (
   },
   resolverOptions = {},
 ) => async (values, context, options) => {
-  const _schemaOptions = Object.assign(Object.assign({}, schemaOptions), {
+  const _schemaOptions = Object.assign({}, schemaOptions, {
     context,
   });
 
