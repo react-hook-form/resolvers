@@ -5,10 +5,13 @@ import {
   UnpackNestedValue,
 } from 'react-hook-form';
 import * as Yup from 'yup';
+import type Lazy from 'yup/lib/Lazy';
 
-type Options<T extends Yup.AnyObjectSchema> = Parameters<T['validate']>[1];
+type Options<T extends Yup.AnyObjectSchema | Lazy<any>> = Parameters<
+  T['validate']
+>[1];
 
-export type Resolver = <T extends Yup.AnyObjectSchema>(
+export type Resolver = <T extends Yup.AnyObjectSchema | Lazy<any>>(
   schema: T,
   schemaOptions?: Options<T>,
   factoryOptions?: { mode?: 'async' | 'sync' },
