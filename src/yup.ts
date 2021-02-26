@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Resolver, transformToNestObject, FieldValues } from 'react-hook-form';
 import Yup from 'yup';
+import Lazy from 'yup/lib/Lazy';
 
 /**
  * From 0.32.0, Yup add TypeScript support and `path` typing is optional that's why we have `@ts-expect-error`
@@ -58,7 +59,7 @@ type ValidateOptions<T extends Yup.AnyObjectSchema> = Parameters<
 >[1];
 
 export const yupResolver = <TFieldValues extends FieldValues>(
-  schema: Yup.AnyObjectSchema,
+  schema: Yup.AnyObjectSchema | Lazy<any, any>,
   options: ValidateOptions<Yup.AnyObjectSchema> = {
     abortEarly: false,
   },
