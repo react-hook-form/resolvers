@@ -90,6 +90,7 @@
   },
   "release": {
     "branches": [
+      "1.x",
       "master"
     ]
   },
