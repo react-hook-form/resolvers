@@ -65,6 +65,8 @@ const App = () => {
     </form>
   );
 };
+
+export default App;
 ```
 
 ### [Zod](https://github.com/vriad/zod)
@@ -115,11 +117,11 @@ A simple and composable way to validate data in JavaScript (or TypeScript).
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { superstructResolver } from '@hookform/resolvers/superstruct';
-import { struct } from 'superstruct';
+import { object, string, number } from 'superstruct';
 
-const schema = struct({
-  name: 'string',
-  age: 'number',
+const schema = object({
+  name: string(),
+  age: number(),
 });
 
 const App = () => {
@@ -130,11 +132,13 @@ const App = () => {
   return (
     <form onSubmit={handleSubmit((d) => console.log(d))}>
       <input name="name" ref={register} />
-      <input name="age" type="number" ref={register} />
+      <input name="age" type="number" ref={register({ valueAsNumber: true })} />
       <input type="submit" />
     </form>
   );
 };
+
+export default App;
 ```
 
 ### [Joi](https://github.com/sideway/joi)
@@ -166,6 +170,8 @@ const App = () => {
     </form>
   );
 };
+
+export default App;
 ```
 
 ### [Vest](https://github.com/ealush/vest)
@@ -219,6 +225,8 @@ const App = () => {
     </form>
   );
 };
+
+export default App;
 ```
 
 ## Backers
