@@ -1,36 +1,90 @@
 {
   "name": "@hookform/resolvers",
+  "amdName": "hookformResolvers",
   "version": "1.3.1",
   "description": "React Hook Form validation resolvers: Yup, Joi, Superstruct, Zod and etc.",
-  "umd:main": "umd/index.js",
-  "unpkg": "umd/index.js",
-  "jsdelivr": "umd/index.js",
   "sideEffects": false,
+  "main": "dist/resolvers.js",
+  "module": "dist/resolvers.module.js",
+  "umd:main": "dist/resolvers.umd.js",
+  "source": "src/index.ts",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "browser": "./dist/resolvers.module.js",
+      "umd": "./dist/resolvers.umd.js",
+      "import": "./dist/resolvers.mjs",
+      "require": "./dist/resolvers.js"
+    },
+    "./zod": {
+      "browser": "./zod/dist/zod.module.js",
+      "umd": "./zod/dist/zod.umd.js",
+      "import": "./zod/dist/zod.mjs",
+      "require": "./zod/dist/zod.js"
+    },
+    "./yup": {
+      "browser": "./yup/dist/yup.module.js",
+      "umd": "./yup/dist/yup.umd.js",
+      "import": "./yup/dist/yup.mjs",
+      "require": "./yup/dist/yup.js"
+    },
+    "./joi": {
+      "browser": "./joi/dist/joi.module.js",
+      "umd": "./joi/dist/joi.umd.js",
+      "import": "./joi/dist/joi.mjs",
+      "require": "./joi/dist/joi.js"
+    },
+    "./vest": {
+      "browser": "./vest/dist/vest.module.js",
+      "umd": "./vest/dist/vest.umd.js",
+      "import": "./vest/dist/vest.mjs",
+      "require": "./vest/dist/vest.js"
+    },
+    "./superstruct": {
+      "browser": "./superstruct/dist/superstruct.module.js",
+      "umd": "./superstruct/dist/superstruct.umd.js",
+      "import": "./superstruct/dist/superstruct.mjs",
+      "require": "./superstruct/dist/superstruct.js"
+    },
+    "./package.json": "./package.json",
+    "./": "./"
+  },
   "files": [
     "dist",
-    "yup.js",
-    "yup.d.ts",
-    "joi.js",
-    "joi.d.ts",
-    "superstruct.js",
-    "superstruct.d.ts",
-    "zod.js",
-    "zod.d.ts",
-    "vest.js",
-    "vest.d.ts"
+    "yup/package.json",
+    "yup/src",
+    "yup/dist",
+    "zod/package.json",
+    "zod/src",
+    "zod/dist",
+    "vest/package.json",
+    "vest/src",
+    "vest/dist",
+    "joi/package.json",
+    "joi/src",
+    "joi/dist",
+    "superstruct/package.json",
+    "superstruct/src",
+    "superstruct/dist"
   ],
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
-    "clean": "rimraf dist",
-    "prebuild": "yarn clean",
-    "build": "tsc && rollup -c",
-    "lint": "eslint '**/*.{js,ts}'",
-    "lint:fix": "yarn lint -- --fix",
-    "lint:types": "tsc --noEmit",
-    "test": "jest --runInBand",
-    "test:watch": "yarn test --watchAll --coverage"
+    "prepare": "run-s build:src build && check-export-map",
+    "build": "npm-run-all --parallel build:*",
+    "build:src": "microbundle build",
+    "build:zod": "microbundle --cwd zod --globals '@hookform/resolvers=hookformResolvers'",
+    "build:yup": "microbundle --cwd yup --globals '@hookform/resolvers=hookformResolvers'",
+    "build:joi": "microbundle --cwd joi --globals '@hookform/resolvers=hookformResolvers'",
+    "build:superstruct": "microbundle --cwd superstruct --globals '@hookform/resolvers=hookformResolvers'",
+    "build:vest": "microbundle --cwd vest --globals '@hookform/resolvers=hookformResolvers'",
+    "postbuild": "node ./config/node-13-exports.js",
+    "lint": "eslint . --ext .ts,.js --ignore-path .gitignore",
+    "lint:types": "tsc",
+    "test": "jest",
+    "test:watch": "yarn test --watchAll --coverage --runInBand",
+    "check:all": "npm-run-all --parallel lint:* test"
   },
   "keywords": [
     "scheme",
@@ -40,7 +94,7 @@
     "react-hook-form",
     "yup",
     "joi",
-    "sperstruct",
+    "superstruct",
     "typescript",
     "zod"
   ],
@@ -55,12 +109,11 @@
   },
   "homepage": "https://react-hook-form.com",
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^17.0.0",
-    "@rollup/plugin-node-resolve": "^11.0.1",
     "@types/jest": "^26.0.19",
     "@types/yup": "^0.29.11",
     "@typescript-eslint/eslint-plugin": "^4.10.0",
     "@typescript-eslint/parser": "^4.10.0",
+    "check-export-map": "^1.0.1",
     "eslint": "^7.16.0",
     "eslint-config-prettier": "^7.1.0",
     "eslint-plugin-prettier": "^3.3.0",
@@ -68,15 +121,11 @@
     "jest": "^26.6.3",
     "joi": "^17.3.0",
     "lint-staged": "^10.5.3",
-    "matched": "^5.0.1",
+    "microbundle": "^0.13.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.2.1",
     "react": "^17.0.1",
     "react-hook-form": "^6.13.1",
-    "rimraf": "^3.0.2",
-    "rollup": "^2.35.1",
-    "rollup-plugin-terser": "^7.0.2",
-    "rollup-plugin-typescript2": "^0.29.0",
     "semantic-release": "^17.3.1",
     "superstruct": "^0.13.1",
     "ts-jest": "^26.4.4",
@@ -100,7 +149,7 @@
   },
   "lint-staged": {
     "*.{js,ts}": [
-      "yarn lint:fix"
+      "yarn lint --fix"
     ],
     "*.{md,json,yml}": [
       "prettier --write"
