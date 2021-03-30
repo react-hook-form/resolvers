@@ -71,7 +71,7 @@
     "access": "public"
   },
   "scripts": {
-    "prepare": "run-s build:src build && check-export-map",
+    "prepare": "run-s build:src build && check-export-map && node ./config/check-ie11.js",
     "build": "npm-run-all --parallel build:*",
     "build:src": "microbundle build",
     "build:zod": "microbundle --cwd zod --globals '@hookform/resolvers=hookformResolvers'",
@@ -79,7 +79,8 @@
     "build:joi": "microbundle --cwd joi --globals '@hookform/resolvers=hookformResolvers'",
     "build:superstruct": "microbundle --cwd superstruct --globals '@hookform/resolvers=hookformResolvers'",
     "build:vest": "microbundle --cwd vest --globals '@hookform/resolvers=hookformResolvers'",
-    "postbuild": "node ./config/node-13-exports.js",
+    "build:ie11": "node ./config/build-ie11",
+    "postbuild": "node ./config/node-13-exports.js && node ./config/check-ie11.js",
     "lint": "eslint . --ext .ts,.js --ignore-path .gitignore",
     "lint:types": "tsc",
     "test": "jest",
@@ -117,6 +118,7 @@
     "eslint": "^7.16.0",
     "eslint-config-prettier": "^7.1.0",
     "eslint-plugin-prettier": "^3.3.0",
+    "fs-extra": "^9.1.0",
     "husky": "^4.3.6",
     "jest": "^26.6.3",
     "joi": "^17.3.0",
@@ -154,6 +156,5 @@
     "*.{md,json,yml}": [
       "prettier --write"
     ]
-  },
-  "dependencies": {}
+  }
 }
