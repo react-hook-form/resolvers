@@ -1,68 +1,30 @@
-import {
-  appendErrors,
-  transformToNestObject,
-  Resolver,
-  ResolverSuccess,
-  ResolverError,
-} from 'react-hook-form';
-import { StructError, validate, Struct, Infer } from 'superstruct';
-import { convertArrayToPathName } from '@hookform/resolvers';
+import { FieldError } from 'react-hook-form';
+import { toNestError } from '@hookform/resolvers';
 
-const parseErrorSchema = (
-  error: StructError,
-  validateAllFieldCriteria: boolean,
-) =>
-  error
-    .failures()
-    .reduce((previous: Record<string, any>, { path, message = '', type }) => {
-      const currentPath = convertArrayToPathName(path);
-      return {
-        ...previous,
-        ...(path
-          ? previous[currentPath] && validateAllFieldCriteria
-            ? {
-                [currentPath]: appendErrors(
-                  currentPath,
-                  validateAllFieldCriteria,
-                  previous,
-                  type || '',
-                  message,
-                ),
-              }
-            : {
-                [currentPath]: previous[currentPath] || {
-                  message,
-                  type,
-                  ...(validateAllFieldCriteria
-                    ? {
-                        types: { [type || '']: message || true },
-                      }
-                    : {}),
-                },
-              }
-          : {}),
-      };
-    }, {});
+import { StructError, validate } from 'superstruct';
+import { Resolver } from './types';
 
-type Options = Parameters<typeof validate>[2];
+const parseErrorSchema = (error: StructError) =>
+  error.failures().reduce<Record<string, FieldError>>(
+    (previous, error) =>
+      (previous[error.path.join('.')] = {
+        message: error.message,
+        type: error.type,
+      }) && previous,
+    {},
+  );
 
-export const superstructResolver = <T extends Struct<any, any>>(
-  schema: T,
-  options?: Options,
-): Resolver<Infer<T>> => (values, _, validateAllFieldCriteria = false) => {
-  const [errors, result] = validate(values, schema, options);
-
-  if (errors != null) {
-    return {
-      values: {},
-      errors: transformToNestObject(
-        parseErrorSchema(errors, validateAllFieldCriteria),
-      ),
-    } as ResolverError<Infer<T>>;
-  }
+export const superstructResolver: Resolver = (schema, resolverOptions) => (
+  values,
+  _,
+  options,
+) => {
+  const result = validate(values, schema, resolverOptions);
 
   return {
-    values: result,
-    errors: {},
-  } as ResolverSuccess<Infer<T>>;
+    values: result[1] || {},
+    errors: result[0]
+      ? toNestError(parseErrorSchema(result[0]), options.fields)
+      : {},
+  };
 };

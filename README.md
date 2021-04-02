@@ -26,12 +26,13 @@ We are moving away from native support for Yup validation. We are now supporting
 
 ## API
 
-`resolver(schema: object, config?: object)`
+`resolver(schema: object, schemaOptions?: object, resolverOptions: { mode: 'async' | 'sync' })`
 
-|        | type     | Required | Description                            |
-| ------ | -------- | -------- | -------------------------------------- |
-| schema | `object` | ✓        | validation schema                      |
-| config | `object` |          | validation schema configuration object |
+|                 | type     | Required | Description                                   |
+| --------------- | -------- | -------- | --------------------------------------------- |
+| schema          | `object` | ✓        | validation schema                             |
+| schemaOptions   | `object` |          | validation library schema options             |
+| resolverOptions | `object` |          | resolver options, `async` is the default mode |
 
 ## Quickstart
 

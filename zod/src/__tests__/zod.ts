@@ -1,131 +1,71 @@
-import * as z from 'zod';
 import { zodResolver } from '..';
-
-const schema = z
-  .object({
-    id: z.number(),
-    title: z.string(),
-    isPublished: z.boolean().optional(),
-    tags: z.array(z.string()),
-    author: z.object({
-      id: z.number(),
-    }),
-    likedUsers: z
-      .array(
-        z.object({
-          id: z.number(),
-        }),
-      )
-      .optional(),
-    count: z.number().positive().int(),
-    date: z.date(),
-    url: z.string().url(),
-    password: z
-      .string()
-      .min(8)
-      .regex(RegExp('(.*[a-z].*)'))
-      .regex(RegExp('(.*[A-Z].*)'))
-      .regex(RegExp('(.*\\d.*)'))
-      .regex(RegExp('[!@#$%^&*(),.?":{}|<>]')),
-    confirm: z.string(),
-  })
-  .refine((data) => data.password === data.confirm, {
-    message: "Passwords don't match",
-    path: ['confirm'], // set path of error
-  });
+import { schema, validData, invalidData, fields } from './__fixtures__/data';
 
 describe('zodResolver', () => {
-  it('should get values', async () => {
-    const data = {
-      id: 2,
-      title: 'test',
-      tags: ['news', 'features'],
-      author: {
-        id: 1,
-      },
-      likedUsers: [{ id: 1 }],
-      count: 4,
-      date: new Date(),
-      url: 'https://github.com/react-hook-form/resolvers',
-      password: '[}tehk6Uor',
-      confirm: '[}tehk6Uor',
-    };
+  it('should return values from zodResolver when validation pass', async () => {
+    const parseAsyncSpy = jest.spyOn(schema, 'parseAsync');
 
-    expect(await zodResolver(schema)(data)).toEqual({
-      values: data,
-      errors: {},
+    const result = await zodResolver(schema)(validData, undefined, {
+      fields,
     });
+
+    expect(parseAsyncSpy).toHaveBeenCalledTimes(1);
+    expect(result).toEqual({ errors: {}, values: validData });
   });
 
-  it('should get errors without validate all criteria fields', async () => {
-    const data: any = {
-      id: '2',
-      tags: [2, true],
-      author: {
-        id: '1',
-      },
-      count: 1,
-      date: 'date',
-      password: 'R',
-      confirm: 'A',
-      unknownProperty: '',
-    };
+  it('should return values from zodResolver with `mode: sync` when validation pass', async () => {
+    const parseSpy = jest.spyOn(schema, 'parse');
+    const parseAsyncSpy = jest.spyOn(schema, 'parseAsync');
 
-    expect(await zodResolver(schema)(data)).toMatchSnapshot();
+    const result = await zodResolver(schema, undefined, {
+      mode: 'sync',
+    })(validData, undefined, { fields });
+
+    expect(parseSpy).toHaveBeenCalledTimes(1);
+    expect(parseAsyncSpy).not.toHaveBeenCalled();
+    expect(result).toEqual({ errors: {}, values: validData });
   });
 
-  it('should get errors without validate all criteria fields', async () => {
-    const data: any = {
-      id: '2',
-      tags: [2, true],
-      author: {
-        id: '1',
-      },
-      likedUsers: [{ id: '1' }],
-      count: -5,
-      date: 'date',
-      password: 'R',
-      confirm: 'R',
-    };
+  it('should return a single error from zodResolver when validation fails', async () => {
+    const result = await zodResolver(schema)(invalidData, undefined, {
+      fields,
+    });
 
-    expect(await zodResolver(schema)(data, undefined, true)).toMatchSnapshot();
+    expect(result).toMatchSnapshot();
   });
 
-  it('should get errors with zod error map', async () => {
-    const data: any = {
-      id: '2',
-      tags: [2, true],
-      author: {
-        id: '1',
+  it('should return a single error from zodResolver with `mode: sync` when validation fails', async () => {
+    const parseSpy = jest.spyOn(schema, 'parse');
+    const parseAsyncSpy = jest.spyOn(schema, 'parseAsync');
+
+    const result = await zodResolver(schema, undefined, {
+      mode: 'sync',
+    })(invalidData, undefined, { fields });
+
+    expect(parseSpy).toHaveBeenCalledTimes(1);
+    expect(parseAsyncSpy).not.toHaveBeenCalled();
+    expect(result).toMatchSnapshot();
+  });
+
+  it('should return all the errors from zodResolver when validation fails with `validateAllFieldCriteria` set to true', async () => {
+    const result = await zodResolver(schema)(invalidData, undefined, {
+      fields,
+      criteriaMode: 'all',
+    });
+
+    expect(result).toMatchSnapshot();
+  });
+
+  it('should return all the errors from zodResolver when validation fails with `validateAllFieldCriteria` set to true and `mode: sync`', async () => {
+    const result = await zodResolver(schema, undefined, { mode: 'sync' })(
+      invalidData,
+      undefined,
+      {
+        fields,
+        criteriaMode: 'all',
       },
-      count: -5,
-      date: 'date',
-      password: 'R',
-      confirm: 'R',
-    };
+    );
 
-    const errorMap: z.ZodErrorMap = (error, ctx) => {
-      if (error.message) {
-        return { message: error.message };
-      }
-
-      switch (error.code) {
-        case z.ZodErrorCode.invalid_type:
-          if (error.expected === 'string') {
-            return { message: `This ain't a string!` };
-          }
-          break;
-        case z.ZodErrorCode.custom_error:
-          const params = error.params || {};
-          if (params.myField) {
-            return { message: `Bad input: ${params.myField}` };
-          }
-          break;
-      }
-
-      return { message: ctx.defaultError };
-    };
-
-    expect(await zodResolver(schema, { errorMap })(data)).toMatchSnapshot();
+    expect(result).toMatchSnapshot();
   });
 });

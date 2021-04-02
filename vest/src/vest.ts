@@ -1,59 +1,45 @@
-import { FieldValues, Resolver, transformToNestObject } from 'react-hook-form';
-import * as Vest from 'vest';
-
-type VestErrors = Record<string, string[]>;
-
-type ICreateResult = ReturnType<typeof Vest.create>;
-
-type Promisify = <T extends ICreateResult, K>(
-  fn: T,
-) => (args: K) => Promise<Vest.IVestResult>;
-
-const promisify: Promisify = (validatorFn) => (...args) =>
-  new Promise((resolve) => validatorFn(...args).done(resolve as Vest.DoneCB));
+import { toNestError } from '@hookform/resolvers';
+import { FieldError } from 'react-hook-form';
+import promisify from 'vest/promisify';
+import type { VestErrors, Resolver } from './types';
 
 const parseErrorSchema = (
   vestError: VestErrors,
   validateAllFieldCriteria: boolean,
 ) => {
-  return Object.entries(vestError).reduce((prev, [key, value]) => {
-    return {
-      ...prev,
-      [key]: {
-        type: '',
-        message: value[0],
-        ...(validateAllFieldCriteria
-          ? {
-              types: value.reduce((prev, message, index) => {
-                return {
-                  ...prev,
-                  [index]: message,
-                };
-              }, {}),
-            }
-          : {}),
-      },
-    };
-  }, {});
+  const errors: Record<string, FieldError> = {};
+  for (const path in vestError) {
+    if (!errors[path]) {
+      errors[path] = { message: vestError[path][0], type: '' };
+    }
+
+    if (validateAllFieldCriteria) {
+      errors[path].types = vestError[path].reduce<Record<number, string>>(
+        (acc, message, index) => (acc[index] = message) && acc,
+        {},
+      );
+    }
+  }
+  return errors;
 };
 
-export const vestResolver = <TFieldValues extends FieldValues>(
-  schema: ICreateResult,
-  _: any = {},
-  validateAllFieldCriteria = false,
-): Resolver<TFieldValues> => async (values) => {
-  const validateSchema = promisify(schema);
-  const result = await validateSchema(values);
-  const errors = result.getErrors();
+export const vestResolver: Resolver = (
+  schema,
+  _,
+  resolverOptions = {},
+) => async (values, _context, options) => {
+  const result =
+    resolverOptions.mode === 'sync'
+      ? schema(values)
+      : await promisify(schema)(values);
 
-  if (!result.hasErrors()) {
-    return { values: values as any, errors: {} };
-  }
-
-  return {
-    values: {},
-    errors: transformToNestObject(
-      parseErrorSchema(errors, validateAllFieldCriteria),
-    ),
-  };
+  return result.hasErrors()
+    ? {
+        values: {},
+        errors: toNestError(
+          parseErrorSchema(result.getErrors(), options.criteriaMode === 'all'),
+          options.fields,
+        ),
+      }
+    : { values, errors: {} };
 };

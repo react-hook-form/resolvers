@@ -1,45 +1,20 @@
-import { object, number, string, boolean, array, optional } from 'superstruct';
 import { superstructResolver } from '..';
-
-const Article = object({
-  id: number(),
-  title: string(),
-  isPublished: optional(boolean()),
-  tags: array(string()),
-  author: object({
-    id: number(),
-  }),
-});
+import { invalidData, schema, validData, fields } from './__fixtures__/data';
 
 describe('superstructResolver', () => {
-  it('should return correct value', async () => {
-    const data = {
-      id: 2,
-      title: 'test',
-      tags: ['news', 'features'],
-      author: {
-        id: 1,
-      },
-    };
-
-    expect(await superstructResolver(Article)(data)).toEqual({
-      values: data,
-      errors: {},
+  it('should return values from superstructResolver when validation pass', async () => {
+    const result = await superstructResolver(schema)(validData, undefined, {
+      fields,
     });
+
+    expect(result).toEqual({ errors: {}, values: validData });
   });
 
-  it('should return errors', async () => {
-    const data = {
-      id: '2',
-      title: 2,
-      tags: [2, 3],
-      author: {
-        id: 'test',
-      },
-    };
+  it('should return a single error from superstructResolver when validation fails', async () => {
+    const result = await superstructResolver(schema)(invalidData, undefined, {
+      fields,
+    });
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error - For testing purpose `id`'s type is wrong
-    expect(await superstructResolver(Article)(data)).toMatchSnapshot();
+    expect(result).toMatchSnapshot();
   });
 });
