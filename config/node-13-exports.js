@@ -1,7 +1,14 @@
 // Original source: https://github.com/preactjs/preact/blob/master/config/node-13-exports.js
 const fs = require('fs');
 
-const subRepositories = ['zod', 'joi', 'vest', 'yup', 'superstruct'];
+const subRepositories = [
+  'zod',
+  'joi',
+  'vest',
+  'yup',
+  'superstruct',
+  'class-validator',
+];
 const snakeCaseToCamelCase = (str) =>
   str.replace(/([-_][a-z])/g, (group) => group.toUpperCase().replace('-', ''));
 
