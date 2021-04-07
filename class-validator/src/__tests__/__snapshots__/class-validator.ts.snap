@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`classValidatorResolver should return a single error from classValidatorResolver when validation fails 1`] = `
+Object {
+  "errors": Object {
+    "birthYear": Object {
+      "message": "birthYear must not be greater than 2013",
+      "ref": undefined,
+    },
+    "email": Object {
+      "message": "email must be an email",
+      "ref": Object {
+        "name": "email",
+      },
+    },
+    "password": Object {
+      "message": "password must match /^[a-zA-Z0-9]{3,30}/ regular expression",
+      "ref": Object {
+        "name": "password",
+      },
+    },
+    "username": Object {
+      "message": "username must be longer than or equal to 3 characters",
+      "ref": Object {
+        "name": "username",
+      },
+    },
+  },
+  "values": Object {
+    "birthYear": "birthYear",
+    "email": "",
+    "like": Array [
+      Object {
+        "id": "z",
+      },
+    ],
+    "password": "___",
+  },
+}
+`;
+
+exports[`classValidatorResolver should return a single error from classValidatorResolver with \`mode: sync\` when validation fails 1`] = `
+Object {
+  "errors": Object {
+    "birthYear": Object {
+      "message": "birthYear must not be greater than 2013",
+      "ref": undefined,
+    },
+    "email": Object {
+      "message": "email must be an email",
+      "ref": Object {
+        "name": "email",
+      },
+    },
+    "password": Object {
+      "message": "password must match /^[a-zA-Z0-9]{3,30}/ regular expression",
+      "ref": Object {
+        "name": "password",
+      },
+    },
+    "username": Object {
+      "message": "username must be longer than or equal to 3 characters",
+      "ref": Object {
+        "name": "username",
+      },
+    },
+  },
+  "values": Object {
+    "birthYear": "birthYear",
+    "email": "",
+    "like": Array [
+      Object {
+        "id": "z",
+      },
+    ],
+    "password": "___",
+  },
+}
+`;
