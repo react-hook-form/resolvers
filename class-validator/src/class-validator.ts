@@ -25,9 +25,9 @@ export const classValidatorResolver: Resolver = (
 ) => async (values, _, options) => {
   const user = plainToClass(schema, values);
   const rawErrors =
-    resolverOptions.mode === 'async'
-      ? await validate(user, schemaOptions)
-      : validateSync(user, schemaOptions);
+    resolverOptions.mode === 'sync'
+      ? validateSync(user, schemaOptions)
+      : await validate(user, schemaOptions);
   const errors = toNestError(parseErrors(rawErrors), options.fields);
   return { values, errors };
 };
