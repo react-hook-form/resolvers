@@ -25,7 +25,7 @@ const copy = (name) => {
   const filename = name.includes('-') ? snakeCaseToCamelCase(name) : name;
   fs.writeFileSync(
     `${process.cwd()}/${name}/dist/${filename}.mjs`,
-    fs.readFileSync(`${process.cwd()}/${name}/dist/${filename}.module.js`),
+    fs.readFileSync(`${process.cwd()}/${name}/dist/${name}.module.js`),
   );
 };
 
