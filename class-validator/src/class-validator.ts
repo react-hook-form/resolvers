@@ -3,10 +3,14 @@ import { plainToClass } from 'class-transformer';
 import { validate, validateSync, ValidationError } from 'class-validator';
 import { toNestError } from '@hookform/resolvers';
 
+const fromEntries = (entries: [any, any][]) => {
+  return entries.reduce((prev, [k, v]) => ({ ...prev, [k]: v }), {});
+};
+
 const getErrorMessages = (rawError: ValidationError): any => {
   const res =
     rawError.children && rawError.children.length > 0
-      ? Object.fromEntries(
+      ? fromEntries(
           rawError.children.map((child) => {
             return [child.property, getErrorMessages(child)];
           }),
@@ -19,7 +23,7 @@ const getErrorMessages = (rawError: ValidationError): any => {
 };
 
 const parseErrors = (rawErrors: ValidationError[]) => {
-  const errors = Object.fromEntries(
+  const errors = fromEntries(
     rawErrors.map((rawError) => [
       rawError.property,
       getErrorMessages(rawError),
