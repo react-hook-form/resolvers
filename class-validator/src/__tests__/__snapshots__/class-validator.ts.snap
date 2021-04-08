@@ -13,6 +13,14 @@ Object {
         "name": "email",
       },
     },
+    "like": Object {
+      "0": Object {
+        "name": Object {
+          "message": "name must be longer than or equal to 4 characters",
+        },
+      },
+      "ref": undefined,
+    },
     "password": Object {
       "message": "password must match /^[a-zA-Z0-9]{3,30}/ regular expression",
       "ref": Object {
@@ -42,6 +50,14 @@ Object {
       "ref": Object {
         "name": "email",
       },
+    },
+    "like": Object {
+      "0": Object {
+        "name": Object {
+          "message": "name must be longer than or equal to 4 characters",
+        },
+      },
+      "ref": undefined,
     },
     "password": Object {
       "message": "password must match /^[a-zA-Z0-9]{3,30}/ regular expression",

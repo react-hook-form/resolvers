@@ -143,6 +143,7 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-hook-form": "^7.0.0-alpha.2",
+    "reflect-metadata": "^0.1.13",
     "semantic-release": "^17.3.7",
     "superstruct": "^0.14.0",
     "ts-jest": "^26.5.0",
@@ -166,6 +167,5 @@
     "*.{md,json,yml}": [
       "prettier --write"
     ]
-  },
-  "dependencies": {}
+  }
 }

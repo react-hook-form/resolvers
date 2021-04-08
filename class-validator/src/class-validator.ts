@@ -2,17 +2,27 @@ import type { Resolver } from './types';
 import { plainToClass } from 'class-transformer';
 import { validate, validateSync, ValidationError } from 'class-validator';
 import { toNestError } from '@hookform/resolvers';
-import { FieldError } from 'react-hook-form';
 
-const parseErrors = (
-  rawErrors: ValidationError[],
-): Record<string, FieldError> => {
+const getErrorMessages = (rawError: ValidationError): any => {
+  const res =
+    rawError.children && rawError.children.length > 0
+      ? Object.fromEntries(
+          rawError.children.map((child) => {
+            return [child.property, getErrorMessages(child)];
+          }),
+        )
+      : {
+          message: Object.entries(rawError.constraints ?? {})?.[0]?.[1],
+        };
+
+  return res;
+};
+
+const parseErrors = (rawErrors: ValidationError[]) => {
   const errors = Object.fromEntries(
     rawErrors.map((rawError) => [
       rawError.property,
-      {
-        message: Object.entries(rawError.constraints ?? {})[0][1],
-      } as FieldError,
+      getErrorMessages(rawError),
     ]),
   );
   return rawErrors.length > 0 ? errors : {};

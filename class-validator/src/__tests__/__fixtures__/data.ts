@@ -1,3 +1,5 @@
+import 'reflect-metadata';
+import { Type } from 'class-transformer';
 import {
   IsEmail,
   IsNotEmpty,
@@ -5,6 +7,7 @@ import {
   Matches,
   Max,
   Min,
+  ValidateNested,
 } from 'class-validator';
 import { Field, InternalFieldName } from 'react-hook-form';
 
@@ -37,6 +40,8 @@ export class Schema {
 
   enabled: boolean;
 
+  @ValidateNested({ each: true })
+  @Type(() => Like)
   like: Like[];
 }
 
