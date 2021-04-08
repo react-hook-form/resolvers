@@ -234,6 +234,70 @@ const App = () => {
 export default App;
 ```
 
+### [Class Validator](https://github.com/typestack/class-validator)
+
+Decorator-based property validation for classes.
+
+[![npm](https://img.shields.io/bundlephobia/minzip/class-validator?style=for-the-badge)](https://bundlephobia.com/result?p=class-validator)
+
+> ⚠️ Remember to add these options to your `tsconfig.json`!
+
+```
+"strictPropertyInitialization": false,
+"experimentalDecorators": true
+```
+
+```tsx
+import 'reflect-metadata';
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { classValidatorResolver } from '@hookform/resolvers/class-validator';
+import { Length, Min, IsEmail } from 'class-validator';
+
+class User {
+  @Length(2, 30)
+  username: string;
+
+  @Min(18)
+  age: number;
+
+  @IsEmail()
+  email: string;
+}
+
+const resolver = classValidatorResolver(User);
+
+const App = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<User>({ resolver });
+
+  return (
+    <div style={{ display: 'grid', placeContent: 'center', height: '90vh' }}>
+      <form
+        onSubmit={handleSubmit((data) => console.log(data))}
+        style={{ display: 'flex', flexDirection: 'column', rowGap: 4 }}
+      >
+        <input type="text" {...register('username')} />
+        {errors.username && <span>{errors.username.message}</span>}
+
+        <input type="text" {...register('email')} />
+        {errors.email && <span>{errors.email.message}</span>}
+
+        <input type="number" {...register('age', { valueAsNumber: true })} />
+        {errors.age && <span>{errors.age.message}</span>}
+
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
+  );
+};
+
+export default App;
+```
+
 ## Backers
 
 Thanks goes to all our backers! [[Become a backer](https://opencollective.com/react-hook-form#backer)].
