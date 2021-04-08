@@ -28,6 +28,9 @@ export const classValidatorResolver: Resolver = (
     resolverOptions.mode === 'sync'
       ? validateSync(user, schemaOptions)
       : await validate(user, schemaOptions);
+  if (rawErrors.length === 0) {
+    return { values, errors: {} };
+  }
   const errors = toNestError(parseErrors(rawErrors), options.fields);
-  return { values, errors };
+  return { values: {}, errors };
 };

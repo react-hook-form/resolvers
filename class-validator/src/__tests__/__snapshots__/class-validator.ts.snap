@@ -26,16 +26,7 @@ Object {
       },
     },
   },
-  "values": Object {
-    "birthYear": "birthYear",
-    "email": "",
-    "like": Array [
-      Object {
-        "id": "z",
-      },
-    ],
-    "password": "___",
-  },
+  "values": Object {},
 }
 `;
 
@@ -65,15 +56,6 @@ Object {
       },
     },
   },
-  "values": Object {
-    "birthYear": "birthYear",
-    "email": "",
-    "like": Array [
-      Object {
-        "id": "z",
-      },
-    ],
-    "password": "___",
-  },
+  "values": Object {},
 }
 `;
