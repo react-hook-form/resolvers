@@ -6,32 +6,37 @@ Object {
     "birthYear": Object {
       "message": "birthYear must not be greater than 2013",
       "ref": undefined,
+      "type": "max",
     },
     "email": Object {
       "message": "email must be an email",
       "ref": Object {
         "name": "email",
       },
+      "type": "isEmail",
     },
-    "like": Object {
-      "0": Object {
+    "like": Array [
+      Object {
         "name": Object {
           "message": "name must be longer than or equal to 4 characters",
+          "ref": undefined,
+          "type": "isLength",
         },
       },
-      "ref": undefined,
-    },
+    ],
     "password": Object {
       "message": "password must match /^[a-zA-Z0-9]{3,30}/ regular expression",
       "ref": Object {
         "name": "password",
       },
+      "type": "matches",
     },
     "username": Object {
       "message": "username must be longer than or equal to 3 characters",
       "ref": Object {
         "name": "username",
       },
+      "type": "isLength",
     },
   },
   "values": Object {},
@@ -44,32 +49,37 @@ Object {
     "birthYear": Object {
       "message": "birthYear must not be greater than 2013",
       "ref": undefined,
+      "type": "max",
     },
     "email": Object {
       "message": "email must be an email",
       "ref": Object {
         "name": "email",
       },
+      "type": "isEmail",
     },
-    "like": Object {
-      "0": Object {
+    "like": Array [
+      Object {
         "name": Object {
           "message": "name must be longer than or equal to 4 characters",
+          "ref": undefined,
+          "type": "isLength",
         },
       },
-      "ref": undefined,
-    },
+    ],
     "password": Object {
       "message": "password must match /^[a-zA-Z0-9]{3,30}/ regular expression",
       "ref": Object {
         "name": "password",
       },
+      "type": "matches",
     },
     "username": Object {
       "message": "username must be longer than or equal to 3 characters",
       "ref": Object {
         "name": "username",
       },
+      "type": "isLength",
     },
   },
   "values": Object {},

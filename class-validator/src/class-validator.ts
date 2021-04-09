@@ -1,35 +1,32 @@
 import type { Resolver } from './types';
 import { plainToClass } from 'class-transformer';
 import { validate, validateSync, ValidationError } from 'class-validator';
+import { FieldErrors } from 'react-hook-form';
 import { toNestError } from '@hookform/resolvers';
 
-const fromEntries = (entries: [any, any][]) => {
-  return entries.reduce((prev, [k, v]) => ({ ...prev, [k]: v }), {});
-};
+const parseErrors = (
+  errors: ValidationError[],
+  parsedErrors: FieldErrors = {},
+  path = '',
+) => {
+  return errors.reduce((acc, error) => {
+    const _path = path ? `${path}.${error.property}` : error.property;
 
-const getErrorMessages = (rawError: ValidationError): any => {
-  const res =
-    rawError.children && rawError.children.length > 0
-      ? fromEntries(
-          rawError.children.map((child) => {
-            return [child.property, getErrorMessages(child)];
-          }),
-        )
-      : {
-          message: Object.entries(rawError.constraints ?? {})?.[0]?.[1],
-        };
+    if (error.constraints) {
+      const [key, message] = Object.entries(error.constraints)[0];
 
-  return res;
-};
+      acc[_path] = {
+        type: key,
+        message,
+      };
+    }
 
-const parseErrors = (rawErrors: ValidationError[]) => {
-  const errors = fromEntries(
-    rawErrors.map((rawError) => [
-      rawError.property,
-      getErrorMessages(rawError),
-    ]),
-  );
-  return rawErrors.length > 0 ? errors : {};
+    if (error.children?.length) {
+      parseErrors(error.children, acc, `${_path}`);
+    }
+
+    return acc;
+  }, parsedErrors);
 };
 
 export const classValidatorResolver: Resolver = (
@@ -42,9 +39,11 @@ export const classValidatorResolver: Resolver = (
     resolverOptions.mode === 'sync'
       ? validateSync(user, schemaOptions)
       : await validate(user, schemaOptions);
+
   if (rawErrors.length === 0) {
     return { values, errors: {} };
   }
+
   const errors = toNestError(parseErrors(rawErrors), options.fields);
   return { values: {}, errors };
 };
