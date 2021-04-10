@@ -6,6 +6,7 @@ import { toNestError } from '@hookform/resolvers';
 
 const parseErrors = (
   errors: ValidationError[],
+  validateAllFieldCriteria: boolean,
   parsedErrors: FieldErrors = {},
   path = '',
 ) => {
@@ -14,15 +15,18 @@ const parseErrors = (
 
     if (error.constraints) {
       const [key, message] = Object.entries(error.constraints)[0];
-
       acc[_path] = {
         type: key,
         message,
       };
+
+      if (validateAllFieldCriteria && acc[_path]) {
+        acc[_path] = { ...acc[_path], types: error.constraints };
+      }
     }
 
     if (error.children?.length) {
-      parseErrors(error.children, acc, `${_path}`);
+      parseErrors(error.children, validateAllFieldCriteria, acc, `${_path}`);
     }
 
     return acc;
@@ -44,6 +48,9 @@ export const classValidatorResolver: Resolver = (
     return { values, errors: {} };
   }
 
-  const errors = toNestError(parseErrors(rawErrors), options.fields);
+  const errors = toNestError(
+    parseErrors(rawErrors, options.criteriaMode === 'all'),
+    options.fields,
+  );
   return { values: {}, errors };
 };

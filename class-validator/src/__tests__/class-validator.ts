@@ -54,4 +54,28 @@ describe('classValidatorResolver', () => {
     expect(validateSpy).not.toHaveBeenCalled();
     expect(result).toMatchSnapshot();
   });
+
+  it('should return all the errors from classValidatorResolver when validation fails with `validateAllFieldCriteria` set to true', async () => {
+    const result = await classValidatorResolver(Schema)(
+      invalidData,
+      undefined,
+      {
+        fields,
+        criteriaMode: 'all',
+      },
+    );
+
+    expect(result).toMatchSnapshot();
+  });
+
+  it('should return all the errors from classValidatorResolver when validation fails with `validateAllFieldCriteria` set to true and `mode: sync`', async () => {
+    const result = await classValidatorResolver(Schema, undefined, {
+      mode: 'sync',
+    })(invalidData, undefined, {
+      fields,
+      criteriaMode: 'all',
+    });
+
+    expect(result).toMatchSnapshot();
+  });
 });
