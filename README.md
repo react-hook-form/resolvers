@@ -298,6 +298,42 @@ const App = () => {
 export default App;
 ```
 
+### [io-ts](https://github.com/gcanti/io-ts)
+
+Validate your data with powerful decoders.
+
+[![npm](https://img.shields.io/bundlephobia/minzip/io-ts?style=for-the-badge)](https://bundlephobia.com/result?p=io-ts@2.2.16)
+
+```typescript jsx
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { ioTsResolver } from '@hookform/resolvers/io-ts';
+import t from 'io-ts';
+// you don't have to use io-ts-types but it's very useful
+import tt from 'io-ts-types';
+
+const schema = t.type({
+  username: t.string,
+  age: tt.NumberFromString,
+});
+
+const App = () => {
+  const { register, handleSubmit } = useForm({
+    resolver: ioTsResolver(schema),
+  });
+
+  return (
+    <form onSubmit={handleSubmit((d) => console.log(d))}>
+      <input name="username" ref={register} />
+      <input name="age" type="number" ref={register} />
+      <input type="submit" />
+    </form>
+  );
+};
+
+export default App;
+```
+
 ## Backers
 
 Thanks goes to all our backers! [[Become a backer](https://opencollective.com/react-hook-form#backer)].
