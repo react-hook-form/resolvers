@@ -275,23 +275,18 @@ const App = () => {
   } = useForm<User>({ resolver });
 
   return (
-    <div style={{ display: 'grid', placeContent: 'center', height: '90vh' }}>
-      <form
-        onSubmit={handleSubmit((data) => console.log(data))}
-        style={{ display: 'flex', flexDirection: 'column', rowGap: 4 }}
-      >
-        <input type="text" {...register('username')} />
-        {errors.username && <span>{errors.username.message}</span>}
+    <form onSubmit={handleSubmit((data) => console.log(data))}>
+      <input type="text" {...register('username')} />
+      {errors.username && <span>{errors.username.message}</span>}
 
-        <input type="text" {...register('email')} />
-        {errors.email && <span>{errors.email.message}</span>}
+      <input type="text" {...register('email')} />
+      {errors.email && <span>{errors.email.message}</span>}
 
-        <input type="number" {...register('age', { valueAsNumber: true })} />
-        {errors.age && <span>{errors.age.message}</span>}
+      <input type="number" {...register('age', { valueAsNumber: true })} />
+      {errors.age && <span>{errors.age.message}</span>}
 
-        <input type="submit" value="Submit" />
-      </form>
-    </div>
+      <input type="submit" value="Submit" />
+    </form>
   );
 };
 
