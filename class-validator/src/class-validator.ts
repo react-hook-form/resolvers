@@ -1,35 +1,36 @@
-import type { Resolver } from './types';
+import { FieldErrors } from 'react-hook-form';
+import { toNestError } from '@hookform/resolvers';
 import { plainToClass } from 'class-transformer';
 import { validate, validateSync, ValidationError } from 'class-validator';
-import { toNestError } from '@hookform/resolvers';
+import type { Resolver } from './types';
 
-const fromEntries = (entries: [any, any][]) => {
-  return entries.reduce((prev, [k, v]) => ({ ...prev, [k]: v }), {});
-};
+const parseErrors = (
+  errors: ValidationError[],
+  validateAllFieldCriteria: boolean,
+  parsedErrors: FieldErrors = {},
+  path = '',
+) => {
+  return errors.reduce((acc, error) => {
+    const _path = path ? `${path}.${error.property}` : error.property;
 
-const getErrorMessages = (rawError: ValidationError): any => {
-  const res =
-    rawError.children && rawError.children.length > 0
-      ? fromEntries(
-          rawError.children.map((child) => {
-            return [child.property, getErrorMessages(child)];
-          }),
-        )
-      : {
-          message: Object.entries(rawError.constraints ?? {})?.[0]?.[1],
-        };
+    if (error.constraints) {
+      const key = Object.keys(error.constraints)[0];
+      acc[_path] = {
+        type: key,
+        message: error.constraints[key],
+      };
 
-  return res;
-};
+      if (validateAllFieldCriteria && acc[_path]) {
+        Object.assign(acc[_path], { types: error.constraints });
+      }
+    }
 
-const parseErrors = (rawErrors: ValidationError[]) => {
-  const errors = fromEntries(
-    rawErrors.map((rawError) => [
-      rawError.property,
-      getErrorMessages(rawError),
-    ]),
-  );
-  return rawErrors.length > 0 ? errors : {};
+    if (error.children && error.children.length) {
+      parseErrors(error.children, validateAllFieldCriteria, acc, _path);
+    }
+
+    return acc;
+  }, parsedErrors);
 };
 
 export const classValidatorResolver: Resolver = (
@@ -38,13 +39,18 @@ export const classValidatorResolver: Resolver = (
   resolverOptions = {},
 ) => async (values, _, options) => {
   const user = plainToClass(schema, values);
-  const rawErrors =
-    resolverOptions.mode === 'sync'
-      ? validateSync(user, schemaOptions)
-      : await validate(user, schemaOptions);
-  if (rawErrors.length === 0) {
-    return { values, errors: {} };
-  }
-  const errors = toNestError(parseErrors(rawErrors), options.fields);
-  return { values: {}, errors };
+
+  const rawErrors = await (resolverOptions.mode === 'sync'
+    ? validateSync
+    : validate)(user, schemaOptions);
+
+  return rawErrors.length
+    ? {
+        values: {},
+        errors: toNestError(
+          parseErrors(rawErrors, options.criteriaMode === 'all'),
+          options.fields,
+        ),
+      }
+    : { values, errors: {} };
 };
