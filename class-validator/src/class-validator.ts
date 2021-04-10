@@ -1,8 +1,8 @@
-import type { Resolver } from './types';
-import { plainToClass } from 'class-transformer';
-import { validate, validateSync, ValidationError } from 'class-validator';
 import { FieldErrors } from 'react-hook-form';
 import { toNestError } from '@hookform/resolvers';
+import { plainToClass } from 'class-transformer';
+import { validate, validateSync, ValidationError } from 'class-validator';
+import type { Resolver } from './types';
 
 const parseErrors = (
   errors: ValidationError[],
@@ -14,19 +14,19 @@ const parseErrors = (
     const _path = path ? `${path}.${error.property}` : error.property;
 
     if (error.constraints) {
-      const [key, message] = Object.entries(error.constraints)[0];
+      const key = Object.keys(error.constraints)[0];
       acc[_path] = {
         type: key,
-        message,
+        message: error.constraints[key],
       };
 
       if (validateAllFieldCriteria && acc[_path]) {
-        acc[_path] = { ...acc[_path], types: error.constraints };
+        Object.assign(acc[_path], { types: error.constraints });
       }
     }
 
-    if (error.children?.length) {
-      parseErrors(error.children, validateAllFieldCriteria, acc, `${_path}`);
+    if (error.children && error.children.length) {
+      parseErrors(error.children, validateAllFieldCriteria, acc, _path);
     }
 
     return acc;
@@ -39,18 +39,18 @@ export const classValidatorResolver: Resolver = (
   resolverOptions = {},
 ) => async (values, _, options) => {
   const user = plainToClass(schema, values);
-  const rawErrors =
-    resolverOptions.mode === 'sync'
-      ? validateSync(user, schemaOptions)
-      : await validate(user, schemaOptions);
 
-  if (rawErrors.length === 0) {
-    return { values, errors: {} };
-  }
+  const rawErrors = await (resolverOptions.mode === 'sync'
+    ? validateSync
+    : validate)(user, schemaOptions);
 
-  const errors = toNestError(
-    parseErrors(rawErrors, options.criteriaMode === 'all'),
-    options.fields,
-  );
-  return { values: {}, errors };
+  return rawErrors.length
+    ? {
+        values: {},
+        errors: toNestError(
+          parseErrors(rawErrors, options.criteriaMode === 'all'),
+          options.fields,
+        ),
+      }
+    : { values, errors: {} };
 };
