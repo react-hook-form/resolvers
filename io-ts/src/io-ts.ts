@@ -8,14 +8,8 @@ export const ioTsResolver: Resolver = (codec) => (values, _context, options) =>
   pipe(
     values,
     codec.decode,
-    Either.mapLeft((errors) =>
-      options.criteriaMode === 'firstError' || !options.criteriaMode
-        ? [errors[0]]
-        : errors,
-    ),
-    errorsToRecord,
+    Either.mapLeft(errorsToRecord(options.criteriaMode === 'all')),
     Either.mapLeft((errors) => toNestError(errors, options.fields)),
-
     Either.fold(
       (errors) => ({
         values: {},

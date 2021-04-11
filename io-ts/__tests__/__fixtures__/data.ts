@@ -17,7 +17,12 @@ export const schema = t.intersection([
     ),
     luckyNumbers: t.array(t.number),
     enabled: t.boolean,
-    animal: t.union([t.string, t.number]),
+    animal: t.union([
+      t.string,
+      t.number,
+      t.literal('bird'),
+      t.literal('snake'),
+    ]),
     vehicles: t.array(
       t.union([
         t.type({

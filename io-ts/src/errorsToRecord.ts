@@ -1,12 +1,18 @@
 import * as t from 'io-ts';
-import { IntersectionType, TaggedUnionType, UnionType } from 'io-ts';
+import {
+  IntersectionType,
+  TaggedUnionType,
+  UnionType,
+  ValidationError,
+} from 'io-ts';
 import { absurd, flow, identity, not, pipe } from 'fp-ts/function';
 import * as ReadonlyArray from 'fp-ts/ReadonlyArray';
 import * as Option from 'fp-ts/Option';
 import * as Either from 'fp-ts/Either';
 import * as SemiGroup from 'fp-ts/Semigroup';
-import { FieldError } from 'react-hook-form';
 import arrayToPath from './arrayToPath';
+import * as ReadonlyRecord from 'fp-ts/ReadonlyRecord';
+import { ErrorObject, FieldErrorWithPath } from './types';
 
 const formatErrorPath = (context: t.Context): string =>
   pipe(
@@ -34,9 +40,7 @@ const formatErrorPath = (context: t.Context): string =>
     arrayToPath,
   );
 
-type ErrorObject = Record<string, FieldError>;
-
-const formatError = (e: t.ValidationError): ErrorObject => {
+const formatError = (e: t.ValidationError): FieldErrorWithPath => {
   const path = formatErrorPath(e.context);
 
   const message = pipe(
@@ -66,14 +70,62 @@ const formatError = (e: t.ValidationError): ErrorObject => {
     Option.getOrElse(() => 'unknown'),
   );
 
-  return { [path]: { message, type } };
+  return { message, type, path };
 };
 
-const concatObjects = (a: ReadonlyArray<ErrorObject>): ErrorObject =>
-  SemiGroup.fold(SemiGroup.getObjectSemigroup<ErrorObject>())({}, a);
+// this is almost the same function like Semigroup.getObjectSemigroup but reversed
+// in order to get the first error
+const getObjectSemigroup = <
+  A extends Record<string, unknown> = never
+>(): SemiGroup.Semigroup<A> => ({
+  concat: (first, second) => Object.assign({}, second, first),
+});
 
-const errorsToRecord = flow(
-  Either.mapLeft(flow(ReadonlyArray.map(formatError), concatObjects)),
-);
+const concatToSingleError = (
+  errors: ReadonlyArray<FieldErrorWithPath>,
+): ErrorObject =>
+  pipe(
+    errors,
+    ReadonlyArray.map((error) => ({
+      [error.path]: {
+        type: error.type,
+        message: error.message,
+      },
+    })),
+    (errors) => SemiGroup.fold(getObjectSemigroup<ErrorObject>())({}, errors),
+  );
+
+const appendSeveralErrors: SemiGroup.Semigroup<FieldErrorWithPath> = {
+  concat: (a, b) => ({
+    ...b,
+    types: { ...a.types, [a.type]: a.message, [b.type]: b.message },
+  }),
+};
+
+const concatToMultipleErrors = (
+  errors: ReadonlyArray<FieldErrorWithPath>,
+): ErrorObject =>
+  pipe(
+    ReadonlyRecord.fromFoldableMap(
+      appendSeveralErrors,
+      ReadonlyArray.Foldable,
+    )(errors, (error) => [error.path, error]),
+    ReadonlyRecord.map((errorWithPath) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { path, ...error } = errorWithPath;
+
+      return error;
+    }),
+  );
+
+const errorsToRecord = (validateAllFieldCriteria: boolean) => (
+  validationErrors: ReadonlyArray<ValidationError>,
+): ErrorObject => {
+  const concat = validateAllFieldCriteria
+    ? concatToMultipleErrors
+    : concatToSingleError;
+
+  return pipe(validationErrors, ReadonlyArray.map(formatError), concat);
+};
 
 export default errorsToRecord;

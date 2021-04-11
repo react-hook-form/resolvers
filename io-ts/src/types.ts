@@ -1,5 +1,6 @@
 import * as t from 'io-ts';
 import {
+  FieldError,
   FieldValues,
   ResolverOptions,
   ResolverResult,
@@ -13,3 +14,6 @@ export type Resolver = <T, TFieldValues, TContext>(
   _context: TContext | undefined,
   options: ResolverOptions<TFieldValues>,
 ) => ResolverResult<TFieldValues>;
+
+export type ErrorObject = Record<string, FieldError>;
+export type FieldErrorWithPath = FieldError & { path: string };
