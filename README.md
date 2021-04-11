@@ -302,7 +302,7 @@ export default App;
 
 Validate your data with powerful decoders.
 
-[![npm](https://img.shields.io/bundlephobia/minzip/io-ts?style=for-the-badge)](https://bundlephobia.com/result?p=io-ts@2.2.16)
+[![npm](https://img.shields.io/bundlephobia/minzip/io-ts?style=for-the-badge)](https://bundlephobia.com/result?p=io-ts)
 
 ```typescript jsx
 import React from 'react';
