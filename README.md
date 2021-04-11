@@ -16,10 +16,6 @@
 
 </div>
 
-## Goal
-
-We are moving away from native support for Yup validation. We are now supporting other schema validation after React Hook Form v6.
-
 ## Install
 
     $ npm install @hookform/resolvers
