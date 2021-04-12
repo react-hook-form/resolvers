@@ -244,7 +244,6 @@ Decorator-based property validation for classes.
 ```
 
 ```tsx
-import 'reflect-metadata';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
