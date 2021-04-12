@@ -1,9 +1,14 @@
 // Original source: https://github.com/preactjs/preact/blob/master/config/node-13-exports.js
 const fs = require('fs');
 
-const subRepositories = ['zod', 'joi', 'vest', 'yup', 'superstruct'];
-const snakeCaseToCamelCase = (str) =>
-  str.replace(/([-_][a-z])/g, (group) => group.toUpperCase().replace('-', ''));
+const subRepositories = [
+  'zod',
+  'joi',
+  'vest',
+  'yup',
+  'superstruct',
+  'class-validator',
+];
 
 const copySrc = () => {
   // Copy .module.js --> .mjs for Node 13 compat.
@@ -15,10 +20,9 @@ const copySrc = () => {
 
 const copy = (name) => {
   // Copy .module.js --> .mjs for Node 13 compat.
-  const filename = name.includes('-') ? snakeCaseToCamelCase(name) : name;
   fs.writeFileSync(
-    `${process.cwd()}/${name}/dist/${filename}.mjs`,
-    fs.readFileSync(`${process.cwd()}/${name}/dist/${filename}.module.js`),
+    `${process.cwd()}/${name}/dist/${name}.mjs`,
+    fs.readFileSync(`${process.cwd()}/${name}/dist/${name}.module.js`),
   );
 };
 

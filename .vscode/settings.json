@@ -5,7 +5,7 @@
     "typescript",
     "typescriptreact"
   ],
-  "prettier.configPath": "./.prettierrc",
+  "prettier.configPath": "./.prettierrc.js",
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true

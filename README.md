@@ -1,7 +1,7 @@
 <div align="center">
     <p align="center">
         <a href="https://react-hook-form.com" title="React Hook Form - Simple React forms validation">
-            <img src="https://raw.githubusercontent.com/bluebill1049/react-hook-form/master/docs/logo.png" alt="React Hook Form Logo - React hook custom hook for form validation" width="300px" />
+            <img src="https://raw.githubusercontent.com/bluebill1049/react-hook-form/master/docs/logo.png" alt="React Hook Form Logo - React hook custom hook for form validation" />
         </a>
     </p>
 </div>
@@ -15,10 +15,6 @@
 [![npm](https://img.shields.io/bundlephobia/minzip/@hookform/resolvers?style=for-the-badge)](https://bundlephobia.com/result?p=@hookform/resolvers)
 
 </div>
-
-## Goal
-
-We are moving away from native support for Yup validation. We are now supporting other schema validation after React Hook Form v6.
 
 ## Install
 
@@ -227,6 +223,65 @@ const App = () => {
       <input type="text" name="username" ref={register} />
       <input type="text" name="password" ref={register} />
       <input type="submit" />
+    </form>
+  );
+};
+
+export default App;
+```
+
+### [Class Validator](https://github.com/typestack/class-validator)
+
+Decorator-based property validation for classes.
+
+[![npm](https://img.shields.io/bundlephobia/minzip/class-validator?style=for-the-badge)](https://bundlephobia.com/result?p=class-validator)
+
+> ⚠️ Remember to add these options to your `tsconfig.json`!
+
+```
+"strictPropertyInitialization": false,
+"experimentalDecorators": true
+```
+
+```tsx
+import 'reflect-metadata';
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { classValidatorResolver } from '@hookform/resolvers/class-validator';
+import { Length, Min, IsEmail } from 'class-validator';
+
+class User {
+  @Length(2, 30)
+  username: string;
+
+  @Min(18)
+  age: number;
+
+  @IsEmail()
+  email: string;
+}
+
+const resolver = classValidatorResolver(User);
+
+const App = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<User>({ resolver });
+
+  return (
+    <form onSubmit={handleSubmit((data) => console.log(data))}>
+      <input type="text" {...register('username')} />
+      {errors.username && <span>{errors.username.message}</span>}
+
+      <input type="text" {...register('email')} />
+      {errors.email && <span>{errors.email.message}</span>}
+
+      <input type="number" {...register('age', { valueAsNumber: true })} />
+      {errors.age && <span>{errors.age.message}</span>}
+
+      <input type="submit" value="Submit" />
     </form>
   );
 };
