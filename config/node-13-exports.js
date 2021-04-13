@@ -8,6 +8,7 @@ const subRepositories = [
   'yup',
   'superstruct',
   'class-validator',
+  'io-ts',
 ];
 
 const copySrc = () => {

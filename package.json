@@ -51,6 +51,12 @@
       "import": "./class-validator/dist/class-validator.mjs",
       "require": "./class-validator/dist/class-validator.js"
     },
+    "./io-ts": {
+      "browser": "./io-ts/dist/io-ts.module.js",
+      "umd": "./io-ts/dist/io-ts.umd.js",
+      "import": "./io-ts/dist/io-ts.mjs",
+      "require": "./io-ts/dist/io-ts.js"
+    },
     "./package.json": "./package.json",
     "./": "./"
   },
@@ -73,7 +79,10 @@
     "superstruct/dist",
     "class-validator/package.json",
     "class-validator/src",
-    "class-validator/dist"
+    "class-validator/dist",
+    "io-ts/package.json",
+    "io-ts/src",
+    "io-ts/dist"
   ],
   "publishConfig": {
     "access": "public"
@@ -86,6 +95,7 @@
     "build:yup": "microbundle --cwd yup --globals '@hookform/resolvers=hookformResolvers'",
     "build:joi": "microbundle --cwd joi --globals '@hookform/resolvers=hookformResolvers'",
     "build:superstruct": "microbundle --cwd superstruct --globals '@hookform/resolvers=hookformResolvers'",
+    "build:io-ts": "microbundle --cwd io-ts --globals '@hookform/resolvers=hookformResolvers'",
     "build:vest": "microbundle --cwd vest --globals '@hookform/resolvers=hookformResolvers'",
     "build:class-validator": "microbundle --cwd class-validator --globals '@hookform/resolvers=hookformResolvers'",
     "postbuild": "node ./config/node-13-exports.js",
@@ -107,7 +117,8 @@
     "typescript",
     "zod",
     "vest",
-    "class-validator"
+    "class-validator",
+    "io-ts"
   ],
   "repository": {
     "type": "git",
@@ -133,11 +144,16 @@
     "eslint": "^7.19.0",
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-prettier": "^3.3.1",
+    "fp-ts": "^2.7.0",
     "husky": "^4.3.8",
+    "io-ts": "^2.0.0",
+    "io-ts-types": "^0.5.16",
     "jest": "^26.6.3",
     "joi": "^17.3.0",
     "lint-staged": "^10.5.3",
     "microbundle": "^0.13.0",
+    "monocle-ts": "^2.3.9",
+    "newtype-ts": "^0.3.4",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.2.1",
     "react": "^17.0.1",
