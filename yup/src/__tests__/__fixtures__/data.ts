@@ -5,8 +5,15 @@ export const schema = yup.object({
   username: yup.string().matches(/^\w+$/).min(3).max(30).required(),
   password: yup
     .string()
-    .matches(/^[a-zA-Z0-9]{3,30}/)
-    .required(),
+    .matches(new RegExp('.*[A-Z].*'), 'One uppercase character')
+    .matches(new RegExp('.*[a-z].*'), 'One lowercase character')
+    .matches(new RegExp('.*\\d.*'), 'One number')
+    .matches(
+      new RegExp('.*[`~<>?,./!@#$%^&*()\\-_+="\'|{}\\[\\];:\\\\].*'),
+      'One special character',
+    )
+    .min(8, 'Must be at least 8 characters in length')
+    .required('New Password is required'),
   repeatPassword: yup.ref('password'),
   accessToken: yup.string(),
   birthYear: yup.number().min(1900).max(2013),
@@ -23,8 +30,8 @@ export const schema = yup.object({
 
 export const validData: yup.InferType<typeof schema> = {
   username: 'Doe',
-  password: 'Password123',
-  repeatPassword: 'Password123',
+  password: 'Password123_',
+  repeatPassword: 'Password123_',
   birthYear: 2000,
   email: 'john@doe.com',
   tags: ['tag1', 'tag2'],

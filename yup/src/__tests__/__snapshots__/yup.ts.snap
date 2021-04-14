@@ -23,7 +23,7 @@ Object {
       },
     ],
     "password": Object {
-      "message": "password must match the following: \\"/^[a-zA-Z0-9]{3,30}/\\"",
+      "message": "One uppercase character",
       "ref": Object {
         "name": "password",
       },
@@ -64,7 +64,7 @@ Object {
       },
     ],
     "password": Object {
-      "message": "password must match the following: \\"/^[a-zA-Z0-9]{3,30}/\\"",
+      "message": "One uppercase character",
       "ref": Object {
         "name": "password",
       },
@@ -114,13 +114,18 @@ Object {
       },
     ],
     "password": Object {
-      "message": "password must match the following: \\"/^[a-zA-Z0-9]{3,30}/\\"",
+      "message": "One uppercase character",
       "ref": Object {
         "name": "password",
       },
       "type": "matches",
       "types": Object {
-        "matches": "password must match the following: \\"/^[a-zA-Z0-9]{3,30}/\\"",
+        "matches": Array [
+          "One uppercase character",
+          "One lowercase character",
+          "One number",
+        ],
+        "min": "Must be at least 8 characters in length",
       },
     },
     "username": Object {
@@ -170,13 +175,18 @@ Object {
       },
     ],
     "password": Object {
-      "message": "password must match the following: \\"/^[a-zA-Z0-9]{3,30}/\\"",
+      "message": "One uppercase character",
       "ref": Object {
         "name": "password",
       },
       "type": "matches",
       "types": Object {
-        "matches": "password must match the following: \\"/^[a-zA-Z0-9]{3,30}/\\"",
+        "matches": Array [
+          "One uppercase character",
+          "One lowercase character",
+          "One number",
+        ],
+        "min": "Must be at least 8 characters in length",
       },
     },
     "username": Object {
