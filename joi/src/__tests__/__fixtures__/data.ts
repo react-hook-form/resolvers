@@ -4,7 +4,16 @@ import { Field, InternalFieldName } from 'react-hook-form';
 
 export const schema = Joi.object({
   username: Joi.string().alphanum().min(3).max(30).required(),
-  password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
+  password: Joi.string()
+    .pattern(new RegExp('.*[A-Z].*'), 'One uppercase character')
+    .pattern(new RegExp('.*[a-z].*'), 'One lowercase character')
+    .pattern(new RegExp('.*\\d.*'), 'One number')
+    .pattern(
+      new RegExp('.*[`~<>?,./!@#$%^&*()\\-_+="\'|{}\\[\\];:\\\\].*'),
+      'One special character',
+    )
+    .min(8)
+    .required(),
   repeatPassword: Joi.ref('password'),
   accessToken: [Joi.string(), Joi.number()],
   birthYear: Joi.number().integer().min(1900).max(2013),
@@ -35,8 +44,8 @@ interface Data {
 
 export const validData: Data = {
   username: 'Doe',
-  password: 'Password123',
-  repeatPassword: 'Password123',
+  password: 'Password123_',
+  repeatPassword: 'Password123_',
   birthYear: 2000,
   email: 'john@doe.com',
   tags: ['tag1', 'tag2'],
