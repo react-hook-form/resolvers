@@ -43,7 +43,7 @@ Object {
       "type": "invalid_union",
     },
     "password": Object {
-      "message": "Invalid",
+      "message": "One uppercase character",
       "ref": Object {
         "name": "password",
       },
@@ -114,7 +114,7 @@ Object {
       "type": "invalid_union",
     },
     "password": Object {
-      "message": "Invalid",
+      "message": "One uppercase character",
       "ref": Object {
         "name": "password",
       },
@@ -150,7 +150,10 @@ Object {
       "ref": undefined,
       "type": "invalid_union",
       "types": Object {
-        "invalid_type": "Expected undefined, received string",
+        "invalid_type": Array [
+          "Expected number, received string",
+          "Expected undefined, received string",
+        ],
         "invalid_union": "Invalid input",
       },
     },
@@ -208,13 +211,18 @@ Object {
       },
     },
     "password": Object {
-      "message": "Invalid",
+      "message": "One uppercase character",
       "ref": Object {
         "name": "password",
       },
       "type": "invalid_string",
       "types": Object {
-        "invalid_string": "Invalid",
+        "invalid_string": Array [
+          "One uppercase character",
+          "One lowercase character",
+          "One number",
+        ],
+        "too_small": "Must be at least 8 characters in length",
       },
     },
     "repeatPassword": Object {
@@ -256,7 +264,10 @@ Object {
       "ref": undefined,
       "type": "invalid_union",
       "types": Object {
-        "invalid_type": "Expected undefined, received string",
+        "invalid_type": Array [
+          "Expected number, received string",
+          "Expected undefined, received string",
+        ],
         "invalid_union": "Invalid input",
       },
     },
@@ -314,13 +325,18 @@ Object {
       },
     },
     "password": Object {
-      "message": "Invalid",
+      "message": "One uppercase character",
       "ref": Object {
         "name": "password",
       },
       "type": "invalid_string",
       "types": Object {
-        "invalid_string": "Invalid",
+        "invalid_string": Array [
+          "One uppercase character",
+          "One lowercase character",
+          "One number",
+        ],
+        "too_small": "Must be at least 8 characters in length",
       },
     },
     "repeatPassword": Object {
