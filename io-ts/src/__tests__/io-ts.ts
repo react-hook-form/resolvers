@@ -1,4 +1,4 @@
-import { ioTsResolver } from '../src';
+import { ioTsResolver } from '..';
 import { schema, validData, fields, invalidData } from './__fixtures__/data';
 
 describe('ioTsResolver', () => {
