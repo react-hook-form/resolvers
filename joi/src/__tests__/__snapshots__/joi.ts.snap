@@ -35,11 +35,11 @@ Object {
       },
     ],
     "password": Object {
-      "message": "\\"password\\" with value \\"___\\" fails to match the required pattern: /^[a-zA-Z0-9]{3,30}$/",
+      "message": "\\"password\\" with value \\"___\\" fails to match the One uppercase character pattern",
       "ref": Object {
         "name": "password",
       },
-      "type": "string.pattern.base",
+      "type": "string.pattern.name",
     },
     "tags": Object {
       "message": "\\"tags\\" is required",
@@ -93,11 +93,11 @@ Object {
       },
     ],
     "password": Object {
-      "message": "\\"password\\" with value \\"___\\" fails to match the required pattern: /^[a-zA-Z0-9]{3,30}$/",
+      "message": "\\"password\\" with value \\"___\\" fails to match the One uppercase character pattern",
       "ref": Object {
         "name": "password",
       },
-      "type": "string.pattern.base",
+      "type": "string.pattern.name",
     },
     "tags": Object {
       "message": "\\"tags\\" is required",
@@ -167,13 +167,18 @@ Object {
       },
     ],
     "password": Object {
-      "message": "\\"password\\" with value \\"___\\" fails to match the required pattern: /^[a-zA-Z0-9]{3,30}$/",
+      "message": "\\"password\\" with value \\"___\\" fails to match the One uppercase character pattern",
       "ref": Object {
         "name": "password",
       },
-      "type": "string.pattern.base",
+      "type": "string.pattern.name",
       "types": Object {
-        "string.pattern.base": "\\"password\\" with value \\"___\\" fails to match the required pattern: /^[a-zA-Z0-9]{3,30}$/",
+        "string.min": "\\"password\\" length must be at least 8 characters long",
+        "string.pattern.name": Array [
+          "\\"password\\" with value \\"___\\" fails to match the One uppercase character pattern",
+          "\\"password\\" with value \\"___\\" fails to match the One lowercase character pattern",
+          "\\"password\\" with value \\"___\\" fails to match the One number pattern",
+        ],
       },
     },
     "tags": Object {
@@ -250,13 +255,18 @@ Object {
       },
     ],
     "password": Object {
-      "message": "\\"password\\" with value \\"___\\" fails to match the required pattern: /^[a-zA-Z0-9]{3,30}$/",
+      "message": "\\"password\\" with value \\"___\\" fails to match the One uppercase character pattern",
       "ref": Object {
         "name": "password",
       },
-      "type": "string.pattern.base",
+      "type": "string.pattern.name",
       "types": Object {
-        "string.pattern.base": "\\"password\\" with value \\"___\\" fails to match the required pattern: /^[a-zA-Z0-9]{3,30}$/",
+        "string.min": "\\"password\\" length must be at least 8 characters long",
+        "string.pattern.name": Array [
+          "\\"password\\" with value \\"___\\" fails to match the One uppercase character pattern",
+          "\\"password\\" with value \\"___\\" fails to match the One lowercase character pattern",
+          "\\"password\\" with value \\"___\\" fails to match the One number pattern",
+        ],
       },
     },
     "tags": Object {

@@ -24,12 +24,17 @@ const parseErrorSchema = (
     }
 
     if (validateAllFieldCriteria) {
+      const types = errors[_path].types;
+      const messages = types && types[error.code];
+
       errors[_path] = appendErrors(
         _path,
         validateAllFieldCriteria,
         errors,
         code,
-        message,
+        messages
+          ? ([] as string[]).concat(messages as string[], error.message)
+          : error.message,
       ) as FieldError;
     }
 

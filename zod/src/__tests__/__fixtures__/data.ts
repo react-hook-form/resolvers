@@ -4,7 +4,16 @@ import * as z from 'zod';
 export const schema = z
   .object({
     username: z.string().regex(/^\w+$/).min(3).max(30),
-    password: z.string().regex(/^[a-zA-Z0-9]{3,30}/),
+    password: z
+      .string()
+      .regex(new RegExp('.*[A-Z].*'), 'One uppercase character')
+      .regex(new RegExp('.*[a-z].*'), 'One lowercase character')
+      .regex(new RegExp('.*\\d.*'), 'One number')
+      .regex(
+        new RegExp('.*[`~<>?,./!@#$%^&*()\\-_+="\'|{}\\[\\];:\\\\].*'),
+        'One special character',
+      )
+      .min(8, 'Must be at least 8 characters in length'),
     repeatPassword: z.string(),
     accessToken: z.union([z.string(), z.number()]).optional(),
     birthYear: z.number().min(1900).max(2013).optional(),
@@ -27,8 +36,8 @@ export const schema = z
 
 export const validData: z.infer<typeof schema> = {
   username: 'Doe',
-  password: 'Password123',
-  repeatPassword: 'Password123',
+  password: 'Password123_',
+  repeatPassword: 'Password123_',
   birthYear: 2000,
   email: 'john@doe.com',
   tags: ['tag1', 'tag2'],
