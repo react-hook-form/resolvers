@@ -4961,6 +4961,11 @@ node-releases@^1.1.67:
   resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-1.1.67.tgz#28ebfcccd0baa6aad8e8d4d8fe4cbc49ae239c12"
   integrity sha512-V5QF9noGFl3EymEwUYzO+3NTDpGfQB4ve6Qfnzf3UNydMhjQRVPR1DZTuvWiLzaFJYw2fmDwAfnRNEVb64hSIg==
 
+nope-validator@^0.12.2:
+  version "0.12.2"
+  resolved "https://registry.yarnpkg.com/nope-validator/-/nope-validator-0.12.2.tgz#7860c9d1ebed5d5d1d6819d19ae25779206663de"
+  integrity sha512-anjqqIqNKxRlo3mBfm1V4V9ShEkj+65BHEvq9yIESjaeWwAJELQl354uQUG2swjk/k6Gifc9L+RQ0iek6X34/w==
+
 normalize-package-data@^2.3.2, normalize-package-data@^2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/normalize-package-data/-/normalize-package-data-2.5.0.tgz#e66db1838b200c1dfc233225d12cb36520e234a8"

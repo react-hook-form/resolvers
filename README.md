@@ -324,6 +324,40 @@ const App = () => {
 export default App;
 ```
 
+### [Nope](https://github.com/bvego/nope-validator)
+
+A small, simple, and fast JS validator
+
+[![npm](https://img.shields.io/bundlephobia/minzip/nope-validator?style=for-the-badge)](https://bundlephobia.com/result?p=nope-validator)
+
+```typescript jsx
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { nopeResolver } from '@hookform/resolvers/nope';
+import Nope from 'nope-validator';
+
+const schema = Nope.object().shape({
+  name: Nope.string().required(),
+  age: Nope.number().required(),
+});
+
+const App = () => {
+  const { register, handleSubmit } = useForm({
+    resolver: nopeResolver(schema),
+  });
+
+  return (
+    <form onSubmit={handleSubmit((d) => console.log(d))}>
+      <input name="name" ref={register} />
+      <input name="age" type="number" ref={register} />
+      <input type="submit" />
+    </form>
+  );
+};
+
+export default App;
+```
+
 ## Backers
 
 Thanks goes to all our backers! [[Become a backer](https://opencollective.com/react-hook-form#backer)].
