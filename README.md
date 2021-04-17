@@ -56,8 +56,8 @@ const App = () => {
 
   return (
     <form onSubmit={handleSubmit((d) => console.log(d))}>
-      <input name="name" ref={register} />
-      <input name="age" type="number" ref={register} />
+      <input {...register('name')} />
+      <input type="number" {...register('age')} />
       <input type="submit" />
     </form>
   );
@@ -96,9 +96,9 @@ const App = () => {
 
   return (
     <form onSubmit={handleSubmit((d) => console.log(d))}>
-      <input name="name" ref={register} />
+      <input {...register('name')} />
       {errors.name?.message && <p>{errors.name?.message}</p>}
-      <input name="age" type="number" ref={register({ valueAsNumber: true })} />
+      <input type="number" {...register('age', { valueAsNumber: true })} />
       {errors.age?.message && <p>{errors.age?.message}</p>}
       <input type="submit" />
     </form>
@@ -132,8 +132,8 @@ const App = () => {
 
   return (
     <form onSubmit={handleSubmit((d) => console.log(d))}>
-      <input name="name" ref={register} />
-      <input name="age" type="number" ref={register({ valueAsNumber: true })} />
+      <input {...register('name')} />
+      <input type="number" ref={register('age', { valueAsNumber: true })} />
       <input type="submit" />
     </form>
   );
@@ -165,8 +165,8 @@ const App = () => {
 
   return (
     <form onSubmit={handleSubmit((d) => console.log(d))}>
-      <input name="name" ref={register} />
-      <input name="age" type="number" ref={register} />
+      <input {...register('name')} />
+      <input type="number" {...register('age')} />
       <input type="submit" />
     </form>
   );
@@ -220,8 +220,8 @@ const App = () => {
 
   return (
     <form onSubmit={handleSubmit((data) => console.log(data))}>
-      <input type="text" name="username" ref={register} />
-      <input type="text" name="password" ref={register} />
+      <input {...register('username')} />
+      <input type="password" {...register('password')} />
       <input type="submit" />
     </form>
   );
@@ -315,7 +315,7 @@ const App = () => {
   return (
     <form onSubmit={handleSubmit((d) => console.log(d))}>
       <input name="username" ref={register} />
-      <input name="age" type="number" ref={register} />
+      <input type="number" {...register('age')} />
       <input type="submit" />
     </form>
   );
@@ -348,8 +348,8 @@ const App = () => {
 
   return (
     <form onSubmit={handleSubmit((d) => console.log(d))}>
-      <input name="name" ref={register} />
-      <input name="age" type="number" ref={register} />
+      <input {...register('name')} />
+      <input type="number" {...register('age')} />
       <input type="submit" />
     </form>
   );
