@@ -10,6 +10,7 @@ const subRepositories = [
   'class-validator',
   'io-ts',
   'nope',
+  'computed-types',
 ];
 
 const copySrc = () => {

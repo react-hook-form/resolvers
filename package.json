@@ -2,7 +2,7 @@
   "name": "@hookform/resolvers",
   "amdName": "hookformResolvers",
   "version": "1.3.1",
-  "description": "React Hook Form validation resolvers: Yup, Joi, Superstruct, Zod, Vest, Class Validator, io-ts and Nope.",
+  "description": "React Hook Form validation resolvers: Yup, Joi, Superstruct, Zod, Vest, Class Validator, io-ts, Nope and computed-types",
   "main": "dist/resolvers.js",
   "module": "dist/resolvers.module.js",
   "umd:main": "dist/resolvers.umd.js",
@@ -63,6 +63,12 @@
       "import": "./nope/dist/nope.mjs",
       "require": "./nope/dist/nope.js"
     },
+    "./computed-types": {
+      "browser": "./computed-types/dist/computed-types.module.js",
+      "umd": "./computed-types/dist/computed-types.umd.js",
+      "import": "./computed-types/dist/computed-types.mjs",
+      "require": "./computed-types/dist/computed-types.js"
+    },
     "./package.json": "./package.json",
     "./": "./"
   },
@@ -91,13 +97,16 @@
     "io-ts/dist",
     "nope/package.json",
     "nope/src",
-    "nope/dist"
+    "nope/dist",
+    "computed-types/package.json",
+    "computed-types/src",
+    "computed-types/dist"
   ],
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
-    "prepare": "run-s build:src build && check-export-map",
+    "prepare": "run-s build:src build && check-export-map && husky install",
     "build": "npm-run-all --parallel build:*",
     "build:src": "microbundle build",
     "build:zod": "microbundle --cwd zod --globals '@hookform/resolvers=hookformResolvers'",
@@ -108,6 +117,7 @@
     "build:vest": "microbundle --cwd vest --globals '@hookform/resolvers=hookformResolvers'",
     "build:class-validator": "microbundle --cwd class-validator --globals '@hookform/resolvers=hookformResolvers'",
     "build:nope": "microbundle --cwd nope --globals '@hookform/resolvers=hookformResolvers'",
+    "build:computed-types": "microbundle --cwd computed-types --globals '@hookform/resolvers=hookformResolvers'",
     "postbuild": "node ./config/node-13-exports.js",
     "lint": "eslint . --ext .ts,.js --ignore-path .gitignore",
     "lint:types": "tsc",
@@ -129,7 +139,8 @@
     "vest",
     "class-validator",
     "io-ts",
-    "nope"
+    "nope",
+    "computed-types"
   ],
   "repository": {
     "type": "git",
@@ -142,50 +153,46 @@
   },
   "homepage": "https://react-hook-form.com",
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.11.9",
-    "@testing-library/react": "^11.2.3",
-    "@testing-library/user-event": "^12.6.3",
-    "@types/jest": "^26.0.20",
-    "@types/react": "^17.0.0",
-    "@typescript-eslint/eslint-plugin": "^4.14.2",
-    "@typescript-eslint/parser": "^4.14.2",
+    "@testing-library/jest-dom": "^5.12.0",
+    "@testing-library/react": "^11.2.6",
+    "@testing-library/user-event": "^13.1.8",
+    "@types/jest": "^26.0.23",
+    "@types/react": "^17.0.5",
+    "@typescript-eslint/eslint-plugin": "^4.22.1",
+    "@typescript-eslint/parser": "^4.22.1",
     "check-export-map": "^1.0.1",
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
-    "eslint": "^7.19.0",
-    "eslint-config-prettier": "^7.2.0",
-    "eslint-plugin-prettier": "^3.3.1",
-    "fp-ts": "^2.7.0",
-    "husky": "^4.3.8",
+    "computed-types": "^1.6.0",
+    "eslint": "^7.26.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "fp-ts": "^2.10.5",
+    "husky": "^6.0.0",
     "io-ts": "^2.0.0",
     "io-ts-types": "^0.5.16",
     "jest": "^26.6.3",
-    "joi": "^17.3.0",
-    "lint-staged": "^10.5.3",
+    "joi": "^17.4.0",
+    "lint-staged": "^11.0.0",
     "microbundle": "^0.13.0",
     "monocle-ts": "^2.3.9",
     "newtype-ts": "^0.3.4",
-    "nope-validator": "^0.12.2",
+    "nope-validator": "^1.0.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.2.1",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-hook-form": "^7.0.0-alpha.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-hook-form": "7.0.0",
     "reflect-metadata": "^0.1.13",
-    "superstruct": "^0.14.0",
-    "ts-jest": "^26.5.0",
-    "typescript": "^4.1.3",
+    "superstruct": "^0.15.2",
+    "ts-jest": "^26.5.6",
+    "typescript": "^4.2.4",
     "vest": "^3.1.2",
-    "yup": "^0.32.8",
-    "zod": "^1.11.11"
+    "yup": "^0.32.9",
+    "zod": "^1.11.17"
   },
   "peerDependencies": {
     "react-hook-form": "^7.0.0"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn lint:types && lint-staged"
-    }
   },
   "lint-staged": {
     "*.{js,ts}": [

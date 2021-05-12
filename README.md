@@ -358,6 +358,47 @@ const App = () => {
 export default App;
 ```
 
+### [computed-types](https://github.com/neuledge/computed-types)
+
+TypeScript-first schema validation with static type inference
+
+[![npm](https://img.shields.io/bundlephobia/minzip/computed-types?style=for-the-badge)](https://bundlephobia.com/result?p=computed-types)
+
+```tsx
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { computedTypesResolver } from '@hookform/resolvers/zod';
+import Schema, { number, string } from 'computed-types';
+
+const schema = Schema({
+  username: string.trim().error('username field is required'),
+  password: string.trim().error('password field is required'),
+  password: number,
+});
+
+const App = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: computedTypesResolver(schema),
+  });
+
+  return (
+    <form onSubmit={handleSubmit((d) => console.log(d))}>
+      <input {...register('name')} />
+      {errors.name?.message && <p>{errors.name?.message}</p>}
+      <input type="number" {...register('age', { valueAsNumber: true })} />
+      {errors.age?.message && <p>{errors.age?.message}</p>}
+      <input type="submit" />
+    </form>
+  );
+};
+
+export default App;
+```
+
 ## Backers
 
 Thanks goes to all our backers! [[Become a backer](https://opencollective.com/react-hook-form#backer)].
