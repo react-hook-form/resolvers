@@ -6,8 +6,8 @@ import Schema, { Type, string } from 'computed-types';
 import { computedTypesResolver } from '..';
 
 const schema = Schema({
-  username: string.trim().error('username field is required'),
-  password: string.trim().error('password field is required'),
+  username: string.min(2).error('username field is required'),
+  password: string.min(2).error('password field is required'),
 });
 
 type FormData = Type<typeof schema> & { unusedProperty: string };
