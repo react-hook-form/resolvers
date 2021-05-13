@@ -371,8 +371,8 @@ import { computedTypesResolver } from '@hookform/resolvers/zod';
 import Schema, { number, string } from 'computed-types';
 
 const schema = Schema({
-  username: string.trim().error('username field is required'),
-  password: string.trim().error('password field is required'),
+  username: string.min(1).error('username field is required'),
+  password: string.min(1).error('password field is required'),
   password: number,
 });
 
