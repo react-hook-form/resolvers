@@ -15,11 +15,12 @@ export const schema = z
       )
       .min(8, 'Must be at least 8 characters in length'),
     repeatPassword: z.string(),
-    accessToken: z.union([z.string(), z.number()]).optional(),
+    accessToken: z.union([z.string(), z.number()]),
     birthYear: z.number().min(1900).max(2013).optional(),
     email: z.string().email().optional(),
     tags: z.array(z.string()),
     enabled: z.boolean(),
+    url: z.string().url('Custom error url').or(z.literal('')),
     like: z
       .array(
         z.object({
@@ -42,6 +43,8 @@ export const validData: z.infer<typeof schema> = {
   email: 'john@doe.com',
   tags: ['tag1', 'tag2'],
   enabled: true,
+  accessToken: 'accessToken',
+  url: 'https://react-hook-form.com/',
   like: [
     {
       id: 1,
@@ -55,6 +58,7 @@ export const invalidData = {
   email: '',
   birthYear: 'birthYear',
   like: [{ id: 'z' }],
+  url: 'abc',
 };
 
 export const fields: Record<InternalFieldName, Field['_f']> = {

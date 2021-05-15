@@ -367,7 +367,7 @@ TypeScript-first schema validation with static type inference
 ```tsx
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { computedTypesResolver } from '@hookform/resolvers/zod';
+import { computedTypesResolver } from '@hookform/resolvers/computed-types';
 import Schema, { number, string } from 'computed-types';
 
 const schema = Schema({
