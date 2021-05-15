@@ -33,24 +33,22 @@ const parseErrors = (
   }, parsedErrors);
 };
 
-export const classValidatorResolver: Resolver = (
-  schema,
-  schemaOptions = {},
-  resolverOptions = {},
-) => async (values, _, options) => {
-  const user = plainToClass(schema, values);
+export const classValidatorResolver: Resolver =
+  (schema, schemaOptions = {}, resolverOptions = {}) =>
+  async (values, _, options) => {
+    const user = plainToClass(schema, values);
 
-  const rawErrors = await (resolverOptions.mode === 'sync'
-    ? validateSync
-    : validate)(user, schemaOptions);
+    const rawErrors = await (resolverOptions.mode === 'sync'
+      ? validateSync
+      : validate)(user, schemaOptions);
 
-  return rawErrors.length
-    ? {
-        values: {},
-        errors: toNestError(
-          parseErrors(rawErrors, options.criteriaMode === 'all'),
-          options.fields,
-        ),
-      }
-    : { values, errors: {} };
-};
+    return rawErrors.length
+      ? {
+          values: {},
+          errors: toNestError(
+            parseErrors(rawErrors, options.criteriaMode === 'all'),
+            options.fields,
+          ),
+        }
+      : { values, errors: {} };
+  };

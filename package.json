@@ -166,7 +166,6 @@
     "computed-types": "^1.6.0",
     "eslint": "^7.26.0",
     "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-prettier": "^3.4.0",
     "fp-ts": "^2.10.5",
     "husky": "^6.0.0",
     "io-ts": "^2.0.0",

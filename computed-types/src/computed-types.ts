@@ -23,20 +23,17 @@ const parseErrorSchema = (
   }, parsedErrors);
 };
 
-export const computedTypesResolver: Resolver = (schema) => async (
-  values,
-  _,
-  options,
-) => {
-  try {
-    return {
-      errors: {},
-      values: await schema(values),
-    };
-  } catch (error) {
-    return {
-      values: {},
-      errors: toNestError(parseErrorSchema(error), options.fields),
-    };
-  }
-};
+export const computedTypesResolver: Resolver =
+  (schema) => async (values, _, options) => {
+    try {
+      return {
+        errors: {},
+        values: await schema(values),
+      };
+    } catch (error) {
+      return {
+        values: {},
+        errors: toNestError(parseErrorSchema(error), options.fields),
+      };
+    }
+  };
