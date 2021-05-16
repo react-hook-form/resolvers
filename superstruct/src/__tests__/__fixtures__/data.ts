@@ -15,8 +15,10 @@ import {
   boolean,
 } from 'superstruct';
 
-const Password = define('Password', (value, ctx) =>
-  value === ctx.branch[0].password);
+const Password = define(
+  'Password',
+  (value, ctx) => value === ctx.branch[0].password,
+);
 
 export const schema = object({
   username: size(pattern(string(), /^\w+$/), 3, 30),

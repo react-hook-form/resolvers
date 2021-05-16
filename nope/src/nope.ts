@@ -24,17 +24,19 @@ const parseErrors = (
   }, parsedErrors);
 };
 
-export const nopeResolver: Resolver = (
-  schema,
-  schemaOptions = {
-    abortEarly: false,
-  },
-) => (values, context, options) => {
-  const result = schema.validate(values, context, schemaOptions) as
-    | ShapeErrors
-    | undefined;
+export const nopeResolver: Resolver =
+  (
+    schema,
+    schemaOptions = {
+      abortEarly: false,
+    },
+  ) =>
+  (values, context, options) => {
+    const result = schema.validate(values, context, schemaOptions) as
+      | ShapeErrors
+      | undefined;
 
-  return result
-    ? { values: {}, errors: toNestError(parseErrors(result), options.fields) }
-    : { values, errors: {} };
-};
+    return result
+      ? { values: {}, errors: toNestError(parseErrors(result), options.fields) }
+      : { values, errors: {} };
+  };

@@ -23,23 +23,24 @@ const parseErrorSchema = (
   return errors;
 };
 
-export const vestResolver: Resolver = (
-  schema,
-  _,
-  resolverOptions = {},
-) => async (values, _context, options) => {
-  const result =
-    resolverOptions.mode === 'sync'
-      ? schema(values)
-      : await promisify(schema)(values);
+export const vestResolver: Resolver =
+  (schema, _, resolverOptions = {}) =>
+  async (values, _context, options) => {
+    const result =
+      resolverOptions.mode === 'sync'
+        ? schema(values)
+        : await promisify(schema)(values);
 
-  return result.hasErrors()
-    ? {
-        values: {},
-        errors: toNestError(
-          parseErrorSchema(result.getErrors(), options.criteriaMode === 'all'),
-          options.fields,
-        ),
-      }
-    : { values, errors: {} };
-};
+    return result.hasErrors()
+      ? {
+          values: {},
+          errors: toNestError(
+            parseErrorSchema(
+              result.getErrors(),
+              options.criteriaMode === 'all',
+            ),
+            options.fields,
+          ),
+        }
+      : { values, errors: {} };
+  };

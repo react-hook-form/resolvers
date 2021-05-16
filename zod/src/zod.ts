@@ -14,7 +14,16 @@ const parseErrorSchema = (
     const _path = path.join('.');
 
     if (!errors[_path]) {
-      errors[_path] = { message, type: code };
+      if ('unionErrors' in error) {
+        const unionError = error.unionErrors[0].errors[0];
+
+        errors[_path] = {
+          message: unionError.message,
+          type: unionError.code,
+        };
+      } else {
+        errors[_path] = { message, type: code };
+      }
     }
 
     if ('unionErrors' in error) {
@@ -44,27 +53,25 @@ const parseErrorSchema = (
   return errors;
 };
 
-export const zodResolver: Resolver = (
-  schema,
-  schemaOptions,
-  resolverOptions = {},
-) => async (values, _, options) => {
-  try {
-    return {
-      errors: {},
-      values: await schema[
-        resolverOptions.mode === 'sync' ? 'parse' : 'parseAsync'
-      ](values, schemaOptions),
-    };
-  } catch (error) {
-    return {
-      values: {},
-      errors: error.isEmpty
-        ? {}
-        : toNestError(
-            parseErrorSchema(error.errors, options.criteriaMode === 'all'),
-            options.fields,
-          ),
-    };
-  }
-};
+export const zodResolver: Resolver =
+  (schema, schemaOptions, resolverOptions = {}) =>
+  async (values, _, options) => {
+    try {
+      return {
+        errors: {},
+        values: await schema[
+          resolverOptions.mode === 'sync' ? 'parse' : 'parseAsync'
+        ](values, schemaOptions),
+      };
+    } catch (error) {
+      return {
+        values: {},
+        errors: error.isEmpty
+          ? {}
+          : toNestError(
+              parseErrorSchema(error.errors, options.criteriaMode === 'all'),
+              options.fields,
+            ),
+      };
+    }
+  };

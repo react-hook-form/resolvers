@@ -35,36 +35,38 @@ const parseErrorSchema = (
   }, {});
 };
 
-export const yupResolver: Resolver = (
-  schema,
-  schemaOptions = {
-    abortEarly: false,
-  },
-  resolverOptions = {},
-) => async (values, context, options) => {
-  try {
-    if (schemaOptions.context && process.env.NODE_ENV === 'development') {
-      // eslint-disable-next-line no-console
-      console.warn(
-        "You should not used the yup options context. Please, use the 'useForm' context object instead",
-      );
+export const yupResolver: Resolver =
+  (
+    schema,
+    schemaOptions = {
+      abortEarly: false,
+    },
+    resolverOptions = {},
+  ) =>
+  async (values, context, options) => {
+    try {
+      if (schemaOptions.context && process.env.NODE_ENV === 'development') {
+        // eslint-disable-next-line no-console
+        console.warn(
+          "You should not used the yup options context. Please, use the 'useForm' context object instead",
+        );
+      }
+
+      const result = await schema[
+        resolverOptions.mode === 'sync' ? 'validateSync' : 'validate'
+      ](values, Object.assign({}, schemaOptions, { context }));
+
+      return {
+        values: result,
+        errors: {},
+      };
+    } catch (e) {
+      return {
+        values: {},
+        errors: toNestError(
+          parseErrorSchema(e, options.criteriaMode === 'all'),
+          options.fields,
+        ),
+      };
     }
-
-    const result = await schema[
-      resolverOptions.mode === 'sync' ? 'validateSync' : 'validate'
-    ](values, Object.assign({}, schemaOptions, { context }));
-
-    return {
-      values: result,
-      errors: {},
-    };
-  } catch (e) {
-    return {
-      values: {},
-      errors: toNestError(
-        parseErrorSchema(e, options.criteriaMode === 'all'),
-        options.fields,
-      ),
-    };
-  }
-};
+  };

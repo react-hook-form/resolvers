@@ -8,7 +8,7 @@ test('transforms flat object to nested object', () => {
     'n.test': { type: 'rd', message: 'third message' },
   };
 
-  const fields = ({
+  const fields = {
     name: {
       ref: 'nameRef',
     },
@@ -20,7 +20,7 @@ test('transforms flat object to nested object', () => {
     unused: {
       ref: 'unusedRef',
     },
-  } as any) as Record<InternalFieldName, Field['_f']>;
+  } as any as Record<InternalFieldName, Field['_f']>;
 
   expect(toNestError(flatObject, fields)).toMatchInlineSnapshot(`
     Object {

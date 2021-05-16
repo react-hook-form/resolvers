@@ -76,7 +76,7 @@ const formatError = (e: t.ValidationError): FieldErrorWithPath => {
 // this is almost the same function like Semigroup.getObjectSemigroup but reversed
 // in order to get the first error
 const getObjectSemigroup = <
-  A extends Record<string, unknown> = never
+  A extends Record<string, unknown> = never,
 >(): SemiGroup.Semigroup<A> => ({
   concat: (first, second) => Object.assign({}, second, first),
 });
@@ -106,10 +106,10 @@ const concatToMultipleErrors = (
   errors: ReadonlyArray<FieldErrorWithPath>,
 ): ErrorObject =>
   pipe(
-    ReadonlyRecord.fromFoldableMap(
-      appendSeveralErrors,
-      ReadonlyArray.Foldable,
-    )(errors, (error) => [error.path, error]),
+    ReadonlyRecord.fromFoldableMap(appendSeveralErrors, ReadonlyArray.Foldable)(
+      errors,
+      (error) => [error.path, error],
+    ),
     ReadonlyRecord.map((errorWithPath) => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { path, ...error } = errorWithPath;
@@ -118,14 +118,14 @@ const concatToMultipleErrors = (
     }),
   );
 
-const errorsToRecord = (validateAllFieldCriteria: boolean) => (
-  validationErrors: ReadonlyArray<ValidationError>,
-): ErrorObject => {
-  const concat = validateAllFieldCriteria
-    ? concatToMultipleErrors
-    : concatToSingleError;
+const errorsToRecord =
+  (validateAllFieldCriteria: boolean) =>
+  (validationErrors: ReadonlyArray<ValidationError>): ErrorObject => {
+    const concat = validateAllFieldCriteria
+      ? concatToMultipleErrors
+      : concatToSingleError;
 
-  return pipe(validationErrors, ReadonlyArray.map(formatError), concat);
-};
+    return pipe(validationErrors, ReadonlyArray.map(formatError), concat);
+  };
 
 export default errorsToRecord;

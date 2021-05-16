@@ -34,35 +34,37 @@ const parseErrorSchema = (
       }, {})
     : {};
 
-export const joiResolver: Resolver = (
-  schema,
-  schemaOptions = {
-    abortEarly: false,
-  },
-  resolverOptions = {},
-) => async (values, context, options) => {
-  const _schemaOptions = Object.assign({}, schemaOptions, {
-    context,
-  });
+export const joiResolver: Resolver =
+  (
+    schema,
+    schemaOptions = {
+      abortEarly: false,
+    },
+    resolverOptions = {},
+  ) =>
+  async (values, context, options) => {
+    const _schemaOptions = Object.assign({}, schemaOptions, {
+      context,
+    });
 
-  let result: Record<string, any> = {};
-  if (resolverOptions.mode === 'sync') {
-    result = schema.validate(values, _schemaOptions);
-  } else {
-    try {
-      result.value = await schema.validateAsync(values, _schemaOptions);
-    } catch (e) {
-      result.error = e;
+    let result: Record<string, any> = {};
+    if (resolverOptions.mode === 'sync') {
+      result = schema.validate(values, _schemaOptions);
+    } else {
+      try {
+        result.value = await schema.validateAsync(values, _schemaOptions);
+      } catch (e) {
+        result.error = e;
+      }
     }
-  }
 
-  return {
-    values: result.error ? {} : result.value,
-    errors: result.error
-      ? toNestError(
-          parseErrorSchema(result.error, options.criteriaMode === 'all'),
-          options.fields,
-        )
-      : {},
+    return {
+      values: result.error ? {} : result.value,
+      errors: result.error
+        ? toNestError(
+            parseErrorSchema(result.error, options.criteriaMode === 'all'),
+            options.fields,
+          )
+        : {},
+    };
   };
-};

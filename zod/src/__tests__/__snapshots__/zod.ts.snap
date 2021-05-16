@@ -3,10 +3,15 @@
 exports[`zodResolver should return a single error from zodResolver when validation fails 1`] = `
 Object {
   "errors": Object {
-    "birthYear": Object {
-      "message": "Invalid input",
+    "accessToken": Object {
+      "message": "Required",
       "ref": undefined,
-      "type": "invalid_union",
+      "type": "invalid_type",
+    },
+    "birthYear": Object {
+      "message": "Expected number, received string",
+      "ref": undefined,
+      "type": "invalid_type",
     },
     "confirm": Object {
       "message": "Passwords don't match",
@@ -38,9 +43,9 @@ Object {
           "type": "invalid_type",
         },
       },
-      "message": "Invalid input",
+      "message": "Expected number, received string",
       "ref": undefined,
-      "type": "invalid_union",
+      "type": "invalid_type",
     },
     "password": Object {
       "message": "One uppercase character",
@@ -58,6 +63,11 @@ Object {
       "message": "Required",
       "ref": undefined,
       "type": "invalid_type",
+    },
+    "url": Object {
+      "message": "Custom error url",
+      "ref": undefined,
+      "type": "invalid_string",
     },
     "username": Object {
       "message": "Required",
@@ -74,10 +84,15 @@ Object {
 exports[`zodResolver should return a single error from zodResolver with \`mode: sync\` when validation fails 1`] = `
 Object {
   "errors": Object {
-    "birthYear": Object {
-      "message": "Invalid input",
+    "accessToken": Object {
+      "message": "Required",
       "ref": undefined,
-      "type": "invalid_union",
+      "type": "invalid_type",
+    },
+    "birthYear": Object {
+      "message": "Expected number, received string",
+      "ref": undefined,
+      "type": "invalid_type",
     },
     "confirm": Object {
       "message": "Passwords don't match",
@@ -109,9 +124,9 @@ Object {
           "type": "invalid_type",
         },
       },
-      "message": "Invalid input",
+      "message": "Expected number, received string",
       "ref": undefined,
-      "type": "invalid_union",
+      "type": "invalid_type",
     },
     "password": Object {
       "message": "One uppercase character",
@@ -130,6 +145,11 @@ Object {
       "ref": undefined,
       "type": "invalid_type",
     },
+    "url": Object {
+      "message": "Custom error url",
+      "ref": undefined,
+      "type": "invalid_string",
+    },
     "username": Object {
       "message": "Required",
       "ref": Object {
@@ -145,10 +165,22 @@ Object {
 exports[`zodResolver should return all the errors from zodResolver when validation fails with \`validateAllFieldCriteria\` set to true 1`] = `
 Object {
   "errors": Object {
-    "birthYear": Object {
-      "message": "Invalid input",
+    "accessToken": Object {
+      "message": "Required",
       "ref": undefined,
-      "type": "invalid_union",
+      "type": "invalid_type",
+      "types": Object {
+        "invalid_type": Array [
+          "Required",
+          "Required",
+        ],
+        "invalid_union": "Invalid input",
+      },
+    },
+    "birthYear": Object {
+      "message": "Expected number, received string",
+      "ref": undefined,
+      "type": "invalid_type",
       "types": Object {
         "invalid_type": Array [
           "Expected number, received string",
@@ -202,9 +234,9 @@ Object {
           },
         },
       },
-      "message": "Invalid input",
+      "message": "Expected number, received string",
       "ref": undefined,
-      "type": "invalid_union",
+      "type": "invalid_type",
       "types": Object {
         "invalid_type": "Expected undefined, received array",
         "invalid_union": "Invalid input",
@@ -239,6 +271,16 @@ Object {
       "type": "invalid_type",
       "types": Object {
         "invalid_type": "Required",
+      },
+    },
+    "url": Object {
+      "message": "Custom error url",
+      "ref": undefined,
+      "type": "invalid_string",
+      "types": Object {
+        "invalid_literal_value": "Input must be \\"\\"",
+        "invalid_string": "Custom error url",
+        "invalid_union": "Invalid input",
       },
     },
     "username": Object {
@@ -259,10 +301,22 @@ Object {
 exports[`zodResolver should return all the errors from zodResolver when validation fails with \`validateAllFieldCriteria\` set to true and \`mode: sync\` 1`] = `
 Object {
   "errors": Object {
-    "birthYear": Object {
-      "message": "Invalid input",
+    "accessToken": Object {
+      "message": "Required",
       "ref": undefined,
-      "type": "invalid_union",
+      "type": "invalid_type",
+      "types": Object {
+        "invalid_type": Array [
+          "Required",
+          "Required",
+        ],
+        "invalid_union": "Invalid input",
+      },
+    },
+    "birthYear": Object {
+      "message": "Expected number, received string",
+      "ref": undefined,
+      "type": "invalid_type",
       "types": Object {
         "invalid_type": Array [
           "Expected number, received string",
@@ -316,9 +370,9 @@ Object {
           },
         },
       },
-      "message": "Invalid input",
+      "message": "Expected number, received string",
       "ref": undefined,
-      "type": "invalid_union",
+      "type": "invalid_type",
       "types": Object {
         "invalid_type": "Expected undefined, received array",
         "invalid_union": "Invalid input",
@@ -353,6 +407,16 @@ Object {
       "type": "invalid_type",
       "types": Object {
         "invalid_type": "Required",
+      },
+    },
+    "url": Object {
+      "message": "Custom error url",
+      "ref": undefined,
+      "type": "invalid_string",
+      "types": Object {
+        "invalid_literal_value": "Input must be \\"\\"",
+        "invalid_string": "Custom error url",
+        "invalid_union": "Invalid input",
       },
     },
     "username": Object {
