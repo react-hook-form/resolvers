@@ -147,4 +147,16 @@ describe('yupResolver', () => {
 
     expect(result).toMatchSnapshot();
   });
+
+  it("should merge default yup resolver options with yup's options", async () => {
+    const validateSpy = jest.spyOn(schema, 'validate');
+
+    await yupResolver(schema, { stripUnknown: true })(invalidData, undefined, {
+      fields,
+    });
+
+    expect(validateSpy.mock.calls[0][1]).toEqual(
+      expect.objectContaining({ stripUnknown: true, abortEarly: false }),
+    );
+  });
 });
