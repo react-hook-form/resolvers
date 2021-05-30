@@ -18,8 +18,8 @@ Object {
       },
     ],
     "luckyNumbers": Array [
-      undefined,
-      undefined,
+      ,
+      ,
       Object {
         "message": "expected number but got \\"3\\"",
         "ref": undefined,
@@ -27,7 +27,7 @@ Object {
       },
     ],
     "vehicles": Array [
-      undefined,
+      ,
       Object {
         "horsepower": Object {
           "message": "expected number but got undefined",
@@ -65,8 +65,8 @@ Object {
       },
     ],
     "luckyNumbers": Array [
-      undefined,
-      undefined,
+      ,
+      ,
       Object {
         "message": "expected number but got \\"3\\"",
         "ref": undefined,
@@ -74,7 +74,7 @@ Object {
       },
     ],
     "vehicles": Array [
-      undefined,
+      ,
       Object {
         "horsepower": Object {
           "message": "expected number but got undefined",
