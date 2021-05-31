@@ -36,13 +36,7 @@ const parseErrorSchema = (
 };
 
 export const yupResolver: Resolver =
-  (
-    schema,
-    schemaOptions = {
-      abortEarly: false,
-    },
-    resolverOptions = {},
-  ) =>
+  (schema, schemaOptions = {}, resolverOptions = {}) =>
   async (values, context, options) => {
     try {
       if (schemaOptions.context && process.env.NODE_ENV === 'development') {
@@ -54,7 +48,10 @@ export const yupResolver: Resolver =
 
       const result = await schema[
         resolverOptions.mode === 'sync' ? 'validateSync' : 'validate'
-      ](values, Object.assign({}, schemaOptions, { context }));
+      ](
+        values,
+        Object.assign({ abortEarly: false }, schemaOptions, { context }),
+      );
 
       return {
         values: result,
