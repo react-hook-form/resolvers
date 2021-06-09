@@ -133,7 +133,7 @@ const App = () => {
   return (
     <form onSubmit={handleSubmit((d) => console.log(d))}>
       <input {...register('name')} />
-      <input type="number" ref={register('age', { valueAsNumber: true })} />
+      <input type="number" {...register('age', { valueAsNumber: true })} />
       <input type="submit" />
     </form>
   );
@@ -314,7 +314,7 @@ const App = () => {
 
   return (
     <form onSubmit={handleSubmit((d) => console.log(d))}>
-      <input name="username" ref={register} />
+      <input {...register('username'} />
       <input type="number" {...register('age')} />
       <input type="submit" />
     </form>
