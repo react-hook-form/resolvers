@@ -37,9 +37,10 @@ export const vestResolver: Resolver =
           errors: toNestError(
             parseErrorSchema(
               result.getErrors(),
-              options.criteriaMode === 'all',
+              !options.shouldUseNativeValidation &&
+                options.criteriaMode === 'all',
             ),
-            options.fields,
+            options,
           ),
         }
       : { values, errors: {} };

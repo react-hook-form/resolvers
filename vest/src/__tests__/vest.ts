@@ -6,10 +6,15 @@ import {
   fields,
 } from './__fixtures__/data';
 
+const shouldUseNativeValidation = false;
+
 describe('vestResolver', () => {
   it('should return values from vestResolver when validation pass', async () => {
     expect(
-      await vestResolver(validationSuite)(validData, undefined, { fields }),
+      await vestResolver(validationSuite)(validData, undefined, {
+        fields,
+        shouldUseNativeValidation,
+      }),
     ).toEqual({
       values: validData,
       errors: {},
@@ -20,7 +25,7 @@ describe('vestResolver', () => {
     expect(
       await vestResolver(validationSuite, undefined, {
         mode: 'sync',
-      })(validData, undefined, { fields }),
+      })(validData, undefined, { fields, shouldUseNativeValidation }),
     ).toEqual({
       values: validData,
       errors: {},
@@ -31,6 +36,7 @@ describe('vestResolver', () => {
     expect(
       await vestResolver(validationSuite)(invalidData, undefined, {
         fields,
+        shouldUseNativeValidation,
       }),
     ).toMatchSnapshot();
   });
@@ -39,7 +45,7 @@ describe('vestResolver', () => {
     expect(
       await vestResolver(validationSuite, undefined, {
         mode: 'sync',
-      })(invalidData, undefined, { fields }),
+      })(invalidData, undefined, { fields, shouldUseNativeValidation }),
     ).toMatchSnapshot();
   });
 
@@ -48,7 +54,7 @@ describe('vestResolver', () => {
       await vestResolver(validationSuite)(
         invalidData,
         {},
-        { fields, criteriaMode: 'all' },
+        { fields, criteriaMode: 'all', shouldUseNativeValidation },
       ),
     ).toMatchSnapshot();
   });
@@ -58,7 +64,7 @@ describe('vestResolver', () => {
       await vestResolver(validationSuite, undefined, { mode: 'sync' })(
         invalidData,
         {},
-        { fields, criteriaMode: 'all' },
+        { fields, criteriaMode: 'all', shouldUseNativeValidation },
       ),
     ).toMatchSnapshot();
   });

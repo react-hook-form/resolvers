@@ -37,6 +37,6 @@ export const nopeResolver: Resolver =
       | undefined;
 
     return result
-      ? { values: {}, errors: toNestError(parseErrors(result), options.fields) }
+      ? { values: {}, errors: toNestError(parseErrors(result), options) }
       : { values, errors: {} };
   };

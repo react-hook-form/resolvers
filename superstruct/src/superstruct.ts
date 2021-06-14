@@ -21,7 +21,7 @@ export const superstructResolver: Resolver =
     return {
       values: result[1] || {},
       errors: result[0]
-        ? toNestError(parseErrorSchema(result[0]), options.fields)
+        ? toNestError(parseErrorSchema(result[0]), options)
         : {},
     };
   };

@@ -46,8 +46,12 @@ export const classValidatorResolver: Resolver =
       ? {
           values: {},
           errors: toNestError(
-            parseErrors(rawErrors, options.criteriaMode === 'all'),
-            options.fields,
+            parseErrors(
+              rawErrors,
+              !options.shouldUseNativeValidation &&
+                options.criteriaMode === 'all',
+            ),
+            options,
           ),
         }
       : { values, errors: {} };

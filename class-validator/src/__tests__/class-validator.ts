@@ -3,6 +3,8 @@ import { classValidatorResolver } from '..';
 import { Schema, validData, fields, invalidData } from './__fixtures__/data';
 import * as classValidator from 'class-validator';
 
+const shouldUseNativeValidation = false;
+
 describe('classValidatorResolver', () => {
   it('should return values from classValidatorResolver when validation pass', async () => {
     const schemaSpy = jest.spyOn(classValidator, 'validate');
@@ -10,6 +12,7 @@ describe('classValidatorResolver', () => {
 
     const result = await classValidatorResolver(Schema)(validData, undefined, {
       fields,
+      shouldUseNativeValidation,
     });
 
     expect(schemaSpy).toHaveBeenCalledTimes(1);
@@ -23,7 +26,7 @@ describe('classValidatorResolver', () => {
 
     const result = await classValidatorResolver(Schema, undefined, {
       mode: 'sync',
-    })(validData, undefined, { fields });
+    })(validData, undefined, { fields, shouldUseNativeValidation });
 
     expect(validateSyncSpy).toHaveBeenCalledTimes(1);
     expect(validateSpy).not.toHaveBeenCalled();
@@ -36,6 +39,7 @@ describe('classValidatorResolver', () => {
       undefined,
       {
         fields,
+        shouldUseNativeValidation,
       },
     );
 
@@ -48,7 +52,7 @@ describe('classValidatorResolver', () => {
 
     const result = await classValidatorResolver(Schema, undefined, {
       mode: 'sync',
-    })(invalidData, undefined, { fields });
+    })(invalidData, undefined, { fields, shouldUseNativeValidation });
 
     expect(validateSyncSpy).toHaveBeenCalledTimes(1);
     expect(validateSpy).not.toHaveBeenCalled();
@@ -62,6 +66,7 @@ describe('classValidatorResolver', () => {
       {
         fields,
         criteriaMode: 'all',
+        shouldUseNativeValidation,
       },
     );
 
@@ -74,6 +79,7 @@ describe('classValidatorResolver', () => {
     })(invalidData, undefined, {
       fields,
       criteriaMode: 'all',
+      shouldUseNativeValidation,
     });
 
     expect(result).toMatchSnapshot();
