@@ -1,12 +1,15 @@
 import { ioTsResolver } from '..';
 import { schema, validData, fields, invalidData } from './__fixtures__/data';
 
+const shouldUseNativeValidation = false;
+
 describe('ioTsResolver', () => {
   it('should return values from ioTsResolver when validation pass', async () => {
     const validateSpy = jest.spyOn(schema, 'decode');
 
     const result = ioTsResolver(schema)(validData, undefined, {
       fields,
+      shouldUseNativeValidation,
     });
 
     expect(validateSpy).toHaveBeenCalled();
@@ -16,6 +19,7 @@ describe('ioTsResolver', () => {
   it('should return a single error from ioTsResolver when validation fails', () => {
     const result = ioTsResolver(schema)(invalidData, undefined, {
       fields,
+      shouldUseNativeValidation,
     });
 
     expect(result).toMatchSnapshot();
@@ -25,6 +29,7 @@ describe('ioTsResolver', () => {
     const result = ioTsResolver(schema)(invalidData, undefined, {
       fields,
       criteriaMode: 'all',
+      shouldUseNativeValidation,
     });
 
     expect(result).toMatchSnapshot();

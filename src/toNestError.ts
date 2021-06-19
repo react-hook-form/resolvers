@@ -4,16 +4,27 @@ import {
   FieldError,
   FieldErrors,
   Field,
-  InternalFieldName,
+  ResolverOptions,
 } from 'react-hook-form';
 
 export const toNestError = <TFieldValues>(
   errors: Record<string, FieldError>,
-  fields: Record<InternalFieldName, Field['_f']>,
+  options: ResolverOptions<TFieldValues>,
 ): FieldErrors<TFieldValues> => {
   const fieldErrors: FieldErrors<TFieldValues> = {};
   for (const path in errors) {
-    const field = get(fields, path) as Field['_f'] | undefined;
+    const field = get(options.fields, path) as Field['_f'] | undefined;
+
+    // Native validation (web only)
+    if (
+      options.shouldUseNativeValidation &&
+      field &&
+      'reportValidity' in field.ref
+    ) {
+      field.ref.setCustomValidity(errors[path].message || '');
+      field.ref.reportValidity();
+    }
+
     set(
       fieldErrors,
       path,

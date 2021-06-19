@@ -61,8 +61,12 @@ export const yupResolver: Resolver =
       return {
         values: {},
         errors: toNestError(
-          parseErrorSchema(e, options.criteriaMode === 'all'),
-          options.fields,
+          parseErrorSchema(
+            e,
+            !options.shouldUseNativeValidation &&
+              options.criteriaMode === 'all',
+          ),
+          options,
         ),
       };
     }

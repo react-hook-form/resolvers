@@ -69,8 +69,12 @@ export const zodResolver: Resolver =
         errors: error.isEmpty
           ? {}
           : toNestError(
-              parseErrorSchema(error.errors, options.criteriaMode === 'all'),
-              options.fields,
+              parseErrorSchema(
+                error.errors,
+                !options.shouldUseNativeValidation &&
+                  options.criteriaMode === 'all',
+              ),
+              options,
             ),
       };
     }

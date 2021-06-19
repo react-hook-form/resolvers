@@ -1,12 +1,15 @@
 import { zodResolver } from '..';
 import { schema, validData, invalidData, fields } from './__fixtures__/data';
 
+const shouldUseNativeValidation = false;
+
 describe('zodResolver', () => {
   it('should return values from zodResolver when validation pass', async () => {
     const parseAsyncSpy = jest.spyOn(schema, 'parseAsync');
 
     const result = await zodResolver(schema)(validData, undefined, {
       fields,
+      shouldUseNativeValidation,
     });
 
     expect(parseAsyncSpy).toHaveBeenCalledTimes(1);
@@ -19,7 +22,7 @@ describe('zodResolver', () => {
 
     const result = await zodResolver(schema, undefined, {
       mode: 'sync',
-    })(validData, undefined, { fields });
+    })(validData, undefined, { fields, shouldUseNativeValidation });
 
     expect(parseSpy).toHaveBeenCalledTimes(1);
     expect(parseAsyncSpy).not.toHaveBeenCalled();
@@ -29,6 +32,7 @@ describe('zodResolver', () => {
   it('should return a single error from zodResolver when validation fails', async () => {
     const result = await zodResolver(schema)(invalidData, undefined, {
       fields,
+      shouldUseNativeValidation,
     });
 
     expect(result).toMatchSnapshot();
@@ -40,7 +44,7 @@ describe('zodResolver', () => {
 
     const result = await zodResolver(schema, undefined, {
       mode: 'sync',
-    })(invalidData, undefined, { fields });
+    })(invalidData, undefined, { fields, shouldUseNativeValidation });
 
     expect(parseSpy).toHaveBeenCalledTimes(1);
     expect(parseAsyncSpy).not.toHaveBeenCalled();
@@ -51,6 +55,7 @@ describe('zodResolver', () => {
     const result = await zodResolver(schema)(invalidData, undefined, {
       fields,
       criteriaMode: 'all',
+      shouldUseNativeValidation,
     });
 
     expect(result).toMatchSnapshot();
@@ -63,6 +68,7 @@ describe('zodResolver', () => {
       {
         fields,
         criteriaMode: 'all',
+        shouldUseNativeValidation,
       },
     );
 

@@ -3,6 +3,8 @@ import * as yup from 'yup';
 import { yupResolver } from '..';
 import { schema, validData, fields, invalidData } from './__fixtures__/data';
 
+const shouldUseNativeValidation = false;
+
 describe('yupResolver', () => {
   it('should return values from yupResolver when validation pass', async () => {
     const schemaSpy = jest.spyOn(schema, 'validate');
@@ -10,6 +12,7 @@ describe('yupResolver', () => {
 
     const result = await yupResolver(schema)(validData, undefined, {
       fields,
+      shouldUseNativeValidation,
     });
 
     expect(schemaSpy).toHaveBeenCalledTimes(1);
@@ -23,7 +26,7 @@ describe('yupResolver', () => {
 
     const result = await yupResolver(schema, undefined, {
       mode: 'sync',
-    })(validData, undefined, { fields });
+    })(validData, undefined, { fields, shouldUseNativeValidation });
 
     expect(validateSyncSpy).toHaveBeenCalledTimes(1);
     expect(validateSpy).not.toHaveBeenCalled();
@@ -33,6 +36,7 @@ describe('yupResolver', () => {
   it('should return a single error from yupResolver when validation fails', async () => {
     const result = await yupResolver(schema)(invalidData, undefined, {
       fields,
+      shouldUseNativeValidation,
     });
 
     expect(result).toMatchSnapshot();
@@ -44,7 +48,7 @@ describe('yupResolver', () => {
 
     const result = await yupResolver(schema, undefined, {
       mode: 'sync',
-    })(invalidData, undefined, { fields });
+    })(invalidData, undefined, { fields, shouldUseNativeValidation });
 
     expect(validateSyncSpy).toHaveBeenCalledTimes(1);
     expect(validateSpy).not.toHaveBeenCalled();
@@ -55,6 +59,7 @@ describe('yupResolver', () => {
     const result = await yupResolver(schema)(invalidData, undefined, {
       fields,
       criteriaMode: 'all',
+      shouldUseNativeValidation,
     });
 
     expect(result).toMatchSnapshot();
@@ -67,6 +72,7 @@ describe('yupResolver', () => {
       {
         fields,
         criteriaMode: 'all',
+        shouldUseNativeValidation,
       },
     );
 
@@ -89,6 +95,7 @@ describe('yupResolver', () => {
 
     const result = await yupResolver(schemaWithContext)(data, context, {
       fields,
+      shouldUseNativeValidation,
     });
     expect(validateSpy).toHaveBeenCalledTimes(1);
     expect(validateSpy).toHaveBeenCalledWith(
@@ -110,6 +117,7 @@ describe('yupResolver', () => {
       undefined,
       {
         fields,
+        shouldUseNativeValidation,
       },
     );
     expect(console.warn).toHaveBeenCalledWith(
@@ -125,7 +133,7 @@ describe('yupResolver', () => {
     await yupResolver(yup.object(), { context: { noContext: true } })(
       {},
       undefined,
-      { fields },
+      { fields, shouldUseNativeValidation },
     );
     expect(console.warn).not.toHaveBeenCalled();
     process.env.NODE_ENV = 'test';
@@ -143,7 +151,10 @@ describe('yupResolver', () => {
           'Email or name are required',
           (value) => !!(value && (value.name || value.email)),
         ),
-    )({ name: '', email: '' }, undefined, { fields });
+    )({ name: '', email: '' }, undefined, {
+      fields,
+      shouldUseNativeValidation,
+    });
 
     expect(result).toMatchSnapshot();
   });
@@ -153,6 +164,7 @@ describe('yupResolver', () => {
 
     await yupResolver(schema, { stripUnknown: true })(invalidData, undefined, {
       fields,
+      shouldUseNativeValidation,
     });
 
     expect(validateSpy.mock.calls[0][1]).toEqual(

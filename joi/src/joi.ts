@@ -62,8 +62,12 @@ export const joiResolver: Resolver =
       values: result.error ? {} : result.value,
       errors: result.error
         ? toNestError(
-            parseErrorSchema(result.error, options.criteriaMode === 'all'),
-            options.fields,
+            parseErrorSchema(
+              result.error,
+              !options.shouldUseNativeValidation &&
+                options.criteriaMode === 'all',
+            ),
+            options,
           )
         : {},
     };

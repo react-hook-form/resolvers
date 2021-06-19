@@ -1,6 +1,8 @@
 import { joiResolver } from '..';
 import { schema, validData, fields, invalidData } from './__fixtures__/data';
 
+const shouldUseNativeValidation = false;
+
 describe('joiResolver', () => {
   it('should return values from joiResolver when validation pass', async () => {
     const validateAsyncSpy = jest.spyOn(schema, 'validateAsync');
@@ -8,6 +10,7 @@ describe('joiResolver', () => {
 
     const result = await joiResolver(schema)(validData, undefined, {
       fields,
+      shouldUseNativeValidation,
     });
 
     expect(validateSpy).not.toHaveBeenCalled();
@@ -21,7 +24,7 @@ describe('joiResolver', () => {
 
     const result = await joiResolver(schema, undefined, {
       mode: 'sync',
-    })(validData, undefined, { fields });
+    })(validData, undefined, { fields, shouldUseNativeValidation });
 
     expect(validateAsyncSpy).not.toHaveBeenCalled();
     expect(validateSpy).toHaveBeenCalledTimes(1);
@@ -31,6 +34,7 @@ describe('joiResolver', () => {
   it('should return a single error from joiResolver when validation fails', async () => {
     const result = await joiResolver(schema)(invalidData, undefined, {
       fields,
+      shouldUseNativeValidation,
     });
 
     expect(result).toMatchSnapshot();
@@ -42,7 +46,7 @@ describe('joiResolver', () => {
 
     const result = await joiResolver(schema, undefined, {
       mode: 'sync',
-    })(invalidData, undefined, { fields });
+    })(invalidData, undefined, { fields, shouldUseNativeValidation });
 
     expect(validateAsyncSpy).not.toHaveBeenCalled();
     expect(validateSpy).toHaveBeenCalledTimes(1);
@@ -53,6 +57,7 @@ describe('joiResolver', () => {
     const result = await joiResolver(schema)(invalidData, undefined, {
       fields,
       criteriaMode: 'all',
+      shouldUseNativeValidation,
     });
 
     expect(result).toMatchSnapshot();
@@ -65,6 +70,7 @@ describe('joiResolver', () => {
       {
         fields,
         criteriaMode: 'all',
+        shouldUseNativeValidation,
       },
     );
 
@@ -76,7 +82,10 @@ describe('joiResolver', () => {
     const validateAsyncSpy = jest.spyOn(schema, 'validateAsync');
     const validateSpy = jest.spyOn(schema, 'validate');
 
-    const result = await joiResolver(schema)(validData, context, { fields });
+    const result = await joiResolver(schema)(validData, context, {
+      fields,
+      shouldUseNativeValidation,
+    });
 
     expect(validateSpy).not.toHaveBeenCalled();
     expect(validateAsyncSpy).toHaveBeenCalledTimes(1);
