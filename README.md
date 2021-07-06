@@ -90,7 +90,7 @@ const App = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
   });
 
