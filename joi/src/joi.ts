@@ -1,5 +1,5 @@
 import { appendErrors, FieldError } from 'react-hook-form';
-import { toNestError } from '@hookform/resolvers';
+import { toNestError, validateFieldsNatively } from '@hookform/resolvers';
 import type { ValidationError } from 'joi';
 import { Resolver } from './types';
 
@@ -58,17 +58,24 @@ export const joiResolver: Resolver =
       }
     }
 
+    if (result.error) {
+      return {
+        values: {},
+        errors: toNestError(
+          parseErrorSchema(
+            result.error,
+            !options.shouldUseNativeValidation &&
+              options.criteriaMode === 'all',
+          ),
+          options,
+        ),
+      };
+    }
+
+    options.shouldUseNativeValidation && validateFieldsNatively({}, options);
+
     return {
-      values: result.error ? {} : result.value,
-      errors: result.error
-        ? toNestError(
-            parseErrorSchema(
-              result.error,
-              !options.shouldUseNativeValidation &&
-                options.criteriaMode === 'all',
-            ),
-            options,
-          )
-        : {},
+      errors: {},
+      values: result.value,
     };
   };

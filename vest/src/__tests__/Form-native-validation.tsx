@@ -19,7 +19,7 @@ const validationSuite = vest.create('form', (data: FormData) => {
   });
 
   vest.test('password', PASSWORD_SYMBOL_MESSAGE, () => {
-    vest.enforce(data.password).matches(/[^A-Za-z0-9]/);
+    vest.enforce(data.password).isNotEmpty();
   });
 });
 
@@ -75,4 +75,19 @@ test("form's native validation with Vest", async () => {
   passwordField = screen.getByPlaceholderText(/password/i) as HTMLInputElement;
   expect(passwordField.validity.valid).toBe(false);
   expect(passwordField.validationMessage).toBe(PASSWORD_SYMBOL_MESSAGE);
+
+  await act(async () => {
+    user.type(screen.getByPlaceholderText(/username/i), 'joe');
+    user.type(screen.getByPlaceholderText(/password/i), 'password');
+  });
+
+  // username
+  usernameField = screen.getByPlaceholderText(/username/i) as HTMLInputElement;
+  expect(usernameField.validity.valid).toBe(true);
+  expect(usernameField.validationMessage).toBe('');
+
+  // password
+  passwordField = screen.getByPlaceholderText(/password/i) as HTMLInputElement;
+  expect(passwordField.validity.valid).toBe(true);
+  expect(passwordField.validationMessage).toBe('');
 });

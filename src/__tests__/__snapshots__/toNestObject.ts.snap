@@ -2,16 +2,6 @@
 
 exports[`transforms flat object to nested object 1`] = `
 Object {
-  "n": Object {
-    "test": Object {
-      "message": "third message",
-      "ref": Object {
-        "reportValidity": [MockFunction],
-        "setCustomValidity": [MockFunction],
-      },
-      "type": "rd",
-    },
-  },
   "name": Object {
     "message": "first message",
     "ref": Object {
@@ -34,38 +24,6 @@ Object {
 
 exports[`transforms flat object to nested object and shouldUseNativeValidation: true 1`] = `
 Object {
-  "n": Object {
-    "test": Object {
-      "message": "third message",
-      "ref": Object {
-        "reportValidity": [MockFunction] {
-          "calls": Array [
-            Array [],
-          ],
-          "results": Array [
-            Object {
-              "type": "return",
-              "value": undefined,
-            },
-          ],
-        },
-        "setCustomValidity": [MockFunction] {
-          "calls": Array [
-            Array [
-              "third message",
-            ],
-          ],
-          "results": Array [
-            Object {
-              "type": "return",
-              "value": undefined,
-            },
-          ],
-        },
-      },
-      "type": "rd",
-    },
-  },
   "name": Object {
     "message": "first message",
     "ref": Object {

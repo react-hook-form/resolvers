@@ -1,4 +1,4 @@
-import { toNestError } from '@hookform/resolvers';
+import { toNestError, validateFieldsNatively } from '@hookform/resolvers';
 import { FieldError } from 'react-hook-form';
 import promisify from 'vest/promisify';
 import type { VestErrors, Resolver } from './types';
@@ -31,17 +31,21 @@ export const vestResolver: Resolver =
         ? schema(values)
         : await promisify(schema)(values);
 
-    return result.hasErrors()
-      ? {
-          values: {},
-          errors: toNestError(
-            parseErrorSchema(
-              result.getErrors(),
-              !options.shouldUseNativeValidation &&
-                options.criteriaMode === 'all',
-            ),
-            options,
+    if (result.hasErrors()) {
+      return {
+        values: {},
+        errors: toNestError(
+          parseErrorSchema(
+            result.getErrors(),
+            !options.shouldUseNativeValidation &&
+              options.criteriaMode === 'all',
           ),
-        }
-      : { values, errors: {} };
+          options,
+        ),
+      };
+    }
+
+    options.shouldUseNativeValidation && validateFieldsNatively({}, options);
+
+    return { values, errors: {} };
   };

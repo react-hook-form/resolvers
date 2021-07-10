@@ -68,4 +68,19 @@ test("form's native validation with Superstruct", async () => {
   expect(passwordField.validationMessage).toBe(
     'Expected a string with a length of `6` but received one with a length of `0`',
   );
+
+  await act(async () => {
+    user.type(screen.getByPlaceholderText(/username/i), 'jo');
+    user.type(screen.getByPlaceholderText(/password/i), 'passwo');
+  });
+
+  // username
+  usernameField = screen.getByPlaceholderText(/username/i) as HTMLInputElement;
+  expect(usernameField.validity.valid).toBe(true);
+  expect(usernameField.validationMessage).toBe('');
+
+  // password
+  passwordField = screen.getByPlaceholderText(/password/i) as HTMLInputElement;
+  expect(passwordField.validity.valid).toBe(true);
+  expect(passwordField.validationMessage).toBe('');
 });
