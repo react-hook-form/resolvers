@@ -1,5 +1,5 @@
 import type { FieldErrors } from 'react-hook-form';
-import { toNestError } from '@hookform/resolvers';
+import { toNestError, validateFieldsNatively } from '@hookform/resolvers';
 import type { ValidationError } from 'computed-types';
 import type { Resolver } from './types';
 
@@ -26,9 +26,13 @@ const parseErrorSchema = (
 export const computedTypesResolver: Resolver =
   (schema) => async (values, _, options) => {
     try {
+      const data = await schema(values);
+
+      options.shouldUseNativeValidation && validateFieldsNatively({}, options);
+
       return {
         errors: {},
-        values: await schema(values),
+        values: data,
       };
     } catch (error) {
       return {

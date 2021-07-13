@@ -1,5 +1,5 @@
 import { FieldErrors } from 'react-hook-form';
-import { toNestError } from '@hookform/resolvers';
+import { toNestError, validateFieldsNatively } from '@hookform/resolvers';
 import { plainToClass } from 'class-transformer';
 import { validate, validateSync, ValidationError } from 'class-validator';
 import type { Resolver } from './types';
@@ -42,17 +42,21 @@ export const classValidatorResolver: Resolver =
       ? validateSync
       : validate)(user, schemaOptions);
 
-    return rawErrors.length
-      ? {
-          values: {},
-          errors: toNestError(
-            parseErrors(
-              rawErrors,
-              !options.shouldUseNativeValidation &&
-                options.criteriaMode === 'all',
-            ),
-            options,
+    if (rawErrors.length) {
+      return {
+        values: {},
+        errors: toNestError(
+          parseErrors(
+            rawErrors,
+            !options.shouldUseNativeValidation &&
+              options.criteriaMode === 'all',
           ),
-        }
-      : { values, errors: {} };
+          options,
+        ),
+      };
+    }
+
+    options.shouldUseNativeValidation && validateFieldsNatively({}, options);
+
+    return { values, errors: {} };
   };

@@ -1,5 +1,5 @@
 import { FieldError } from 'react-hook-form';
-import { toNestError } from '@hookform/resolvers';
+import { toNestError, validateFieldsNatively } from '@hookform/resolvers';
 
 import { StructError, validate } from 'superstruct';
 import { Resolver } from './types';
@@ -18,10 +18,17 @@ export const superstructResolver: Resolver =
   (schema, resolverOptions) => (values, _, options) => {
     const result = validate(values, schema, resolverOptions);
 
+    if (result[0]) {
+      return {
+        values: {},
+        errors: toNestError(parseErrorSchema(result[0]), options),
+      };
+    }
+
+    options.shouldUseNativeValidation && validateFieldsNatively({}, options);
+
     return {
-      values: result[1] || {},
-      errors: result[0]
-        ? toNestError(parseErrorSchema(result[0]), options)
-        : {},
+      values: result[1],
+      errors: {},
     };
   };

@@ -1,5 +1,5 @@
 import Yup from 'yup';
-import { toNestError } from '@hookform/resolvers';
+import { toNestError, validateFieldsNatively } from '@hookform/resolvers';
 import { appendErrors, FieldError } from 'react-hook-form';
 import { Resolver } from './types';
 
@@ -52,6 +52,8 @@ export const yupResolver: Resolver =
         values,
         Object.assign({ abortEarly: false }, schemaOptions, { context }),
       );
+
+      options.shouldUseNativeValidation && validateFieldsNatively({}, options);
 
       return {
         values: result,
