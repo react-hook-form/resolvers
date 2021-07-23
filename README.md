@@ -159,7 +159,8 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 
 const schema = Joi.object({
-  username: Joi.string().required(),
+  name: Joi.string().required(),
+  age: Joi.number().required(),
 });
 
 const App = () => {
