@@ -11,6 +11,7 @@ const subRepositories = [
   'io-ts',
   'nope',
   'computed-types',
+  'typanion'
 ];
 
 const copySrc = () => {
