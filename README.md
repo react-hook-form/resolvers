@@ -43,7 +43,6 @@ Dead simple Object schema validation.
 [![npm](https://img.shields.io/bundlephobia/minzip/yup?style=for-the-badge)](https://bundlephobia.com/result?p=yup)
 
 ```typescript jsx
-import React from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -66,8 +65,6 @@ const App = () => {
     </form>
   );
 };
-
-export default App;
 ```
 
 ### [Zod](https://github.com/vriad/zod)
@@ -79,7 +76,6 @@ TypeScript-first schema validation with static type inference
 > ⚠️ Example below uses the `valueAsNumber`, which requires `react-hook-form` v6.12.0 (released Nov 28, 2020) or later.
 
 ```tsx
-import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -108,8 +104,6 @@ const App = () => {
     </form>
   );
 };
-
-export default App;
 ```
 
 ### [Superstruct](https://github.com/ianstormtaylor/superstruct)
@@ -119,7 +113,6 @@ A simple and composable way to validate data in JavaScript (or TypeScript).
 [![npm](https://img.shields.io/bundlephobia/minzip/superstruct?style=for-the-badge)](https://bundlephobia.com/result?p=superstruct)
 
 ```typescript jsx
-import React from 'react';
 import { useForm } from 'react-hook-form';
 import { superstructResolver } from '@hookform/resolvers/superstruct';
 import { object, string, number } from 'superstruct';
@@ -142,8 +135,6 @@ const App = () => {
     </form>
   );
 };
-
-export default App;
 ```
 
 ### [Joi](https://github.com/sideway/joi)
@@ -153,7 +144,6 @@ The most powerful data validation library for JS.
 [![npm](https://img.shields.io/bundlephobia/minzip/joi?style=for-the-badge)](https://bundlephobia.com/result?p=joi)
 
 ```typescript jsx
-import React from 'react';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
@@ -176,8 +166,6 @@ const App = () => {
     </form>
   );
 };
-
-export default App;
 ```
 
 ### [Vest](https://github.com/ealush/vest)
@@ -187,7 +175,6 @@ Vest 🦺 Declarative Validation Testing.
 [![npm](https://img.shields.io/bundlephobia/minzip/vest?style=for-the-badge)](https://bundlephobia.com/result?p=vest)
 
 ```typescript jsx
-import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { vestResolver } from '@hookform/resolvers/vest';
 import vest, { test, enforce } from 'vest';
@@ -197,24 +184,8 @@ const validationSuite = vest.create((data = {}) => {
     enforce(data.username).isNotEmpty();
   });
 
-  test('username', 'Must be longer than 3 chars', () => {
-    enforce(data.username).longerThan(3);
-  });
-
   test('password', 'Password is required', () => {
     enforce(data.password).isNotEmpty();
-  });
-
-  test('password', 'Password must be at least 5 chars', () => {
-    enforce(data.password).longerThanOrEquals(5);
-  });
-
-  test('password', 'Password must contain a digit', () => {
-    enforce(data.password).matches(/[0-9]/);
-  });
-
-  test('password', 'Password must contain a symbol', () => {
-    enforce(data.password).matches(/[^A-Za-z0-9]/);
   });
 });
 
@@ -231,8 +202,6 @@ const App = () => {
     </form>
   );
 };
-
-export default App;
 ```
 
 ### [Class Validator](https://github.com/typestack/class-validator)
@@ -249,7 +218,6 @@ Decorator-based property validation for classes.
 ```
 
 ```tsx
-import React from 'react';
 import { useForm } from 'react-hook-form';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { Length, Min, IsEmail } from 'class-validator';
@@ -257,9 +225,6 @@ import { Length, Min, IsEmail } from 'class-validator';
 class User {
   @Length(2, 30)
   username: string;
-
-  @Min(18)
-  age: number;
 
   @IsEmail()
   email: string;
@@ -278,19 +243,12 @@ const App = () => {
     <form onSubmit={handleSubmit((data) => console.log(data))}>
       <input type="text" {...register('username')} />
       {errors.username && <span>{errors.username.message}</span>}
-
       <input type="text" {...register('email')} />
       {errors.email && <span>{errors.email.message}</span>}
-
-      <input type="number" {...register('age', { valueAsNumber: true })} />
-      {errors.age && <span>{errors.age.message}</span>}
-
       <input type="submit" value="Submit" />
     </form>
   );
 };
-
-export default App;
 ```
 
 ### [io-ts](https://github.com/gcanti/io-ts)
@@ -336,7 +294,6 @@ A small, simple, and fast JS validator
 [![npm](https://img.shields.io/bundlephobia/minzip/nope-validator?style=for-the-badge)](https://bundlephobia.com/result?p=nope-validator)
 
 ```typescript jsx
-import React from 'react';
 import { useForm } from 'react-hook-form';
 import { nopeResolver } from '@hookform/resolvers/nope';
 import Nope from 'nope-validator';
@@ -359,8 +316,6 @@ const App = () => {
     </form>
   );
 };
-
-export default App;
 ```
 
 ### [computed-types](https://github.com/neuledge/computed-types)
@@ -370,7 +325,6 @@ TypeScript-first schema validation with static type inference
 [![npm](https://img.shields.io/bundlephobia/minzip/computed-types?style=for-the-badge)](https://bundlephobia.com/result?p=computed-types)
 
 ```tsx
-import React from 'react';
 import { useForm } from 'react-hook-form';
 import { computedTypesResolver } from '@hookform/resolvers/computed-types';
 import Schema, { number, string } from 'computed-types';
@@ -399,8 +353,6 @@ const App = () => {
     </form>
   );
 };
-
-export default App;
 ```
 
 ### [typanion](https://github.com/arcanis/typanion)
@@ -410,7 +362,6 @@ Static and runtime type assertion library with no dependencies
 [![npm](https://img.shields.io/bundlephobia/minzip/typanion?style=for-the-badge)](https://bundlephobia.com/result?p=typanion)
 
 ```tsx
-import React from 'react';
 import { useForm } from 'react-hook-form';
 import { typanionResolver } from '@hookform/resolvers/typanion';
 import * as t from 'typanion';
@@ -439,8 +390,6 @@ const App = () => {
     </form>
   );
 };
-
-export default App;
 ```
 
 ## Backers
