@@ -377,8 +377,7 @@ import Schema, { number, string } from 'computed-types';
 
 const schema = Schema({
   username: string.min(1).error('username field is required'),
-  password: string.min(1).error('password field is required'),
-  password: number,
+  age: number,
 });
 
 const App = () => {
@@ -395,6 +394,46 @@ const App = () => {
       <input {...register('name')} />
       {errors.name?.message && <p>{errors.name?.message}</p>}
       <input type="number" {...register('age', { valueAsNumber: true })} />
+      {errors.age?.message && <p>{errors.age?.message}</p>}
+      <input type="submit" />
+    </form>
+  );
+};
+
+export default App;
+```
+
+### [typanion](https://github.com/arcanis/typanion)
+
+Static and runtime type assertion library with no dependencies
+
+[![npm](https://img.shields.io/bundlephobia/minzip/typanion?style=for-the-badge)](https://bundlephobia.com/result?p=typanion)
+
+```tsx
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { typanionResolver } from '@hookform/resolvers/typanion';
+import * as t from 'typanion';
+
+const isUser = t.isObject({
+  username: t.applyCascade(t.isString(), [t.hasMinLength(1)]),
+  age: t.applyCascade(t.isNumber(), [t.isInteger(), t.isInInclusiveRange(1, 100)]),
+});
+
+const App = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: typanionResolver(isUser),
+  });
+
+  return (
+    <form onSubmit={handleSubmit((d) => console.log(d))}>
+      <input {...register('name')} />
+      {errors.name?.message && <p>{errors.name?.message}</p>}
+      <input type="number" {...register('age')} />
       {errors.age?.message && <p>{errors.age?.message}</p>}
       <input type="submit" />
     </form>
