@@ -4662,9 +4662,9 @@ node-releases@^1.1.71:
   integrity sha512-LLUo+PpH3dU6XizX3iVoubUNheF/owjXCZZ5yACDxNnPtgFuludV1ZL3ayK1kVep42Rmm0+R9/Y60NQbZ2bifw==
 
 nope-validator@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/nope-validator/-/nope-validator-1.0.0.tgz#52d34346cff9396f527b3070f3611ab763d57278"
-  integrity sha512-MFfJKIepTIAQkDYgRqrJwrFe+/K/8wAhgYzkB4L4p4IY8W7cC5YvCLcPWG8KcQIDQtjR4r5wpNh4St7XlRNAIg==
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/nope-validator/-/nope-validator-1.0.2.tgz#2fe161e4e135a88adcf64d3328b0d82243740884"
+  integrity sha512-wmRULNJg4kkzQBJk8WsW2HVMPYUioXDUcIRDIjzS+LnPwKlA9fK79s5bqW3h4H6c2DiGS+2a06xGDaqf+5+3xw==
 
 normalize-package-data@^2.3.2:
   version "2.5.0"
