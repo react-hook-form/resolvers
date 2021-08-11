@@ -13,11 +13,6 @@ Object {
       "ref": undefined,
       "type": "invalid_type",
     },
-    "confirm": Object {
-      "message": "Passwords don't match",
-      "ref": undefined,
-      "type": "custom_error",
-    },
     "email": Object {
       "message": "Invalid email",
       "ref": Object {
@@ -30,8 +25,8 @@ Object {
       "ref": undefined,
       "type": "invalid_type",
     },
-    "like": Object {
-      "0": Object {
+    "like": Array [
+      Object {
         "id": Object {
           "message": "Expected number, received string",
           "ref": undefined,
@@ -43,10 +38,7 @@ Object {
           "type": "invalid_type",
         },
       },
-      "message": "Expected number, received string",
-      "ref": undefined,
-      "type": "invalid_type",
-    },
+    ],
     "password": Object {
       "message": "One uppercase character",
       "ref": Object {
@@ -94,11 +86,6 @@ Object {
       "ref": undefined,
       "type": "invalid_type",
     },
-    "confirm": Object {
-      "message": "Passwords don't match",
-      "ref": undefined,
-      "type": "custom_error",
-    },
     "email": Object {
       "message": "Invalid email",
       "ref": Object {
@@ -111,8 +98,8 @@ Object {
       "ref": undefined,
       "type": "invalid_type",
     },
-    "like": Object {
-      "0": Object {
+    "like": Array [
+      Object {
         "id": Object {
           "message": "Expected number, received string",
           "ref": undefined,
@@ -124,10 +111,7 @@ Object {
           "type": "invalid_type",
         },
       },
-      "message": "Expected number, received string",
-      "ref": undefined,
-      "type": "invalid_type",
-    },
+    ],
     "password": Object {
       "message": "One uppercase character",
       "ref": Object {
@@ -182,19 +166,7 @@ Object {
       "ref": undefined,
       "type": "invalid_type",
       "types": Object {
-        "invalid_type": Array [
-          "Expected number, received string",
-          "Expected undefined, received string",
-        ],
-        "invalid_union": "Invalid input",
-      },
-    },
-    "confirm": Object {
-      "message": "Passwords don't match",
-      "ref": undefined,
-      "type": "custom_error",
-      "types": Object {
-        "custom_error": "Passwords don't match",
+        "invalid_type": "Expected number, received string",
       },
     },
     "email": Object {
@@ -215,8 +187,8 @@ Object {
         "invalid_type": "Required",
       },
     },
-    "like": Object {
-      "0": Object {
+    "like": Array [
+      Object {
         "id": Object {
           "message": "Expected number, received string",
           "ref": undefined,
@@ -234,14 +206,7 @@ Object {
           },
         },
       },
-      "message": "Expected number, received string",
-      "ref": undefined,
-      "type": "invalid_type",
-      "types": Object {
-        "invalid_type": "Expected undefined, received array",
-        "invalid_union": "Invalid input",
-      },
-    },
+    ],
     "password": Object {
       "message": "One uppercase character",
       "ref": Object {
@@ -278,9 +243,7 @@ Object {
       "ref": undefined,
       "type": "invalid_string",
       "types": Object {
-        "invalid_literal_value": "Input must be \\"\\"",
         "invalid_string": "Custom error url",
-        "invalid_union": "Invalid input",
       },
     },
     "username": Object {
@@ -318,19 +281,7 @@ Object {
       "ref": undefined,
       "type": "invalid_type",
       "types": Object {
-        "invalid_type": Array [
-          "Expected number, received string",
-          "Expected undefined, received string",
-        ],
-        "invalid_union": "Invalid input",
-      },
-    },
-    "confirm": Object {
-      "message": "Passwords don't match",
-      "ref": undefined,
-      "type": "custom_error",
-      "types": Object {
-        "custom_error": "Passwords don't match",
+        "invalid_type": "Expected number, received string",
       },
     },
     "email": Object {
@@ -351,8 +302,8 @@ Object {
         "invalid_type": "Required",
       },
     },
-    "like": Object {
-      "0": Object {
+    "like": Array [
+      Object {
         "id": Object {
           "message": "Expected number, received string",
           "ref": undefined,
@@ -370,14 +321,7 @@ Object {
           },
         },
       },
-      "message": "Expected number, received string",
-      "ref": undefined,
-      "type": "invalid_type",
-      "types": Object {
-        "invalid_type": "Expected undefined, received array",
-        "invalid_union": "Invalid input",
-      },
-    },
+    ],
     "password": Object {
       "message": "One uppercase character",
       "ref": Object {
@@ -414,9 +358,7 @@ Object {
       "ref": undefined,
       "type": "invalid_string",
       "types": Object {
-        "invalid_literal_value": "Input must be \\"\\"",
         "invalid_string": "Custom error url",
-        "invalid_union": "Invalid input",
       },
     },
     "username": Object {

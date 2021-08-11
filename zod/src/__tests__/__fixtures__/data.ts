@@ -1,5 +1,5 @@
 import { Field, InternalFieldName } from 'react-hook-form';
-import * as z from 'zod';
+import { z } from 'zod';
 
 export const schema = z
   .object({
@@ -30,9 +30,9 @@ export const schema = z
       )
       .optional(),
   })
-  .refine((data) => data.password === data.repeatPassword, {
-    message: "Passwords don't match",
-    path: ['confirm'], // set path of error
+  .refine((obj) => obj.password === obj.repeatPassword, {
+    message: 'Passwords do not match',
+    path: ['confirm'],
   });
 
 export const validData: z.infer<typeof schema> = {

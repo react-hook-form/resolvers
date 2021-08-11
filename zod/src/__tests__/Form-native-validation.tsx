@@ -2,18 +2,18 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { act, render, screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
-import * as Zod from 'zod';
+import { z } from 'zod';
 import { zodResolver } from '..';
 
 const USERNAME_REQUIRED_MESSAGE = 'username field is required';
 const PASSWORD_REQUIRED_MESSAGE = 'password field is required';
 
-const schema = Zod.object({
-  username: Zod.string().nonempty({ message: USERNAME_REQUIRED_MESSAGE }),
-  password: Zod.string().nonempty({ message: PASSWORD_REQUIRED_MESSAGE }),
+const schema = z.object({
+  username: z.string().nonempty({ message: USERNAME_REQUIRED_MESSAGE }),
+  password: z.string().nonempty({ message: PASSWORD_REQUIRED_MESSAGE }),
 });
 
-type FormData = Zod.infer<typeof schema>;
+type FormData = z.infer<typeof schema>;
 
 interface Props {
   onSubmit: (data: FormData) => void;
