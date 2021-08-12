@@ -2368,9 +2368,9 @@ commondir@^1.0.1:
   integrity sha1-3dgA2gxmEnOTzKWVDqloo6rxJTs=
 
 computed-types@^1.7.0:
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/computed-types/-/computed-types-1.7.0.tgz#f4636aafd9c58eac23001b57a72cd27f5de15b47"
-  integrity sha512-bRXfRgd6xBmt7PU9VsHJKPPNCIqpziHOuiMpsA5Pud6YlRXvM6ZvVgsSAJL4rqBL222CeMvKT2oq+CdCBMPsOg==
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/computed-types/-/computed-types-1.9.0.tgz#347aff586f1c106914d3bf95f91a1cca52c67518"
+  integrity sha512-g4BT09bX2ygdly0EzaUwnYLn2T3Nsbf03bc/bzOXl+IP1k7YERGdX/l1Katkw9w7TsF68mqLmMfgjToesIS8qw==
 
 concat-map@0.0.1:
   version "0.0.1"

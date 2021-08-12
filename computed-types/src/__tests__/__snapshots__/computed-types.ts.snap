@@ -21,17 +21,7 @@ Object {
       "type": "ValidationError",
     },
     "like": Object {
-      "id": Object {
-        "message": "Expect value to be \\"number\\"",
-        "ref": undefined,
-        "type": "ValidationError",
-      },
-      "message": "id: Expect value to be \\"number\\"",
-      "name": Object {
-        "message": "Expect value to be \\"string\\"",
-        "ref": undefined,
-        "type": "ValidationError",
-      },
+      "message": "Expect value to be \\"string\\"",
       "ref": undefined,
       "type": "ValidationError",
     },
