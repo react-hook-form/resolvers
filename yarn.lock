@@ -6405,9 +6405,9 @@ vendors@^1.0.0:
   integrity sha512-/juG65kTL4Cy2su4P8HjtkTxk6VmJDiOPBufWniqQ6wknac6jNiXS9vU+hO3wgusiyqWlzTbVHi0dyJqRONg3w==
 
 vest@^3.2.3:
-  version "3.2.3"
-  resolved "https://registry.yarnpkg.com/vest/-/vest-3.2.3.tgz#834781cbbba5f8529513660e81f540f927f468bc"
-  integrity sha512-fB05C57gmmwQ4/ZPUE8jMgcGty1ra44zua5ph3hYrkhOgk3q995BrzSJU7m5oa4y8eyaVzBAqj0yHXHGrsFP8Q==
+  version "3.2.5"
+  resolved "https://registry.yarnpkg.com/vest/-/vest-3.2.5.tgz#89b22645d92a192641011d900c1a6333a668d388"
+  integrity sha512-AQa/NOtHMTnJAP8m6gIX6N9OvScCaud6qu78s+zjX5yJ3PgM3FNWC1H5d81Es3IUGAuGS/6XrMyebHK+arzzSQ==
 
 w3c-hr-time@^1.0.2:
   version "1.0.2"
