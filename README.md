@@ -22,7 +22,7 @@
 
 ## Links
 
-- [React-hook-form validation resolver documentation ](https://react-hook-form.com/api/useform/#validationResolver)
+- [React-hook-form validation resolver documentation ](https://react-hook-form.com/api/useform/#resolver)
 
 ## API
 
