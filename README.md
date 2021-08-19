@@ -368,7 +368,10 @@ import * as t from 'typanion';
 
 const isUser = t.isObject({
   username: t.applyCascade(t.isString(), [t.hasMinLength(1)]),
-  age: t.applyCascade(t.isNumber(), [t.isInteger(), t.isInInclusiveRange(1, 100)]),
+  age: t.applyCascade(t.isNumber(), [
+    t.isInteger(),
+    t.isInInclusiveRange(1, 100),
+  ]),
 });
 
 const App = () => {

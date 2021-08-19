@@ -1,10 +1,10 @@
 import { appendErrors, FieldError } from 'react-hook-form';
-import * as z from 'zod';
+import { z } from 'zod';
 import { toNestError, validateFieldsNatively } from '@hookform/resolvers';
 import type { Resolver } from './types';
 
 const parseErrorSchema = (
-  zodErrors: z.ZodSuberror[],
+  zodErrors: z.ZodIssue[],
   validateAllFieldCriteria: boolean,
 ) => {
   const errors: Record<string, FieldError> = {};
