@@ -4436,7 +4436,7 @@ lodash.uniq@^4.5.0:
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
   integrity sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=
 
-lodash@4.x, lodash@^4.17.15, lodash@^4.17.20, lodash@^4.7.0:
+lodash@4.x, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.20, lodash@^4.7.0:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
@@ -6603,6 +6603,6 @@ yup@^0.32.9:
     toposort "^2.0.2"
 
 zod@^3.7.1:
-  version "3.7.1"
-  resolved "https://registry.yarnpkg.com/zod/-/zod-3.7.1.tgz#143a9f9bc8ebad27525f1b1069dad7328d0f9d53"
-  integrity sha512-9TRjeMKz3xFUOl/CYhBmp/hCrMhk5U6qRnfy9q+HwmQPbMYp3qnM+/cPst+wzHQjfSBjHDYZq7S7TQnlAjqjFg==
+  version "3.7.3"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-3.7.3.tgz#83363e528de4538429f0b5828a5a0ad6198b70e1"
+  integrity sha512-g2vA55KUfAkQPNPg0Ikj1Qy9THLUBHlnh2ZRXJc0eUaue81Sm0J4w1daRcuzdgapxn+J71kbxg0lBqMJJZSK5g==
