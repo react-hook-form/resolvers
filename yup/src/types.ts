@@ -1,5 +1,4 @@
 import {
-  FieldValues,
   ResolverOptions,
   ResolverResult,
   UnpackNestedValue,

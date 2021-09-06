@@ -1,5 +1,4 @@
 import {
-  FieldValues,
   ResolverOptions,
   ResolverResult,
   UnpackNestedValue,
@@ -8,10 +7,10 @@ import { validate, Struct } from 'superstruct';
 
 type Options = Parameters<typeof validate>[2];
 
-export type Resolver = <T extends Struct<any, any>>(
+export type Resolver = <T extends Struct<any, any>, TFieldValues, TContext>(
   schema: T,
   factoryOtions?: Options,
-) => <TFieldValues extends FieldValues, TContext>(
+) => (
   values: UnpackNestedValue<TFieldValues>,
   context: TContext | undefined,
   options: ResolverOptions<TFieldValues>,
