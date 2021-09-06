@@ -11,11 +11,11 @@ type Options<T extends Yup.AnyObjectSchema | Lazy<any>> = Parameters<
   T['validate']
 >[1];
 
-export type Resolver = <T extends Yup.AnyObjectSchema | Lazy<any>>(
+export type Resolver = <T extends Yup.AnyObjectSchema | Lazy<any>, TFieldValues, TContext>(
   schema: T,
   schemaOptions?: Options<T>,
   factoryOptions?: { mode?: 'async' | 'sync' },
-) => <TFieldValues extends FieldValues, TContext>(
+) => (
   values: UnpackNestedValue<TFieldValues>,
   context: TContext | undefined,
   options: ResolverOptions<TFieldValues>,
