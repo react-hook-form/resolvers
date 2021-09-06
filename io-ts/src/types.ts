@@ -1,14 +1,13 @@
 import * as t from 'io-ts';
 import {
   FieldError,
-  FieldValues,
   ResolverOptions,
   ResolverResult,
   UnpackNestedValue,
 } from 'react-hook-form';
 
-export type Resolver = <T, TFieldValues, TContext>(
-  codec: t.Decoder<FieldValues, T>,
+export type Resolver = <TFieldValues, TContext>(
+  codec: t.Decoder<unknown, any>,
 ) => (
   values: UnpackNestedValue<TFieldValues>,
   _context: TContext | undefined,

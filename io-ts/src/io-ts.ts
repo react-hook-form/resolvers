@@ -3,6 +3,7 @@ import { pipe } from 'fp-ts/function';
 import { toNestError, validateFieldsNatively } from '@hookform/resolvers';
 import errorsToRecord from './errorsToRecord';
 import { Resolver } from './types';
+import { FieldErrors } from 'react-hook-form';
 
 export const ioTsResolver: Resolver = (codec) => (values, _context, options) =>
   pipe(
@@ -25,7 +26,7 @@ export const ioTsResolver: Resolver = (codec) => (values, _context, options) =>
 
         return {
           values,
-          errors: {},
+          errors: {} as FieldErrors<any>,
         };
       },
     ),

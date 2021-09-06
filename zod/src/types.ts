@@ -2,11 +2,12 @@ import {
   ResolverResult,
   UnpackNestedValue,
   ResolverOptions,
+  FieldValues,
 } from 'react-hook-form';
 import { z } from 'zod';
 
-export type Resolver = <T extends z.Schema<any, any>, TFieldValues, TContext>(
-  schema: T,
+export type Resolver = <TFieldValues extends FieldValues, TContext>(
+  schema: z.Schema<any, any>,
   schemaOptions?: Partial<z.ParseParamsNoData>,
   factoryOptions?: { mode?: 'async' | 'sync' },
 ) => (
