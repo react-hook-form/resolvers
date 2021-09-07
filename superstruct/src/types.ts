@@ -9,7 +9,7 @@ type Options = Parameters<typeof validate>[2];
 
 export type Resolver = <T extends Struct<any, any>, TFieldValues, TContext>(
   schema: T,
-  factoryOtions?: Options,
+  factoryOptions?: Options,
 ) => (
   values: UnpackNestedValue<TFieldValues>,
   context: TContext | undefined,
