@@ -1,17 +1,16 @@
-import {
-  ResolverResult,
-  UnpackNestedValue,
-  ResolverOptions,
-  FieldValues,
-} from 'react-hook-form';
+/* eslint-disable @typescript-eslint/ban-types */
+import { ResolverResult, ResolverOptions, FieldValues } from 'react-hook-form';
 import { z } from 'zod';
 
-export type Resolver = <TFieldValues extends FieldValues, TContext>(
-  schema: z.Schema<any, any>,
+export type Resolver = <
+  TFieldValues extends FieldValues,
+  TContext extends object = object,
+>(
+  schema: z.Schema<TFieldValues, any>,
   schemaOptions?: Partial<z.ParseParamsNoData>,
   factoryOptions?: { mode?: 'async' | 'sync' },
 ) => (
-  values: UnpackNestedValue<TFieldValues>,
+  values: unknown,
   context: TContext | undefined,
   options: ResolverOptions<TFieldValues>,
 ) => Promise<ResolverResult<TFieldValues>>;
