@@ -7,14 +7,8 @@ import * as tt from 'io-ts-types';
 import { ioTsResolver } from '..';
 
 const schema = t.type({
-  username: tt.withMessage(
-    tt.NonEmptyString,
-    () => 'username is a required field',
-  ),
-  password: tt.withMessage(
-    tt.NonEmptyString,
-    () => 'password is a required field',
-  ),
+  username: tt.withMessage(t.string, () => 'username is a required field'),
+  password: tt.withMessage(t.string, () => 'password is a required field'),
 });
 
 interface FormData {

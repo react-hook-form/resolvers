@@ -10,8 +10,8 @@ const USERNAME_REQUIRED_MESSAGE = 'username field is required';
 const PASSWORD_REQUIRED_MESSAGE = 'password field is required';
 
 const schema = t.type({
-  username: tt.withMessage(tt.NonEmptyString, () => USERNAME_REQUIRED_MESSAGE),
-  password: tt.withMessage(tt.NonEmptyString, () => PASSWORD_REQUIRED_MESSAGE),
+  username: tt.withMessage(t.string, () => USERNAME_REQUIRED_MESSAGE),
+  password: tt.withMessage(t.string, () => PASSWORD_REQUIRED_MESSAGE),
 });
 
 interface FormData {
