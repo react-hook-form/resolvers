@@ -1,17 +1,13 @@
-import {
-  ResolverOptions,
-  ResolverResult,
-  UnpackNestedValue,
-} from 'react-hook-form';
+import { FieldValues, ResolverOptions, ResolverResult } from 'react-hook-form';
 import { validate, Struct } from 'superstruct';
 
 type Options = Parameters<typeof validate>[2];
 
-export type Resolver = <T extends Struct<any, any>, TFieldValues, TContext>(
-  schema: T,
+export type Resolver = <TFieldValues extends FieldValues, TContext>(
+  schema: Struct<TFieldValues, any>,
   factoryOptions?: Options,
 ) => (
-  values: UnpackNestedValue<TFieldValues>,
+  values: unknown,
   context: TContext | undefined,
   options: ResolverOptions<TFieldValues>,
 ) => ResolverResult<TFieldValues>;
