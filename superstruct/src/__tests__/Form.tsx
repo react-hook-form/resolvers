@@ -21,7 +21,7 @@ function TestComponent({ onSubmit }: Props) {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm<FormData>({
+  } = useForm({
     resolver: superstructResolver(schema), // Useful to check TypeScript regressions
   });
 
