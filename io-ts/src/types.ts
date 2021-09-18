@@ -1,13 +1,18 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import * as t from 'io-ts';
-import { FieldError, ResolverOptions, ResolverResult } from 'react-hook-form';
+import {
+  FieldError,
+  ResolverOptions,
+  ResolverResult,
+  UnpackNestedValue,
+} from 'react-hook-form';
 
 export type Resolver = <
   TFieldValues,
   TInput extends unknown = unknown,
   TContext extends object = object,
 >(
-  codec: t.Decoder<TInput, TFieldValues>,
+  codec: t.Decoder<TInput, UnpackNestedValue<TFieldValues>>,
 ) => (
   values: TInput,
   _context: TContext | undefined,
