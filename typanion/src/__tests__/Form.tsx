@@ -25,7 +25,7 @@ function TestComponent({ onSubmit }: Props) {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm<FormData>({
+  } = useForm({
     resolver: typanionResolver(schema), // Useful to check TypeScript regressions
   });
 
@@ -52,6 +52,10 @@ test("form's validation with Typanion and TypeScript's integration", async () =>
     user.click(screen.getByText(/submit/i));
   });
 
-  expect(screen.getAllByText('Expected to have a length of at least 1 elements (got 0)')).toHaveLength(2);
+  expect(
+    screen.getAllByText(
+      'Expected to have a length of at least 1 elements (got 0)',
+    ),
+  ).toHaveLength(2);
   expect(handleSubmit).not.toHaveBeenCalled();
 });

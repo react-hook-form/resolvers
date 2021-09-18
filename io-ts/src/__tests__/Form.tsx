@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, act } from '@testing-library/react';
 import user from '@testing-library/user-event';
-import { useForm } from 'react-hook-form';
+import { NestedValue, SubmitHandler, useForm } from 'react-hook-form';
 import * as t from 'io-ts';
 import * as tt from 'io-ts-types';
 import { ioTsResolver } from '..';
@@ -18,12 +18,12 @@ const schema = t.type({
 });
 
 interface FormData {
-  username: string;
-  password: string;
+  username: NestedValue<tt.NonEmptyString>;
+  password: NestedValue<tt.NonEmptyString>;
 }
 
 interface Props {
-  onSubmit: (data: FormData) => void;
+  onSubmit: SubmitHandler<FormData>;
 }
 
 function TestComponent({ onSubmit }: Props) {
@@ -32,7 +32,7 @@ function TestComponent({ onSubmit }: Props) {
     formState: { errors },
     handleSubmit,
   } = useForm<FormData>({
-    resolver: ioTsResolver(schema),
+    resolver: ioTsResolver<FormData>(schema),
     criteriaMode: 'all',
   });
 

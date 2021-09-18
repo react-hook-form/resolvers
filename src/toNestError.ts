@@ -5,16 +5,17 @@ import {
   FieldErrors,
   Field,
   ResolverOptions,
+  FieldValues,
 } from 'react-hook-form';
 import { validateFieldsNatively } from './validateFieldsNatively';
 
-export const toNestError = <TFieldValues>(
+export const toNestError = <TFieldValues extends FieldValues>(
   errors: Record<string, FieldError>,
   options: ResolverOptions<TFieldValues>,
 ): FieldErrors<TFieldValues> => {
   options.shouldUseNativeValidation && validateFieldsNatively(errors, options);
 
-  const fieldErrors: FieldErrors<TFieldValues> = {};
+  const fieldErrors = {} as FieldErrors<TFieldValues>;
   for (const path in errors) {
     const field = get(options.fields, path) as Field['_f'] | undefined;
 

@@ -21,7 +21,7 @@ function TestComponent({ onSubmit }: Props) {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({
+  } = useForm({
     resolver: zodResolver(schema), // Useful to check TypeScript regressions
   });
 

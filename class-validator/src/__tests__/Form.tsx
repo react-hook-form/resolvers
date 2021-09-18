@@ -14,7 +14,7 @@ class Schema {
 }
 
 interface Props {
-  onSubmit: (data: FormData) => void;
+  onSubmit: (data: Schema) => void;
 }
 
 function TestComponent({ onSubmit }: Props) {

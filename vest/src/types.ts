@@ -1,5 +1,4 @@
 import {
-  FieldValues,
   ResolverOptions,
   ResolverResult,
   UnpackNestedValue,
@@ -8,11 +7,11 @@ import * as Vest from 'vest';
 
 export type ICreateResult = ReturnType<typeof Vest.create>;
 
-export type Resolver = (
+export type Resolver = <TFieldValues, TContext>(
   schema: ICreateResult,
   schemaOptions?: never,
   factoryOptions?: { mode?: 'async' | 'sync' },
-) => <TFieldValues extends FieldValues, TContext>(
+) => (
   values: UnpackNestedValue<TFieldValues>,
   context: TContext | undefined,
   options: ResolverOptions<TFieldValues>,
