@@ -1,5 +1,9 @@
-/* eslint-disable @typescript-eslint/ban-types */
-import { ResolverOptions, ResolverResult } from 'react-hook-form';
+import {
+  FieldValues,
+  ResolverOptions,
+  ResolverResult,
+  UnpackNestedValue,
+} from 'react-hook-form';
 import * as Yup from 'yup';
 import type Lazy from 'yup/lib/Lazy';
 
@@ -7,15 +11,12 @@ type Options<T extends Yup.AnyObjectSchema | Lazy<any>> = Parameters<
   T['validate']
 >[1];
 
-export type Resolver = <
-  T extends Yup.AnyObjectSchema | Lazy<any>,
-  TContext extends object = object,
->(
+export type Resolver = <T extends Yup.AnyObjectSchema | Lazy<any>>(
   schema: T,
   schemaOptions?: Options<T>,
   factoryOptions?: { mode?: 'async' | 'sync' },
-) => (
-  values: unknown,
+) => <TFieldValues extends FieldValues, TContext>(
+  values: UnpackNestedValue<TFieldValues>,
   context: TContext | undefined,
-  options: ResolverOptions<Yup.InferType<T>>,
-) => Promise<ResolverResult<Yup.InferType<T>>>;
+  options: ResolverOptions<TFieldValues>,
+) => Promise<ResolverResult<TFieldValues>>;

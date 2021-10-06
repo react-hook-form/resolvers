@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, act } from '@testing-library/react';
 import user from '@testing-library/user-event';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import * as t from 'io-ts';
 import * as tt from 'io-ts-types';
 import { ioTsResolver } from '..';
@@ -15,16 +15,16 @@ const schema = t.type({
 });
 
 interface FormData {
-  username: tt.NonEmptyString;
-  password: tt.NonEmptyString;
+  username: string;
+  password: string;
 }
 
 interface Props {
-  onSubmit: SubmitHandler<FormData>;
+  onSubmit: (data: FormData) => void;
 }
 
 function TestComponent({ onSubmit }: Props) {
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit } = useForm<FormData>({
     resolver: ioTsResolver(schema),
     shouldUseNativeValidation: true,
   });

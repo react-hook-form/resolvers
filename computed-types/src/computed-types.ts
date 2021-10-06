@@ -34,7 +34,7 @@ export const computedTypesResolver: Resolver =
         errors: {},
         values: data,
       };
-    } catch (error) {
+    } catch (error: any) {
       return {
         values: {},
         errors: toNestError(parseErrorSchema(error), options),

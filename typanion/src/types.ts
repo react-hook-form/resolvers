@@ -1,28 +1,20 @@
-/* eslint-disable @typescript-eslint/ban-types */
 import type {
   FieldValues,
   ResolverOptions,
   ResolverResult,
+  UnpackNestedValue,
 } from 'react-hook-form';
-import { ValidationState, StrictValidator } from 'typanion';
+import { ValidationState, AnyStrictValidator} from 'typanion'
 
-type ValidateOptions = Pick<ValidationState, 'coercions' | 'coercion'>;
+type ValidateOptions = Pick<ValidationState, 'coercions' | 'coercion'>
 
-type RHFResolver<
-  TFieldValues extends FieldValues,
-  TInput = unknown,
-  TContext extends Object = object,
-> = (
-  values: TInput,
+type RHFResolver = <TFieldValues extends FieldValues, TContext>(
+  values: UnpackNestedValue<TFieldValues>,
   context: TContext | undefined,
   options: ResolverOptions<TFieldValues>,
 ) => ResolverResult<TFieldValues>;
 
-export type Resolver = <
-  TInput extends FieldValues = FieldValues,
-  TFieldValues extends TInput = TInput,
-  TContext extends object = object,
->(
-  validator: StrictValidator<TInput, TFieldValues>,
+export type Resolver = <UnknownValidator extends AnyStrictValidator>(
+  validator: UnknownValidator,
   validatorOptions?: ValidateOptions,
-) => RHFResolver<TFieldValues, TInput, TContext>;
+)=> RHFResolver
