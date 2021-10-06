@@ -20,7 +20,7 @@ interface Props {
 }
 
 function TestComponent({ onSubmit }: Props) {
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit } = useForm<FormData>({
     resolver: yupResolver(schema),
     shouldUseNativeValidation: true,
   });

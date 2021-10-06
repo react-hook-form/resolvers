@@ -61,7 +61,7 @@ describe('zodResolver', () => {
     expect(result).toMatchSnapshot();
   });
 
-  it.only('should return all the errors from zodResolver when validation fails with `validateAllFieldCriteria` set to true and `mode: sync`', async () => {
+  it('should return all the errors from zodResolver when validation fails with `validateAllFieldCriteria` set to true and `mode: sync`', async () => {
     const result = await zodResolver(schema, undefined, { mode: 'sync' })(
       invalidData,
       undefined,

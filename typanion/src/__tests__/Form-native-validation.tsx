@@ -5,8 +5,7 @@ import { useForm } from 'react-hook-form';
 import * as t from 'typanion';
 import { typanionResolver } from '..';
 
-const ERROR_MESSAGE =
-  'Expected to have a length of at least 1 elements (got 0)';
+const ERROR_MESSAGE = 'Expected to have a length of at least 1 elements (got 0)';
 
 const schema = t.isObject({
   username: t.applyCascade(t.isString(), [t.hasMinLength(1)]),
@@ -24,7 +23,7 @@ interface Props {
 }
 
 function TestComponent({ onSubmit }: Props) {
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit } = useForm<FormData>({
     resolver: typanionResolver(schema),
     shouldUseNativeValidation: true,
   });

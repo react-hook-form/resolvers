@@ -34,11 +34,8 @@ export const typanionResolver: Resolver =
       options.shouldUseNativeValidation &&
         validateFieldsNatively(parsedErrors, options);
 
-      return { values, errors: {} as FieldErrors<any> };
+      return { values, errors: {} };
     }
 
-    return {
-      values: {},
-      errors: toNestError(parsedErrors, options) as FieldErrors<any>,
-    };
+    return { values: {}, errors: toNestError(parsedErrors, options) };
   };

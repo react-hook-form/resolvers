@@ -1,4 +1,4 @@
-import { FieldError, FieldErrors } from 'react-hook-form';
+import { FieldError } from 'react-hook-form';
 import { toNestError, validateFieldsNatively } from '@hookform/resolvers';
 
 import { StructError, validate } from 'superstruct';
@@ -21,10 +21,7 @@ export const superstructResolver: Resolver =
     if (result[0]) {
       return {
         values: {},
-        errors: toNestError(
-          parseErrorSchema(result[0]),
-          options,
-        ) as FieldErrors<any>,
+        errors: toNestError(parseErrorSchema(result[0]), options),
       };
     }
 
@@ -32,6 +29,6 @@ export const superstructResolver: Resolver =
 
     return {
       values: result[1],
-      errors: {} as FieldErrors<any>,
+      errors: {},
     };
   };
