@@ -184,7 +184,7 @@
     "jest": "^27.2.4",
     "joi": "^17.4.2",
     "lint-staged": "^11.2.0",
-    "microbundle": "^0.13.3",
+    "microbundle": "^0.14.0",
     "monocle-ts": "^2.3.10",
     "newtype-ts": "^0.3.4",
     "nope-validator": "^1.0.0",
