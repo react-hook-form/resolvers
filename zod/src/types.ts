@@ -8,7 +8,7 @@ import { z } from 'zod';
 
 export type Resolver = <T extends z.Schema<any, any>>(
   schema: T,
-  schemaOptions?: Partial<z.ParseParamsNoData>,
+  schemaOptions?: Partial<z.ParseParams>,
   factoryOptions?: { mode?: 'async' | 'sync' },
 ) => <TFieldValues extends FieldValues, TContext>(
   values: UnpackNestedValue<TFieldValues>,
