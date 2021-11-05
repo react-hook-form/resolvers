@@ -76,7 +76,7 @@
       "require": "./typanion/dist/typanion.js"
     },
     "./package.json": "./package.json",
-    "./": "./"
+    "./*": "./*"
   },
   "files": [
     "dist",
