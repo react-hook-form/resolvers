@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, act } from '@testing-library/react';
 import user from '@testing-library/user-event';
 import { useForm } from 'react-hook-form';
-import vest from 'vest';
+import * as vest from 'vest';
 import { vestResolver } from '..';
 
 const USERNAME_REQUIRED_MESSAGE = 'username field is required';
