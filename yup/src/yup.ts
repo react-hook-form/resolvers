@@ -11,28 +11,30 @@ const parseErrorSchema = (
   error: Yup.ValidationError,
   validateAllFieldCriteria: boolean,
 ) => {
-  return error.inner.reduce<Record<string, FieldError>>((previous, error) => {
-    if (!previous[error.path!]) {
-      previous[error.path!] = { message: error.message, type: error.type! };
-    }
+  return Array.isArray(error.inner)
+    ? error.inner.reduce<Record<string, FieldError>>((previous, error) => {
+        if (!previous[error.path!]) {
+          previous[error.path!] = { message: error.message, type: error.type! };
+        }
 
-    if (validateAllFieldCriteria) {
-      const types = previous[error.path!].types;
-      const messages = types && types[error.type!];
+        if (validateAllFieldCriteria) {
+          const types = previous[error.path!].types;
+          const messages = types && types[error.type!];
 
-      previous[error.path!] = appendErrors(
-        error.path!,
-        validateAllFieldCriteria,
-        previous,
-        error.type!,
-        messages
-          ? ([] as string[]).concat(messages as string[], error.message)
-          : error.message,
-      ) as FieldError;
-    }
+          previous[error.path!] = appendErrors(
+            error.path!,
+            validateAllFieldCriteria,
+            previous,
+            error.type!,
+            messages
+              ? ([] as string[]).concat(messages as string[], error.message)
+              : error.message,
+          ) as FieldError;
+        }
 
-    return previous;
-  }, {});
+        return previous;
+      }, {})
+    : {};
 };
 
 export const yupResolver: Resolver =
