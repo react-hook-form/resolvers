@@ -175,7 +175,7 @@
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
     "computed-types": "^1.11.1",
-    "eslint": "^7.27.0",
+    "eslint": "^8.6.0",
     "eslint-config-prettier": "^8.3.0",
     "fp-ts": "^2.11.5",
     "husky": "^7.0.4",
