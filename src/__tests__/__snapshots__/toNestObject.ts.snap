@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`transforms flat object to nested object 1`] = `
+Object {
+  "name": Object {
+    "message": "first message",
+    "ref": Object {
+      "reportValidity": [MockFunction],
+      "setCustomValidity": [MockFunction],
+    },
+    "type": "st",
+  },
+  "test": Array [
+    Object {
+      "name": Object {
+        "message": "second message",
+        "ref": undefined,
+        "type": "nd",
+      },
+    },
+  ],
+}
+`;
+
+exports[`transforms flat object to nested object and shouldUseNativeValidation: true 1`] = `
+Object {
+  "name": Object {
+    "message": "first message",
+    "ref": Object {
+      "reportValidity": [MockFunction] {
+        "calls": Array [
+          Array [],
+        ],
+        "results": Array [
+          Object {
+            "type": "return",
+            "value": undefined,
+          },
+        ],
+      },
+      "setCustomValidity": [MockFunction] {
+        "calls": Array [
+          Array [
+            "first message",
+          ],
+        ],
+        "results": Array [
+          Object {
+            "type": "return",
+            "value": undefined,
+          },
+        ],
+      },
+    },
+    "type": "st",
+  },
+  "test": Array [
+    Object {
+      "name": Object {
+        "message": "second message",
+        "ref": undefined,
+        "type": "nd",
+      },
+    },
+  ],
+}
+`;

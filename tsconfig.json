@@ -1,23 +1,25 @@
 {
   "compilerOptions": {
     "sourceMap": true,
-    "module": "es2015",
-    "target": "es2017",
+    "module": "ESNext",
+    "target": "ES2017",
     "moduleResolution": "node",
-    "outDir": "./dist",
-    "jsx": "react",
     "skipLibCheck": true,
-    "declaration": true,
-    "noEmit": true,
-    "allowSyntheticDefaultImports": true,
-    "lib": ["dom", "dom.iterable", "esnext"],
     "strict": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "noEmit": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "esModuleInterop": true
-  },
-  "include": ["src"],
-  "exclude": ["src/**/*.test.js", "src/**/*.test.ts"]
+    "strictNullChecks": true,
+    "isolatedModules": true,
+    "experimentalDecorators": true,
+    "strictPropertyInitialization": false,
+    "jsx": "react",
+    "paths": {
+      "@hookform/resolvers": ["."]
+    }
+  }
 }

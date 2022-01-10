@@ -1,33 +1,139 @@
 {
   "name": "@hookform/resolvers",
-  "version": "0.2.0-beta.1",
-  "description": "React Hook Form validation resolvers: Yup, Joi, Superstruct and etc.",
-  "main": "dist/index.js",
-  "module": "dist/index.esm.js",
-  "umd:main": "dist/index.umd.production.min.js",
-  "unpkg": "dist/index.umd.production.min.js",
-  "jsdelivr": "dist/index.umd.production.min.js",
-  "jsnext:main": "dist/index.esm.js",
+  "amdName": "hookformResolvers",
+  "version": "1.3.1",
+  "description": "React Hook Form validation resolvers: Yup, Joi, Superstruct, Zod, Vest, Class Validator, io-ts, Nope, computed-types and Typanion",
+  "main": "dist/resolvers.js",
+  "module": "dist/resolvers.module.js",
+  "umd:main": "dist/resolvers.umd.js",
   "source": "src/index.ts",
   "types": "dist/index.d.ts",
-  "sideEffects": false,
+  "exports": {
+    ".": {
+      "browser": "./dist/resolvers.module.js",
+      "umd": "./dist/resolvers.umd.js",
+      "import": "./dist/resolvers.mjs",
+      "require": "./dist/resolvers.js"
+    },
+    "./zod": {
+      "browser": "./zod/dist/zod.module.js",
+      "umd": "./zod/dist/zod.umd.js",
+      "import": "./zod/dist/zod.mjs",
+      "require": "./zod/dist/zod.js"
+    },
+    "./yup": {
+      "browser": "./yup/dist/yup.module.js",
+      "umd": "./yup/dist/yup.umd.js",
+      "import": "./yup/dist/yup.mjs",
+      "require": "./yup/dist/yup.js"
+    },
+    "./joi": {
+      "browser": "./joi/dist/joi.module.js",
+      "umd": "./joi/dist/joi.umd.js",
+      "import": "./joi/dist/joi.mjs",
+      "require": "./joi/dist/joi.js"
+    },
+    "./vest": {
+      "browser": "./vest/dist/vest.module.js",
+      "umd": "./vest/dist/vest.umd.js",
+      "import": "./vest/dist/vest.mjs",
+      "require": "./vest/dist/vest.js"
+    },
+    "./superstruct": {
+      "browser": "./superstruct/dist/superstruct.module.js",
+      "umd": "./superstruct/dist/superstruct.umd.js",
+      "import": "./superstruct/dist/superstruct.mjs",
+      "require": "./superstruct/dist/superstruct.js"
+    },
+    "./class-validator": {
+      "browser": "./class-validator/dist/class-validator.module.js",
+      "umd": "./class-validator/dist/class-validator.umd.js",
+      "import": "./class-validator/dist/class-validator.mjs",
+      "require": "./class-validator/dist/class-validator.js"
+    },
+    "./io-ts": {
+      "browser": "./io-ts/dist/io-ts.module.js",
+      "umd": "./io-ts/dist/io-ts.umd.js",
+      "import": "./io-ts/dist/io-ts.mjs",
+      "require": "./io-ts/dist/io-ts.js"
+    },
+    "./nope": {
+      "browser": "./nope/dist/nope.module.js",
+      "umd": "./nope/dist/nope.umd.js",
+      "import": "./nope/dist/nope.mjs",
+      "require": "./nope/dist/nope.js"
+    },
+    "./computed-types": {
+      "browser": "./computed-types/dist/computed-types.module.js",
+      "umd": "./computed-types/dist/computed-types.umd.js",
+      "import": "./computed-types/dist/computed-types.mjs",
+      "require": "./computed-types/dist/computed-types.js"
+    },
+    "./typanion": {
+      "browser": "./typanion/dist/typanion.module.js",
+      "umd": "./typanion/dist/typanion.umd.js",
+      "import": "./typanion/dist/typanion.mjs",
+      "require": "./typanion/dist/typanion.js"
+    },
+    "./package.json": "./package.json",
+    "./*": "./*"
+  },
   "files": [
-    "dist"
+    "dist",
+    "yup/package.json",
+    "yup/src",
+    "yup/dist",
+    "zod/package.json",
+    "zod/src",
+    "zod/dist",
+    "vest/package.json",
+    "vest/src",
+    "vest/dist",
+    "joi/package.json",
+    "joi/src",
+    "joi/dist",
+    "superstruct/package.json",
+    "superstruct/src",
+    "superstruct/dist",
+    "class-validator/package.json",
+    "class-validator/src",
+    "class-validator/dist",
+    "io-ts/package.json",
+    "io-ts/src",
+    "io-ts/dist",
+    "nope/package.json",
+    "nope/src",
+    "nope/dist",
+    "computed-types/package.json",
+    "computed-types/src",
+    "computed-types/dist",
+    "typanion/package.json",
+    "typanion/src",
+    "typanion/dist"
   ],
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
-    "clean": "rimraf dist",
-    "prebuild": "npm run clean",
-    "build": "node rollup/writeCjsEntryFile.js && rollup -c",
-    "lint": "eslint '**/*.{js,ts}'",
-    "lint:fix": "npm run lint -- --fix",
-    "lint:types": "tsc --noEmit",
-    "test": "jest --runInBand",
-    "test:watch": "npm run test -- --watchAll --coverage",
-    "postversion": "git push && git push origin v$npm_package_version",
-    "prepublishOnly": "npm run lint && npm run lint:types && npm test && npm run build"
+    "prepare": "run-s build:src build && check-export-map && husky install",
+    "build": "npm-run-all --parallel build:*",
+    "build:src": "microbundle build",
+    "build:zod": "microbundle --cwd zod --globals '@hookform/resolvers=hookformResolvers'",
+    "build:yup": "microbundle --cwd yup --globals '@hookform/resolvers=hookformResolvers'",
+    "build:joi": "microbundle --cwd joi --globals '@hookform/resolvers=hookformResolvers'",
+    "build:superstruct": "microbundle --cwd superstruct --globals '@hookform/resolvers=hookformResolvers'",
+    "build:io-ts": "microbundle --cwd io-ts --globals '@hookform/resolvers=hookformResolvers'",
+    "build:vest": "microbundle --cwd vest --globals '@hookform/resolvers=hookformResolvers'",
+    "build:class-validator": "microbundle --cwd class-validator --globals '@hookform/resolvers=hookformResolvers'",
+    "build:nope": "microbundle --cwd nope --globals '@hookform/resolvers=hookformResolvers'",
+    "build:computed-types": "microbundle --cwd computed-types --globals '@hookform/resolvers=hookformResolvers'",
+    "build:typanion": "microbundle --cwd typanion --globals '@hookform/resolvers=hookformResolvers'",
+    "postbuild": "node ./config/node-13-exports.js",
+    "lint": "eslint . --ext .ts,.js --ignore-path .gitignore",
+    "lint:types": "tsc",
+    "test": "jest",
+    "test:watch": "yarn test --watchAll --coverage --runInBand",
+    "check:all": "npm-run-all --parallel lint:* test"
   },
   "keywords": [
     "scheme",
@@ -36,11 +142,16 @@
     "hookform",
     "react-hook-form",
     "yup",
-    "json-schema",
-    "ajv",
     "joi",
-    "sperstruct",
-    "typescript"
+    "superstruct",
+    "typescript",
+    "zod",
+    "vest",
+    "class-validator",
+    "io-ts",
+    "nope",
+    "computed-types",
+    "typanion"
   ],
   "repository": {
     "type": "git",
@@ -53,52 +164,51 @@
   },
   "homepage": "https://react-hook-form.com",
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^13.0.0",
-    "@rollup/plugin-json": "^4.1.0",
-    "@rollup/plugin-node-resolve": "^8.0.1",
-    "@rollup/plugin-replace": "^2.3.3",
-    "@types/hapi__joi": "^17.1.0",
-    "@types/jest": "^26.0.0",
-    "@types/json-schema": "^7.0.6",
-    "@types/yup": "^0.29.3",
-    "@typescript-eslint/eslint-plugin": "^3.2.0",
-    "@typescript-eslint/parser": "^3.2.0",
-    "ajv": "^6.12.4",
-    "eslint": "^7.2.0",
-    "eslint-config-prettier": "^6.11.0",
-    "eslint-plugin-prettier": "^3.1.4",
-    "husky": "^4.2.5",
-    "jest": "^26.0.1",
-    "lint-staged": "^10.2.10",
-    "prettier": "^2.0.5",
-    "react": "^16.13.1",
-    "react-hook-form": "^6.7.0",
-    "rimraf": "^3.0.2",
-    "rollup": "^2.16.1",
-    "rollup-plugin-peer-deps-external": "^2.2.2",
-    "rollup-plugin-sourcemaps": "^0.6.2",
-    "rollup-plugin-terser": "^6.1.0",
-    "rollup-plugin-typescript2": "^0.27.1",
-    "ts-jest": "^26.1.0",
-    "typescript": "^3.7.5"
+    "@testing-library/jest-dom": "^5.15.0",
+    "@testing-library/react": "^12.1.2",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.0.2",
+    "@types/react": "^17.0.33",
+    "@typescript-eslint/eslint-plugin": "^5.3.0",
+    "@typescript-eslint/parser": "^5.3.0",
+    "ajv": "^8.8.2",
+    "check-export-map": "^1.2.0",
+    "class-transformer": "^0.4.0",
+    "class-validator": "^0.13.1",
+    "computed-types": "^1.11.1",
+    "eslint": "^7.27.0",
+    "eslint-config-prettier": "^8.3.0",
+    "fp-ts": "^2.11.5",
+    "husky": "^7.0.4",
+    "io-ts": "^2.0.0",
+    "io-ts-types": "^0.5.16",
+    "jest": "^27.3.1",
+    "joi": "^17.4.2",
+    "lint-staged": "^11.2.6",
+    "microbundle": "^0.14.1",
+    "monocle-ts": "^2.3.10",
+    "newtype-ts": "^0.3.4",
+    "nope-validator": "^1.0.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.3.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-hook-form": "7.20.4",
+    "reflect-metadata": "^0.1.13",
+    "superstruct": "^0.15.3",
+    "ts-jest": "^27.0.7",
+    "typanion": "^3.7.1",
+    "typescript": "^4.4.4",
+    "vest": "^3.2.8",
+    "yup": "^0.32.11",
+    "zod": "^3.11.6"
   },
   "peerDependencies": {
-    "react-hook-form": ">=6.6.0"
-  },
-  "dependencies": {
-    "@hapi/joi": "^17.1.1",
-    "ajv": "^6.12.5",
-    "superstruct": "^0.8.3",
-    "yup": "^0.29.3"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint:types && lint-staged"
-    }
+    "react-hook-form": "^7.0.0"
   },
   "lint-staged": {
     "*.{js,ts}": [
-      "npm run lint:fix"
+      "yarn lint --fix"
     ],
     "*.{md,json,yml}": [
       "prettier --write"

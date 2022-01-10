@@ -1,0 +1,89 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ioTsResolver should return a single error from ioTsResolver when validation fails 1`] = `
+Object {
+  "errors": Object {
+    "animal": Object {
+      "message": "expected string but got [\\"dog\\"]",
+      "ref": undefined,
+      "type": "string",
+    },
+    "like": Array [
+      Object {
+        "id": Object {
+          "message": "this id is very important but you passed: string(1)",
+          "ref": undefined,
+          "type": "number",
+        },
+      },
+    ],
+    "luckyNumbers": Array [
+      ,
+      ,
+      Object {
+        "message": "expected number but got \\"3\\"",
+        "ref": undefined,
+        "type": "number",
+      },
+    ],
+    "vehicles": Array [
+      ,
+      Object {
+        "horsepower": Object {
+          "message": "expected number but got undefined",
+          "ref": undefined,
+          "type": "number",
+        },
+      },
+    ],
+  },
+  "values": Object {},
+}
+`;
+
+exports[`ioTsResolver should return all the errors from ioTsResolver when validation fails with \`validateAllFieldCriteria\` set to true 1`] = `
+Object {
+  "errors": Object {
+    "animal": Object {
+      "message": "expected \\"snake\\" but got [\\"dog\\"]",
+      "ref": undefined,
+      "type": "\\"snake\\"",
+      "types": Object {
+        "\\"bird\\"": "expected \\"bird\\" but got [\\"dog\\"]",
+        "\\"snake\\"": "expected \\"snake\\" but got [\\"dog\\"]",
+        "number": "expected number but got [\\"dog\\"]",
+        "string": "expected string but got [\\"dog\\"]",
+      },
+    },
+    "like": Array [
+      Object {
+        "id": Object {
+          "message": "this id is very important but you passed: string(1)",
+          "ref": undefined,
+          "type": "number",
+        },
+      },
+    ],
+    "luckyNumbers": Array [
+      ,
+      ,
+      Object {
+        "message": "expected number but got \\"3\\"",
+        "ref": undefined,
+        "type": "number",
+      },
+    ],
+    "vehicles": Array [
+      ,
+      Object {
+        "horsepower": Object {
+          "message": "expected number but got undefined",
+          "ref": undefined,
+          "type": "number",
+        },
+      },
+    ],
+  },
+  "values": Object {},
+}
+`;

@@ -1,0 +1,141 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`vestResolver should return all the error messages from vestResolver when validation fails and validateAllFieldCriteria set to true 1`] = `
+Object {
+  "errors": Object {
+    "deepObject": Object {
+      "data": Object {
+        "message": "deepObject.data is required",
+        "ref": undefined,
+        "type": "",
+        "types": Object {
+          "0": "deepObject.data is required",
+        },
+      },
+    },
+    "password": Object {
+      "message": "Password must be at least 5 chars",
+      "ref": Object {
+        "name": "password",
+      },
+      "type": "",
+      "types": Object {
+        "0": "Password must be at least 5 chars",
+        "1": "Password must contain a digit",
+        "2": "Password must contain a symbol",
+      },
+    },
+    "username": Object {
+      "message": "Username is required",
+      "ref": Object {
+        "name": "username",
+      },
+      "type": "",
+      "types": Object {
+        "0": "Username is required",
+        "1": "Must be longer than 3 chars",
+      },
+    },
+  },
+  "values": Object {},
+}
+`;
+
+exports[`vestResolver should return all the error messages from vestResolver when validation fails and validateAllFieldCriteria set to true and \`mode: sync\` 1`] = `
+Object {
+  "errors": Object {
+    "deepObject": Object {
+      "data": Object {
+        "message": "deepObject.data is required",
+        "ref": undefined,
+        "type": "",
+        "types": Object {
+          "0": "deepObject.data is required",
+        },
+      },
+    },
+    "password": Object {
+      "message": "Password must be at least 5 chars",
+      "ref": Object {
+        "name": "password",
+      },
+      "type": "",
+      "types": Object {
+        "0": "Password must be at least 5 chars",
+        "1": "Password must contain a digit",
+        "2": "Password must contain a symbol",
+      },
+    },
+    "username": Object {
+      "message": "Username is required",
+      "ref": Object {
+        "name": "username",
+      },
+      "type": "",
+      "types": Object {
+        "0": "Username is required",
+        "1": "Must be longer than 3 chars",
+      },
+    },
+  },
+  "values": Object {},
+}
+`;
+
+exports[`vestResolver should return single error message from vestResolver when validation fails and validateAllFieldCriteria set to false 1`] = `
+Object {
+  "errors": Object {
+    "deepObject": Object {
+      "data": Object {
+        "message": "deepObject.data is required",
+        "ref": undefined,
+        "type": "",
+      },
+    },
+    "password": Object {
+      "message": "Password must be at least 5 chars",
+      "ref": Object {
+        "name": "password",
+      },
+      "type": "",
+    },
+    "username": Object {
+      "message": "Username is required",
+      "ref": Object {
+        "name": "username",
+      },
+      "type": "",
+    },
+  },
+  "values": Object {},
+}
+`;
+
+exports[`vestResolver should return single error message from vestResolver when validation fails and validateAllFieldCriteria set to false and \`mode: sync\` 1`] = `
+Object {
+  "errors": Object {
+    "deepObject": Object {
+      "data": Object {
+        "message": "deepObject.data is required",
+        "ref": undefined,
+        "type": "",
+      },
+    },
+    "password": Object {
+      "message": "Password must be at least 5 chars",
+      "ref": Object {
+        "name": "password",
+      },
+      "type": "",
+    },
+    "username": Object {
+      "message": "Username is required",
+      "ref": Object {
+        "name": "username",
+      },
+      "type": "",
+    },
+  },
+  "values": Object {},
+}
+`;

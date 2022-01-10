@@ -1,0 +1,83 @@
+import React from 'react';
+import { render, screen, act } from '@testing-library/react';
+import user from '@testing-library/user-event';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { classValidatorResolver } from '..';
+import { IsNotEmpty } from 'class-validator';
+
+class Schema {
+  @IsNotEmpty()
+  username: string;
+
+  @IsNotEmpty()
+  password: string;
+}
+
+interface Props {
+  onSubmit: SubmitHandler<FormData>;
+}
+
+function TestComponent({ onSubmit }: Props) {
+  const { register, handleSubmit } = useForm<Schema>({
+    resolver: classValidatorResolver(Schema),
+    shouldUseNativeValidation: true,
+  });
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <input {...register('username')} placeholder="username" />
+
+      <input {...register('password')} placeholder="password" />
+
+      <button type="submit">submit</button>
+    </form>
+  );
+}
+
+test("form's native validation with Class Validator", async () => {
+  const handleSubmit = jest.fn();
+  render(<TestComponent onSubmit={handleSubmit} />);
+
+  // username
+  let usernameField = screen.getByPlaceholderText(
+    /username/i,
+  ) as HTMLInputElement;
+  expect(usernameField.validity.valid).toBe(true);
+  expect(usernameField.validationMessage).toBe('');
+
+  // password
+  let passwordField = screen.getByPlaceholderText(
+    /password/i,
+  ) as HTMLInputElement;
+  expect(passwordField.validity.valid).toBe(true);
+  expect(passwordField.validationMessage).toBe('');
+
+  await act(async () => {
+    user.click(screen.getByText(/submit/i));
+  });
+
+  // username
+  usernameField = screen.getByPlaceholderText(/username/i) as HTMLInputElement;
+  expect(usernameField.validity.valid).toBe(false);
+  expect(usernameField.validationMessage).toBe('username should not be empty');
+
+  // password
+  passwordField = screen.getByPlaceholderText(/password/i) as HTMLInputElement;
+  expect(passwordField.validity.valid).toBe(false);
+  expect(passwordField.validationMessage).toBe('password should not be empty');
+
+  await act(async () => {
+    user.type(screen.getByPlaceholderText(/username/i), 'joe');
+    user.type(screen.getByPlaceholderText(/password/i), 'password');
+  });
+
+  // username
+  usernameField = screen.getByPlaceholderText(/username/i) as HTMLInputElement;
+  expect(usernameField.validity.valid).toBe(true);
+  expect(usernameField.validationMessage).toBe('');
+
+  // password
+  passwordField = screen.getByPlaceholderText(/password/i) as HTMLInputElement;
+  expect(passwordField.validity.valid).toBe(true);
+  expect(passwordField.validationMessage).toBe('');
+});

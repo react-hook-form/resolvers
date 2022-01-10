@@ -1,0 +1,293 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`joiResolver should return a single error from joiResolver when validation fails 1`] = `
+Object {
+  "errors": Object {
+    "birthYear": Object {
+      "message": "\\"birthYear\\" must be a number",
+      "ref": undefined,
+      "type": "number.base",
+    },
+    "email": Object {
+      "message": "\\"email\\" is not allowed to be empty",
+      "ref": Object {
+        "name": "email",
+      },
+      "type": "string.empty",
+    },
+    "enabled": Object {
+      "message": "\\"enabled\\" is required",
+      "ref": undefined,
+      "type": "any.required",
+    },
+    "like": Array [
+      Object {
+        "id": Object {
+          "message": "\\"like[0].id\\" must be a number",
+          "ref": undefined,
+          "type": "number.base",
+        },
+        "name": Object {
+          "message": "\\"like[0].name\\" length must be 4 characters long",
+          "ref": undefined,
+          "type": "string.length",
+        },
+      },
+    ],
+    "password": Object {
+      "message": "\\"password\\" with value \\"___\\" fails to match the One uppercase character pattern",
+      "ref": Object {
+        "name": "password",
+      },
+      "type": "string.pattern.name",
+    },
+    "tags": Object {
+      "message": "\\"tags\\" is required",
+      "ref": undefined,
+      "type": "any.required",
+    },
+    "username": Object {
+      "message": "\\"username\\" is required",
+      "ref": Object {
+        "name": "username",
+      },
+      "type": "any.required",
+    },
+  },
+  "values": Object {},
+}
+`;
+
+exports[`joiResolver should return a single error from joiResolver with \`mode: sync\` when validation fails 1`] = `
+Object {
+  "errors": Object {
+    "birthYear": Object {
+      "message": "\\"birthYear\\" must be a number",
+      "ref": undefined,
+      "type": "number.base",
+    },
+    "email": Object {
+      "message": "\\"email\\" is not allowed to be empty",
+      "ref": Object {
+        "name": "email",
+      },
+      "type": "string.empty",
+    },
+    "enabled": Object {
+      "message": "\\"enabled\\" is required",
+      "ref": undefined,
+      "type": "any.required",
+    },
+    "like": Array [
+      Object {
+        "id": Object {
+          "message": "\\"like[0].id\\" must be a number",
+          "ref": undefined,
+          "type": "number.base",
+        },
+        "name": Object {
+          "message": "\\"like[0].name\\" length must be 4 characters long",
+          "ref": undefined,
+          "type": "string.length",
+        },
+      },
+    ],
+    "password": Object {
+      "message": "\\"password\\" with value \\"___\\" fails to match the One uppercase character pattern",
+      "ref": Object {
+        "name": "password",
+      },
+      "type": "string.pattern.name",
+    },
+    "tags": Object {
+      "message": "\\"tags\\" is required",
+      "ref": undefined,
+      "type": "any.required",
+    },
+    "username": Object {
+      "message": "\\"username\\" is required",
+      "ref": Object {
+        "name": "username",
+      },
+      "type": "any.required",
+    },
+  },
+  "values": Object {},
+}
+`;
+
+exports[`joiResolver should return all the errors from joiResolver when validation fails with \`validateAllFieldCriteria\` set to true 1`] = `
+Object {
+  "errors": Object {
+    "birthYear": Object {
+      "message": "\\"birthYear\\" must be a number",
+      "ref": undefined,
+      "type": "number.base",
+      "types": Object {
+        "number.base": "\\"birthYear\\" must be a number",
+      },
+    },
+    "email": Object {
+      "message": "\\"email\\" is not allowed to be empty",
+      "ref": Object {
+        "name": "email",
+      },
+      "type": "string.empty",
+      "types": Object {
+        "string.empty": "\\"email\\" is not allowed to be empty",
+      },
+    },
+    "enabled": Object {
+      "message": "\\"enabled\\" is required",
+      "ref": undefined,
+      "type": "any.required",
+      "types": Object {
+        "any.required": "\\"enabled\\" is required",
+      },
+    },
+    "like": Array [
+      Object {
+        "id": Object {
+          "message": "\\"like[0].id\\" must be a number",
+          "ref": undefined,
+          "type": "number.base",
+          "types": Object {
+            "number.base": "\\"like[0].id\\" must be a number",
+          },
+        },
+        "name": Object {
+          "message": "\\"like[0].name\\" length must be 4 characters long",
+          "ref": undefined,
+          "type": "string.length",
+          "types": Object {
+            "string.length": "\\"like[0].name\\" length must be 4 characters long",
+            "string.pattern.base": "\\"like[0].name\\" with value \\"r\\" fails to match the required pattern: /a/",
+          },
+        },
+      },
+    ],
+    "password": Object {
+      "message": "\\"password\\" with value \\"___\\" fails to match the One uppercase character pattern",
+      "ref": Object {
+        "name": "password",
+      },
+      "type": "string.pattern.name",
+      "types": Object {
+        "string.min": "\\"password\\" length must be at least 8 characters long",
+        "string.pattern.name": Array [
+          "\\"password\\" with value \\"___\\" fails to match the One uppercase character pattern",
+          "\\"password\\" with value \\"___\\" fails to match the One lowercase character pattern",
+          "\\"password\\" with value \\"___\\" fails to match the One number pattern",
+        ],
+      },
+    },
+    "tags": Object {
+      "message": "\\"tags\\" is required",
+      "ref": undefined,
+      "type": "any.required",
+      "types": Object {
+        "any.required": "\\"tags\\" is required",
+      },
+    },
+    "username": Object {
+      "message": "\\"username\\" is required",
+      "ref": Object {
+        "name": "username",
+      },
+      "type": "any.required",
+      "types": Object {
+        "any.required": "\\"username\\" is required",
+      },
+    },
+  },
+  "values": Object {},
+}
+`;
+
+exports[`joiResolver should return all the errors from joiResolver when validation fails with \`validateAllFieldCriteria\` set to true and \`mode: sync\` 1`] = `
+Object {
+  "errors": Object {
+    "birthYear": Object {
+      "message": "\\"birthYear\\" must be a number",
+      "ref": undefined,
+      "type": "number.base",
+      "types": Object {
+        "number.base": "\\"birthYear\\" must be a number",
+      },
+    },
+    "email": Object {
+      "message": "\\"email\\" is not allowed to be empty",
+      "ref": Object {
+        "name": "email",
+      },
+      "type": "string.empty",
+      "types": Object {
+        "string.empty": "\\"email\\" is not allowed to be empty",
+      },
+    },
+    "enabled": Object {
+      "message": "\\"enabled\\" is required",
+      "ref": undefined,
+      "type": "any.required",
+      "types": Object {
+        "any.required": "\\"enabled\\" is required",
+      },
+    },
+    "like": Array [
+      Object {
+        "id": Object {
+          "message": "\\"like[0].id\\" must be a number",
+          "ref": undefined,
+          "type": "number.base",
+          "types": Object {
+            "number.base": "\\"like[0].id\\" must be a number",
+          },
+        },
+        "name": Object {
+          "message": "\\"like[0].name\\" length must be 4 characters long",
+          "ref": undefined,
+          "type": "string.length",
+          "types": Object {
+            "string.length": "\\"like[0].name\\" length must be 4 characters long",
+            "string.pattern.base": "\\"like[0].name\\" with value \\"r\\" fails to match the required pattern: /a/",
+          },
+        },
+      },
+    ],
+    "password": Object {
+      "message": "\\"password\\" with value \\"___\\" fails to match the One uppercase character pattern",
+      "ref": Object {
+        "name": "password",
+      },
+      "type": "string.pattern.name",
+      "types": Object {
+        "string.min": "\\"password\\" length must be at least 8 characters long",
+        "string.pattern.name": Array [
+          "\\"password\\" with value \\"___\\" fails to match the One uppercase character pattern",
+          "\\"password\\" with value \\"___\\" fails to match the One lowercase character pattern",
+          "\\"password\\" with value \\"___\\" fails to match the One number pattern",
+        ],
+      },
+    },
+    "tags": Object {
+      "message": "\\"tags\\" is required",
+      "ref": undefined,
+      "type": "any.required",
+      "types": Object {
+        "any.required": "\\"tags\\" is required",
+      },
+    },
+    "username": Object {
+      "message": "\\"username\\" is required",
+      "ref": Object {
+        "name": "username",
+      },
+      "type": "any.required",
+      "types": Object {
+        "any.required": "\\"username\\" is required",
+      },
+    },
+  },
+  "values": Object {},
+}
+`;

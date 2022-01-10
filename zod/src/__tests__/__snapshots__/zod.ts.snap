@@ -1,0 +1,377 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`zodResolver should return a single error from zodResolver when validation fails 1`] = `
+Object {
+  "errors": Object {
+    "accessToken": Object {
+      "message": "Required",
+      "ref": undefined,
+      "type": "invalid_type",
+    },
+    "birthYear": Object {
+      "message": "Expected number, received string",
+      "ref": undefined,
+      "type": "invalid_type",
+    },
+    "email": Object {
+      "message": "Invalid email",
+      "ref": Object {
+        "name": "email",
+      },
+      "type": "invalid_string",
+    },
+    "enabled": Object {
+      "message": "Required",
+      "ref": undefined,
+      "type": "invalid_type",
+    },
+    "like": Array [
+      Object {
+        "id": Object {
+          "message": "Expected number, received string",
+          "ref": undefined,
+          "type": "invalid_type",
+        },
+        "name": Object {
+          "message": "Required",
+          "ref": undefined,
+          "type": "invalid_type",
+        },
+      },
+    ],
+    "password": Object {
+      "message": "One uppercase character",
+      "ref": Object {
+        "name": "password",
+      },
+      "type": "invalid_string",
+    },
+    "repeatPassword": Object {
+      "message": "Required",
+      "ref": undefined,
+      "type": "invalid_type",
+    },
+    "tags": Object {
+      "message": "Required",
+      "ref": undefined,
+      "type": "invalid_type",
+    },
+    "url": Object {
+      "message": "Custom error url",
+      "ref": undefined,
+      "type": "invalid_string",
+    },
+    "username": Object {
+      "message": "Required",
+      "ref": Object {
+        "name": "username",
+      },
+      "type": "invalid_type",
+    },
+  },
+  "values": Object {},
+}
+`;
+
+exports[`zodResolver should return a single error from zodResolver with \`mode: sync\` when validation fails 1`] = `
+Object {
+  "errors": Object {
+    "accessToken": Object {
+      "message": "Required",
+      "ref": undefined,
+      "type": "invalid_type",
+    },
+    "birthYear": Object {
+      "message": "Expected number, received string",
+      "ref": undefined,
+      "type": "invalid_type",
+    },
+    "email": Object {
+      "message": "Invalid email",
+      "ref": Object {
+        "name": "email",
+      },
+      "type": "invalid_string",
+    },
+    "enabled": Object {
+      "message": "Required",
+      "ref": undefined,
+      "type": "invalid_type",
+    },
+    "like": Array [
+      Object {
+        "id": Object {
+          "message": "Expected number, received string",
+          "ref": undefined,
+          "type": "invalid_type",
+        },
+        "name": Object {
+          "message": "Required",
+          "ref": undefined,
+          "type": "invalid_type",
+        },
+      },
+    ],
+    "password": Object {
+      "message": "One uppercase character",
+      "ref": Object {
+        "name": "password",
+      },
+      "type": "invalid_string",
+    },
+    "repeatPassword": Object {
+      "message": "Required",
+      "ref": undefined,
+      "type": "invalid_type",
+    },
+    "tags": Object {
+      "message": "Required",
+      "ref": undefined,
+      "type": "invalid_type",
+    },
+    "url": Object {
+      "message": "Custom error url",
+      "ref": undefined,
+      "type": "invalid_string",
+    },
+    "username": Object {
+      "message": "Required",
+      "ref": Object {
+        "name": "username",
+      },
+      "type": "invalid_type",
+    },
+  },
+  "values": Object {},
+}
+`;
+
+exports[`zodResolver should return all the errors from zodResolver when validation fails with \`validateAllFieldCriteria\` set to true 1`] = `
+Object {
+  "errors": Object {
+    "accessToken": Object {
+      "message": "Required",
+      "ref": undefined,
+      "type": "invalid_type",
+      "types": Object {
+        "invalid_type": Array [
+          "Required",
+          "Required",
+        ],
+        "invalid_union": "Invalid input",
+      },
+    },
+    "birthYear": Object {
+      "message": "Expected number, received string",
+      "ref": undefined,
+      "type": "invalid_type",
+      "types": Object {
+        "invalid_type": "Expected number, received string",
+      },
+    },
+    "email": Object {
+      "message": "Invalid email",
+      "ref": Object {
+        "name": "email",
+      },
+      "type": "invalid_string",
+      "types": Object {
+        "invalid_string": "Invalid email",
+      },
+    },
+    "enabled": Object {
+      "message": "Required",
+      "ref": undefined,
+      "type": "invalid_type",
+      "types": Object {
+        "invalid_type": "Required",
+      },
+    },
+    "like": Array [
+      Object {
+        "id": Object {
+          "message": "Expected number, received string",
+          "ref": undefined,
+          "type": "invalid_type",
+          "types": Object {
+            "invalid_type": "Expected number, received string",
+          },
+        },
+        "name": Object {
+          "message": "Required",
+          "ref": undefined,
+          "type": "invalid_type",
+          "types": Object {
+            "invalid_type": "Required",
+          },
+        },
+      },
+    ],
+    "password": Object {
+      "message": "One uppercase character",
+      "ref": Object {
+        "name": "password",
+      },
+      "type": "invalid_string",
+      "types": Object {
+        "invalid_string": Array [
+          "One uppercase character",
+          "One lowercase character",
+          "One number",
+        ],
+        "too_small": "Must be at least 8 characters in length",
+      },
+    },
+    "repeatPassword": Object {
+      "message": "Required",
+      "ref": undefined,
+      "type": "invalid_type",
+      "types": Object {
+        "invalid_type": "Required",
+      },
+    },
+    "tags": Object {
+      "message": "Required",
+      "ref": undefined,
+      "type": "invalid_type",
+      "types": Object {
+        "invalid_type": "Required",
+      },
+    },
+    "url": Object {
+      "message": "Custom error url",
+      "ref": undefined,
+      "type": "invalid_string",
+      "types": Object {
+        "invalid_string": "Custom error url",
+      },
+    },
+    "username": Object {
+      "message": "Required",
+      "ref": Object {
+        "name": "username",
+      },
+      "type": "invalid_type",
+      "types": Object {
+        "invalid_type": "Required",
+      },
+    },
+  },
+  "values": Object {},
+}
+`;
+
+exports[`zodResolver should return all the errors from zodResolver when validation fails with \`validateAllFieldCriteria\` set to true and \`mode: sync\` 1`] = `
+Object {
+  "errors": Object {
+    "accessToken": Object {
+      "message": "Required",
+      "ref": undefined,
+      "type": "invalid_type",
+      "types": Object {
+        "invalid_type": Array [
+          "Required",
+          "Required",
+        ],
+        "invalid_union": "Invalid input",
+      },
+    },
+    "birthYear": Object {
+      "message": "Expected number, received string",
+      "ref": undefined,
+      "type": "invalid_type",
+      "types": Object {
+        "invalid_type": "Expected number, received string",
+      },
+    },
+    "email": Object {
+      "message": "Invalid email",
+      "ref": Object {
+        "name": "email",
+      },
+      "type": "invalid_string",
+      "types": Object {
+        "invalid_string": "Invalid email",
+      },
+    },
+    "enabled": Object {
+      "message": "Required",
+      "ref": undefined,
+      "type": "invalid_type",
+      "types": Object {
+        "invalid_type": "Required",
+      },
+    },
+    "like": Array [
+      Object {
+        "id": Object {
+          "message": "Expected number, received string",
+          "ref": undefined,
+          "type": "invalid_type",
+          "types": Object {
+            "invalid_type": "Expected number, received string",
+          },
+        },
+        "name": Object {
+          "message": "Required",
+          "ref": undefined,
+          "type": "invalid_type",
+          "types": Object {
+            "invalid_type": "Required",
+          },
+        },
+      },
+    ],
+    "password": Object {
+      "message": "One uppercase character",
+      "ref": Object {
+        "name": "password",
+      },
+      "type": "invalid_string",
+      "types": Object {
+        "invalid_string": Array [
+          "One uppercase character",
+          "One lowercase character",
+          "One number",
+        ],
+        "too_small": "Must be at least 8 characters in length",
+      },
+    },
+    "repeatPassword": Object {
+      "message": "Required",
+      "ref": undefined,
+      "type": "invalid_type",
+      "types": Object {
+        "invalid_type": "Required",
+      },
+    },
+    "tags": Object {
+      "message": "Required",
+      "ref": undefined,
+      "type": "invalid_type",
+      "types": Object {
+        "invalid_type": "Required",
+      },
+    },
+    "url": Object {
+      "message": "Custom error url",
+      "ref": undefined,
+      "type": "invalid_string",
+      "types": Object {
+        "invalid_string": "Custom error url",
+      },
+    },
+    "username": Object {
+      "message": "Required",
+      "ref": Object {
+        "name": "username",
+      },
+      "type": "invalid_type",
+      "types": Object {
+        "invalid_type": "Required",
+      },
+    },
+  },
+  "values": Object {},
+}
+`;

@@ -10,9 +10,6 @@ coverage
 
 # Dependency directories
 node_modules/
-app/node_modules/
-example/node_modules/
-example/build/
 
 # Optional npm cache directory
 .npm
@@ -27,11 +24,9 @@ example/build/
 .yarn-integrity
 
 .DS_Store
-/lib
-/dist
+dist
 .idea/
 .rpt2_cache
 .coveralls.yml
 package-lock.json
-/cypress/videos
-/cypress/screenshots
+.history

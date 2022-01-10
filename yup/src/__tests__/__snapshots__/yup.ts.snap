@@ -1,0 +1,231 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`yupResolver should return a single error from yupResolver when validation fails 1`] = `
+Object {
+  "errors": Object {
+    "birthYear": Object {
+      "message": "birthYear must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"birthYear\\"\`).",
+      "ref": undefined,
+      "type": "typeError",
+    },
+    "like": Array [
+      Object {
+        "id": Object {
+          "message": "like[0].id must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"z\\"\`).",
+          "ref": undefined,
+          "type": "typeError",
+        },
+        "name": Object {
+          "message": "like[0].name is a required field",
+          "ref": undefined,
+          "type": "required",
+        },
+      },
+    ],
+    "password": Object {
+      "message": "One uppercase character",
+      "ref": Object {
+        "name": "password",
+      },
+      "type": "matches",
+    },
+    "username": Object {
+      "message": "username is a required field",
+      "ref": Object {
+        "name": "username",
+      },
+      "type": "required",
+    },
+  },
+  "values": Object {},
+}
+`;
+
+exports[`yupResolver should return a single error from yupResolver with \`mode: sync\` when validation fails 1`] = `
+Object {
+  "errors": Object {
+    "birthYear": Object {
+      "message": "birthYear must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"birthYear\\"\`).",
+      "ref": undefined,
+      "type": "typeError",
+    },
+    "like": Array [
+      Object {
+        "id": Object {
+          "message": "like[0].id must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"z\\"\`).",
+          "ref": undefined,
+          "type": "typeError",
+        },
+        "name": Object {
+          "message": "like[0].name is a required field",
+          "ref": undefined,
+          "type": "required",
+        },
+      },
+    ],
+    "password": Object {
+      "message": "One uppercase character",
+      "ref": Object {
+        "name": "password",
+      },
+      "type": "matches",
+    },
+    "username": Object {
+      "message": "username is a required field",
+      "ref": Object {
+        "name": "username",
+      },
+      "type": "required",
+    },
+  },
+  "values": Object {},
+}
+`;
+
+exports[`yupResolver should return all the errors from yupResolver when validation fails with \`validateAllFieldCriteria\` set to true 1`] = `
+Object {
+  "errors": Object {
+    "birthYear": Object {
+      "message": "birthYear must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"birthYear\\"\`).",
+      "ref": undefined,
+      "type": "typeError",
+      "types": Object {
+        "typeError": "birthYear must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"birthYear\\"\`).",
+      },
+    },
+    "like": Array [
+      Object {
+        "id": Object {
+          "message": "like[0].id must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"z\\"\`).",
+          "ref": undefined,
+          "type": "typeError",
+          "types": Object {
+            "typeError": "like[0].id must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"z\\"\`).",
+          },
+        },
+        "name": Object {
+          "message": "like[0].name is a required field",
+          "ref": undefined,
+          "type": "required",
+          "types": Object {
+            "required": "like[0].name is a required field",
+          },
+        },
+      },
+    ],
+    "password": Object {
+      "message": "One uppercase character",
+      "ref": Object {
+        "name": "password",
+      },
+      "type": "matches",
+      "types": Object {
+        "matches": Array [
+          "One uppercase character",
+          "One lowercase character",
+          "One number",
+        ],
+        "min": "Must be at least 8 characters in length",
+      },
+    },
+    "username": Object {
+      "message": "username is a required field",
+      "ref": Object {
+        "name": "username",
+      },
+      "type": "required",
+      "types": Object {
+        "required": "username is a required field",
+      },
+    },
+  },
+  "values": Object {},
+}
+`;
+
+exports[`yupResolver should return all the errors from yupResolver when validation fails with \`validateAllFieldCriteria\` set to true and \`mode: sync\` 1`] = `
+Object {
+  "errors": Object {
+    "birthYear": Object {
+      "message": "birthYear must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"birthYear\\"\`).",
+      "ref": undefined,
+      "type": "typeError",
+      "types": Object {
+        "typeError": "birthYear must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"birthYear\\"\`).",
+      },
+    },
+    "like": Array [
+      Object {
+        "id": Object {
+          "message": "like[0].id must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"z\\"\`).",
+          "ref": undefined,
+          "type": "typeError",
+          "types": Object {
+            "typeError": "like[0].id must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"z\\"\`).",
+          },
+        },
+        "name": Object {
+          "message": "like[0].name is a required field",
+          "ref": undefined,
+          "type": "required",
+          "types": Object {
+            "required": "like[0].name is a required field",
+          },
+        },
+      },
+    ],
+    "password": Object {
+      "message": "One uppercase character",
+      "ref": Object {
+        "name": "password",
+      },
+      "type": "matches",
+      "types": Object {
+        "matches": Array [
+          "One uppercase character",
+          "One lowercase character",
+          "One number",
+        ],
+        "min": "Must be at least 8 characters in length",
+      },
+    },
+    "username": Object {
+      "message": "username is a required field",
+      "ref": Object {
+        "name": "username",
+      },
+      "type": "required",
+      "types": Object {
+        "required": "username is a required field",
+      },
+    },
+  },
+  "values": Object {},
+}
+`;
+
+exports[`yupResolver should return an error from yupResolver when validation fails and pass down the yup context 1`] = `
+Object {
+  "errors": Object {
+    "name": Object {
+      "message": "name must be at least 6 characters",
+      "ref": undefined,
+      "type": "min",
+    },
+  },
+  "values": Object {},
+}
+`;
+
+exports[`yupResolver should return correct error message with using yup.test 1`] = `
+Object {
+  "errors": Object {
+    "": Object {
+      "message": "Email or name are required",
+      "ref": undefined,
+      "type": "name",
+    },
+  },
+  "values": Object {},
+}
+`;

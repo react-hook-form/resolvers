@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`typanionResolver should return a single error from typanionResolver when validation fails 1`] = `
+Object {
+  "errors": Object {
+    "accessToken": Object {
+      "message": "Expected a string (got undefined)",
+      "ref": undefined,
+    },
+    "birthYear": Object {
+      "message": "Expected a number (got \\"birthYear\\")",
+      "ref": undefined,
+    },
+    "email": Object {
+      "message": "Expected to match the pattern /^\\\\S+@\\\\S+$/ (got an empty string)",
+      "ref": Object {
+        "name": "email",
+      },
+    },
+    "enabled": Object {
+      "message": "Expected a boolean (got undefined)",
+      "ref": undefined,
+    },
+    "like": Object {
+      "id": Object {
+        "message": "Expected a number (got \\"z\\")",
+        "ref": undefined,
+      },
+      "name": Object {
+        "message": "Expected a string (got undefined)",
+        "ref": undefined,
+      },
+    },
+    "password": Object {
+      "message": "Expected to match the pattern /.*[A-Z].*/ (got \\"___\\")",
+      "ref": Object {
+        "name": "password",
+      },
+    },
+    "repeatPassword": Object {
+      "message": "Expected a string (got undefined)",
+      "ref": undefined,
+    },
+    "tags": Array [
+      Object {
+        "message": "Expected a string (got 1)",
+        "ref": undefined,
+      },
+      Object {
+        "message": "Expected a string (got 2)",
+        "ref": undefined,
+      },
+      Object {
+        "message": "Expected a string (got 3)",
+        "ref": undefined,
+      },
+    ],
+    "username": Object {
+      "message": "Expected a string (got undefined)",
+      "ref": Object {
+        "name": "username",
+      },
+    },
+  },
+  "values": Object {},
+}
+`;

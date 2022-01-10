@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`superstructResolver should return a single error from superstructResolver when validation fails 1`] = `
+Object {
+  "errors": Object {
+    "birthYear": Object {
+      "message": "Expected a number, but received: \\"birthYear\\"",
+      "ref": undefined,
+      "type": "number",
+    },
+    "email": Object {
+      "message": "Expected a string matching \`/^[\\\\w-\\\\.]+@([\\\\w-]+\\\\.)+[\\\\w-]{2,4}$/\` but received \\"\\"",
+      "ref": Object {
+        "name": "email",
+      },
+      "type": "string",
+    },
+    "enabled": Object {
+      "message": "Expected a value of type \`boolean\`, but received: \`undefined\`",
+      "ref": undefined,
+      "type": "boolean",
+    },
+    "like": Array [
+      Object {
+        "id": Object {
+          "message": "Expected a number, but received: \\"z\\"",
+          "ref": undefined,
+          "type": "number",
+        },
+        "name": Object {
+          "message": "Expected a string, but received: undefined",
+          "ref": undefined,
+          "type": "string",
+        },
+      },
+    ],
+    "password": Object {
+      "message": "Expected a string matching \`/^[a-zA-Z0-9]{3,30}/\` but received \\"___\\"",
+      "ref": Object {
+        "name": "password",
+      },
+      "type": "string",
+    },
+    "repeatPassword": Object {
+      "message": "Expected a value of type \`Password\`, but received: \`undefined\`",
+      "ref": undefined,
+      "type": "Password",
+    },
+    "tags": Object {
+      "message": "Expected an array value, but received: undefined",
+      "ref": undefined,
+      "type": "array",
+    },
+    "username": Object {
+      "message": "Expected a string, but received: undefined",
+      "ref": Object {
+        "name": "username",
+      },
+      "type": "string",
+    },
+  },
+  "values": Object {},
+}
+`;

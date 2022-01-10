@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`computedTypesResolver should return a single error from computedTypesResolver when validation fails 1`] = `
+Object {
+  "errors": Object {
+    "birthYear": Object {
+      "message": "Expect value to be \\"number\\"",
+      "ref": undefined,
+      "type": "ValidationError",
+    },
+    "email": Object {
+      "message": "Incorrect email",
+      "ref": Object {
+        "name": "email",
+      },
+      "type": "ValidationError",
+    },
+    "enabled": Object {
+      "message": "Expect value to be \\"boolean\\"",
+      "ref": undefined,
+      "type": "ValidationError",
+    },
+    "like": Object {
+      "message": "Expect value to be \\"string\\"",
+      "ref": undefined,
+      "type": "ValidationError",
+    },
+    "password": Object {
+      "message": "One uppercase character",
+      "ref": Object {
+        "name": "password",
+      },
+      "type": "ValidationError",
+    },
+    "repeatPassword": Object {
+      "message": "Expect value to be \\"string\\"",
+      "ref": undefined,
+      "type": "ValidationError",
+    },
+    "tags": Object {
+      "message": "Expecting value to be an array",
+      "ref": undefined,
+      "type": "ValidationError",
+    },
+    "username": Object {
+      "message": "Expect value to be \\"string\\"",
+      "ref": Object {
+        "name": "username",
+      },
+      "type": "ValidationError",
+    },
+  },
+  "values": Object {},
+}
+`;
