@@ -183,7 +183,7 @@
     "io-ts-types": "^0.5.16",
     "jest": "^27.3.1",
     "joi": "^17.4.2",
-    "lint-staged": "^11.2.6",
+    "lint-staged": "^12.1.7",
     "microbundle": "^0.14.1",
     "monocle-ts": "^2.3.10",
     "newtype-ts": "^0.3.4",
