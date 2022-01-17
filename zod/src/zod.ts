@@ -1,7 +1,52 @@
-import { appendErrors, FieldError, FieldErrors } from 'react-hook-form';
+import {
+  appendErrors,
+  FieldError,
+  FieldErrors,
+  set,
+  get,
+  Field,
+  ResolverOptions,
+} from 'react-hook-form';
 import { z } from 'zod';
-import { toNestError, validateFieldsNatively } from '@hookform/resolvers';
 import type { Resolver } from './types';
+
+// Native validation (web only)
+export const validateFieldsNatively = <TFieldValues>(
+  errors: Record<string, FieldError>,
+  options: ResolverOptions<TFieldValues>,
+): void => {
+  for (const fieldPath in options.fields) {
+    const field = options.fields[fieldPath];
+
+    if (field && field.ref && 'reportValidity' in field.ref) {
+      const error = get(errors, fieldPath) as FieldError | undefined;
+
+      field.ref.setCustomValidity((error && error.message) || '');
+
+      field.ref.reportValidity();
+    }
+  }
+};
+
+const toNestError = <TFieldValues>(
+  errors: Record<string, FieldError>,
+  options: ResolverOptions<TFieldValues>,
+): FieldErrors<TFieldValues> => {
+  options.shouldUseNativeValidation && validateFieldsNatively(errors, options);
+
+  const fieldErrors = {} as FieldErrors<TFieldValues>;
+  for (const path in errors) {
+    const field = get(options.fields, path) as Field['_f'] | undefined;
+
+    set(
+      fieldErrors,
+      path,
+      Object.assign(errors[path], { ref: field && field.ref }),
+    );
+  }
+
+  return fieldErrors;
+};
 
 const parseErrorSchema = (
   zodErrors: z.ZodIssue[],
