@@ -47,10 +47,13 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-const schema = yup.object().shape({
-  name: yup.string().required(),
-  age: yup.number().required(),
-}).required();
+const schema = yup
+  .object()
+  .shape({
+    name: yup.string().required(),
+    age: yup.number().required(),
+  })
+  .required();
 
 const App = () => {
   const { register, handleSubmit } = useForm({
@@ -177,9 +180,9 @@ Vest 🦺 Declarative Validation Testing.
 ```typescript jsx
 import { useForm } from 'react-hook-form';
 import { vestResolver } from '@hookform/resolvers/vest';
-import vest, { test, enforce } from 'vest';
+import { create, test, enforce } from 'vest';
 
-const validationSuite = vest.create((data = {}) => {
+const validationSuite = create((data = {}) => {
   test('username', 'Username is required', () => {
     enforce(data.username).isNotEmpty();
   });
