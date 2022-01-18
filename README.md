@@ -47,10 +47,13 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-const schema = yup.object().shape({
-  name: yup.string().required(),
-  age: yup.number().required(),
-}).required();
+const schema = yup
+  .object()
+  .shape({
+    name: yup.string().required(),
+    age: yup.number().required(),
+  })
+  .required();
 
 const App = () => {
   const { register, handleSubmit } = useForm({

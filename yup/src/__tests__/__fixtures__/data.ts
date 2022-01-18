@@ -28,6 +28,14 @@ export const schema = yup.object({
   ),
 });
 
+export const schemaWithWhen = yup.object({
+  name: yup.string().required(),
+  value: yup.string().when('name', {
+    is: 'test',
+    then: yup.number().required(),
+  }),
+});
+
 export const validData: yup.InferType<typeof schema> = {
   username: 'Doe',
   password: 'Password123_',

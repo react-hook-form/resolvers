@@ -63,6 +63,10 @@ export const yupResolver: Resolver =
         errors: {},
       };
     } catch (e: any) {
+      if (!e.inner) {
+        throw e;
+      }
+
       return {
         values: {},
         errors: toNestError(

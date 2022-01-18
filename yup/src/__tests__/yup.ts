@@ -1,7 +1,13 @@
 /* eslint-disable no-console, @typescript-eslint/ban-ts-comment */
 import * as yup from 'yup';
 import { yupResolver } from '..';
-import { schema, validData, fields, invalidData } from './__fixtures__/data';
+import {
+  schema,
+  validData,
+  fields,
+  invalidData,
+  schemaWithWhen,
+} from './__fixtures__/data';
 
 const shouldUseNativeValidation = false;
 
@@ -170,5 +176,17 @@ describe('yupResolver', () => {
     expect(validateSpy.mock.calls[0][1]).toEqual(
       expect.objectContaining({ stripUnknown: true, abortEarly: false }),
     );
+  });
+
+  it('should throw an error without inner property', (done) => {
+    yupResolver(schemaWithWhen)({ name: 'test', value: '' }, undefined, {
+      fields,
+      shouldUseNativeValidation,
+    }).catch((e) => {
+      expect(e).toMatchInlineSnapshot(
+        `[TypeError: You cannot \`concat()\` schema's of different types: string and number]`,
+      );
+      done();
+    });
   });
 });
