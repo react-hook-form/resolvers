@@ -82,7 +82,11 @@ export const yupResolver = <TFieldValues extends FieldValues>(
       }),
       errors: {},
     };
-  } catch (e) {
+  } catch (e: any) {
+    if (!e.inner) {
+      throw e;
+    }
+
     const parsedErrors = parseErrorSchema(e, validateAllFieldCriteria);
     return {
       values: {},
