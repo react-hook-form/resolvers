@@ -290,4 +290,22 @@ describe('validateWithSchema', () => {
       errors: { name: { message: 'Email or name are required', type: 'name' } },
     });
   });
+
+  it('should throw an error without inner property', (done) => {
+    const schemaWithWhen = yup.object({
+      name: yup.string().required(),
+      value: yup.string().when('name', {
+        is: 'test',
+        then: yup.number().required(),
+      }),
+    });
+
+    // @ts-expect-error
+    yupResolver(schemaWithWhen)({ name: 'test', value: '' }).catch((e) => {
+      expect(e).toMatchInlineSnapshot(
+        `[TypeError: You cannot \`concat()\` schema's of different types: string and number]`,
+      );
+      done();
+    });
+  });
 });
