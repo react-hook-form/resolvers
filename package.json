@@ -12,7 +12,7 @@
     ".": {
       "browser": "./dist/resolvers.module.js",
       "umd": "./dist/resolvers.umd.js",
-      "import": "./dist/resolvers.module.js",
+      "import": "./dist/resolvers.mjs",
       "require": "./dist/resolvers.js"
     },
     "./zod": {
