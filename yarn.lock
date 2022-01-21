@@ -6702,9 +6702,9 @@ vendors@^1.0.0:
   integrity sha512-/juG65kTL4Cy2su4P8HjtkTxk6VmJDiOPBufWniqQ6wknac6jNiXS9vU+hO3wgusiyqWlzTbVHi0dyJqRONg3w==
 
 vest@^4.0.3:
-  version "4.0.3"
-  resolved "https://registry.yarnpkg.com/vest/-/vest-4.0.3.tgz#757a7e810ce63fbc2261a6947461ab3859eb5a05"
-  integrity sha512-sTJ2FdT+OrCGdd5b2aXhD8G3q2GWuFIW05faRHn+UOiSEVTpUSqLRZ9CD2Kw9ghMQWCkMdJe9kbEFiR1BHT1rg==
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/vest/-/vest-4.1.0.tgz#b1b640f51bfd8ad31d5a2807b101948d2182e0cf"
+  integrity sha512-ByhfYTeR7QaYwgyIt+x3+u3jpTEgSUDgnbVj+G5WMtGd/MO8cSYcnlRTSb/IwIlhIor+3n6UueLFmee4ECYYUQ==
   dependencies:
     context "^2.0.1"
     n4s "^4.1.1"
