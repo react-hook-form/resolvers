@@ -84,7 +84,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 
 const schema = z.object({
-  name: z.string().nonempty({ message: 'Required' }),
+  name: z.string().min(1, { message: 'Required' }),
   age: z.number().min(10),
 });
 
