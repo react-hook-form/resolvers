@@ -4883,10 +4883,10 @@ ms@2.1.2:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.2.tgz#d09d1f357b443f493382a8eb3ccd183872ae6009"
   integrity sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
 
-n4s@^4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/n4s/-/n4s-4.1.1.tgz#ca87bf9d62f94ed1b0b65a386cbf0d5e19aeba7c"
-  integrity sha512-oLGcAd3KZ2UFM/HrUmO6y6Eg+Yi9KKpu4X1bzXRAFSsxQnqQcfXU2H+RyQo1Wccw40t4O1tHOzyZ5igiC2c5pQ==
+n4s@^4.1.2:
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/n4s/-/n4s-4.1.2.tgz#3d651f6493c7c48e70498d128fa288ef9e429a07"
+  integrity sha512-xn4sPvCiocGNPwD6QCYjPPlD0GfvBVe+9Dn8EnEsdm3ZvFg1CzAbsmSlKuh/FskNUHipM3XfolO8DoBoWiprgg==
   dependencies:
     context "^2.0.1"
 
@@ -5682,10 +5682,10 @@ react-dom@^17.0.2:
     object-assign "^4.1.1"
     scheduler "^0.20.2"
 
-react-hook-form@7.24.2:
-  version "7.24.2"
-  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.24.2.tgz#c90735079886573ee3ada948ccf8bd45042298ac"
-  integrity sha512-Ora2l2A4ts8xLxP9QOKEAObTMNZNdR7gt3UpWb9alFJx/AFAQcYAi/joLNo6PoC0AE/Vyq4pnCYb9jUufWoVNw==
+react-hook-form@7.27.1:
+  version "7.27.1"
+  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.27.1.tgz#fe5fbcb6bf58751f66d9569e998d671480cc57f6"
+  integrity sha512-N3a7A6zIQ8DJeThisVZGtOUabTbJw+7DHJidmB9w8m3chckv2ZWKb5MHps9d2pPJqmCDoWe53Bos56bYmJms5w==
 
 react-is@^17.0.1:
   version "17.0.2"
@@ -6697,12 +6697,12 @@ vendors@^1.0.0:
   integrity sha512-/juG65kTL4Cy2su4P8HjtkTxk6VmJDiOPBufWniqQ6wknac6jNiXS9vU+hO3wgusiyqWlzTbVHi0dyJqRONg3w==
 
 vest@^4.0.3:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/vest/-/vest-4.1.0.tgz#b1b640f51bfd8ad31d5a2807b101948d2182e0cf"
-  integrity sha512-ByhfYTeR7QaYwgyIt+x3+u3jpTEgSUDgnbVj+G5WMtGd/MO8cSYcnlRTSb/IwIlhIor+3n6UueLFmee4ECYYUQ==
+  version "4.2.2"
+  resolved "https://registry.yarnpkg.com/vest/-/vest-4.2.2.tgz#b13b4a12359290981291964bf0b1c78b4ee035e2"
+  integrity sha512-K0lNhaLUciHCrPZhcEiZnfZEiFHNmKwdTAM3sxD4FidnqNK2Cyp+wbjRMVjDcZ9B25414VaYqMHtBdl0aUVK+Q==
   dependencies:
     context "^2.0.1"
-    n4s "^4.1.1"
+    n4s "^4.1.2"
 
 w3c-hr-time@^1.0.2:
   version "1.0.2"
