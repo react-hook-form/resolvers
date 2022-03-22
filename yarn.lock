@@ -2642,10 +2642,10 @@ concat-with-sourcemaps@^1.1.0:
   dependencies:
     source-map "^0.6.1"
 
-context@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/context/-/context-2.0.1.tgz#f5bbd0d4ee2a5ced0eba2636595173704759dfed"
-  integrity sha512-8QV3EXa7WP9l8aL8a3BMM792vvuPbIyp6ktGHEX6V4XiGNaiqxCGMRGzEavE3cPnHWqI9fXTujPEfBPt0iRhQw==
+context@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/context/-/context-2.0.2.tgz#cc5a2b3d805733c7370bc383070d7f1240f2c75d"
+  integrity sha512-9qZJlz8LVkr6RqGbqeSb05tkIT1GQerWvd175zuTzupYPaOxjNVief0bqj/83kVz3TwICZrirof7LJIrNz8Bxg==
 
 convert-source-map@^1.4.0, convert-source-map@^1.6.0, convert-source-map@^1.7.0:
   version "1.8.0"
@@ -4924,12 +4924,12 @@ ms@2.1.2:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.2.tgz#d09d1f357b443f493382a8eb3ccd183872ae6009"
   integrity sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
 
-n4s@^4.1.2:
-  version "4.1.2"
-  resolved "https://registry.yarnpkg.com/n4s/-/n4s-4.1.2.tgz#3d651f6493c7c48e70498d128fa288ef9e429a07"
-  integrity sha512-xn4sPvCiocGNPwD6QCYjPPlD0GfvBVe+9Dn8EnEsdm3ZvFg1CzAbsmSlKuh/FskNUHipM3XfolO8DoBoWiprgg==
+n4s@^4.1.3:
+  version "4.1.3"
+  resolved "https://registry.yarnpkg.com/n4s/-/n4s-4.1.3.tgz#39909b920e696ce1ddd66d63491a04003a34f600"
+  integrity sha512-7nyVxx50BjUcBg1zhBmLjN3LNdWSJHWZ+0dloTtGc1K/58TQR87B/c0TYD89IhG/xjpA5pCIVH+TE7FCN2sozg==
   dependencies:
-    context "^2.0.1"
+    context "^2.0.2"
 
 nanoclone@^0.2.1:
   version "0.2.1"
@@ -6728,12 +6728,12 @@ vendors@^1.0.0:
   integrity sha512-/juG65kTL4Cy2su4P8HjtkTxk6VmJDiOPBufWniqQ6wknac6jNiXS9vU+hO3wgusiyqWlzTbVHi0dyJqRONg3w==
 
 vest@^4.0.3:
-  version "4.2.2"
-  resolved "https://registry.yarnpkg.com/vest/-/vest-4.2.2.tgz#b13b4a12359290981291964bf0b1c78b4ee035e2"
-  integrity sha512-K0lNhaLUciHCrPZhcEiZnfZEiFHNmKwdTAM3sxD4FidnqNK2Cyp+wbjRMVjDcZ9B25414VaYqMHtBdl0aUVK+Q==
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/vest/-/vest-4.3.0.tgz#a85fb861a4ce5bea3e5974cfed24477bdc0b94fe"
+  integrity sha512-+7iofnU6AoFST+VCAHvvCQcM9vhOjSys0rRzqevubYzsUP15x3TMCbd4Q65nazVzOYJt1sZrpLArHsKQsfEXzQ==
   dependencies:
-    context "^2.0.1"
-    n4s "^4.1.2"
+    context "^2.0.2"
+    n4s "^4.1.3"
 
 w3c-hr-time@^1.0.2:
   version "1.0.2"
