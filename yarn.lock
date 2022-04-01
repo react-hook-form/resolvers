@@ -6935,6 +6935,6 @@ yup@^0.32.11:
     toposort "^2.0.2"
 
 zod@^3.11.6:
-  version "3.14.1"
-  resolved "https://registry.yarnpkg.com/zod/-/zod-3.14.1.tgz#c31b3ce1d64707e7972e63d7508d4053947da4bb"
-  integrity sha512-eKN/fIHKSGnHFjKBj4pnHDX69uJ2XxU01rilItLtLNt4mQoINo3aipnBLrbIqH9IHHwGnN+v0Zcc9vRKku/2fQ==
+  version "3.14.3"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-3.14.3.tgz#60e86341c05883c281fe96a0e79acea48a09f123"
+  integrity sha512-OzwRCSXB1+/8F6w6HkYHdbuWysYWnAF4fkRgKDcSFc54CE+Sv0rHXKfeNUReGCrHukm1LNpi6AYeXotznhYJbQ==
