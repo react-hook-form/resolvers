@@ -69,7 +69,7 @@ export const zodResolver: Resolver =
 
         return {
           errors: {} as FieldErrors,
-          values: data,
+          values: resolverOptions.rawValues ? values : data,
         };
       } catch (error: any) {
         return {

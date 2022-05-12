@@ -4,10 +4,12 @@ import { schema, validData, invalidData, fields } from './__fixtures__/data';
 const shouldUseNativeValidation = false;
 
 describe('zodResolver', () => {
-  it('should return values from zodResolver when validation pass', async () => {
+  it('should return values from zodResolver when validation pass & rawValues=true', async () => {
     const parseAsyncSpy = jest.spyOn(schema, 'parseAsync');
 
-    const result = await zodResolver(schema)(validData, undefined, {
+    const result = await zodResolver(schema, undefined, {
+      rawValues: true,
+    })(validData, undefined, {
       fields,
       shouldUseNativeValidation,
     });
@@ -16,7 +18,7 @@ describe('zodResolver', () => {
     expect(result).toEqual({ errors: {}, values: validData });
   });
 
-  it('should return values from zodResolver with `mode: sync` when validation pass', async () => {
+  it('should return parsed values from zodResolver with `mode: sync` when validation pass', async () => {
     const parseSpy = jest.spyOn(schema, 'parse');
     const parseAsyncSpy = jest.spyOn(schema, 'parseAsync');
 
@@ -26,7 +28,8 @@ describe('zodResolver', () => {
 
     expect(parseSpy).toHaveBeenCalledTimes(1);
     expect(parseAsyncSpy).not.toHaveBeenCalled();
-    expect(result).toEqual({ errors: {}, values: validData });
+    expect(result.errors).toEqual({});
+    expect(result).toMatchSnapshot();
   });
 
   it('should return a single error from zodResolver when validation fails', async () => {

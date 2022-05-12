@@ -29,13 +29,19 @@ export const schema = z
         }),
       )
       .optional(),
+    dateStr: z
+      .string()
+      .transform((value) => new Date(value))
+      .refine((value) => !isNaN(value.getTime()), {
+        message: 'Invalid date',
+      }),
   })
   .refine((obj) => obj.password === obj.repeatPassword, {
     message: 'Passwords do not match',
     path: ['confirm'],
   });
 
-export const validData: z.infer<typeof schema> = {
+export const validData: z.input<typeof schema> = {
   username: 'Doe',
   password: 'Password123_',
   repeatPassword: 'Password123_',
@@ -51,6 +57,7 @@ export const validData: z.infer<typeof schema> = {
       name: 'name',
     },
   ],
+  dateStr: '2020-01-01',
 };
 
 export const invalidData = {

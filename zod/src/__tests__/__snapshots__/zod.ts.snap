@@ -13,6 +13,11 @@ Object {
       "ref": undefined,
       "type": "invalid_type",
     },
+    "dateStr": Object {
+      "message": "Required",
+      "ref": undefined,
+      "type": "invalid_type",
+    },
     "email": Object {
       "message": "Invalid email",
       "ref": Object {
@@ -83,6 +88,11 @@ Object {
     },
     "birthYear": Object {
       "message": "Expected number, received string",
+      "ref": undefined,
+      "type": "invalid_type",
+    },
+    "dateStr": Object {
+      "message": "Required",
       "ref": undefined,
       "type": "invalid_type",
     },
@@ -167,6 +177,14 @@ Object {
       "type": "invalid_type",
       "types": Object {
         "invalid_type": "Expected number, received string",
+      },
+    },
+    "dateStr": Object {
+      "message": "Required",
+      "ref": undefined,
+      "type": "invalid_type",
+      "types": Object {
+        "invalid_type": "Required",
       },
     },
     "email": Object {
@@ -284,6 +302,14 @@ Object {
         "invalid_type": "Expected number, received string",
       },
     },
+    "dateStr": Object {
+      "message": "Required",
+      "ref": undefined,
+      "type": "invalid_type",
+      "types": Object {
+        "invalid_type": "Required",
+      },
+    },
     "email": Object {
       "message": "Invalid email",
       "ref": Object {
@@ -373,5 +399,32 @@ Object {
     },
   },
   "values": Object {},
+}
+`;
+
+exports[`zodResolver should return parsed values from zodResolver with \`mode: sync\` when validation pass 1`] = `
+Object {
+  "errors": Object {},
+  "values": Object {
+    "accessToken": "accessToken",
+    "birthYear": 2000,
+    "dateStr": 2020-01-01T00:00:00.000Z,
+    "email": "john@doe.com",
+    "enabled": true,
+    "like": Array [
+      Object {
+        "id": 1,
+        "name": "name",
+      },
+    ],
+    "password": "Password123_",
+    "repeatPassword": "Password123_",
+    "tags": Array [
+      "tag1",
+      "tag2",
+    ],
+    "url": "https://react-hook-form.com/",
+    "username": "Doe",
+  },
 }
 `;
