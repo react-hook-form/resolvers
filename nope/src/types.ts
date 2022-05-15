@@ -12,6 +12,7 @@ type Context = Parameters<NopeObject['validate']>[1];
 export type Resolver = <T extends NopeObject>(
   schema: T,
   schemaOptions?: ValidateOptions,
+  resolverOptions?: { mode?: 'async' | 'sync', rawValues?: boolean; },
 ) => <TFieldValues extends FieldValues, TContext extends Context>(
   values: UnpackNestedValue<TFieldValues>,
   context: TContext | undefined,

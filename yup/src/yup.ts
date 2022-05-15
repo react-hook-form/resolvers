@@ -59,7 +59,7 @@ export const yupResolver: Resolver =
       options.shouldUseNativeValidation && validateFieldsNatively({}, options);
 
       return {
-        values: result,
+        values: resolverOptions.rawValues ? values : result,
         errors: {},
       };
     } catch (e: any) {

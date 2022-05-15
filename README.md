@@ -26,7 +26,14 @@
 
 ## API
 
-`resolver(schema: object, schemaOptions?: object, resolverOptions: { mode: 'async' | 'sync' })`
+```
+type Options = { 
+  mode: 'async' | 'sync',
+  rawValues?: boolean 
+}
+
+resolver(schema: object, schemaOptions?: object, resolverOptions: Options)
+````
 
 |                 | type     | Required | Description                                   |
 | --------------- | -------- | -------- | --------------------------------------------- |

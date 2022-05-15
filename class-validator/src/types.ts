@@ -10,7 +10,7 @@ import { ClassConstructor } from 'class-transformer';
 export type Resolver = <T extends { [_: string]: any }>(
   schema: ClassConstructor<T>,
   schemaOptions?: ValidatorOptions,
-  resolverOptions?: { mode?: 'async' | 'sync' },
+  resolverOptions?: { mode?: 'async' | 'sync', rawValues?: boolean; },
 ) => <TFieldValues extends FieldValues, TContext>(
   values: UnpackNestedValue<TFieldValues>,
   context: TContext | undefined,
