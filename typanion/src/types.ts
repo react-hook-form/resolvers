@@ -17,4 +17,5 @@ type RHFResolver = <TFieldValues extends FieldValues, TContext>(
 export type Resolver = <UnknownValidator extends AnyStrictValidator>(
   validator: UnknownValidator,
   validatorOptions?: ValidateOptions,
+  resolverOptions?: { mode?: 'async' | 'sync', rawValues?: boolean; },
 )=> RHFResolver

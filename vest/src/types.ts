@@ -11,7 +11,7 @@ export type ICreateResult = ReturnType<typeof Vest.create>;
 export type Resolver = (
   schema: ICreateResult,
   schemaOptions?: never,
-  factoryOptions?: { mode?: 'async' | 'sync' },
+  factoryOptions?: { mode?: 'async' | 'sync', rawValues?: boolean; },
 ) => <TFieldValues extends FieldValues, TContext>(
   values: UnpackNestedValue<TFieldValues>,
   context: TContext | undefined,
