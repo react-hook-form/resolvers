@@ -75,6 +75,12 @@
       "import": "./typanion/dist/typanion.mjs",
       "require": "./typanion/dist/typanion.js"
     },
+    "./ajv": {
+      "browser": "./ajv/dist/ajv.module.js",
+      "umd": "./ajv/dist/ajv.umd.js",
+      "import": "./ajv/dist/ajv.mjs",
+      "require": "./ajv/dist/ajv.js"
+    },
     "./package.json": "./package.json",
     "./*": "./*"
   },
@@ -109,7 +115,10 @@
     "computed-types/dist",
     "typanion/package.json",
     "typanion/src",
-    "typanion/dist"
+    "typanion/dist",
+    "ajv/package.json",
+    "ajv/src",
+    "ajv/dist"
   ],
   "publishConfig": {
     "access": "public"
@@ -128,6 +137,7 @@
     "build:nope": "microbundle --cwd nope --globals '@hookform/resolvers=hookformResolvers'",
     "build:computed-types": "microbundle --cwd computed-types --globals '@hookform/resolvers=hookformResolvers'",
     "build:typanion": "microbundle --cwd typanion --globals '@hookform/resolvers=hookformResolvers'",
+    "build:ajv": "microbundle --cwd ajv --globals '@hookform/resolvers=hookformResolvers'",
     "postbuild": "node ./config/node-13-exports.js",
     "lint": "eslint . --ext .ts,.js --ignore-path .gitignore",
     "lint:types": "tsc",
@@ -151,7 +161,8 @@
     "io-ts",
     "nope",
     "computed-types",
-    "typanion"
+    "typanion",
+    "ajv"
   ],
   "repository": {
     "type": "git",
@@ -171,6 +182,8 @@
     "@types/react": "^17.0.38",
     "@typescript-eslint/eslint-plugin": "^5.10.0",
     "@typescript-eslint/parser": "^5.10.0",
+    "ajv": "^8.11.0",
+    "ajv-errors": "^3.0.0",
     "check-export-map": "^1.2.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
