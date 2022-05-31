@@ -4,7 +4,7 @@ import { Field, InternalFieldName } from 'react-hook-form';
 interface Data {
   username: string;
   password: string;
-  deepObject?: { data: string };
+  deepObject: { data: string };
 }
 
 export const schema: JSONSchemaType<Data> = {
@@ -30,7 +30,7 @@ export const schema: JSONSchemaType<Data> = {
       required: ['data'],
     },
   },
-  required: ['username', 'password'],
+  required: ['username', 'password', 'deepObject'],
   additionalProperties: false,
 };
 

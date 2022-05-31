@@ -1,5 +1,59 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`ajvResolver should return all the error messages from ajvResolver when requirement fails and validateAllFieldCriteria set to true 1`] = `
+Object {
+  "errors": Object {
+    "deepObject": Object {
+      "message": "must have required property 'deepObject'",
+      "ref": undefined,
+      "type": "required",
+    },
+    "password": Object {
+      "message": "must have required property 'password'",
+      "ref": Object {
+        "name": "password",
+      },
+      "type": "required",
+    },
+    "username": Object {
+      "message": "must have required property 'username'",
+      "ref": Object {
+        "name": "username",
+      },
+      "type": "required",
+    },
+  },
+  "values": Object {},
+}
+`;
+
+exports[`ajvResolver should return all the error messages from ajvResolver when requirement fails and validateAllFieldCriteria set to true and \`mode: sync\` 1`] = `
+Object {
+  "errors": Object {
+    "deepObject": Object {
+      "message": "must have required property 'deepObject'",
+      "ref": undefined,
+      "type": "required",
+    },
+    "password": Object {
+      "message": "must have required property 'password'",
+      "ref": Object {
+        "name": "password",
+      },
+      "type": "required",
+    },
+    "username": Object {
+      "message": "must have required property 'username'",
+      "ref": Object {
+        "name": "username",
+      },
+      "type": "required",
+    },
+  },
+  "values": Object {},
+}
+`;
+
 exports[`ajvResolver should return all the error messages from ajvResolver when validation fails and validateAllFieldCriteria set to true 1`] = `
 Object {
   "errors": Object {

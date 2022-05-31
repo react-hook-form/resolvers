@@ -8,9 +8,17 @@ const parseErrorSchema = (
   ajvErrors: DefinedError[],
   validateAllFieldCriteria: boolean,
 ) => {
+  // Ajv will return empty instancePath when require error
+  ajvErrors.forEach((error) => {
+    if (error.keyword === 'required') {
+      error.instancePath = '/' + error.params.missingProperty;
+    }
+  });
+
   return ajvErrors.reduce<Record<string, FieldError>>((previous, error) => {
     // `/deepObject/data` -> `deepObject.data`
     const path = error.instancePath.substring(1).replace('/', '.');
+
     if (!previous[path]) {
       previous[path] = {
         message: error.message,

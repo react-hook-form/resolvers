@@ -63,4 +63,22 @@ describe('ajvResolver', () => {
       ),
     ).toMatchSnapshot();
   });
+
+  it('should return all the error messages from ajvResolver when requirement fails and validateAllFieldCriteria set to true', async () => {
+    expect(
+      await ajvResolver(schema)({}, undefined, {
+        fields,
+        shouldUseNativeValidation,
+      }),
+    ).toMatchSnapshot();
+  });
+
+  it('should return all the error messages from ajvResolver when requirement fails and validateAllFieldCriteria set to true and `mode: sync`', async () => {
+    expect(
+      await ajvResolver(schema, undefined, { mode: 'sync' })({}, undefined, {
+        fields,
+        shouldUseNativeValidation,
+      }),
+    ).toMatchSnapshot();
+  });
 });
