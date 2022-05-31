@@ -15,6 +15,9 @@ const parseErrorSchema = (
     }
   });
 
+  // eslint-disable-next-line no-console
+  console.log('errors', ajvErrors);
+
   return ajvErrors.reduce<Record<string, FieldError>>((previous, error) => {
     // `/deepObject/data` -> `deepObject.data`
     const path = error.instancePath.substring(1).replace('/', '.');
