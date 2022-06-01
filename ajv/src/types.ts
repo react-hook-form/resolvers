@@ -6,8 +6,8 @@ import {
 } from 'react-hook-form';
 import * as Ajv from 'ajv';
 
-export type Resolver = <T extends Ajv.AnySchema>(
-  schema: T,
+export type Resolver = <T>(
+  schema: Ajv.JSONSchemaType<T>,
   schemaOptions?: Ajv.Options,
   factoryOptions?: { mode?: 'async' | 'sync' },
 ) => <TFieldValues extends FieldValues, TContext>(

@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { act, render, screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
 import { JSONSchemaType } from 'ajv';
@@ -11,16 +10,8 @@ type FormData = { username: string; password: string };
 const schema: JSONSchemaType<FormData> = {
   type: 'object',
   properties: {
-    username: {
-      type: 'string',
-      minLength: 1,
-      errorMessage: { minLength: 'username field is required' },
-    },
-    password: {
-      type: 'string',
-      minLength: 1,
-      errorMessage: { minLength: 'password field is required' },
-    },
+    username: { type: 'string' },
+    password: { type: 'string' },
   },
   required: ['username', 'password'],
   additionalProperties: false,
