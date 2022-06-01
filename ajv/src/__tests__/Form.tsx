@@ -10,8 +10,16 @@ type FormData = { username: string; password: string };
 const schema: JSONSchemaType<FormData> = {
   type: 'object',
   properties: {
-    username: { type: 'string' },
-    password: { type: 'string' },
+    username: {
+      type: 'string',
+      minLength: 1,
+      errorMessage: { minLength: 'username field is required' },
+    },
+    password: {
+      type: 'string',
+      minLength: 1,
+      errorMessage: { minLength: 'password field is required' },
+    },
   },
   required: ['username', 'password'],
   additionalProperties: false,
