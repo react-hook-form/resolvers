@@ -27,13 +27,13 @@
 ## API
 
 ```
-type Options = { 
+type Options = {
   mode: 'async' | 'sync',
-  rawValues?: boolean 
+  rawValues?: boolean
 }
 
 resolver(schema: object, schemaOptions?: object, resolverOptions: Options)
-````
+```
 
 |                 | type     | Required | Description                                   |
 | --------------- | -------- | -------- | --------------------------------------------- |
@@ -400,6 +400,56 @@ const App = () => {
       <input type="number" {...register('age')} />
       {errors.age?.message && <p>{errors.age?.message}</p>}
       <input type="submit" />
+    </form>
+  );
+};
+```
+
+### [Ajv](https://github.com/ajv-validator/ajv)
+
+The fastest JSON validator for Node.js and browser
+
+[![npm](https://img.shields.io/bundlephobia/minzip/ajv?style=for-the-badge)](https://bundlephobia.com/result?p=ajv)
+
+```tsx
+import { useForm } from 'react-hook-form';
+import { ajvResolver } from '@hookform/resolvers/ajv';
+
+// must use `minLength: 1` to implement required field
+const schema = {
+  type: 'object',
+  properties: {
+    username: {
+      type: 'string',
+      minLength: 1,
+      errorMessage: { minLength: 'username field is required' },
+    },
+    password: {
+      type: 'string',
+      minLength: 1,
+      errorMessage: { minLength: 'password field is required' },
+    },
+  },
+  required: ['username', 'password'],
+  additionalProperties: false,
+};
+
+const App = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: ajvResolver(schema),
+  });
+
+  return (
+    <form onSubmit={handleSubmit((data) => console.log(data))}>
+      <input {...register('username')} />
+      {errors.username && <span>{errors.username.message}</span>}
+      <input {...register('password')} />
+      {errors.password && <span>{errors.password.message}</span>}
+      <button type="submit">submit</button>
     </form>
   );
 };
