@@ -1,0 +1,189 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ajvResolver should return all the error messages from ajvResolver when requirement fails and validateAllFieldCriteria set to true 1`] = `
+Object {
+  "errors": Object {
+    "deepObject": Object {
+      "message": "must have required property 'deepObject'",
+      "ref": undefined,
+      "type": "required",
+    },
+    "password": Object {
+      "message": "must have required property 'password'",
+      "ref": Object {
+        "name": "password",
+      },
+      "type": "required",
+    },
+    "username": Object {
+      "message": "must have required property 'username'",
+      "ref": Object {
+        "name": "username",
+      },
+      "type": "required",
+    },
+  },
+  "values": Object {},
+}
+`;
+
+exports[`ajvResolver should return all the error messages from ajvResolver when requirement fails and validateAllFieldCriteria set to true and \`mode: sync\` 1`] = `
+Object {
+  "errors": Object {
+    "deepObject": Object {
+      "message": "must have required property 'deepObject'",
+      "ref": undefined,
+      "type": "required",
+    },
+    "password": Object {
+      "message": "must have required property 'password'",
+      "ref": Object {
+        "name": "password",
+      },
+      "type": "required",
+    },
+    "username": Object {
+      "message": "must have required property 'username'",
+      "ref": Object {
+        "name": "username",
+      },
+      "type": "required",
+    },
+  },
+  "values": Object {},
+}
+`;
+
+exports[`ajvResolver should return all the error messages from ajvResolver when validation fails and validateAllFieldCriteria set to true 1`] = `
+Object {
+  "errors": Object {
+    "deepObject": Object {
+      "data": Object {
+        "message": "must be string",
+        "ref": undefined,
+        "type": "type",
+        "types": Object {
+          "type": "must be string",
+        },
+      },
+    },
+    "password": Object {
+      "message": "One uppercase character",
+      "ref": Object {
+        "name": "password",
+      },
+      "type": "errorMessage",
+      "types": Object {
+        "errorMessage": "One uppercase character",
+      },
+    },
+    "username": Object {
+      "message": "must NOT have fewer than 3 characters",
+      "ref": Object {
+        "name": "username",
+      },
+      "type": "minLength",
+      "types": Object {
+        "minLength": "must NOT have fewer than 3 characters",
+      },
+    },
+  },
+  "values": Object {},
+}
+`;
+
+exports[`ajvResolver should return all the error messages from ajvResolver when validation fails and validateAllFieldCriteria set to true and \`mode: sync\` 1`] = `
+Object {
+  "errors": Object {
+    "deepObject": Object {
+      "data": Object {
+        "message": "must be string",
+        "ref": undefined,
+        "type": "type",
+        "types": Object {
+          "type": "must be string",
+        },
+      },
+    },
+    "password": Object {
+      "message": "One uppercase character",
+      "ref": Object {
+        "name": "password",
+      },
+      "type": "errorMessage",
+      "types": Object {
+        "errorMessage": "One uppercase character",
+      },
+    },
+    "username": Object {
+      "message": "must NOT have fewer than 3 characters",
+      "ref": Object {
+        "name": "username",
+      },
+      "type": "minLength",
+      "types": Object {
+        "minLength": "must NOT have fewer than 3 characters",
+      },
+    },
+  },
+  "values": Object {},
+}
+`;
+
+exports[`ajvResolver should return single error message from ajvResolver when validation fails and validateAllFieldCriteria set to false 1`] = `
+Object {
+  "errors": Object {
+    "deepObject": Object {
+      "data": Object {
+        "message": "must be string",
+        "ref": undefined,
+        "type": "type",
+      },
+    },
+    "password": Object {
+      "message": "One uppercase character",
+      "ref": Object {
+        "name": "password",
+      },
+      "type": "errorMessage",
+    },
+    "username": Object {
+      "message": "must NOT have fewer than 3 characters",
+      "ref": Object {
+        "name": "username",
+      },
+      "type": "minLength",
+    },
+  },
+  "values": Object {},
+}
+`;
+
+exports[`ajvResolver should return single error message from ajvResolver when validation fails and validateAllFieldCriteria set to false and \`mode: sync\` 1`] = `
+Object {
+  "errors": Object {
+    "deepObject": Object {
+      "data": Object {
+        "message": "must be string",
+        "ref": undefined,
+        "type": "type",
+      },
+    },
+    "password": Object {
+      "message": "One uppercase character",
+      "ref": Object {
+        "name": "password",
+      },
+      "type": "errorMessage",
+    },
+    "username": Object {
+      "message": "must NOT have fewer than 3 characters",
+      "ref": Object {
+        "name": "username",
+      },
+      "type": "minLength",
+    },
+  },
+  "values": Object {},
+}
+`;
