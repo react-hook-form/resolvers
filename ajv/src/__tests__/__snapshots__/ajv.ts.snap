@@ -66,6 +66,16 @@ Object {
           "type": "must be string",
         },
       },
+      "twoLayersDeep": Object {
+        "name": Object {
+          "message": "must be string",
+          "ref": undefined,
+          "type": "type",
+          "types": Object {
+            "type": "must be string",
+          },
+        },
+      },
     },
     "password": Object {
       "message": "One uppercase character",
@@ -104,6 +114,16 @@ Object {
           "type": "must be string",
         },
       },
+      "twoLayersDeep": Object {
+        "name": Object {
+          "message": "must be string",
+          "ref": undefined,
+          "type": "type",
+          "types": Object {
+            "type": "must be string",
+          },
+        },
+      },
     },
     "password": Object {
       "message": "One uppercase character",
@@ -139,6 +159,13 @@ Object {
         "ref": undefined,
         "type": "type",
       },
+      "twoLayersDeep": Object {
+        "name": Object {
+          "message": "must be string",
+          "ref": undefined,
+          "type": "type",
+        },
+      },
     },
     "password": Object {
       "message": "One uppercase character",
@@ -167,6 +194,13 @@ Object {
         "message": "must be string",
         "ref": undefined,
         "type": "type",
+      },
+      "twoLayersDeep": Object {
+        "name": Object {
+          "message": "must be string",
+          "ref": undefined,
+          "type": "type",
+        },
       },
     },
     "password": Object {
