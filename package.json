@@ -188,7 +188,7 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
     "computed-types": "^1.11.1",
-    "eslint": "^7.27.0",
+    "eslint": "^8.17.0",
     "eslint-config-prettier": "^8.3.0",
     "fp-ts": "^2.11.8",
     "husky": "^7.0.4",
