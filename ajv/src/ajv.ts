@@ -17,7 +17,7 @@ const parseErrorSchema = (
 
   return ajvErrors.reduce<Record<string, FieldError>>((previous, error) => {
     // `/deepObject/data` -> `deepObject.data`
-    const path = error.instancePath.substring(1).replace('/', '.');
+    const path = error.instancePath.substring(1).replace(/\//g, '.');
 
     if (!previous[path]) {
       previous[path] = {

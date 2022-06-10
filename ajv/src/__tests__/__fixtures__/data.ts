@@ -4,7 +4,7 @@ import { Field, InternalFieldName } from 'react-hook-form';
 interface Data {
   username: string;
   password: string;
-  deepObject: { data: string };
+  deepObject: { data: string; twoLayersDeep: { name: string } };
 }
 
 export const schema: JSONSchemaType<Data> = {
@@ -26,8 +26,14 @@ export const schema: JSONSchemaType<Data> = {
       nullable: true,
       properties: {
         data: { type: 'string' },
+        twoLayersDeep: {
+          type: 'object',
+          properties: { name: { type: 'string' } },
+          additionalProperties: false,
+          required: ['name'],
+        },
       },
-      required: ['data'],
+      required: ['data', 'twoLayersDeep'],
     },
   },
   required: ['username', 'password', 'deepObject'],
@@ -38,6 +44,9 @@ export const validData: Data = {
   username: 'jsun969',
   password: 'validPassword',
   deepObject: {
+    twoLayersDeep: {
+      name: 'deeper',
+    },
     data: 'data',
   },
 };
@@ -47,6 +56,7 @@ export const invalidData = {
   password: 'invalid-password',
   deepObject: {
     data: 233,
+    twoLayersDeep: { name: 123 }
   },
 };
 
