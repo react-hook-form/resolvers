@@ -1,4 +1,4 @@
-import * as Either from 'fp-ts/lib/Either';
+import * as Either from 'fp-ts/Either';
 import { pipe } from 'fp-ts/function';
 import { toNestError, validateFieldsNatively } from '@hookform/resolvers';
 import errorsToRecord from './errorsToRecord';
