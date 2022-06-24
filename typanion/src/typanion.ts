@@ -1,4 +1,4 @@
-import type { FieldErrors } from 'react-hook-form';
+import type {FieldError, FieldErrors} from 'react-hook-form';
 import { toNestError, validateFieldsNatively } from '@hookform/resolvers';
 import type { Resolver } from './types';
 
@@ -8,7 +8,7 @@ const parseErrors = (errors: string[], parsedErrors: FieldErrors = {}) => {
 
     acc[e[0].slice(1)] = {
       message: e[1].trim(),
-    };
+    } as FieldError;
 
     return acc;
   }, parsedErrors);

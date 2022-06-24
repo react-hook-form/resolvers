@@ -1,7 +1,6 @@
 import {
   set,
   get,
-  FieldError,
   FieldErrors,
   Field,
   ResolverOptions,
@@ -9,7 +8,7 @@ import {
 import { validateFieldsNatively } from './validateFieldsNatively';
 
 export const toNestError = <TFieldValues>(
-  errors: Record<string, FieldError>,
+  errors: FieldErrors,
   options: ResolverOptions<TFieldValues>,
 ): FieldErrors<TFieldValues> => {
   options.shouldUseNativeValidation && validateFieldsNatively(errors, options);

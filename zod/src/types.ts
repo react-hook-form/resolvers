@@ -1,7 +1,6 @@
 import {
   FieldValues,
   ResolverResult,
-  UnpackNestedValue,
   ResolverOptions,
 } from 'react-hook-form';
 import { z } from 'zod';
@@ -21,7 +20,7 @@ export type Resolver = <T extends z.Schema<any, any>>(
     rawValues?: boolean;
   },
 ) => <TFieldValues extends FieldValues, TContext>(
-  values: UnpackNestedValue<TFieldValues>,
+  values: TFieldValues,
   context: TContext | undefined,
   options: ResolverOptions<TFieldValues>,
 ) => Promise<ResolverResult<TFieldValues>>;

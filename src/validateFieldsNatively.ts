@@ -1,8 +1,8 @@
 import {
-  get, FieldError, ResolverOptions, Ref
+  get, FieldError, ResolverOptions, Ref, FieldErrors
 } from 'react-hook-form';
 
-const setCustomValidity = (ref: Ref, fieldPath: string, errors: Record<string, FieldError>) => {
+const setCustomValidity = (ref: Ref, fieldPath: string, errors: FieldErrors) => {
   if (ref && 'reportValidity' in ref) {
     const error = get(errors, fieldPath) as FieldError | undefined;
     ref.setCustomValidity((error && error.message) || '');
@@ -13,7 +13,7 @@ const setCustomValidity = (ref: Ref, fieldPath: string, errors: Record<string, F
 
 // Native validation (web only)
 export const validateFieldsNatively = <TFieldValues>(
-  errors: Record<string, FieldError>,
+  errors: FieldErrors,
   options: ResolverOptions<TFieldValues>,
 ): void => {
 
