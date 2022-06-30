@@ -1,5 +1,5 @@
 {
-  "name": "ajv",
+  "name": "@hookform/resolvers/ajv",
   "amdName": "hookformResolversAjv",
   "version": "1.0.0",
   "private": true,

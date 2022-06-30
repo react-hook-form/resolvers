@@ -1,5 +1,5 @@
 {
-  "name": "computed-types",
+  "name": "@hookform/resolvers/computed-types",
   "amdName": "hookformResolversComputedTypes",
   "version": "1.0.0",
   "private": true,

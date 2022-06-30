@@ -1,5 +1,5 @@
 {
-  "name": "zod",
+  "name": "@hookform/resolvers/zod",
   "amdName": "hookformResolversZod",
   "version": "1.0.0",
   "private": true,
