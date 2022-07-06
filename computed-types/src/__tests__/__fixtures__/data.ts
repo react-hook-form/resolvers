@@ -26,6 +26,12 @@ export const schema = Schema({
       name: string.min(4).max(4),
     })
     .optional(),
+  address: Schema({
+    city: string.min(3, 'Is required'),
+    zipCode: string
+      .min(5, 'Must be 5 characters long')
+      .max(5, 'Must be 5 characters long'),
+  }),
 });
 
 export const validData: Type<typeof schema> = {
@@ -43,6 +49,10 @@ export const validData: Type<typeof schema> = {
       name: 'name',
     },
   ],
+  address: {
+    city: 'Awesome city',
+    zipCode: '12345',
+  },
 };
 
 export const invalidData = {
@@ -50,6 +60,10 @@ export const invalidData = {
   email: '',
   birthYear: 'birthYear',
   like: [{ id: 'z' }],
+  address: {
+    city: '',
+    zipCode: '123',
+  },
 };
 
 export const fields: Record<InternalFieldName, Field['_f']> = {

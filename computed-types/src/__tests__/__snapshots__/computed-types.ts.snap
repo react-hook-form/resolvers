@@ -3,6 +3,18 @@
 exports[`computedTypesResolver should return a single error from computedTypesResolver when validation fails 1`] = `
 Object {
   "errors": Object {
+    "address": Object {
+      "city": Object {
+        "message": "Is required",
+        "ref": undefined,
+        "type": "ValidationError",
+      },
+      "zipCode": Object {
+        "message": "Must be 5 characters long",
+        "ref": undefined,
+        "type": "ValidationError",
+      },
+    },
     "birthYear": Object {
       "message": "Expect value to be \\"number\\"",
       "ref": undefined,
@@ -21,9 +33,16 @@ Object {
       "type": "ValidationError",
     },
     "like": Object {
-      "message": "Expect value to be \\"string\\"",
-      "ref": undefined,
-      "type": "ValidationError",
+      "id": Object {
+        "message": "Expect value to be \\"number\\"",
+        "ref": undefined,
+        "type": "ValidationError",
+      },
+      "name": Object {
+        "message": "Expect value to be \\"string\\"",
+        "ref": undefined,
+        "type": "ValidationError",
+      },
     },
     "password": Object {
       "message": "One uppercase character",
