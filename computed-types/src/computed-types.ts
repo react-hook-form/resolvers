@@ -3,21 +3,13 @@ import { toNestError, validateFieldsNatively } from '@hookform/resolvers';
 import type { ValidationError } from 'computed-types';
 import type { Resolver } from './types';
 
-const parseErrorSchema = (
-  computedTypesError: ValidationError,
-  parsedErrors: FieldErrors = {},
-  path = '',
-) => {
+const parseErrorSchema = (computedTypesError: ValidationError) => {
+  const parsedErrors: FieldErrors = {};
   return (computedTypesError.errors || []).reduce((acc, error) => {
-    const _currentPath = String(error.path[0]);
-    const _path = path ? `${path}.${_currentPath}` : _currentPath;
-
-    acc[_path] = {
+    acc[error.path.join('.')] = {
       type: error.error.name,
       message: error.error.message,
     };
-
-    parseErrorSchema(error.error, acc, _path);
 
     return acc;
   }, parsedErrors);
