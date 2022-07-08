@@ -1,5 +1,5 @@
 {
-  "name": "class-validator",
+  "name": "@hookform/resolvers/class-validator",
   "amdName": "hookformResolversClassValidator",
   "version": "1.0.0",
   "private": true,

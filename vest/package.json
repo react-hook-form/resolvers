@@ -1,5 +1,5 @@
 {
-  "name": "vest",
+  "name": "@hookform/resolvers/vest",
   "amdName": "hookformResolversVest",
   "version": "1.0.0",
   "private": true,

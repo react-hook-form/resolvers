@@ -1,5 +1,5 @@
 {
-  "name": "typanion",
+  "name": "@hookform/resolvers/typanion",
   "amdName": "hookformResolversTypanion",
   "version": "1.0.0",
   "private": true,

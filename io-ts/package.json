@@ -1,5 +1,5 @@
 {
-  "name": "io-ts",
+  "name": "@hookform/resolvers/io-ts",
   "amdName": "hookformResolversIoTs",
   "version": "1.0.0",
   "private": true,
