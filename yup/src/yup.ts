@@ -1,4 +1,4 @@
-import Yup from 'yup';
+import * as Yup from 'yup';
 import { toNestError, validateFieldsNatively } from '@hookform/resolvers';
 import { appendErrors, FieldError } from 'react-hook-form';
 import { Resolver } from './types';
