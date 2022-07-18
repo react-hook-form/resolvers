@@ -1,5 +1,13 @@
 import { ajvResolver } from '..';
-import { fields, invalidData, schema, validData } from './__fixtures__/data';
+import {
+  fields,
+  invalidData,
+  invalidEmail,
+  schema,
+  schemaFormat,
+  validData,
+  validEmail,
+} from './__fixtures__/data';
 
 const shouldUseNativeValidation = false;
 
@@ -79,6 +87,35 @@ describe('ajvResolver', () => {
         fields,
         shouldUseNativeValidation,
       }),
+    ).toMatchSnapshot();
+  });
+
+  it('should return values from ajvResolver when format validation pass', async () => {
+    expect(
+      await ajvResolver(schemaFormat, undefined, { addFormats: true })(
+        validEmail,
+        undefined,
+        {
+          fields,
+          shouldUseNativeValidation,
+        },
+      ),
+    ).toEqual({
+      values: validEmail,
+      errors: {},
+    });
+  });
+
+  it('should return error messages from ajvResolver when format validation fails', async () => {
+    expect(
+      await ajvResolver(schemaFormat, undefined, { addFormats: true })(
+        invalidEmail,
+        undefined,
+        {
+          fields,
+          shouldUseNativeValidation,
+        },
+      ),
     ).toMatchSnapshot();
   });
 });

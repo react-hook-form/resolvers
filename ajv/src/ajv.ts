@@ -1,5 +1,6 @@
 import { toNestError, validateFieldsNatively } from '@hookform/resolvers';
 import Ajv, { DefinedError } from 'ajv';
+import ajvFormats from 'ajv-formats';
 import ajvErrors from 'ajv-errors';
 import { appendErrors, FieldError } from 'react-hook-form';
 import { Resolver } from './types';
@@ -55,6 +56,9 @@ export const ajvResolver: Resolver =
     });
 
     ajvErrors(ajv);
+    if (resolverOptions?.addFormats) {
+      ajvFormats(ajv);
+    }
 
     const validate = ajv.compile(
       Object.assign({ $async: resolverOptions?.mode === 'async' }, schema),

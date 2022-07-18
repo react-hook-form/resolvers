@@ -7,6 +7,10 @@ interface Data {
   deepObject: { data: string; twoLayersDeep: { name: string } };
 }
 
+interface Email {
+  email: string;
+}
+
 export const schema: JSONSchemaType<Data> = {
   type: 'object',
   properties: {
@@ -56,7 +60,7 @@ export const invalidData = {
   password: 'invalid-password',
   deepObject: {
     data: 233,
-    twoLayersDeep: { name: 123 }
+    twoLayersDeep: { name: 123 },
   },
 };
 
@@ -77,4 +81,27 @@ export const fields: Record<InternalFieldName, Field['_f']> = {
     ref: { name: 'birthday' },
     name: 'birthday',
   },
+};
+
+export const schemaFormat: JSONSchemaType<Email> = {
+  type: 'object',
+  properties: {
+    email: {
+      type: 'string',
+      format: 'email',
+      errorMessage: {
+        format: 'email format is not valid',
+      },
+    },
+  },
+  required: ['email'],
+  additionalProperties: false,
+};
+
+export const validEmail: Email = {
+  email: 'asdf@asdf.as',
+};
+
+export const invalidEmail: Email = {
+  email: `invalid email`,
 };

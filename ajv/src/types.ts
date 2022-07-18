@@ -1,14 +1,10 @@
-import {
-  FieldValues,
-  ResolverOptions,
-  ResolverResult,
-} from 'react-hook-form';
+import { FieldValues, ResolverOptions, ResolverResult } from 'react-hook-form';
 import * as Ajv from 'ajv';
 
 export type Resolver = <T>(
   schema: Ajv.JSONSchemaType<T>,
   schemaOptions?: Ajv.Options,
-  factoryOptions?: { mode?: 'async' | 'sync' },
+  factoryOptions?: { mode?: 'async' | 'sync'; addFormats?: boolean },
 ) => <TFieldValues extends FieldValues, TContext>(
   values: TFieldValues,
   context: TContext | undefined,
