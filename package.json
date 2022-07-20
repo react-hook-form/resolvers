@@ -10,73 +10,61 @@
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "browser": "./dist/resolvers.module.js",
       "umd": "./dist/resolvers.umd.js",
       "import": "./dist/resolvers.mjs",
       "require": "./dist/resolvers.js"
     },
     "./zod": {
-      "browser": "./zod/dist/zod.module.js",
       "umd": "./zod/dist/zod.umd.js",
       "import": "./zod/dist/zod.mjs",
       "require": "./zod/dist/zod.js"
     },
     "./yup": {
-      "browser": "./yup/dist/yup.module.js",
       "umd": "./yup/dist/yup.umd.js",
       "import": "./yup/dist/yup.mjs",
       "require": "./yup/dist/yup.js"
     },
     "./joi": {
-      "browser": "./joi/dist/joi.module.js",
       "umd": "./joi/dist/joi.umd.js",
       "import": "./joi/dist/joi.mjs",
       "require": "./joi/dist/joi.js"
     },
     "./vest": {
-      "browser": "./vest/dist/vest.module.js",
       "umd": "./vest/dist/vest.umd.js",
       "import": "./vest/dist/vest.mjs",
       "require": "./vest/dist/vest.js"
     },
     "./superstruct": {
-      "browser": "./superstruct/dist/superstruct.module.js",
       "umd": "./superstruct/dist/superstruct.umd.js",
       "import": "./superstruct/dist/superstruct.mjs",
       "require": "./superstruct/dist/superstruct.js"
     },
     "./class-validator": {
-      "browser": "./class-validator/dist/class-validator.module.js",
       "umd": "./class-validator/dist/class-validator.umd.js",
       "import": "./class-validator/dist/class-validator.mjs",
       "require": "./class-validator/dist/class-validator.js"
     },
     "./io-ts": {
-      "browser": "./io-ts/dist/io-ts.module.js",
       "umd": "./io-ts/dist/io-ts.umd.js",
       "import": "./io-ts/dist/io-ts.mjs",
       "require": "./io-ts/dist/io-ts.js"
     },
     "./nope": {
-      "browser": "./nope/dist/nope.module.js",
       "umd": "./nope/dist/nope.umd.js",
       "import": "./nope/dist/nope.mjs",
       "require": "./nope/dist/nope.js"
     },
     "./computed-types": {
-      "browser": "./computed-types/dist/computed-types.module.js",
       "umd": "./computed-types/dist/computed-types.umd.js",
       "import": "./computed-types/dist/computed-types.mjs",
       "require": "./computed-types/dist/computed-types.js"
     },
     "./typanion": {
-      "browser": "./typanion/dist/typanion.module.js",
       "umd": "./typanion/dist/typanion.umd.js",
       "import": "./typanion/dist/typanion.mjs",
       "require": "./typanion/dist/typanion.js"
     },
     "./ajv": {
-      "browser": "./ajv/dist/ajv.module.js",
       "umd": "./ajv/dist/ajv.umd.js",
       "import": "./ajv/dist/ajv.mjs",
       "require": "./ajv/dist/ajv.js"
