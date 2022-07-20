@@ -183,6 +183,7 @@
     "@typescript-eslint/eslint-plugin": "^5.10.0",
     "@typescript-eslint/parser": "^5.10.0",
     "ajv": "^8.11.0",
+    "ajv-formats": "^2.1.1",
     "ajv-errors": "^3.0.0",
     "check-export-map": "^1.2.0",
     "class-transformer": "^0.5.1",

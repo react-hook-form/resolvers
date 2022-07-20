@@ -150,6 +150,21 @@ Object {
 }
 `;
 
+exports[`ajvResolver should return error messages from ajvResolver when format validation fails 1`] = `
+Object {
+  "errors": Object {
+    "email": Object {
+      "message": "email format is not valid",
+      "ref": Object {
+        "name": "email",
+      },
+      "type": "errorMessage",
+    },
+  },
+  "values": Object {},
+}
+`;
+
 exports[`ajvResolver should return single error message from ajvResolver when validation fails and validateAllFieldCriteria set to false 1`] = `
 Object {
   "errors": Object {
