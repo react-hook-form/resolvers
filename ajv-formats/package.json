@@ -1,0 +1,17 @@
+{
+  "name": "@hookform/resolvers/ajv-formats",
+  "amdName": "hookformResolversAjvFormats",
+  "version": "1.0.0",
+  "private": true,
+  "description": "React Hook Form validation resolver: ajv with ajv-formats",
+  "main": "dist/ajv-formats.js",
+  "module": "dist/ajv-formats.module.js",
+  "umd:main": "dist/ajv-formats.umd.js",
+  "source": "src/index.ts",
+  "types": "dist/index.d.ts",
+  "license": "MIT",
+  "peerDependencies": {
+    "react-hook-form": "^7.0.0",
+    "@hookform/resolvers": "^2.0.0"
+  }
+}

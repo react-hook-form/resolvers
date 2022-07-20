@@ -13,6 +13,7 @@ const subRepositories = [
   'computed-types',
   'typanion',
   'ajv',
+  `ajv-formats`,
 ];
 
 const copySrc = () => {
