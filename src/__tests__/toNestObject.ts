@@ -32,10 +32,10 @@ test('transforms flat object to nested object and shouldUseNativeValidation: tru
   ).toMatchSnapshot();
   expect(
     (fields.name.ref as HTMLInputElement).reportValidity,
-  ).toHaveBeenCalledTimes(1);
+  ).toHaveBeenCalledTimes(2);
   expect(
     (fields.name.ref as HTMLInputElement).setCustomValidity,
-  ).toHaveBeenCalledTimes(1);
+  ).toHaveBeenCalledTimes(2);
   expect(
     (fields.name.ref as HTMLInputElement).setCustomValidity,
   ).toHaveBeenCalledWith(flatObject.name.message);

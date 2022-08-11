@@ -10,25 +10,22 @@ Object {
     },
     "type": "st",
   },
-  "test": Object {
-    "0": Object {
+  "test": Array [
+    Object {
       "name": Object {
         "message": "second message",
         "ref": undefined,
         "type": "nd",
       },
     },
-    "1": Object {
+    Object {
       "name": Object {
         "message": "third message",
         "ref": undefined,
         "type": "foo",
       },
     },
-    "message": "second message",
-    "ref": undefined,
-    "type": "st",
-  },
+  ],
 }
 `;
 
@@ -70,6 +67,13 @@ Object {
         "message": "second message",
         "ref": undefined,
         "type": "nd",
+      },
+    },
+    Object {
+      "name": Object {
+        "message": "third message",
+        "ref": undefined,
+        "type": "foo",
       },
     },
   ],

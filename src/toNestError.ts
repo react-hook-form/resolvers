@@ -19,7 +19,7 @@ export const toNestError = <TFieldValues>(
           return 0;
         }
 
-        return leftPath > rightPath ? 1 : -1
+        return leftPath > rightPath ? -1 : 1
       });
 
   const fieldErrors = {} as FieldErrors<TFieldValues>;
@@ -27,11 +27,15 @@ export const toNestError = <TFieldValues>(
     const path = entries[index][0];
     const error = entries[index][1];
     const field = get(options.fields, path) as Field['_f'] | undefined;
+    const currentValue = get(fieldErrors, path);
+    const mergedError = currentValue !== undefined
+      ? Object.assign(currentValue, error)
+      : errors[path];
 
     set(
-        fieldErrors,
-        path,
-        Object.assign(error, {ref: field && field.ref}),
+      fieldErrors,
+      path,
+      Object.assign(mergedError, { ref: field && field.ref }),
     );
   }
 
