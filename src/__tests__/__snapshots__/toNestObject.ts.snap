@@ -10,15 +10,25 @@ Object {
     },
     "type": "st",
   },
-  "test": Array [
-    Object {
+  "test": Object {
+    "0": Object {
       "name": Object {
         "message": "second message",
         "ref": undefined,
         "type": "nd",
       },
     },
-  ],
+    "1": Object {
+      "name": Object {
+        "message": "third message",
+        "ref": undefined,
+        "type": "foo",
+      },
+    },
+    "message": "second message",
+    "ref": undefined,
+    "type": "st",
+  },
 }
 `;
 

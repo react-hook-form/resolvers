@@ -13,14 +13,25 @@ export const toNestError = <TFieldValues>(
 ): FieldErrors<TFieldValues> => {
   options.shouldUseNativeValidation && validateFieldsNatively(errors, options);
 
+  const entries = Object.entries(errors)
+      .sort(([leftPath], [rightPath]) => {
+        if (leftPath === rightPath) {
+          return 0;
+        }
+
+        return leftPath > rightPath ? 1 : -1
+      });
+
   const fieldErrors = {} as FieldErrors<TFieldValues>;
-  for (const path in errors) {
+  for (let index = 0; index < entries.length; index++) {
+    const path = entries[index][0];
+    const error = entries[index][1];
     const field = get(options.fields, path) as Field['_f'] | undefined;
 
     set(
-      fieldErrors,
-      path,
-      Object.assign(errors[path], { ref: field && field.ref }),
+        fieldErrors,
+        path,
+        Object.assign(error, {ref: field && field.ref}),
     );
   }
 

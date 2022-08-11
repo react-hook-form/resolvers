@@ -3,7 +3,9 @@ import { toNestError } from '../toNestError';
 
 const flatObject: Record<string, FieldError> = {
   name: { type: 'st', message: 'first message' },
+  'test': { type: 'st', message: 'second message' },
   'test.0.name': { type: 'nd', message: 'second message' },
+  'test[1].name': { type: 'foo', message: 'third message' },
 };
 
 const fields = {
