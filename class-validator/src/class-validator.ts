@@ -36,11 +36,12 @@ const parseErrors = (
 export const classValidatorResolver: Resolver =
   (schema, schemaOptions = {}, resolverOptions = {}) =>
   async (values, _, options) => {
-    const user = plainToClass(schema, values);
+    const { transformerOptions, ...restSchemaOptions } = schemaOptions;
+    const user = plainToClass(schema, values, transformerOptions);
 
     const rawErrors = await (resolverOptions.mode === 'sync'
       ? validateSync
-      : validate)(user, schemaOptions);
+      : validate)(user, restSchemaOptions);
 
     if (rawErrors.length) {
       return {
