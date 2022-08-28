@@ -33,6 +33,7 @@ describe('zodResolver', () => {
   });
 
   it('should return a single error from zodResolver when validation fails', async () => {
+    /// @ts-expect-error invalidData is not matched schema.
     const result = await zodResolver(schema)(invalidData, undefined, {
       fields,
       shouldUseNativeValidation,
@@ -45,9 +46,15 @@ describe('zodResolver', () => {
     const parseSpy = jest.spyOn(schema, 'parse');
     const parseAsyncSpy = jest.spyOn(schema, 'parseAsync');
 
-    const result = await zodResolver(schema, undefined, {
-      mode: 'sync',
-    })(invalidData, undefined, { fields, shouldUseNativeValidation });
+    const result = await zodResolver(schema, undefined, { mode: 'sync' })(
+      /// @ts-expect-error invalidData is not matched schema.
+      invalidData,
+      undefined,
+      {
+        fields,
+        shouldUseNativeValidation,
+      },
+    );
 
     expect(parseSpy).toHaveBeenCalledTimes(1);
     expect(parseAsyncSpy).not.toHaveBeenCalled();
@@ -55,6 +62,7 @@ describe('zodResolver', () => {
   });
 
   it('should return all the errors from zodResolver when validation fails with `validateAllFieldCriteria` set to true', async () => {
+    /// @ts-expect-error invalidData is not matched schema.
     const result = await zodResolver(schema)(invalidData, undefined, {
       fields,
       criteriaMode: 'all',
@@ -66,6 +74,7 @@ describe('zodResolver', () => {
 
   it('should return all the errors from zodResolver when validation fails with `validateAllFieldCriteria` set to true and `mode: sync`', async () => {
     const result = await zodResolver(schema, undefined, { mode: 'sync' })(
+      /// @ts-expect-error invalidData is not matched schema.
       invalidData,
       undefined,
       {

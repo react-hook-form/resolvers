@@ -10,7 +10,7 @@ const schema = z.object({
   password: z.string().nonempty({ message: 'password field is required' }),
 });
 
-type FormData = z.infer<typeof schema> & { unusedProperty: string };
+type FormData = z.infer<typeof schema>;
 
 interface Props {
   onSubmit: (data: FormData) => void;
@@ -22,7 +22,7 @@ function TestComponent({ onSubmit }: Props) {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({
-    resolver: zodResolver(schema), // Useful to check TypeScript regressions
+    resolver: zodResolver(schema),
   });
 
   return (
