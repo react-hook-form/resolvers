@@ -2490,9 +2490,9 @@ char-regex@^1.0.2:
   integrity sha512-kWWXztvZ5SBQV+eRgKFeh8q5sLuZY2+8WUIzlxWVTg+oGwY14qylx1KbKzHd8P6ZYkAg0xyIDU9JMHhyJMZ1jw==
 
 check-export-map@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/check-export-map/-/check-export-map-1.2.0.tgz#dd3eb269ca86f21b810b896fa79a6bb42b7e9b54"
-  integrity sha512-wPDctrZ9+vk24t2ZXkKPUz+meV4oOIzUerq/leeWo0knqg6HF/LASNINwpqXBQhXWktSbN7Y0dIhs/KxAhBKPQ==
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/check-export-map/-/check-export-map-1.3.0.tgz#9e055504caefdbcdc18377094e691bc48f197210"
+  integrity sha512-5UCK+1T+hi08B5RZ4mjMk4ddlI0WMVjd04PPDnPO0/CMQDi+3p7gxYdBmLmM67JRtp1+GJxZbStnooyB6xakiQ==
   dependencies:
     kolorist "^1.5.0"
     mri "^1.2.0"
@@ -4966,12 +4966,7 @@ monocle-ts@^2.3.12:
   resolved "https://registry.yarnpkg.com/monocle-ts/-/monocle-ts-2.3.12.tgz#73e7d59841b3843bf76eb840735a9641fdd3bd93"
   integrity sha512-mf753m69aRNApcL2KCKfLRwfWbraeqQfRRgm3a8D+5lvkhCcMtVp8/vnM04Cmhsd6YXJeInMeQFFETrd7jWYww==
 
-mri@^1.1.0:
-  version "1.1.6"
-  resolved "https://registry.yarnpkg.com/mri/-/mri-1.1.6.tgz#49952e1044db21dbf90f6cd92bc9c9a777d415a6"
-  integrity sha512-oi1b3MfbyGa7FJMP9GmLTttni5JoICpYBRlq+x5V16fZbLsnL9N3wFqqIm/nIG43FjUFkFh9Epzp/kzUGUnJxQ==
-
-mri@^1.2.0:
+mri@^1.1.0, mri@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/mri/-/mri-1.2.0.tgz#6721480fec2a11a4889861115a48b6cbe7cc8f0b"
   integrity sha512-tzzskb3bG8LvYGFF/mDTpq3jpI6Q9wc3LEmBaghu+DdCssd1FakN7Bc0hVNmEyGq1bq3RgfkCb3cmQLpNPOroA==
