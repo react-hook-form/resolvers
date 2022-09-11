@@ -2649,9 +2649,9 @@ commondir@^1.0.1:
   integrity sha1-3dgA2gxmEnOTzKWVDqloo6rxJTs=
 
 computed-types@^1.11.1:
-  version "1.11.1"
-  resolved "https://registry.yarnpkg.com/computed-types/-/computed-types-1.11.1.tgz#2abd97d48f34914732070427f1ff6af192756a02"
-  integrity sha512-L0tn5D+PILEbG1TrvjYbq0hvxyjM7cj4TCE0YWk2Ks8aeT8HOACMhFRbOQnr1Th0CYhcsJ+aJOFmNkKADUoDIQ==
+  version "1.11.2"
+  resolved "https://registry.yarnpkg.com/computed-types/-/computed-types-1.11.2.tgz#a27ad4b722999bdbdea0a9b384f587054fb923c7"
+  integrity sha512-5KK7nQrJDtm0dByaXTY1ZnTmZchilV2cew2LqIDLQo9JGvrkSqbikfk0m+MpiEgTVTPPx3dFQmwKSkK6Iae5Jw==
 
 concat-map@0.0.1:
   version "0.0.1"
