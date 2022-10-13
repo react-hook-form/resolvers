@@ -6,7 +6,7 @@ import {
   ResolverResult,
 } from 'react-hook-form';
 
-export type Resolver = <T, TFieldValues, TContext>(
+export type Resolver = <T, TFieldValues extends FieldValues, TContext>(
   codec: t.Decoder<FieldValues, T>,
 ) => (
   values: TFieldValues,
