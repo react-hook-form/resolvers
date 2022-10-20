@@ -60,6 +60,17 @@ export const invalidData = {
   },
 };
 
+export const invalidDataWithUndefined = {
+  username: 'jsun969',
+  password: undefined,
+  deepObject: {
+    twoLayersDeep: {
+      name: 'deeper',
+    },
+    data: undefined,
+  }
+}
+
 export const fields: Record<InternalFieldName, Field['_f']> = {
   username: {
     ref: { name: 'username' },
