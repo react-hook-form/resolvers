@@ -54,6 +54,28 @@ Object {
 }
 `;
 
+exports[`ajvResolver should return all the error messages from ajvResolver when some property is undefined and result will keep the input data structure 1`] = `
+Object {
+  "errors": Object {
+    "deepObject": Object {
+      "data": Object {
+        "message": "must have required property 'data'",
+        "ref": undefined,
+        "type": "required",
+      },
+    },
+    "password": Object {
+      "message": "must have required property 'password'",
+      "ref": Object {
+        "name": "password",
+      },
+      "type": "required",
+    },
+  },
+  "values": Object {},
+}
+`;
+
 exports[`ajvResolver should return all the error messages from ajvResolver when validation fails and validateAllFieldCriteria set to true 1`] = `
 Object {
   "errors": Object {

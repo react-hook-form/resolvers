@@ -11,7 +11,7 @@ const parseErrorSchema = (
   // Ajv will return empty instancePath when require error
   ajvErrors.forEach((error) => {
     if (error.keyword === 'required') {
-      error.instancePath = '/' + error.params.missingProperty;
+      error.instancePath += '/' + error.params.missingProperty;
     }
   });
 
