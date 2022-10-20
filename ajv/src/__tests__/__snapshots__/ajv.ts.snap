@@ -54,7 +54,7 @@ Object {
 }
 `;
 
-exports[`ajvResolver should return all the error messages from ajvResolver when some property is undefined and result will keep strcut 1`] = `
+exports[`ajvResolver should return all the error messages from ajvResolver when some property is undefined and result will keep the input data structure 1`] = `
 Object {
   "errors": Object {
     "deepObject": Object {
