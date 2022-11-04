@@ -6644,9 +6644,9 @@ tsutils@^3.21.0:
     tslib "^1.8.1"
 
 typanion@^3.7.1:
-  version "3.7.1"
-  resolved "https://registry.yarnpkg.com/typanion/-/typanion-3.7.1.tgz#5fceb57a2fa0c0a5beca25a7e90ac2a420863709"
-  integrity sha512-g2QDI/ZLpuEor9EnJ1b7s9S2QSJgNCPBw9ZCSkQdqXNjg5ZQs4mASgW/elVifSxISFwBeMaIAmMBP5luAOIKAw==
+  version "3.12.1"
+  resolved "https://registry.yarnpkg.com/typanion/-/typanion-3.12.1.tgz#d33deb130aba23ef6f2a3c69e7fb28148dd9089a"
+  integrity sha512-3SJF/czpzqq6G3lprGFLa6ps12yb1uQ1EmitNnep2fDMNh1aO/Zbq9sWY+3lem0zYb2oHJnQWyabTGUZ+L1ScQ==
 
 type-check@^0.4.0, type-check@~0.4.0:
   version "0.4.0"
