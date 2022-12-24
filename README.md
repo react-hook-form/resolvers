@@ -18,7 +18,7 @@
 
 ## Install
 
-    $ npm install @hookform/resolvers
+    npm install @hookform/resolvers
 
 ## Links
 
