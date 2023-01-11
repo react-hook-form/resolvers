@@ -174,7 +174,7 @@
     "ajv-errors": "^3.0.0",
     "check-export-map": "^1.2.0",
     "class-transformer": "^0.5.1",
-    "class-validator": "^0.13.2",
+    "class-validator": "^0.14.0",
     "computed-types": "^1.11.1",
     "eslint": "^7.27.0",
     "eslint-config-prettier": "^8.3.0",
