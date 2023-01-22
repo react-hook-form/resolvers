@@ -272,7 +272,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { ioTsResolver } from '@hookform/resolvers/io-ts';
 import t from 'io-ts';
-// you don't have to use io-ts-types but it's very useful
+// you don't have to use io-ts-types, but it's very useful
 import tt from 'io-ts-types';
 
 const schema = t.type({
