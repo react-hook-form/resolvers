@@ -1,7 +1,8 @@
 import * as t from 'io-ts';
 import {
   ExactType,
-  IntersectionType, RefinementType,
+  IntersectionType,
+  RefinementType,
   TaggedUnionType,
   UnionType,
   ValidationError
