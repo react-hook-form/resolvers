@@ -1,9 +1,11 @@
 import * as t from 'io-ts';
 import {
+  ExactType,
   IntersectionType,
+  RefinementType,
   TaggedUnionType,
   UnionType,
-  ValidationError,
+  ValidationError
 } from 'io-ts';
 import { absurd, flow, identity, not, pipe } from 'fp-ts/function';
 import * as ReadonlyArray from 'fp-ts/ReadonlyArray';
@@ -14,17 +16,16 @@ import arrayToPath from './arrayToPath';
 import * as ReadonlyRecord from 'fp-ts/ReadonlyRecord';
 import { ErrorObject, FieldErrorWithPath } from './types';
 
+const INSTANCE_TYPES_TO_FILTER = [TaggedUnionType, UnionType, IntersectionType, ExactType, RefinementType];
 const formatErrorPath = (context: t.Context): string =>
   pipe(
     context,
     ReadonlyArray.filterMapWithIndex((index, contextEntry) => {
       const previousIndex = index - 1;
-
+      const previousContextEntry = previousIndex === -1 ? undefined : context[previousIndex];
       const shouldBeFiltered =
-        context[previousIndex] === undefined ||
-        context[previousIndex].type instanceof TaggedUnionType ||
-        context[previousIndex].type instanceof UnionType ||
-        context[previousIndex].type instanceof IntersectionType;
+        previousContextEntry === undefined ||
+        INSTANCE_TYPES_TO_FILTER.some((type) => previousContextEntry.type instanceof type)
 
       return shouldBeFiltered ? Option.none : Option.some(contextEntry);
     }),
