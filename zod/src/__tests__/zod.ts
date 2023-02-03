@@ -77,4 +77,16 @@ describe('zodResolver', () => {
 
     expect(result).toMatchSnapshot();
   });
+
+  it('should throw any error unrelated to Zod', async () => {
+    const schemaWithCustomError = schema.refine(() => {
+      throw Error('custom error');
+    });
+    const promise = zodResolver(schemaWithCustomError)(validData, undefined, {
+      fields,
+      shouldUseNativeValidation,
+    });
+
+    await expect(promise).rejects.toThrow('custom error');
+  });
 });

@@ -3,7 +3,7 @@ import {
   FieldError,
   FieldErrors,
 } from 'react-hook-form';
-import { z } from 'zod';
+import { z, ZodError } from 'zod';
 import { toNestError, validateFieldsNatively } from '@hookform/resolvers';
 import type { Resolver } from './types';
 
@@ -72,18 +72,22 @@ export const zodResolver: Resolver =
           values: resolverOptions.rawValues ? values : data,
         };
       } catch (error: any) {
-        return {
-          values: {},
-          errors: error.isEmpty
-            ? {}
-            : toNestError(
-              parseErrorSchema(
-                error.errors,
-                !options.shouldUseNativeValidation &&
-                options.criteriaMode === 'all',
+        if (error instanceof ZodError) {
+          return {
+            values: {},
+            errors: error.isEmpty
+              ? {}
+              : toNestError(
+                parseErrorSchema(
+                  error.errors,
+                  !options.shouldUseNativeValidation &&
+                  options.criteriaMode === 'all',
+                ),
+                options,
               ),
-              options,
-            ),
-        };
+          };
+        }
+
+        throw error;
       }
     };
