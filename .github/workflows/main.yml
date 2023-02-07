@@ -21,9 +21,9 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Use Node ${{ matrix.node }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node }}
+          node-version: 18
 
       - name: Install deps and build (with cache)
         uses: bahmutov/npm-install@v1
@@ -48,9 +48,9 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v2
       - name: 'Use Node ${{ matrix.node }}'
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
-          node-version: '${{ matrix.node }}'
+          node-version: 18
           registry-url: 'https://registry.npmjs.org/'
       - name: Install dependencies
         uses: bahmutov/npm-install@v1
