@@ -1,18 +1,18 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`transforms flat object to nested object 1`] = `
-Object {
-  "name": Object {
+{
+  "name": {
     "message": "first message",
-    "ref": Object {
-      "reportValidity": [MockFunction],
-      "setCustomValidity": [MockFunction],
+    "ref": {
+      "reportValidity": [MockFunction spy],
+      "setCustomValidity": [MockFunction spy],
     },
     "type": "st",
   },
-  "test": Array [
-    Object {
-      "name": Object {
+  "test": [
+    {
+      "name": {
         "message": "second message",
         "ref": undefined,
         "type": "nd",
@@ -23,29 +23,29 @@ Object {
 `;
 
 exports[`transforms flat object to nested object and shouldUseNativeValidation: true 1`] = `
-Object {
-  "name": Object {
+{
+  "name": {
     "message": "first message",
-    "ref": Object {
-      "reportValidity": [MockFunction] {
-        "calls": Array [
-          Array [],
+    "ref": {
+      "reportValidity": [MockFunction spy] {
+        "calls": [
+          [],
         ],
-        "results": Array [
-          Object {
+        "results": [
+          {
             "type": "return",
             "value": undefined,
           },
         ],
       },
-      "setCustomValidity": [MockFunction] {
-        "calls": Array [
-          Array [
+      "setCustomValidity": [MockFunction spy] {
+        "calls": [
+          [
             "first message",
           ],
         ],
-        "results": Array [
-          Object {
+        "results": [
+          {
             "type": "return",
             "value": undefined,
           },
@@ -54,9 +54,9 @@ Object {
     },
     "type": "st",
   },
-  "test": Array [
-    Object {
-      "name": Object {
+  "test": [
+    {
+      "name": {
         "message": "second message",
         "ref": undefined,
         "type": "nd",

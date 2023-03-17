@@ -18,6 +18,7 @@
     "experimentalDecorators": true,
     "strictPropertyInitialization": false,
     "jsx": "react",
+    "types": ["vitest/globals"],
     "paths": {
       "@hookform/resolvers": ["."]
     }

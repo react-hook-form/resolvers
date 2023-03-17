@@ -5,7 +5,7 @@ const shouldUseNativeValidation = false;
 
 describe('zodResolver', () => {
   it('should return values from zodResolver when validation pass & rawValues=true', async () => {
-    const parseAsyncSpy = jest.spyOn(schema, 'parseAsync');
+    const parseAsyncSpy = vi.spyOn(schema, 'parseAsync');
 
     const result = await zodResolver(schema, undefined, {
       rawValues: true,
@@ -19,8 +19,8 @@ describe('zodResolver', () => {
   });
 
   it('should return parsed values from zodResolver with `mode: sync` when validation pass', async () => {
-    const parseSpy = jest.spyOn(schema, 'parse');
-    const parseAsyncSpy = jest.spyOn(schema, 'parseAsync');
+    const parseSpy = vi.spyOn(schema, 'parse');
+    const parseAsyncSpy = vi.spyOn(schema, 'parseAsync');
 
     const result = await zodResolver(schema, undefined, {
       mode: 'sync',
@@ -42,8 +42,8 @@ describe('zodResolver', () => {
   });
 
   it('should return a single error from zodResolver with `mode: sync` when validation fails', async () => {
-    const parseSpy = jest.spyOn(schema, 'parse');
-    const parseAsyncSpy = jest.spyOn(schema, 'parseAsync');
+    const parseSpy = vi.spyOn(schema, 'parse');
+    const parseAsyncSpy = vi.spyOn(schema, 'parseAsync');
 
     const result = await zodResolver(schema, undefined, {
       mode: 'sync',

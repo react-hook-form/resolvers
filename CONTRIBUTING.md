@@ -12,21 +12,21 @@ Here is a quick guide to doing code contributions to the library.
 
 3. Install packages by running:
 
-   > yarn
+   > pnpm
 
 4. If you've added a code that should be tested, ensure the test suite still passes.
 
-   > yarn test
+   > pnpm test
 
 5. Try to write some unit tests to cover as much of your code as possible.
 
 6. Ensure your code lints without errors.
 
-   > yarn lint
+   > pnpm lint
 
 7. Ensure build passes.
 
-   > yarn build
+   > pnpm build
 
 8. Push your branch: `git push -u origin your-meaningful-branch-name`
 

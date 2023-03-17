@@ -20,8 +20,9 @@ const parseErrors = (
         message: error.constraints[key],
       };
 
-      if (validateAllFieldCriteria && acc[_path]) {
-        Object.assign(acc[_path], { types: error.constraints });
+      const _e = acc[_path];
+      if (validateAllFieldCriteria && _e) {
+        Object.assign(_e, { types: error.constraints });
       }
     }
 

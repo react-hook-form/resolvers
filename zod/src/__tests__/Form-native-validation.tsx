@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { act, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
 import { z } from 'zod';
 import { zodResolver } from '..';
@@ -37,7 +37,7 @@ function TestComponent({ onSubmit }: Props) {
 }
 
 test("form's native validation with Zod", async () => {
-  const handleSubmit = jest.fn();
+  const handleSubmit = vi.fn();
   render(<TestComponent onSubmit={handleSubmit} />);
 
   // username
@@ -54,9 +54,7 @@ test("form's native validation with Zod", async () => {
   expect(passwordField.validity.valid).toBe(true);
   expect(passwordField.validationMessage).toBe('');
 
-  await act(async () => {
-    user.click(screen.getByText(/submit/i));
-  });
+  await user.click(screen.getByText(/submit/i));
 
   // username
   usernameField = screen.getByPlaceholderText(/username/i) as HTMLInputElement;
@@ -68,10 +66,8 @@ test("form's native validation with Zod", async () => {
   expect(passwordField.validity.valid).toBe(false);
   expect(passwordField.validationMessage).toBe(PASSWORD_REQUIRED_MESSAGE);
 
-  await act(async () => {
-    user.type(screen.getByPlaceholderText(/username/i), 'joe');
-    user.type(screen.getByPlaceholderText(/password/i), 'password');
-  });
+  await user.type(screen.getByPlaceholderText(/username/i), 'joe');
+  await user.type(screen.getByPlaceholderText(/password/i), 'password');
 
   // username
   usernameField = screen.getByPlaceholderText(/username/i) as HTMLInputElement;

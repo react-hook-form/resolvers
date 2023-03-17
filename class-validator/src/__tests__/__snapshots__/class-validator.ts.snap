@@ -1,207 +1,207 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`classValidatorResolver should return a single error from classValidatorResolver when validation fails 1`] = `
-Object {
-  "errors": Object {
-    "birthYear": Object {
+exports[`classValidatorResolver > should return a single error from classValidatorResolver when validation fails 1`] = `
+{
+  "errors": {
+    "birthYear": {
       "message": "birthYear must not be greater than 2013",
       "ref": undefined,
       "type": "max",
     },
-    "email": Object {
+    "email": {
       "message": "email must be an email",
-      "ref": Object {
+      "ref": {
         "name": "email",
       },
       "type": "isEmail",
     },
-    "like": Array [
-      Object {
-        "name": Object {
+    "like": [
+      {
+        "name": {
           "message": "name must be longer than or equal to 4 characters",
           "ref": undefined,
           "type": "isLength",
         },
       },
     ],
-    "password": Object {
+    "password": {
       "message": "password must match /^[a-zA-Z0-9]{3,30}/ regular expression",
-      "ref": Object {
+      "ref": {
         "name": "password",
       },
       "type": "matches",
     },
-    "username": Object {
+    "username": {
       "message": "username must be longer than or equal to 3 characters",
-      "ref": Object {
+      "ref": {
         "name": "username",
       },
       "type": "isLength",
     },
   },
-  "values": Object {},
+  "values": {},
 }
 `;
 
-exports[`classValidatorResolver should return a single error from classValidatorResolver with \`mode: sync\` when validation fails 1`] = `
-Object {
-  "errors": Object {
-    "birthYear": Object {
+exports[`classValidatorResolver > should return a single error from classValidatorResolver with \`mode: sync\` when validation fails 1`] = `
+{
+  "errors": {
+    "birthYear": {
       "message": "birthYear must not be greater than 2013",
       "ref": undefined,
       "type": "max",
     },
-    "email": Object {
+    "email": {
       "message": "email must be an email",
-      "ref": Object {
+      "ref": {
         "name": "email",
       },
       "type": "isEmail",
     },
-    "like": Array [
-      Object {
-        "name": Object {
+    "like": [
+      {
+        "name": {
           "message": "name must be longer than or equal to 4 characters",
           "ref": undefined,
           "type": "isLength",
         },
       },
     ],
-    "password": Object {
+    "password": {
       "message": "password must match /^[a-zA-Z0-9]{3,30}/ regular expression",
-      "ref": Object {
+      "ref": {
         "name": "password",
       },
       "type": "matches",
     },
-    "username": Object {
+    "username": {
       "message": "username must be longer than or equal to 3 characters",
-      "ref": Object {
+      "ref": {
         "name": "username",
       },
       "type": "isLength",
     },
   },
-  "values": Object {},
+  "values": {},
 }
 `;
 
-exports[`classValidatorResolver should return all the errors from classValidatorResolver when validation fails with \`validateAllFieldCriteria\` set to true 1`] = `
-Object {
-  "errors": Object {
-    "birthYear": Object {
+exports[`classValidatorResolver > should return all the errors from classValidatorResolver when validation fails with \`validateAllFieldCriteria\` set to true 1`] = `
+{
+  "errors": {
+    "birthYear": {
       "message": "birthYear must not be greater than 2013",
       "ref": undefined,
       "type": "max",
-      "types": Object {
+      "types": {
         "max": "birthYear must not be greater than 2013",
         "min": "birthYear must not be less than 1900",
       },
     },
-    "email": Object {
+    "email": {
       "message": "email must be an email",
-      "ref": Object {
+      "ref": {
         "name": "email",
       },
       "type": "isEmail",
-      "types": Object {
+      "types": {
         "isEmail": "email must be an email",
       },
     },
-    "like": Array [
-      Object {
-        "name": Object {
+    "like": [
+      {
+        "name": {
           "message": "name must be longer than or equal to 4 characters",
           "ref": undefined,
           "type": "isLength",
-          "types": Object {
+          "types": {
             "isLength": "name must be longer than or equal to 4 characters",
           },
         },
       },
     ],
-    "password": Object {
+    "password": {
       "message": "password must match /^[a-zA-Z0-9]{3,30}/ regular expression",
-      "ref": Object {
+      "ref": {
         "name": "password",
       },
       "type": "matches",
-      "types": Object {
+      "types": {
         "matches": "password must match /^[a-zA-Z0-9]{3,30}/ regular expression",
       },
     },
-    "username": Object {
+    "username": {
       "message": "username must be longer than or equal to 3 characters",
-      "ref": Object {
+      "ref": {
         "name": "username",
       },
       "type": "isLength",
-      "types": Object {
+      "types": {
         "isLength": "username must be longer than or equal to 3 characters",
         "matches": "username must match /^\\\\w+$/ regular expression",
       },
     },
   },
-  "values": Object {},
+  "values": {},
 }
 `;
 
-exports[`classValidatorResolver should return all the errors from classValidatorResolver when validation fails with \`validateAllFieldCriteria\` set to true and \`mode: sync\` 1`] = `
-Object {
-  "errors": Object {
-    "birthYear": Object {
+exports[`classValidatorResolver > should return all the errors from classValidatorResolver when validation fails with \`validateAllFieldCriteria\` set to true and \`mode: sync\` 1`] = `
+{
+  "errors": {
+    "birthYear": {
       "message": "birthYear must not be greater than 2013",
       "ref": undefined,
       "type": "max",
-      "types": Object {
+      "types": {
         "max": "birthYear must not be greater than 2013",
         "min": "birthYear must not be less than 1900",
       },
     },
-    "email": Object {
+    "email": {
       "message": "email must be an email",
-      "ref": Object {
+      "ref": {
         "name": "email",
       },
       "type": "isEmail",
-      "types": Object {
+      "types": {
         "isEmail": "email must be an email",
       },
     },
-    "like": Array [
-      Object {
-        "name": Object {
+    "like": [
+      {
+        "name": {
           "message": "name must be longer than or equal to 4 characters",
           "ref": undefined,
           "type": "isLength",
-          "types": Object {
+          "types": {
             "isLength": "name must be longer than or equal to 4 characters",
           },
         },
       },
     ],
-    "password": Object {
+    "password": {
       "message": "password must match /^[a-zA-Z0-9]{3,30}/ regular expression",
-      "ref": Object {
+      "ref": {
         "name": "password",
       },
       "type": "matches",
-      "types": Object {
+      "types": {
         "matches": "password must match /^[a-zA-Z0-9]{3,30}/ regular expression",
       },
     },
-    "username": Object {
+    "username": {
       "message": "username must be longer than or equal to 3 characters",
-      "ref": Object {
+      "ref": {
         "name": "username",
       },
       "type": "isLength",
-      "types": Object {
+      "types": {
         "isLength": "username must be longer than or equal to 3 characters",
         "matches": "username must match /^\\\\w+$/ regular expression",
       },
     },
   },
-  "values": Object {},
+  "values": {},
 }
 `;

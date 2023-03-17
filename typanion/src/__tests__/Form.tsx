@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, act } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
 import { useForm } from 'react-hook-form';
 import * as t from 'typanion';
@@ -43,15 +43,17 @@ function TestComponent({ onSubmit }: Props) {
 }
 
 test("form's validation with Typanion and TypeScript's integration", async () => {
-  const handleSubmit = jest.fn();
+  const handleSubmit = vi.fn();
   render(<TestComponent onSubmit={handleSubmit} />);
 
-  expect(screen.queryAllByRole(/alert/i)).toHaveLength(0);
+  expect(screen.queryAllByRole('alert')).toHaveLength(0);
 
-  await act(async () => {
-    user.click(screen.getByText(/submit/i));
-  });
+  await user.click(screen.getByText(/submit/i));
 
-  expect(screen.getAllByText('Expected to have a length of at least 1 elements (got 0)')).toHaveLength(2);
+  expect(
+    screen.getAllByText(
+      'Expected to have a length of at least 1 elements (got 0)',
+    ),
+  ).toHaveLength(2);
   expect(handleSubmit).not.toHaveBeenCalled();
 });

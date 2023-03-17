@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, act } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
@@ -39,14 +39,12 @@ function TestComponent({ onSubmit }: Props) {
 }
 
 test("form's validation with Yup and TypeScript's integration", async () => {
-  const handleSubmit = jest.fn();
+  const handleSubmit = vi.fn();
   render(<TestComponent onSubmit={handleSubmit} />);
 
-  expect(screen.queryAllByRole(/alert/i)).toHaveLength(0);
+  expect(screen.queryAllByRole('alert')).toHaveLength(0);
 
-  await act(async () => {
-    user.click(screen.getByText(/submit/i));
-  });
+  await user.click(screen.getByText(/submit/i));
 
   expect(screen.getByText(/username is a required field/i)).toBeInTheDocument();
   expect(screen.getByText(/password is a required field/i)).toBeInTheDocument();

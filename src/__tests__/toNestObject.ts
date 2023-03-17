@@ -9,8 +9,8 @@ const flatObject: Record<string, FieldError> = {
 const fields = {
   name: {
     ref: {
-      reportValidity: jest.fn(),
-      setCustomValidity: jest.fn(),
+      reportValidity: vi.fn(),
+      setCustomValidity: vi.fn(),
     },
   },
   unused: {
