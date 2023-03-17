@@ -113,7 +113,7 @@
   },
   "scripts": {
     "prepare": "run-s build:src build && check-export-map && husky install",
-    "build": "npm-run-all --parallel 'build:*'",
+    "build": "cross-env npm-run-all --parallel 'build:*'",
     "build:src": "microbundle build --globals react-hook-form=ReactHookForm",
     "build:zod": "microbundle --cwd zod --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
     "build:yup": "microbundle --cwd yup --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
@@ -179,6 +179,7 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
     "computed-types": "^1.11.2",
+    "cross-env": "^7.0.3",
     "eslint": "^8.36.0",
     "eslint-config-prettier": "^8.7.0",
     "fp-ts": "^2.13.1",
