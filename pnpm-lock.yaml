@@ -17,6 +17,7 @@ specifiers:
   class-transformer: ^0.5.1
   class-validator: ^0.14.0
   computed-types: ^1.11.2
+  cross-env: ^7.0.3
   eslint: ^8.36.0
   eslint-config-prettier: ^8.7.0
   fp-ts: ^2.13.1
@@ -63,6 +64,7 @@ devDependencies:
   class-transformer: 0.5.1
   class-validator: 0.14.0
   computed-types: 1.11.2
+  cross-env: 7.0.3
   eslint: 8.36.0
   eslint-config-prettier: 8.7.0_eslint@8.36.0
   fp-ts: 2.13.1
@@ -2772,6 +2774,14 @@ packages:
       parse-json: 5.2.0
       path-type: 4.0.0
       yaml: 1.10.2
+    dev: true
+
+  /cross-env/7.0.3:
+    resolution: {integrity: sha512-+/HKd6EgcQCJGh2PSjZuUitQBQynKor4wrFbRg4DtAgS1aWO+gU52xpH7M9ScGgXSYmAVS9bIJ8EzuaGw0oNAw==}
+    engines: {node: '>=10.14', npm: '>=6', yarn: '>=1'}
+    hasBin: true
+    dependencies:
+      cross-spawn: 7.0.3
     dev: true
 
   /cross-spawn/6.0.5:
