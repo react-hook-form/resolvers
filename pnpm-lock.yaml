@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@sinclair/typebox': ^0.25.24
   '@testing-library/dom': ^9.0.1
   '@testing-library/jest-dom': ^5.16.5
   '@testing-library/react': ^14.0.0
@@ -47,6 +48,7 @@ specifiers:
   zod: ^3.21.4
 
 devDependencies:
+  '@sinclair/typebox': 0.25.24
   '@testing-library/dom': 9.0.1
   '@testing-library/jest-dom': 5.16.5
   '@testing-library/react': 14.0.0_biqbaboplfbrettd7655fr4n2y
