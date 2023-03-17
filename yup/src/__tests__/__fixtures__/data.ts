@@ -30,9 +30,8 @@ export const schema = yup.object({
 
 export const schemaWithWhen = yup.object({
   name: yup.string().required(),
-  value: yup.string().when('name', {
-    is: 'test',
-    then: yup.number().required(),
+  value: yup.string().when('name', ([name], schema) => {
+    return name === 'test' ? yup.number().required() : schema;
   }),
 });
 
