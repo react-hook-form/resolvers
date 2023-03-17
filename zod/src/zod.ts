@@ -1,8 +1,4 @@
-import {
-  appendErrors,
-  FieldError,
-  FieldErrors,
-} from 'react-hook-form';
+import { appendErrors, FieldError, FieldErrors } from 'react-hook-form';
 import { z } from 'zod';
 import { toNestError, validateFieldsNatively } from '@hookform/resolvers';
 import type { Resolver } from './types';
@@ -12,7 +8,7 @@ const parseErrorSchema = (
   validateAllFieldCriteria: boolean,
 ) => {
   const errors: Record<string, FieldError> = {};
-  for (; zodErrors.length;) {
+  for (; zodErrors.length; ) {
     const error = zodErrors[0];
     const { code, message, path } = error;
     const _path = path.join('.');
@@ -59,31 +55,31 @@ const parseErrorSchema = (
 
 export const zodResolver: Resolver =
   (schema, schemaOptions, resolverOptions = {}) =>
-    async (values, _, options) => {
-      try {
-        const data = await schema[
-          resolverOptions.mode === 'sync' ? 'parse' : 'parseAsync'
-        ](values, schemaOptions);
+  async (values, _, options) => {
+    try {
+      const data = await schema[
+        resolverOptions.mode === 'sync' ? 'parse' : 'parseAsync'
+      ](values, schemaOptions);
 
-        options.shouldUseNativeValidation && validateFieldsNatively({}, options);
+      options.shouldUseNativeValidation && validateFieldsNatively({}, options);
 
-        return {
-          errors: {} as FieldErrors,
-          values: resolverOptions.rawValues ? values : data,
-        };
-      } catch (error: any) {
-        return {
-          values: {},
-          errors: error.isEmpty
-            ? {}
-            : toNestError(
+      return {
+        errors: {} as FieldErrors,
+        values: resolverOptions.rawValues ? values : data,
+      };
+    } catch (error: any) {
+      return {
+        values: {},
+        errors: error.isEmpty
+          ? {}
+          : toNestError(
               parseErrorSchema(
                 error.errors,
                 !options.shouldUseNativeValidation &&
-                options.criteriaMode === 'all',
+                  options.criteriaMode === 'all',
               ),
               options,
             ),
-        };
-      }
-    };
+      };
+    }
+  };

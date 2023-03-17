@@ -23,7 +23,6 @@ export const schema: JSONSchemaType<Data> = {
     },
     deepObject: {
       type: 'object',
-      nullable: true,
       properties: {
         data: { type: 'string' },
         twoLayersDeep: {
@@ -56,7 +55,7 @@ export const invalidData = {
   password: 'invalid-password',
   deepObject: {
     data: 233,
-    twoLayersDeep: { name: 123 }
+    twoLayersDeep: { name: 123 },
   },
 };
 
@@ -68,8 +67,8 @@ export const invalidDataWithUndefined = {
       name: 'deeper',
     },
     data: undefined,
-  }
-}
+  },
+};
 
 export const fields: Record<InternalFieldName, Field['_f']> = {
   username: {

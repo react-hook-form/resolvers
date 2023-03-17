@@ -4,10 +4,11 @@ import {
   FieldErrors,
   Field,
   ResolverOptions,
+  FieldValues,
 } from 'react-hook-form';
 import { validateFieldsNatively } from './validateFieldsNatively';
 
-export const toNestError = <TFieldValues>(
+export const toNestError = <TFieldValues extends FieldValues>(
   errors: FieldErrors,
   options: ResolverOptions<TFieldValues>,
 ): FieldErrors<TFieldValues> => {
@@ -20,7 +21,7 @@ export const toNestError = <TFieldValues>(
     set(
       fieldErrors,
       path,
-      Object.assign(errors[path], { ref: field && field.ref }),
+      Object.assign(errors[path] || {}, { ref: field && field.ref }),
     );
   }
 

@@ -6,7 +6,7 @@ const shouldUseNativeValidation = false;
 
 describe('nopeResolver', () => {
   it('should return values from nopeResolver when validation pass', async () => {
-    const schemaSpy = jest.spyOn(schema, 'validate');
+    const schemaSpy = vi.spyOn(schema, 'validate');
 
     const result = await nopeResolver(schema)(validData, undefined, {
       fields,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, act } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
 import { useForm } from 'react-hook-form';
 import { object, string, Infer, size } from 'superstruct';
@@ -34,7 +34,7 @@ function TestComponent({ onSubmit }: Props) {
 }
 
 test("form's native validation with Superstruct", async () => {
-  const handleSubmit = jest.fn();
+  const handleSubmit = vi.fn();
   render(<TestComponent onSubmit={handleSubmit} />);
 
   // username
@@ -51,9 +51,7 @@ test("form's native validation with Superstruct", async () => {
   expect(passwordField.validity.valid).toBe(true);
   expect(passwordField.validationMessage).toBe('');
 
-  await act(async () => {
-    user.click(screen.getByText(/submit/i));
-  });
+  await user.click(screen.getByText(/submit/i));
 
   // username
   usernameField = screen.getByPlaceholderText(/username/i) as HTMLInputElement;
@@ -69,10 +67,8 @@ test("form's native validation with Superstruct", async () => {
     'Expected a string with a length of `6` but received one with a length of `0`',
   );
 
-  await act(async () => {
-    user.type(screen.getByPlaceholderText(/username/i), 'jo');
-    user.type(screen.getByPlaceholderText(/password/i), 'passwo');
-  });
+  await user.type(screen.getByPlaceholderText(/username/i), 'jo');
+  await user.type(screen.getByPlaceholderText(/password/i), 'passwo');
 
   // username
   usernameField = screen.getByPlaceholderText(/username/i) as HTMLInputElement;

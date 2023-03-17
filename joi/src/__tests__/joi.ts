@@ -5,8 +5,8 @@ const shouldUseNativeValidation = false;
 
 describe('joiResolver', () => {
   it('should return values from joiResolver when validation pass', async () => {
-    const validateAsyncSpy = jest.spyOn(schema, 'validateAsync');
-    const validateSpy = jest.spyOn(schema, 'validate');
+    const validateAsyncSpy = vi.spyOn(schema, 'validateAsync');
+    const validateSpy = vi.spyOn(schema, 'validate');
 
     const result = await joiResolver(schema)(validData, undefined, {
       fields,
@@ -19,8 +19,8 @@ describe('joiResolver', () => {
   });
 
   it('should return values from joiResolver with `mode: sync` when validation pass', async () => {
-    const validateAsyncSpy = jest.spyOn(schema, 'validateAsync');
-    const validateSpy = jest.spyOn(schema, 'validate');
+    const validateAsyncSpy = vi.spyOn(schema, 'validateAsync');
+    const validateSpy = vi.spyOn(schema, 'validate');
 
     const result = await joiResolver(schema, undefined, {
       mode: 'sync',
@@ -41,8 +41,8 @@ describe('joiResolver', () => {
   });
 
   it('should return a single error from joiResolver with `mode: sync` when validation fails', async () => {
-    const validateAsyncSpy = jest.spyOn(schema, 'validateAsync');
-    const validateSpy = jest.spyOn(schema, 'validate');
+    const validateAsyncSpy = vi.spyOn(schema, 'validateAsync');
+    const validateSpy = vi.spyOn(schema, 'validate');
 
     const result = await joiResolver(schema, undefined, {
       mode: 'sync',
@@ -79,8 +79,8 @@ describe('joiResolver', () => {
 
   it('should return values from joiResolver when validation pass and pass down the Joi context', async () => {
     const context = { value: 'context' };
-    const validateAsyncSpy = jest.spyOn(schema, 'validateAsync');
-    const validateSpy = jest.spyOn(schema, 'validate');
+    const validateAsyncSpy = vi.spyOn(schema, 'validateAsync');
+    const validateSpy = vi.spyOn(schema, 'validate');
 
     const result = await joiResolver(schema)(validData, context, {
       fields,

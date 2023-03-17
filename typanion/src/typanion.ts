@@ -1,4 +1,4 @@
-import type {FieldError, FieldErrors} from 'react-hook-form';
+import type { FieldError, FieldErrors } from 'react-hook-form';
 import { toNestError, validateFieldsNatively } from '@hookform/resolvers';
 import type { Resolver } from './types';
 

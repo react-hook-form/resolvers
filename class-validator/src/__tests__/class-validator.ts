@@ -7,8 +7,8 @@ const shouldUseNativeValidation = false;
 
 describe('classValidatorResolver', () => {
   it('should return values from classValidatorResolver when validation pass', async () => {
-    const schemaSpy = jest.spyOn(classValidator, 'validate');
-    const schemaSyncSpy = jest.spyOn(classValidator, 'validateSync');
+    const schemaSpy = vi.spyOn(classValidator, 'validate');
+    const schemaSyncSpy = vi.spyOn(classValidator, 'validateSync');
 
     const result = await classValidatorResolver(Schema)(validData, undefined, {
       fields,
@@ -21,8 +21,8 @@ describe('classValidatorResolver', () => {
   });
 
   it('should return values from classValidatorResolver with `mode: sync` when validation pass', async () => {
-    const validateSyncSpy = jest.spyOn(classValidator, 'validateSync');
-    const validateSpy = jest.spyOn(classValidator, 'validate');
+    const validateSyncSpy = vi.spyOn(classValidator, 'validateSync');
+    const validateSpy = vi.spyOn(classValidator, 'validate');
 
     const result = await classValidatorResolver(Schema, undefined, {
       mode: 'sync',
@@ -47,8 +47,8 @@ describe('classValidatorResolver', () => {
   });
 
   it('should return a single error from classValidatorResolver with `mode: sync` when validation fails', async () => {
-    const validateSyncSpy = jest.spyOn(classValidator, 'validateSync');
-    const validateSpy = jest.spyOn(classValidator, 'validate');
+    const validateSyncSpy = vi.spyOn(classValidator, 'validateSync');
+    const validateSpy = vi.spyOn(classValidator, 'validate');
 
     const result = await classValidatorResolver(Schema, undefined, {
       mode: 'sync',

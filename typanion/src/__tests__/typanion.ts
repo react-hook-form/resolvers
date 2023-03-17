@@ -2,19 +2,23 @@ import { typanionResolver } from '..';
 import { isSchema, validData, fields, invalidData } from './__fixtures__/data';
 
 const tmpObj = {
-  validate: isSchema
-}
+  validate: isSchema,
+};
 
 const shouldUseNativeValidation = false;
 
 describe('typanionResolver', () => {
   it('should return values from typanionResolver when validation pass', async () => {
-    const schemaSpy = jest.spyOn(tmpObj, 'validate')
+    const schemaSpy = vi.spyOn(tmpObj, 'validate');
 
-    const result = await typanionResolver(schemaSpy as any)(validData, undefined, {
-      fields,
-      shouldUseNativeValidation,
-    });
+    const result = await typanionResolver(schemaSpy as any)(
+      validData,
+      undefined,
+      {
+        fields,
+        shouldUseNativeValidation,
+      },
+    );
 
     expect(schemaSpy).toHaveBeenCalledTimes(1);
     expect(result).toEqual({ errors: {}, values: validData });

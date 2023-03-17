@@ -7,7 +7,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7
       - uses: preactjs/compressed-size-action@v2
         with:
           repo-token: '${{ secrets.GITHUB_TOKEN }}'

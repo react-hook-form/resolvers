@@ -1,8 +1,17 @@
 import {
-  get, FieldError, ResolverOptions, Ref, FieldErrors
+  get,
+  FieldError,
+  ResolverOptions,
+  Ref,
+  FieldErrors,
+  FieldValues,
 } from 'react-hook-form';
 
-const setCustomValidity = (ref: Ref, fieldPath: string, errors: FieldErrors) => {
+const setCustomValidity = (
+  ref: Ref,
+  fieldPath: string,
+  errors: FieldErrors,
+) => {
   if (ref && 'reportValidity' in ref) {
     const error = get(errors, fieldPath) as FieldError | undefined;
     ref.setCustomValidity((error && error.message) || '');
@@ -12,18 +21,18 @@ const setCustomValidity = (ref: Ref, fieldPath: string, errors: FieldErrors) => 
 };
 
 // Native validation (web only)
-export const validateFieldsNatively = <TFieldValues>(
+export const validateFieldsNatively = <TFieldValues extends FieldValues>(
   errors: FieldErrors,
   options: ResolverOptions<TFieldValues>,
 ): void => {
-
-
   for (const fieldPath in options.fields) {
     const field = options.fields[fieldPath];
     if (field && field.ref && 'reportValidity' in field.ref) {
-      setCustomValidity(field.ref, fieldPath, errors)
+      setCustomValidity(field.ref, fieldPath, errors);
     } else if (field.refs) {
-      field.refs.forEach((ref: HTMLInputElement) => setCustomValidity(ref, fieldPath, errors))
+      field.refs.forEach((ref: HTMLInputElement) =>
+        setCustomValidity(ref, fieldPath, errors),
+      );
     }
   }
 };

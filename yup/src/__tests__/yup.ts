@@ -13,8 +13,8 @@ const shouldUseNativeValidation = false;
 
 describe('yupResolver', () => {
   it('should return values from yupResolver when validation pass', async () => {
-    const schemaSpy = jest.spyOn(schema, 'validate');
-    const schemaSyncSpy = jest.spyOn(schema, 'validateSync');
+    const schemaSpy = vi.spyOn(schema, 'validate');
+    const schemaSyncSpy = vi.spyOn(schema, 'validateSync');
 
     const result = await yupResolver(schema)(validData, undefined, {
       fields,
@@ -27,8 +27,8 @@ describe('yupResolver', () => {
   });
 
   it('should return values from yupResolver with `mode: sync` when validation pass', async () => {
-    const validateSyncSpy = jest.spyOn(schema, 'validateSync');
-    const validateSpy = jest.spyOn(schema, 'validate');
+    const validateSyncSpy = vi.spyOn(schema, 'validateSync');
+    const validateSpy = vi.spyOn(schema, 'validate');
 
     const result = await yupResolver(schema, undefined, {
       mode: 'sync',
@@ -49,8 +49,8 @@ describe('yupResolver', () => {
   });
 
   it('should return a single error from yupResolver with `mode: sync` when validation fails', async () => {
-    const validateSyncSpy = jest.spyOn(schema, 'validateSync');
-    const validateSpy = jest.spyOn(schema, 'validate');
+    const validateSyncSpy = vi.spyOn(schema, 'validateSync');
+    const validateSpy = vi.spyOn(schema, 'validate');
 
     const result = await yupResolver(schema, undefined, {
       mode: 'sync',
@@ -97,7 +97,7 @@ describe('yupResolver', () => {
         }),
     });
 
-    const validateSpy = jest.spyOn(schemaWithContext, 'validate');
+    const validateSpy = vi.spyOn(schemaWithContext, 'validate');
 
     const result = await yupResolver(schemaWithContext)(data, context, {
       fields,
@@ -115,7 +115,7 @@ describe('yupResolver', () => {
   });
 
   it('should show a warning log if yup context is used instead only on dev environment', async () => {
-    jest.spyOn(console, 'warn').mockImplementation(jest.fn);
+    vi.spyOn(console, 'warn').mockImplementation(() => vi.fn());
     process.env.NODE_ENV = 'development';
 
     await yupResolver(yup.object(), { context: { noContext: true } })(
@@ -133,7 +133,7 @@ describe('yupResolver', () => {
   });
 
   it('should not show a warning log if yup context is used instead only on production environment', async () => {
-    jest.spyOn(console, 'warn').mockImplementation(jest.fn);
+    vi.spyOn(console, 'warn').mockImplementation(() => vi.fn());
     process.env.NODE_ENV = 'production';
 
     await yupResolver(yup.object(), { context: { noContext: true } })(
@@ -166,7 +166,7 @@ describe('yupResolver', () => {
   });
 
   it("should merge default yup resolver options with yup's options", async () => {
-    const validateSpy = jest.spyOn(schema, 'validate');
+    const validateSpy = vi.spyOn(schema, 'validate');
 
     await yupResolver(schema, { stripUnknown: true })(invalidData, undefined, {
       fields,
@@ -178,15 +178,14 @@ describe('yupResolver', () => {
     );
   });
 
-  it('should throw an error without inner property', (done) => {
-    yupResolver(schemaWithWhen)({ name: 'test', value: '' }, undefined, {
-      fields,
-      shouldUseNativeValidation,
-    }).catch((e) => {
-      expect(e).toMatchInlineSnapshot(
-        `[TypeError: You cannot \`concat()\` schema's of different types: string and number]`,
-      );
-      done();
-    });
+  it('should throw an error without inner property', () => {
+    expect(
+      yupResolver(schemaWithWhen)({ name: 'test', value: '' }, undefined, {
+        fields,
+        shouldUseNativeValidation,
+      }),
+    ).rejects.toThrowErrorMatchingInlineSnapshot(
+      '"You cannot `concat()` schema\'s of different types: string and number"',
+    );
   });
 });

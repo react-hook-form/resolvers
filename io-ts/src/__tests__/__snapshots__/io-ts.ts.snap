@@ -1,35 +1,35 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ioTsResolver should return a single error from ioTsResolver when validation fails 1`] = `
-Object {
-  "errors": Object {
-    "animal": Object {
+exports[`ioTsResolver > should return a single error from ioTsResolver when validation fails 1`] = `
+{
+  "errors": {
+    "animal": {
       "message": "expected string but got [\\"dog\\"]",
       "ref": undefined,
       "type": "string",
     },
-    "like": Array [
-      Object {
-        "id": Object {
+    "like": [
+      {
+        "id": {
           "message": "this id is very important but you passed: string(1)",
           "ref": undefined,
           "type": "number",
         },
       },
     ],
-    "luckyNumbers": Array [
+    "luckyNumbers": [
       ,
       ,
-      Object {
+      {
         "message": "expected number but got \\"3\\"",
         "ref": undefined,
         "type": "number",
       },
     ],
-    "vehicles": Array [
+    "vehicles": [
       ,
-      Object {
-        "horsepower": Object {
+      {
+        "horsepower": {
           "message": "expected number but got undefined",
           "ref": undefined,
           "type": "number",
@@ -37,46 +37,46 @@ Object {
       },
     ],
   },
-  "values": Object {},
+  "values": {},
 }
 `;
 
-exports[`ioTsResolver should return all the errors from ioTsResolver when validation fails with \`validateAllFieldCriteria\` set to true 1`] = `
-Object {
-  "errors": Object {
-    "animal": Object {
+exports[`ioTsResolver > should return all the errors from ioTsResolver when validation fails with \`validateAllFieldCriteria\` set to true 1`] = `
+{
+  "errors": {
+    "animal": {
       "message": "expected \\"snake\\" but got [\\"dog\\"]",
       "ref": undefined,
       "type": "\\"snake\\"",
-      "types": Object {
+      "types": {
         "\\"bird\\"": "expected \\"bird\\" but got [\\"dog\\"]",
         "\\"snake\\"": "expected \\"snake\\" but got [\\"dog\\"]",
         "number": "expected number but got [\\"dog\\"]",
         "string": "expected string but got [\\"dog\\"]",
       },
     },
-    "like": Array [
-      Object {
-        "id": Object {
+    "like": [
+      {
+        "id": {
           "message": "this id is very important but you passed: string(1)",
           "ref": undefined,
           "type": "number",
         },
       },
     ],
-    "luckyNumbers": Array [
+    "luckyNumbers": [
       ,
       ,
-      Object {
+      {
         "message": "expected number but got \\"3\\"",
         "ref": undefined,
         "type": "number",
       },
     ],
-    "vehicles": Array [
+    "vehicles": [
       ,
-      Object {
-        "horsepower": Object {
+      {
+        "horsepower": {
           "message": "expected number but got undefined",
           "ref": undefined,
           "type": "number",
@@ -84,6 +84,6 @@ Object {
       },
     ],
   },
-  "values": Object {},
+  "values": {},
 }
 `;

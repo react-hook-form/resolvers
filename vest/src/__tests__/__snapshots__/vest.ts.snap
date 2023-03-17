@@ -1,141 +1,141 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`vestResolver should return all the error messages from vestResolver when validation fails and validateAllFieldCriteria set to true 1`] = `
-Object {
-  "errors": Object {
-    "deepObject": Object {
-      "data": Object {
+exports[`vestResolver > should return all the error messages from vestResolver when validation fails and validateAllFieldCriteria set to true 1`] = `
+{
+  "errors": {
+    "deepObject": {
+      "data": {
         "message": "deepObject.data is required",
         "ref": undefined,
         "type": "",
-        "types": Object {
+        "types": {
           "0": "deepObject.data is required",
         },
       },
     },
-    "password": Object {
+    "password": {
       "message": "Password must be at least 5 chars",
-      "ref": Object {
+      "ref": {
         "name": "password",
       },
       "type": "",
-      "types": Object {
+      "types": {
         "0": "Password must be at least 5 chars",
         "1": "Password must contain a digit",
         "2": "Password must contain a symbol",
       },
     },
-    "username": Object {
+    "username": {
       "message": "Username is required",
-      "ref": Object {
+      "ref": {
         "name": "username",
       },
       "type": "",
-      "types": Object {
+      "types": {
         "0": "Username is required",
         "1": "Must be longer than 3 chars",
       },
     },
   },
-  "values": Object {},
+  "values": {},
 }
 `;
 
-exports[`vestResolver should return all the error messages from vestResolver when validation fails and validateAllFieldCriteria set to true and \`mode: sync\` 1`] = `
-Object {
-  "errors": Object {
-    "deepObject": Object {
-      "data": Object {
+exports[`vestResolver > should return all the error messages from vestResolver when validation fails and validateAllFieldCriteria set to true and \`mode: sync\` 1`] = `
+{
+  "errors": {
+    "deepObject": {
+      "data": {
         "message": "deepObject.data is required",
         "ref": undefined,
         "type": "",
-        "types": Object {
+        "types": {
           "0": "deepObject.data is required",
         },
       },
     },
-    "password": Object {
+    "password": {
       "message": "Password must be at least 5 chars",
-      "ref": Object {
+      "ref": {
         "name": "password",
       },
       "type": "",
-      "types": Object {
+      "types": {
         "0": "Password must be at least 5 chars",
         "1": "Password must contain a digit",
         "2": "Password must contain a symbol",
       },
     },
-    "username": Object {
+    "username": {
       "message": "Username is required",
-      "ref": Object {
+      "ref": {
         "name": "username",
       },
       "type": "",
-      "types": Object {
+      "types": {
         "0": "Username is required",
         "1": "Must be longer than 3 chars",
       },
     },
   },
-  "values": Object {},
+  "values": {},
 }
 `;
 
-exports[`vestResolver should return single error message from vestResolver when validation fails and validateAllFieldCriteria set to false 1`] = `
-Object {
-  "errors": Object {
-    "deepObject": Object {
-      "data": Object {
+exports[`vestResolver > should return single error message from vestResolver when validation fails and validateAllFieldCriteria set to false 1`] = `
+{
+  "errors": {
+    "deepObject": {
+      "data": {
         "message": "deepObject.data is required",
         "ref": undefined,
         "type": "",
       },
     },
-    "password": Object {
+    "password": {
       "message": "Password must be at least 5 chars",
-      "ref": Object {
+      "ref": {
         "name": "password",
       },
       "type": "",
     },
-    "username": Object {
+    "username": {
       "message": "Username is required",
-      "ref": Object {
+      "ref": {
         "name": "username",
       },
       "type": "",
     },
   },
-  "values": Object {},
+  "values": {},
 }
 `;
 
-exports[`vestResolver should return single error message from vestResolver when validation fails and validateAllFieldCriteria set to false and \`mode: sync\` 1`] = `
-Object {
-  "errors": Object {
-    "deepObject": Object {
-      "data": Object {
+exports[`vestResolver > should return single error message from vestResolver when validation fails and validateAllFieldCriteria set to false and \`mode: sync\` 1`] = `
+{
+  "errors": {
+    "deepObject": {
+      "data": {
         "message": "deepObject.data is required",
         "ref": undefined,
         "type": "",
       },
     },
-    "password": Object {
+    "password": {
       "message": "Password must be at least 5 chars",
-      "ref": Object {
+      "ref": {
         "name": "password",
       },
       "type": "",
     },
-    "username": Object {
+    "username": {
       "message": "Username is required",
-      "ref": Object {
+      "ref": {
         "name": "username",
       },
       "type": "",
     },
   },
-  "values": Object {},
+  "values": {},
 }
 `;

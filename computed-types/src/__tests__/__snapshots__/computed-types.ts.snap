@@ -1,74 +1,74 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`computedTypesResolver should return a single error from computedTypesResolver when validation fails 1`] = `
-Object {
-  "errors": Object {
-    "address": Object {
-      "city": Object {
+exports[`computedTypesResolver > should return a single error from computedTypesResolver when validation fails 1`] = `
+{
+  "errors": {
+    "address": {
+      "city": {
         "message": "Is required",
         "ref": undefined,
         "type": "ValidationError",
       },
-      "zipCode": Object {
+      "zipCode": {
         "message": "Must be 5 characters long",
         "ref": undefined,
         "type": "ValidationError",
       },
     },
-    "birthYear": Object {
+    "birthYear": {
       "message": "Expect value to be \\"number\\"",
       "ref": undefined,
       "type": "ValidationError",
     },
-    "email": Object {
+    "email": {
       "message": "Incorrect email",
-      "ref": Object {
+      "ref": {
         "name": "email",
       },
       "type": "ValidationError",
     },
-    "enabled": Object {
+    "enabled": {
       "message": "Expect value to be \\"boolean\\"",
       "ref": undefined,
       "type": "ValidationError",
     },
-    "like": Object {
-      "id": Object {
+    "like": {
+      "id": {
         "message": "Expect value to be \\"number\\"",
         "ref": undefined,
         "type": "ValidationError",
       },
-      "name": Object {
+      "name": {
         "message": "Expect value to be \\"string\\"",
         "ref": undefined,
         "type": "ValidationError",
       },
     },
-    "password": Object {
+    "password": {
       "message": "One uppercase character",
-      "ref": Object {
+      "ref": {
         "name": "password",
       },
       "type": "ValidationError",
     },
-    "repeatPassword": Object {
+    "repeatPassword": {
       "message": "Expect value to be \\"string\\"",
       "ref": undefined,
       "type": "ValidationError",
     },
-    "tags": Object {
+    "tags": {
       "message": "Expecting value to be an array",
       "ref": undefined,
       "type": "ValidationError",
     },
-    "username": Object {
+    "username": {
       "message": "Expect value to be \\"string\\"",
-      "ref": Object {
+      "ref": {
         "name": "username",
       },
       "type": "ValidationError",
     },
   },
-  "values": Object {},
+  "values": {},
 }
 `;

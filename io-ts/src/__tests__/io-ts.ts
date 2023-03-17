@@ -5,7 +5,7 @@ const shouldUseNativeValidation = false;
 
 describe('ioTsResolver', () => {
   it('should return values from ioTsResolver when validation pass', async () => {
-    const validateSpy = jest.spyOn(schema, 'decode');
+    const validateSpy = vi.spyOn(schema, 'decode');
 
     const result = ioTsResolver(schema)(validData, undefined, {
       fields,
