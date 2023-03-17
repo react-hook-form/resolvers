@@ -48,37 +48,41 @@ const parseErrorSchema = (
 export const ajvResolver: Resolver =
   (schema, schemaOptions, resolverOptions = {}) =>
   async (values, _, options) => {
-    const ajv = new Ajv({
-      allErrors: true,
-      validateSchema: true,
-      ...schemaOptions,
-    });
+    const ajv = new Ajv(
+      Object.assign(
+        {},
+        {
+          allErrors: true,
+          validateSchema: true,
+        },
+        schemaOptions,
+      ),
+    );
 
     ajvErrors(ajv);
 
     const validate = ajv.compile(
-      Object.assign({ $async: resolverOptions?.mode === 'async' }, schema),
+      Object.assign(
+        { $async: resolverOptions && resolverOptions.mode === 'async' },
+        schema,
+      ),
     );
-    const valid = validate(values);
 
-    if (!valid) {
-      return {
-        values: {},
-        errors: toNestError(
-          parseErrorSchema(
-            validate.errors as DefinedError[],
-            !options.shouldUseNativeValidation &&
-              options.criteriaMode === 'all',
-          ),
-          options,
-        ),
-      };
-    }
+    const valid = validate(values);
 
     options.shouldUseNativeValidation && validateFieldsNatively({}, options);
 
-    return {
-      values,
-      errors: {},
-    };
+    return valid
+      ? { values, errors: {} }
+      : {
+          values: {},
+          errors: toNestError(
+            parseErrorSchema(
+              validate.errors as DefinedError[],
+              !options.shouldUseNativeValidation &&
+                options.criteriaMode === 'all',
+            ),
+            options,
+          ),
+        };
   };
