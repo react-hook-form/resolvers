@@ -12,7 +12,7 @@ Here is a quick guide to doing code contributions to the library.
 
 3. Install packages by running:
 
-   > pnpm
+   > pnpm install
 
 4. If you've added a code that should be tested, ensure the test suite still passes.
 
@@ -36,7 +36,7 @@ Here is a quick guide to doing code contributions to the library.
 
 ## Coding style
 
-Please follow the coding style of the project. React Hook Form uses eslint and prettier. If possible, enable their respective plugins in your editor to get real-time feedback. The linting can be run manually with the following command: `yarn lint`
+Please follow the coding style of the project. React Hook Form uses eslint and prettier. If possible, enable their respective plugins in your editor to get real-time feedback. The linting can be run manually with the following command: `pnpm lint`
 
 ## License
 
