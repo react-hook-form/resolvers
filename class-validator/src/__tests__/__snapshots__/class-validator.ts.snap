@@ -205,3 +205,38 @@ exports[`classValidatorResolver > should return all the errors from classValidat
   "values": {},
 }
 `;
+
+exports[`validate data with transformer option 1`] = `
+{
+  "errors": {
+    "random": {
+      "message": "All fields must be defined.",
+      "ref": undefined,
+      "type": "isDefined",
+      "types": {
+        "isDefined": "All fields must be defined.",
+        "isNumber": "Must be a number",
+        "max": "Cannot be greater than 255",
+        "min": "Cannot be lower than 0",
+      },
+    },
+  },
+  "values": {},
+}
+`;
+
+exports[`validate data with validator option 1`] = `
+{
+  "errors": {
+    "random": {
+      "message": "All fields must be defined.",
+      "ref": undefined,
+      "type": "isDefined",
+      "types": {
+        "isDefined": "All fields must be defined.",
+      },
+    },
+  },
+  "values": {},
+}
+`;
