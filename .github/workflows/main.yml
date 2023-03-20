@@ -66,16 +66,12 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
+
       - name: Build
         run: pnpm build
-
-      - name: Npm token
-        run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
-        env:
-          NPM_TOKEN: '${{secrets.NPM_TOKEN}}'
 
       - name: Publish
         run: npx semantic-release
         env:
-          NODE_AUTH_TOKEN: '${{secrets.NPM_TOKEN}}'
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: '${{secrets.GITHUB_TOKEN}}'
