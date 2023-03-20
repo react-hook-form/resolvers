@@ -459,7 +459,7 @@ const App = () => {
 
 JSON Schema Type Builder with Static Type Resolution for TypeScript
 
-[![npm](https://img.shields.io/bundlephobia/minzip/@sinclair/typebox ?style=for-the-badge)](https://bundlephobia.com/result?p=@sinclair/typebox)
+[![npm](https://img.shields.io/bundlephobia/minzip/@sinclair/typebox?style=for-the-badge)](https://bundlephobia.com/result?p=@sinclair/typebox)
 
 ```typescript jsx
 import { useForm } from 'react-hook-form';
@@ -478,8 +478,8 @@ const App = () => {
 
   return (
     <form onSubmit={handleSubmit((d) => console.log(d))}>
-      <input {...register('name')} />
-      <input type="number" {...register('age')} />
+      <input {...register('username')} />
+      <input type="password" {...register('password')} />
       <input type="submit" />
     </form>
   );
