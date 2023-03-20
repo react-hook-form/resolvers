@@ -147,7 +147,7 @@
     "build:computed-types": "microbundle --cwd computed-types --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
     "build:typanion": "microbundle --cwd typanion --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
     "build:ajv": "microbundle --cwd ajv --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
-    "build:typebox": "microbundle --cwd typebox --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
+    "build:typebox": "microbundle --cwd typebox --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm,@sinclair/typebox/value=value",
     "postbuild": "node ./config/node-13-exports.js",
     "lint": "eslint . --ext .ts,.js --ignore-path .gitignore",
     "lint:types": "tsc",
