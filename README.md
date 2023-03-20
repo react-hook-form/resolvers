@@ -455,6 +455,37 @@ const App = () => {
 };
 ```
 
+### [TypeBox](https://github.com/sinclairzx81/typebox)
+
+JSON Schema Type Builder with Static Type Resolution for TypeScript
+
+[![npm](https://img.shields.io/bundlephobia/minzip/@sinclair/typebox ?style=for-the-badge)](https://bundlephobia.com/result?p=@sinclair/typebox)
+
+```typescript jsx
+import { useForm } from 'react-hook-form';
+import { typeboxResolver } from '@hookform/resolvers/typebox';
+import { Type } from '@sinclair/typebox';
+
+const schema = Type.Object({
+  username: Type.String({ minLength: 1 }),
+  password: Type.String({ minLength: 1 }),
+});
+
+const App = () => {
+  const { register, handleSubmit } = useForm({
+    resolver: typeboxResolver(schema),
+  });
+
+  return (
+    <form onSubmit={handleSubmit((d) => console.log(d))}>
+      <input {...register('name')} />
+      <input type="number" {...register('age')} />
+      <input type="submit" />
+    </form>
+  );
+};
+```
+
 ## Backers
 
 Thanks goes to all our backers! [[Become a backer](https://opencollective.com/react-hook-form#backer)].

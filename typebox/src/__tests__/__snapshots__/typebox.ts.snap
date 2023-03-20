@@ -1,0 +1,190 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`typeboxResolver > should return a single error from typeboxResolver when validation fails 1`] = `
+{
+  "errors": {
+    "accessToken": {
+      "message": "Expected required property",
+      "ref": undefined,
+      "type": "30",
+    },
+    "birthYear": {
+      "message": "Expected number",
+      "ref": undefined,
+      "type": "20",
+    },
+    "dateStr": {
+      "message": "Expected required property",
+      "ref": undefined,
+      "type": "30",
+    },
+    "email": {
+      "message": "Expected string to match format 'email'",
+      "ref": {
+        "name": "email",
+      },
+      "type": "39",
+    },
+    "enabled": {
+      "message": "Expected required property",
+      "ref": undefined,
+      "type": "30",
+    },
+    "like": [
+      {
+        "id": {
+          "message": "Expected number",
+          "ref": undefined,
+          "type": "20",
+        },
+        "name": {
+          "message": "Expected required property",
+          "ref": undefined,
+          "type": "30",
+        },
+      },
+    ],
+    "password": {
+      "message": "Expected string length greater or equal to 8",
+      "ref": {
+        "name": "password",
+      },
+      "type": "35",
+    },
+    "repeatPassword": {
+      "message": "Expected required property",
+      "ref": undefined,
+      "type": "30",
+    },
+    "tags": {
+      "message": "Expected required property",
+      "ref": undefined,
+      "type": "30",
+    },
+    "username": {
+      "message": "Expected required property",
+      "ref": {
+        "name": "username",
+      },
+      "type": "30",
+    },
+  },
+  "values": {},
+}
+`;
+
+exports[`typeboxResolver > should return all the errors from typeboxResolver when validation fails with \`validateAllFieldCriteria\` set to true 1`] = `
+{
+  "errors": {
+    "accessToken": {
+      "message": "Expected required property",
+      "ref": undefined,
+      "type": "30",
+      "types": {
+        "20": "Expected number",
+        "30": "Expected required property",
+        "34": "Expected string",
+        "43": "Expected value of union",
+      },
+    },
+    "birthYear": {
+      "message": "Expected number",
+      "ref": undefined,
+      "type": "20",
+      "types": {
+        "20": "Expected number",
+      },
+    },
+    "dateStr": {
+      "message": "Expected required property",
+      "ref": undefined,
+      "type": "30",
+      "types": {
+        "30": "Expected required property",
+        "5": "Expected Date object",
+      },
+    },
+    "email": {
+      "message": "Expected string to match format 'email'",
+      "ref": {
+        "name": "email",
+      },
+      "type": "39",
+      "types": {
+        "39": "Expected string to match format 'email'",
+      },
+    },
+    "enabled": {
+      "message": "Expected required property",
+      "ref": undefined,
+      "type": "30",
+      "types": {
+        "30": "Expected required property",
+        "4": "Expected boolean",
+      },
+    },
+    "like": [
+      {
+        "id": {
+          "message": "Expected number",
+          "ref": undefined,
+          "type": "20",
+          "types": {
+            "20": "Expected number",
+          },
+        },
+        "name": {
+          "message": "Expected required property",
+          "ref": undefined,
+          "type": "30",
+          "types": {
+            "30": "Expected required property",
+            "34": "Expected string",
+          },
+        },
+      },
+    ],
+    "password": {
+      "message": "Expected string length greater or equal to 8",
+      "ref": {
+        "name": "password",
+      },
+      "type": "35",
+      "types": {
+        "35": "Expected string length greater or equal to 8",
+        "37": "Expected string to match pattern ^(.*[A-Za-z\\\\d].*)$",
+      },
+    },
+    "repeatPassword": {
+      "message": "Expected required property",
+      "ref": undefined,
+      "type": "30",
+      "types": {
+        "30": "Expected required property",
+        "34": "Expected string",
+      },
+    },
+    "tags": {
+      "message": "Expected required property",
+      "ref": undefined,
+      "type": "30",
+      "types": {
+        "0": "Expected array",
+        "30": "Expected required property",
+      },
+    },
+    "username": {
+      "message": "Expected required property",
+      "ref": {
+        "name": "username",
+      },
+      "type": "30",
+      "types": {
+        "30": "Expected required property",
+        "34": "Expected string",
+      },
+    },
+  },
+  "values": {},
+}
+`;

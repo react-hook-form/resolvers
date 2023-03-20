@@ -2,7 +2,7 @@
   "name": "@hookform/resolvers",
   "amdName": "hookformResolvers",
   "version": "2.9.1",
-  "description": "React Hook Form validation resolvers: Yup, Joi, Superstruct, Zod, Vest, Class Validator, io-ts, Nope, computed-types and Typanion",
+  "description": "React Hook Form validation resolvers: Yup, Joi, Superstruct, Zod, Vest, Class Validator, io-ts, Nope, computed-types, TypeBox and Typanion",
   "main": "dist/resolvers.js",
   "module": "dist/resolvers.module.js",
   "umd:main": "dist/resolvers.umd.js",
@@ -20,6 +20,12 @@
       "umd": "./zod/dist/zod.umd.js",
       "import": "./zod/dist/zod.mjs",
       "require": "./zod/dist/zod.js"
+    },
+    "./typebox": {
+      "types": "./typebox/dist/index.d.ts",
+      "umd": "./typebox/dist/typebox.umd.js",
+      "import": "./typebox/dist/typebox.mjs",
+      "require": "./typebox/dist/typebox.js"
     },
     "./yup": {
       "types": "./yup/dist/index.d.ts",
@@ -118,7 +124,10 @@
     "typanion/dist",
     "ajv/package.json",
     "ajv/src",
-    "ajv/dist"
+    "ajv/dist",
+    "typebox/package.json",
+    "typebox/src",
+    "typebox/dist"
   ],
   "publishConfig": {
     "access": "public"
@@ -138,6 +147,7 @@
     "build:computed-types": "microbundle --cwd computed-types --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
     "build:typanion": "microbundle --cwd typanion --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
     "build:ajv": "microbundle --cwd ajv --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
+    "build:typebox": "microbundle --cwd typebox --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
     "postbuild": "node ./config/node-13-exports.js",
     "lint": "eslint . --ext .ts,.js --ignore-path .gitignore",
     "lint:types": "tsc",
@@ -162,7 +172,8 @@
     "nope",
     "computed-types",
     "typanion",
-    "ajv"
+    "ajv",
+    "TypeBox"
   ],
   "repository": {
     "type": "git",
@@ -175,6 +186,7 @@
   },
   "homepage": "https://react-hook-form.com",
   "devDependencies": {
+    "@sinclair/typebox": "^0.25.24",
     "@testing-library/dom": "^9.0.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
