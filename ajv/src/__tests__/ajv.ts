@@ -1,5 +1,5 @@
 import { ajvResolver } from '..';
-import { fields, invalidData, invalidDataWithUndefined, schema, validData } from './__fixtures__/data';
+import { fields, invalidData, invalidDataWithUndefined, schema, validData, emptyData, Data } from './__fixtures__/data';
 
 const shouldUseNativeValidation = false;
 
@@ -66,7 +66,7 @@ describe('ajvResolver', () => {
 
   it('should return all the error messages from ajvResolver when requirement fails and validateAllFieldCriteria set to true', async () => {
     expect(
-      await ajvResolver(schema)({}, undefined, {
+      await ajvResolver(schema)(emptyData, undefined, {
         fields,
         shouldUseNativeValidation,
       }),
@@ -75,7 +75,7 @@ describe('ajvResolver', () => {
 
   it('should return all the error messages from ajvResolver when requirement fails and validateAllFieldCriteria set to true and `mode: sync`', async () => {
     expect(
-      await ajvResolver(schema, undefined, { mode: 'sync' })({}, undefined, {
+      await ajvResolver(schema, undefined, { mode: 'sync' })(emptyData, undefined, {
         fields,
         shouldUseNativeValidation,
       }),
@@ -93,5 +93,35 @@ describe('ajvResolver', () => {
         },
       ),
     ).toMatchSnapshot();
+  });
+
+  it('should run given transform function before validating values', async function() {
+    const validWithEmail = { ...validData, optionalEmail: '' };
+    const transform = (data: Data) => {
+      const fieldsToValidate = { ...data };
+      delete fieldsToValidate.optionalEmail;
+
+      return fieldsToValidate;
+    }
+
+    // ensure validation error exists without transform
+    const withoutTransform = await ajvResolver(schema, undefined)(validWithEmail, undefined, { fields, shouldUseNativeValidation });
+    expect(Object.keys(withoutTransform.errors).length).toBeGreaterThan(0);
+
+    const withTransform = await ajvResolver(schema, undefined, { transform })(validWithEmail, undefined, { fields, shouldUseNativeValidation });
+    expect(Object.keys(withTransform.errors).length).toEqual(0);
+  });
+
+  it('should not modify form values when transform function is provided', async function() {
+    const validWithEmail = { ...validData, optionalEmail: '' };
+    const transform = (data: Data) => {
+      const fieldsToValidate = { ...data };
+      delete fieldsToValidate.optionalEmail;
+
+      return fieldsToValidate;
+    }
+
+    const result = await ajvResolver(schema, undefined, { transform })(validWithEmail, undefined, { fields, shouldUseNativeValidation });
+    expect(result.values).toEqual(validWithEmail);
   });
 });

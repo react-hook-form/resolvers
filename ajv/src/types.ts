@@ -5,12 +5,17 @@ import {
 } from 'react-hook-form';
 import * as Ajv from 'ajv';
 
-export type Resolver = <T>(
+export type FactoryOptions<T> = {
+  mode?: 'async' | 'sync',
+  transform?: (data: T) => T,
+}
+
+export type Resolver = <T extends FieldValues>(
   schema: Ajv.JSONSchemaType<T>,
   schemaOptions?: Ajv.Options,
-  factoryOptions?: { mode?: 'async' | 'sync' },
-) => <TFieldValues extends FieldValues, TContext>(
-  values: TFieldValues,
+  factoryOptions?: FactoryOptions<T>,
+) => <TContext>(
+  values: T,
   context: TContext | undefined,
-  options: ResolverOptions<TFieldValues>,
-) => Promise<ResolverResult<TFieldValues>>;
+  options: ResolverOptions<T>,
+) => Promise<ResolverResult<T>>;

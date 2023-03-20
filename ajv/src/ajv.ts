@@ -46,7 +46,7 @@ const parseErrorSchema = (
 };
 
 export const ajvResolver: Resolver =
-  (schema, schemaOptions, resolverOptions = {}) =>
+  (schema, schemaOptions, { mode = 'sync', transform } = {}) =>
   async (values, _, options) => {
     const ajv = new Ajv(
       Object.assign(
@@ -63,12 +63,12 @@ export const ajvResolver: Resolver =
 
     const validate = ajv.compile(
       Object.assign(
-        { $async: resolverOptions && resolverOptions.mode === 'async' },
+        { $async: mode === 'async' },
         schema,
       ),
     );
 
-    const valid = validate(values);
+    const valid = validate(transform ? transform(values) : values);
 
     options.shouldUseNativeValidation && validateFieldsNatively({}, options);
 

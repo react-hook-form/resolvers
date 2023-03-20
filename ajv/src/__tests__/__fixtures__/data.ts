@@ -1,10 +1,11 @@
 import { JSONSchemaType } from 'ajv';
 import { Field, InternalFieldName } from 'react-hook-form';
 
-interface Data {
+export interface Data {
   username: string;
   password: string;
   deepObject: { data: string; twoLayersDeep: { name: string } };
+  optionalEmail?: string;
 }
 
 export const schema: JSONSchemaType<Data> = {
@@ -34,6 +35,11 @@ export const schema: JSONSchemaType<Data> = {
       },
       required: ['data', 'twoLayersDeep'],
     },
+    optionalEmail: {
+      type: 'string',
+      pattern: '^[0-9a-zA-Z\.]+@[0-9a-zA-Z]+\.com$',
+      nullable: true,
+    },
   },
   required: ['username', 'password', 'deepObject'],
   additionalProperties: false,
@@ -50,7 +56,7 @@ export const validData: Data = {
   },
 };
 
-export const invalidData = {
+export const invalidData: any = {
   username: '__',
   password: 'invalid-password',
   deepObject: {
@@ -59,7 +65,7 @@ export const invalidData = {
   },
 };
 
-export const invalidDataWithUndefined = {
+export const invalidDataWithUndefined: any = {
   username: 'jsun969',
   password: undefined,
   deepObject: {
@@ -69,6 +75,8 @@ export const invalidDataWithUndefined = {
     data: undefined,
   },
 };
+
+export const emptyData: any = {};
 
 export const fields: Record<InternalFieldName, Field['_f']> = {
   username: {
