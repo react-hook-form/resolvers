@@ -6,7 +6,17 @@ type Options<T extends Yup.ObjectSchema<any>> = Parameters<T['validate']>[1];
 export type Resolver = <T extends Yup.ObjectSchema<any>>(
   schema: T,
   schemaOptions?: Options<T>,
-  factoryOptions?: { mode?: 'async' | 'sync'; rawValues?: boolean },
+  factoryOptions?: {
+    /**
+     * @default async
+     */
+    mode?: 'async' | 'sync';
+    /**
+     * Return the raw input values rather than the parsed values.
+     * @default false
+     */
+    raw?: boolean;
+  },
 ) => <TFieldValues extends FieldValues, TContext>(
   values: TFieldValues,
   context: TContext | undefined,

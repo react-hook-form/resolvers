@@ -21,4 +21,17 @@ describe('superstructResolver', () => {
 
     expect(result).toMatchSnapshot();
   });
+
+  it('should return values from superstructResolver when validation pass & raw=true', async () => {
+    const result = await superstructResolver(schema, undefined, { raw: true })(
+      validData,
+      undefined,
+      {
+        fields,
+        shouldUseNativeValidation,
+      },
+    );
+
+    expect(result).toEqual({ errors: {}, values: validData });
+  });
 });

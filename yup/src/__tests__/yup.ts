@@ -190,4 +190,34 @@ describe('yupResolver', () => {
 
     expect(result).toMatchSnapshot();
   });
+
+  it('should throw any error unrelated to Yup', async () => {
+    const schemaWithCustomError = schema.transform(() => {
+      throw Error('custom error');
+    });
+    const promise = yupResolver(schemaWithCustomError)(validData, undefined, {
+      fields,
+      shouldUseNativeValidation,
+    });
+
+    await expect(promise).rejects.toThrow('custom error');
+  });
+
+  it('should return values from yupResolver when validation pass & raw=true', async () => {
+    const schemaSpy = vi.spyOn(schema, 'validate');
+    const schemaSyncSpy = vi.spyOn(schema, 'validateSync');
+
+    const result = await yupResolver(schema, undefined, { raw: true })(
+      validData,
+      undefined,
+      {
+        fields,
+        shouldUseNativeValidation,
+      },
+    );
+
+    expect(schemaSpy).toHaveBeenCalledTimes(1);
+    expect(schemaSyncSpy).not.toHaveBeenCalled();
+    expect(result).toEqual({ errors: {}, values: validData });
+  });
 });

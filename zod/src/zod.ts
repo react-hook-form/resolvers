@@ -1,7 +1,9 @@
 import { appendErrors, FieldError, FieldErrors } from 'react-hook-form';
-import { z } from 'zod';
+import { z, ZodError } from 'zod';
 import { toNestError, validateFieldsNatively } from '@hookform/resolvers';
 import type { Resolver } from './types';
+
+const isZodError = (error: any): error is ZodError => error.errors != null;
 
 const parseErrorSchema = (
   zodErrors: z.ZodIssue[],
@@ -65,21 +67,23 @@ export const zodResolver: Resolver =
 
       return {
         errors: {} as FieldErrors,
-        values: resolverOptions.rawValues ? values : data,
+        values: resolverOptions.raw ? values : data,
       };
     } catch (error: any) {
-      return {
-        values: {},
-        errors: error.isEmpty
-          ? {}
-          : toNestError(
-              parseErrorSchema(
-                error.errors,
-                !options.shouldUseNativeValidation &&
-                  options.criteriaMode === 'all',
-              ),
-              options,
+      if (isZodError(error)) {
+        return {
+          values: {},
+          errors: toNestError(
+            parseErrorSchema(
+              error.errors,
+              !options.shouldUseNativeValidation &&
+                options.criteriaMode === 'all',
             ),
-      };
+            options,
+          ),
+        };
+      }
+
+      throw error;
     }
   };

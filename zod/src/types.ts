@@ -1,8 +1,4 @@
-import {
-  FieldValues,
-  ResolverResult,
-  ResolverOptions,
-} from 'react-hook-form';
+import { FieldValues, ResolverResult, ResolverOptions } from 'react-hook-form';
 import { z } from 'zod';
 
 export type Resolver = <T extends z.Schema<any, any>>(
@@ -17,7 +13,7 @@ export type Resolver = <T extends z.Schema<any, any>>(
      * Return the raw input values rather than the parsed values.
      * @default false
      */
-    rawValues?: boolean;
+    raw?: boolean;
   },
 ) => <TFieldValues extends FieldValues, TContext>(
   values: TFieldValues,
