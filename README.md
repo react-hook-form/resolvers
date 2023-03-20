@@ -478,8 +478,8 @@ const App = () => {
 
   return (
     <form onSubmit={handleSubmit((d) => console.log(d))}>
-      <input {...register('name')} />
-      <input type="number" {...register('age')} />
+      <input {...register('username')} />
+      <input type="password" {...register('password')} />
       <input type="submit" />
     </form>
   );
