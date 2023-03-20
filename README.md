@@ -29,7 +29,7 @@
 ```
 type Options = {
   mode: 'async' | 'sync',
-  rawValues?: boolean
+  raw?: boolean
 }
 
 resolver(schema: object, schemaOptions?: object, resolverOptions: Options)
