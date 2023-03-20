@@ -1,7 +1,10 @@
 import type { FieldErrors } from 'react-hook-form';
 import { toNestError, validateFieldsNatively } from '@hookform/resolvers';
-import type { ValidationError } from 'computed-types';
 import type { Resolver } from './types';
+import type { ValidationError } from 'computed-types';
+
+const isValidationError = (error: any): error is ValidationError =>
+  error.errors != null;
 
 const parseErrorSchema = (computedTypesError: ValidationError) => {
   const parsedErrors: FieldErrors = {};
@@ -27,9 +30,13 @@ export const computedTypesResolver: Resolver =
         values: data,
       };
     } catch (error: any) {
-      return {
-        values: {},
-        errors: toNestError(parseErrorSchema(error), options),
-      };
+      if (isValidationError(error)) {
+        return {
+          values: {},
+          errors: toNestError(parseErrorSchema(error), options),
+        };
+      }
+
+      throw error;
     }
   };

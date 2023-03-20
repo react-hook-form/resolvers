@@ -15,8 +15,9 @@ const parseErrorSchema = (error: StructError) =>
   );
 
 export const superstructResolver: Resolver =
-  (schema, resolverOptions) => (values, _, options) => {
-    const result = validate(values, schema, resolverOptions);
+  (schema, schemaOptions, resolverOptions = {}) =>
+  (values, _, options) => {
+    const result = validate(values, schema, schemaOptions);
 
     if (result[0]) {
       return {
@@ -28,7 +29,7 @@ export const superstructResolver: Resolver =
     options.shouldUseNativeValidation && validateFieldsNatively({}, options);
 
     return {
-      values: result[1],
+      values: resolverOptions.raw ? values : result[1],
       errors: {},
     };
   };

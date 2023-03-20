@@ -4,11 +4,11 @@ import { schema, validData, invalidData, fields } from './__fixtures__/data';
 const shouldUseNativeValidation = false;
 
 describe('zodResolver', () => {
-  it('should return values from zodResolver when validation pass & rawValues=true', async () => {
+  it('should return values from zodResolver when validation pass & raw=true', async () => {
     const parseAsyncSpy = vi.spyOn(schema, 'parseAsync');
 
     const result = await zodResolver(schema, undefined, {
-      rawValues: true,
+      raw: true,
     })(validData, undefined, {
       fields,
       shouldUseNativeValidation,
@@ -76,5 +76,17 @@ describe('zodResolver', () => {
     );
 
     expect(result).toMatchSnapshot();
+  });
+
+  it('should throw any error unrelated to Zod', async () => {
+    const schemaWithCustomError = schema.refine(() => {
+      throw Error('custom error');
+    });
+    const promise = zodResolver(schemaWithCustomError)(validData, undefined, {
+      fields,
+      shouldUseNativeValidation,
+    });
+
+    await expect(promise).rejects.toThrow('custom error');
   });
 });

@@ -21,4 +21,20 @@ describe('computedTypesResolver', () => {
 
     expect(result).toMatchSnapshot();
   });
+
+  it('should throw any error unrelated to computed-types', async () => {
+    const schemaWithCustomError = schema.transform(() => {
+      throw Error('custom error');
+    });
+    const promise = computedTypesResolver(schemaWithCustomError)(
+      validData,
+      undefined,
+      {
+        fields,
+        shouldUseNativeValidation,
+      },
+    );
+
+    await expect(promise).rejects.toThrow('custom error');
+  });
 });
