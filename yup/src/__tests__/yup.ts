@@ -92,7 +92,7 @@ describe('yupResolver', () => {
       name: yup
         .string()
         .required()
-        .when('$min', (min: boolean, schema: yup.StringSchema) => {
+        .when('$min', ([min], schema) => {
           return min ? schema.min(6) : schema;
         }),
     });
@@ -178,15 +178,17 @@ describe('yupResolver', () => {
     );
   });
 
-  it('should throw an error without inner property', () => {
-    expect(
-      yupResolver(schemaWithWhen)({ name: 'test', value: '' }, undefined, {
+  it('should throw an error without inner property', async () => {
+    const result = await yupResolver(schemaWithWhen)(
+      { name: 'test', value: '' },
+      undefined,
+      {
         fields,
         shouldUseNativeValidation,
-      }),
-    ).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"You cannot `concat()` schema\'s of different types: string and number"',
+      },
     );
+
+    expect(result).toMatchSnapshot();
   });
 
   it('should throw any error unrelated to Yup', async () => {

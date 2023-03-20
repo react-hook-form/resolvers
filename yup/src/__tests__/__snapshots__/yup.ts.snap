@@ -18,7 +18,7 @@ exports[`yupResolver > should return a single error from yupResolver when valida
         "name": {
           "message": "like[0].name is a required field",
           "ref": undefined,
-          "type": "required",
+          "type": "optionality",
         },
       },
     ],
@@ -34,7 +34,7 @@ exports[`yupResolver > should return a single error from yupResolver when valida
       "ref": {
         "name": "username",
       },
-      "type": "required",
+      "type": "optionality",
     },
   },
   "values": {},
@@ -59,7 +59,7 @@ exports[`yupResolver > should return a single error from yupResolver with \`mode
         "name": {
           "message": "like[0].name is a required field",
           "ref": undefined,
-          "type": "required",
+          "type": "optionality",
         },
       },
     ],
@@ -75,7 +75,7 @@ exports[`yupResolver > should return a single error from yupResolver with \`mode
       "ref": {
         "name": "username",
       },
-      "type": "required",
+      "type": "optionality",
     },
   },
   "values": {},
@@ -106,9 +106,9 @@ exports[`yupResolver > should return all the errors from yupResolver when valida
         "name": {
           "message": "like[0].name is a required field",
           "ref": undefined,
-          "type": "required",
+          "type": "optionality",
           "types": {
-            "required": "like[0].name is a required field",
+            "optionality": "like[0].name is a required field",
           },
         },
       },
@@ -133,9 +133,9 @@ exports[`yupResolver > should return all the errors from yupResolver when valida
       "ref": {
         "name": "username",
       },
-      "type": "required",
+      "type": "optionality",
       "types": {
-        "required": "username is a required field",
+        "optionality": "username is a required field",
       },
     },
   },
@@ -167,9 +167,9 @@ exports[`yupResolver > should return all the errors from yupResolver when valida
         "name": {
           "message": "like[0].name is a required field",
           "ref": undefined,
-          "type": "required",
+          "type": "optionality",
           "types": {
-            "required": "like[0].name is a required field",
+            "optionality": "like[0].name is a required field",
           },
         },
       },
@@ -194,9 +194,9 @@ exports[`yupResolver > should return all the errors from yupResolver when valida
       "ref": {
         "name": "username",
       },
-      "type": "required",
+      "type": "optionality",
       "types": {
-        "required": "username is a required field",
+        "optionality": "username is a required field",
       },
     },
   },
@@ -224,6 +224,19 @@ exports[`yupResolver > should return correct error message with using yup.test 1
       "message": "Email or name are required",
       "ref": undefined,
       "type": "name",
+    },
+  },
+  "values": {},
+}
+`;
+
+exports[`yupResolver > should throw an error without inner property 1`] = `
+{
+  "errors": {
+    "value": {
+      "message": "value must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"\\"\`).",
+      "ref": undefined,
+      "type": "typeError",
     },
   },
   "values": {},

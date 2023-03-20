@@ -2,6 +2,8 @@
 import { classValidatorResolver } from '..';
 import { Schema, validData, fields, invalidData } from './__fixtures__/data';
 import * as classValidator from 'class-validator';
+import { Expose, Type } from 'class-transformer';
+import { IsDefined, IsNumber, Max, Min } from 'class-validator';
 
 const shouldUseNativeValidation = false;
 
@@ -84,4 +86,62 @@ describe('classValidatorResolver', () => {
 
     expect(result).toMatchSnapshot();
   });
+});
+
+it('validate data with transformer option', async () => {
+  class SchemaTest {
+    @Expose({ groups: ['find', 'create', 'update'] })
+    @Type(() => Number)
+    @IsDefined({
+      message: `All fields must be defined.`,
+      groups: ['publish'],
+    })
+    @IsNumber({}, { message: `Must be a number`, always: true })
+    @Min(0, { message: `Cannot be lower than 0`, always: true })
+    @Max(255, { message: `Cannot be greater than 255`, always: true })
+    random: number;
+  }
+
+  const result = await classValidatorResolver(
+    SchemaTest,
+    { transformer: { groups: ['update'] } },
+    {
+      mode: 'sync',
+    },
+  )(invalidData, undefined, {
+    fields,
+    criteriaMode: 'all',
+    shouldUseNativeValidation,
+  });
+
+  expect(result).toMatchSnapshot();
+});
+
+it('validate data with validator option', async () => {
+  class SchemaTest {
+    @Expose({ groups: ['find', 'create', 'update'] })
+    @Type(() => Number)
+    @IsDefined({
+      message: `All fields must be defined.`,
+      groups: ['publish'],
+    })
+    @IsNumber({}, { message: `Must be a number`, always: true })
+    @Min(0, { message: `Cannot be lower than 0`, always: true })
+    @Max(255, { message: `Cannot be greater than 255`, always: true })
+    random: number;
+  }
+
+  const result = await classValidatorResolver(
+    SchemaTest,
+    { validator: { stopAtFirstError: true } },
+    {
+      mode: 'sync',
+    },
+  )(invalidData, undefined, {
+    fields,
+    criteriaMode: 'all',
+    shouldUseNativeValidation,
+  });
+
+  expect(result).toMatchSnapshot();
 });
