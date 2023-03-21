@@ -411,6 +411,8 @@ The fastest JSON validator for Node.js and browser
 
 [![npm](https://img.shields.io/bundlephobia/minzip/ajv?style=for-the-badge)](https://bundlephobia.com/result?p=ajv)
 
+Read more about [ajv resolver api](./ajv/README.md)
+
 ```tsx
 import { useForm } from 'react-hook-form';
 import { ajvResolver } from '@hookform/resolvers/ajv';
