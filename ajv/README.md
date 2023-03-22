@@ -45,9 +45,9 @@ As our form has all fields present by design, `ajv` will validate them. For exam
       type: 'string',
       minLength: 3,
     },
-    description: {
+    email: {
       type: 'string',
-      pattern: '.*[A-Z].*'
+      pattern: '^[0-9a-zA-Z\.]+@[0-9a-zA-Z]+\.com$'
     }
   }
 }
@@ -55,10 +55,10 @@ As our form has all fields present by design, `ajv` will validate them. For exam
 // form values
 {
   username: 'amazing user',
-  description: '',
+  email: '',
 }
 
-// Even though "description" is optional, as it's present, ajv validation will fail
+// Even though "email" is optional, as it's present, ajv validation will fail
 ```
 
 In order to address this problem, we can define a `transform` function that will be executed before `ajv` validate the data and before submitting it:
