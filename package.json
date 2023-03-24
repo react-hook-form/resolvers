@@ -186,7 +186,7 @@
   },
   "homepage": "https://react-hook-form.com",
   "devDependencies": {
-    "@sinclair/typebox": "^0.25.24",
+    "@sinclair/typebox": "^0.26.3",
     "@testing-library/dom": "^9.0.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
