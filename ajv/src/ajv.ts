@@ -1,11 +1,11 @@
 import { toNestError, validateFieldsNatively } from '@hookform/resolvers';
-import Ajv, { DefinedError } from 'ajv';
+import Ajv, { ErrorObject, ValidateFunction } from 'ajv';
 import ajvErrors from 'ajv-errors';
 import { appendErrors, FieldError } from 'react-hook-form';
 import { Resolver } from './types';
 
 const parseErrorSchema = (
-  ajvErrors: DefinedError[],
+  ajvErrors: ErrorObject[],
   validateAllFieldCriteria: boolean,
 ) => {
   // Ajv will return empty instancePath when require error
@@ -46,7 +46,7 @@ const parseErrorSchema = (
 };
 
 export const ajvResolver: Resolver =
-  (schema, schemaOptions, { mode = 'sync', transform } = {}) =>
+  (schema, schemaOptions, { mode = 'async', transform } = {}) =>
   async (values, _, options) => {
     const ajv = new Ajv(
       Object.assign(
@@ -62,23 +62,24 @@ export const ajvResolver: Resolver =
     ajvErrors(ajv);
 
     const validate = ajv.compile(
-      Object.assign(
-        { $async: mode === 'async' },
-        schema,
-      ),
+      Object.assign({ $async: mode === 'async' }, schema),
     );
 
-    const valid = validate(transform ? transform(values) : values);
+    const result = await validateByMode(
+      validate,
+      transform ? transform(values) : values,
+      mode,
+    );
 
     options.shouldUseNativeValidation && validateFieldsNatively({}, options);
 
-    return valid
+    return result.valid
       ? { values, errors: {} }
       : {
           values: {},
           errors: toNestError(
             parseErrorSchema(
-              validate.errors as DefinedError[],
+              result.errors,
               !options.shouldUseNativeValidation &&
                 options.criteriaMode === 'all',
             ),
@@ -86,3 +87,29 @@ export const ajvResolver: Resolver =
           ),
         };
   };
+
+async function validateByMode(
+  validate: ValidateFunction,
+  values: Record<string, any>,
+  mode: 'sync' | 'async',
+) {
+  let valid = false;
+  let errors: ErrorObject[] = [];
+  if (mode === 'sync') {
+    valid = validate(values);
+    errors = validate.errors ?? [];
+  } else {
+    try {
+      await validate(values);
+      valid = true;
+    } catch (err) {
+      if (!(err instanceof Ajv.ValidationError)) {
+        throw err;
+      }
+
+      errors = err.errors as ErrorObject[];
+    }
+  }
+
+  return { valid, errors };
+}

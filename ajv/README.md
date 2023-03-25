@@ -19,7 +19,7 @@ ajvResolver(schema: object, schemaOptions?: object, resolverOptions?: Options)
 | schemaOptions.allErrors      | `boolean`            |          | true                                             |
 | schemaOptions.validateSchema | `boolean`            |          | true                                             |
 | resolverOptions              | `Options`            |          | resolver                                         |
-| resolverOptions.mode         | `async     \|  sync` |          | sync                                             |
+| resolverOptions.mode         | `async     \|  sync` |          | async                                            |
 | resolverOptions.transform    | `Function`           |          | function to transform data before validation (1) |
 
 (1) Make sure to not mutate given "values" object
