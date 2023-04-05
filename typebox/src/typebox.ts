@@ -40,7 +40,7 @@ const parseErrorSchema = (
 
 export const typeboxResolver: Resolver =
   (schema) => async (values, _, options) => {
-    const errors = [...Value.Errors(schema, values)];
+    const errors = Array.from(Value.Errors(schema, values));
 
     options.shouldUseNativeValidation && validateFieldsNatively({}, options);
 
