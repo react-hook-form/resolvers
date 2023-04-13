@@ -486,6 +486,37 @@ const App = () => {
 };
 ```
 
+### [ArkType](https://github.com/arktypeio/arktype)
+
+TypeScript's 1:1 validator, optimized from editor to runtime
+
+[![npm](https://img.shields.io/bundlephobia/minzip/arktype?style=for-the-badge)](https://bundlephobia.com/result?p=arktype)
+
+```typescript jsx
+import { useForm } from 'react-hook-form';
+import { arktypeResolver } from '@hookform/resolvers/arktype';
+import { type } from 'arktype';
+
+const schema = type({
+  username: 'string>1',
+  password: 'string>1',
+});
+
+const App = () => {
+  const { register, handleSubmit } = useForm({
+    resolver: arktypeResolver(schema),
+  });
+
+  return (
+    <form onSubmit={handleSubmit((d) => console.log(d))}>
+      <input {...register('username')} />
+      <input type="password" {...register('password')} />
+      <input type="submit" />
+    </form>
+  );
+};
+```
+
 ## Backers
 
 Thanks goes to all our backers! [[Become a backer](https://opencollective.com/react-hook-form#backer)].

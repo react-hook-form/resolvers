@@ -14,6 +14,7 @@ specifiers:
   '@vitejs/plugin-react': ^3.1.0
   ajv: ^8.12.0
   ajv-errors: ^3.0.0
+  arktype: 1.0.13-alpha
   check-export-map: ^1.3.0
   class-transformer: ^0.5.1
   class-validator: ^0.14.0
@@ -62,6 +63,7 @@ devDependencies:
   '@vitejs/plugin-react': 3.1.0_vite@4.2.1
   ajv: 8.12.0
   ajv-errors: 3.0.0_ajv@8.12.0
+  arktype: 1.0.13-alpha
   check-export-map: 1.3.0
   class-transformer: 0.5.1
   class-validator: 0.14.0
@@ -2359,6 +2361,11 @@ packages:
     resolution: {integrity: sha512-R5iJ5lkuHybztUfuOAznmboyjWq8O6sqNqtK7CLOqdydi54VNbORp49mb14KbWgG1QD3JFO9hJdZ+y4KutfdOQ==}
     dependencies:
       deep-equal: 2.2.0
+    dev: true
+
+  /arktype/1.0.13-alpha:
+    resolution: {integrity: sha512-2WRZj8oKnIZnCtVM4lOBWZzh8ay08207ssiNm6tT67CQYju7voVaqWM3hzOSVCq4EvyYy67EQUdEyxNKLfxo9Q==}
+    requiresBuild: true
     dev: true
 
   /array-buffer-byte-length/1.0.0:
