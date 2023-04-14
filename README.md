@@ -24,6 +24,21 @@
 
 - [React-hook-form validation resolver documentation ](https://react-hook-form.com/api/useform/#resolver)
 
+### Supported resolvers
+
+- [Yup](#Yup)
+- [Zod](#Zod)
+- [Superstruct](#Superstruct)
+- [Joi](#Joi)
+- [Class Validator](#Class-Validator)
+- [io-ts](#io-ts)
+- [Nope](#Nope)
+- [computed-types](#computed-types)
+- [typanion](#typanion)
+- [Ajv](#Ajv)
+- [TypeBox](#TypeBox)
+- [ArkType](#ArkType)
+
 ## API
 
 ```
