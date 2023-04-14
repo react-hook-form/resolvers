@@ -45,7 +45,6 @@ test("form's validation with arkType and TypeScript's integration", async () => 
   expect(screen.queryAllByRole('alert')).toHaveLength(0);
 
   await user.click(screen.getByText(/submit/i));
-  screen.debug();
 
   expect(
     screen.getByText('username must be more than 1 characters (was 0)'),
