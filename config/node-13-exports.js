@@ -14,6 +14,7 @@ const subRepositories = [
   'typanion',
   'ajv',
   'typebox',
+  'arktype'
 ];
 
 const copySrc = () => {

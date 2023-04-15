@@ -1,0 +1,76 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`arktypeResolver > should return a single error from arktypeResolver when validation fails 1`] = `
+{
+  "errors": {
+    "accessToken": {
+      "message": "accessToken must be defined",
+      "ref": undefined,
+      "type": "missing",
+    },
+    "birthYear": {
+      "message": "birthYear must be a number (was string)",
+      "ref": undefined,
+      "type": "domain",
+    },
+    "dateStr": {
+      "message": "dateStr must be defined",
+      "ref": undefined,
+      "type": "missing",
+    },
+    "email": {
+      "message": "email must be a valid email (was '')",
+      "ref": {
+        "name": "email",
+      },
+      "type": "regex",
+    },
+    "enabled": {
+      "message": "enabled must be defined",
+      "ref": undefined,
+      "type": "missing",
+    },
+    "like": [
+      {
+        "id": {
+          "message": "like/0/id must be a number (was string)",
+          "ref": undefined,
+          "type": "domain",
+        },
+        "name": {
+          "message": "like/0/name must be defined",
+          "ref": undefined,
+          "type": "missing",
+        },
+      },
+    ],
+    "password": {
+      "message": "At password, '___' must be...
+• more than 8 characters
+• a string matching /.*[A-Za-z].*/",
+      "ref": {
+        "name": "password",
+      },
+      "type": "multi",
+    },
+    "repeatPassword": {
+      "message": "repeatPassword must be defined",
+      "ref": undefined,
+      "type": "missing",
+    },
+    "tags": {
+      "message": "tags must be defined",
+      "ref": undefined,
+      "type": "missing",
+    },
+    "username": {
+      "message": "username must be defined",
+      "ref": {
+        "name": "username",
+      },
+      "type": "missing",
+    },
+  },
+  "values": {},
+}
+`;

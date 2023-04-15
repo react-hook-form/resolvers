@@ -4,9 +4,9 @@ exports[`typeboxResolver > should return a single error from typeboxResolver whe
 {
   "errors": {
     "accessToken": {
-      "message": "Expected string",
+      "message": "Expected value of union",
       "ref": undefined,
-      "type": "43",
+      "type": "53",
     },
     "birthYear": {
       "message": "Expected number",
@@ -77,9 +77,9 @@ exports[`typeboxResolver > should return all the errors from typeboxResolver whe
 {
   "errors": {
     "accessToken": {
-      "message": "Expected string",
+      "message": "Expected value of union",
       "ref": undefined,
-      "type": "43",
+      "type": "53",
       "types": {
         "29": "Expected number",
         "39": "Expected required property",
