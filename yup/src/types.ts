@@ -1,11 +1,13 @@
 import { FieldValues, ResolverOptions, ResolverResult } from 'react-hook-form';
 import * as Yup from 'yup';
 
-type Options<T extends Yup.ObjectSchema<any>> = Parameters<T['validate']>[1];
+type Options<T extends Yup.ObjectSchema<V>, V extends FieldValues> = Parameters<
+  T['validate']
+>[1];
 
-export type Resolver = <T extends Yup.ObjectSchema<any>>(
+export type Resolver = <T extends Yup.ObjectSchema<V>, V extends FieldValues>(
   schema: T,
-  schemaOptions?: Options<T>,
+  schemaOptions?: Options<T, V>,
   factoryOptions?: {
     /**
      * @default async
