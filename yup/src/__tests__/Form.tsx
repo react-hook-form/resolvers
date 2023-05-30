@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '..';
 
@@ -10,10 +10,10 @@ const schema = Yup.object({
   password: Yup.string().required(),
 });
 
-type FormData = Yup.InferType<typeof schema> & { unusedProperty: string };
+type FormData = Yup.InferType<typeof schema>;
 
 interface Props {
-  onSubmit: (data: FormData) => void;
+  onSubmit: SubmitHandler<FormData>;
 }
 
 function TestComponent({ onSubmit }: Props) {
@@ -21,7 +21,7 @@ function TestComponent({ onSubmit }: Props) {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm<FormData>({
+  } = useForm({
     resolver: yupResolver(schema), // Useful to check TypeScript regressions
   });
 
