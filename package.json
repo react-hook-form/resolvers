@@ -223,7 +223,7 @@
     "io-ts": "^2.2.20",
     "io-ts-types": "^0.5.19",
     "joi": "^17.9.1",
-    "jsdom": "^21.1.1",
+    "jsdom": "^22.1.0",
     "lint-staged": "^13.2.1",
     "microbundle": "^0.15.1",
     "monocle-ts": "^2.3.13",
