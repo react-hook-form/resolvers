@@ -35,7 +35,7 @@ export const schemaWithWhen = yup.object({
   }),
 });
 
-export const validData: yup.InferType<typeof schema> = {
+export const validData = {
   username: 'Doe',
   password: 'Password123_',
   repeatPassword: 'Password123_',
@@ -50,14 +50,15 @@ export const validData: yup.InferType<typeof schema> = {
       name: 'name',
     },
   ],
-};
+} satisfies yup.InferType<typeof schema>;
 
 export const invalidData = {
   password: '___',
   email: '',
   birthYear: 'birthYear',
   like: [{ id: 'z' }],
-};
+  // Must be set to "unknown", otherwise typescript knows that it is invalid
+} as unknown as Required<yup.InferType<typeof schema>>;
 
 export const fields: Record<InternalFieldName, Field['_f']> = {
   username: {
