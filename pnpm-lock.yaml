@@ -2,8 +2,8 @@ lockfileVersion: '6.0'
 
 devDependencies:
   '@sinclair/typebox':
-    specifier: ^0.27.6
-    version: 0.27.6
+    specifier: ^0.28.18
+    version: 0.28.18
   '@testing-library/dom':
     specifier: ^9.2.0
     version: 9.2.0
@@ -1909,8 +1909,8 @@ packages:
     resolution: {integrity: sha512-XJfwUVUKDHF5ugKwIcxEgc9k8b7HbznCp6eUfWgu710hMPNIO4aw4/zB5RogDQz8nd6gyCDpU9O/m6qYEWY6yQ==}
     dev: true
 
-  /@sinclair/typebox@0.27.6:
-    resolution: {integrity: sha512-Mp7BRgoCKdukKBxCaSWf7kGMd0lA4yaz7fQTYTe4pTEwBBcXNih7/xynWApgOsFGMQe5fwJR7Av952E1BVQOtw==}
+  /@sinclair/typebox@0.28.18:
+    resolution: {integrity: sha512-I19d36CXlLAsm+nrl7VKsYyirFLtdebT2nlfV3Knvo0tnk8B8UKyt3DEqNJexEb/2pKPtdXNLcr72aJtfl6whA==}
     dev: true
 
   /@surma/rollup-plugin-off-main-thread@2.2.3:
