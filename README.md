@@ -26,18 +26,18 @@
 
 ### Supported resolvers
 
-- [Yup](#Yup)
-- [Zod](#Zod)
-- [Superstruct](#Superstruct)
-- [Joi](#Joi)
-- [Class Validator](#Class-Validator)
+- [Yup](#yup)
+- [Zod](#zod)
+- [Superstruct](#superstruct)
+- [Joi](#joi)
+- [Class Validator](#class-validator)
 - [io-ts](#io-ts)
-- [Nope](#Nope)
+- [Nope](#nope)
 - [computed-types](#computed-types)
 - [typanion](#typanion)
-- [Ajv](#Ajv)
-- [TypeBox](#TypeBox)
-- [ArkType](#ArkType)
+- [Ajv](#ajv)
+- [TypeBox](#typebox)
+- [ArkType](#arktype)
 
 ## API
 
