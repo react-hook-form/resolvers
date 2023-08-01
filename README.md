@@ -26,18 +26,28 @@
 
 ### Supported resolvers
 
-- [Yup](#yup)
-- [Zod](#zod)
-- [Superstruct](#superstruct)
-- [Joi](#joi)
-- [Class Validator](#class-validator)
-- [io-ts](#io-ts)
-- [Nope](#nope)
-- [computed-types](#computed-types)
-- [typanion](#typanion)
-- [Ajv](#ajv)
-- [TypeBox](#typebox)
-- [ArkType](#arktype)
+- [Install](#install)
+- [Links](#links)
+  - [Supported resolvers](#supported-resolvers)
+- [API](#api)
+- [Quickstart](#quickstart)
+  - [Yup](#yup)
+  - [Zod](#zod)
+  - [Superstruct](#superstruct)
+  - [Joi](#joi)
+  - [Vest](#vest)
+  - [Class Validator](#class-validator)
+  - [io-ts](#io-ts)
+  - [Nope](#nope)
+  - [computed-types](#computed-types)
+  - [typanion](#typanion)
+  - [Ajv](#ajv)
+  - [TypeBox](#typebox)
+  - [ArkType](#arktype)
+  - [Valibot](#valibot)
+- [Backers](#backers)
+  - [Sponsors](#sponsors)
+- [Contributors](#contributors)
 
 ## API
 
@@ -520,6 +530,40 @@ const schema = type({
 const App = () => {
   const { register, handleSubmit } = useForm({
     resolver: arktypeResolver(schema),
+  });
+
+  return (
+    <form onSubmit={handleSubmit((d) => console.log(d))}>
+      <input {...register('username')} />
+      <input type="password" {...register('password')} />
+      <input type="submit" />
+    </form>
+  );
+};
+```
+
+### [Valibot](https://github.com/fabian-hiller/valibot)
+
+The modular and type safe schema library for validating structural data
+
+[![npm](https://img.shields.io/bundlephobia/minzip/valibot?style=for-the-badge)](https://bundlephobia.com/result?p=valibot)
+
+```typescript jsx
+import { useForm } from 'react-hook-form';
+import { valibotResolver } from '@hookform/resolvers/valibot';
+import { type } from 'arktype';
+
+const schema = object({
+  username: string([
+    minLength(3, 'Needs to be at least 3 characters'),
+    endsWith('cool', 'Needs to end with `cool`'),
+  ]),
+  password: string(),
+});
+
+const App = () => {
+  const { register, handleSubmit } = useForm({
+    resolver: valibotResolver(schema),
   });
 
   return (

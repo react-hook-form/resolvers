@@ -1,0 +1,79 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`valibotResolver > should return a single error from valibotResolver when validation fails 1`] = `
+{
+  "errors": {
+    "accessToken": {
+      "message": "Invalid type",
+      "ref": undefined,
+      "type": "non_optional",
+    },
+    "birthYear": {
+      "message": "Please enter your birth year",
+      "ref": undefined,
+      "type": "number",
+    },
+    "email": {
+      "message": "Invalid email address",
+      "ref": {
+        "name": "email",
+      },
+      "type": "email",
+    },
+    "enabled": {
+      "message": "Invalid type",
+      "ref": undefined,
+      "type": "non_optional",
+    },
+    "like": {
+      "id": {
+        "message": "Like id is required",
+        "ref": undefined,
+        "type": "number",
+      },
+      "name": {
+        "message": "Invalid type",
+        "ref": undefined,
+        "type": "non_optional",
+      },
+    },
+    "password": {
+      "message": "One uppercase character",
+      "ref": {
+        "name": "password",
+      },
+      "type": "regex",
+    },
+    "repeatPassword": {
+      "message": "Invalid type",
+      "ref": undefined,
+      "type": "non_optional",
+    },
+    "tags": [
+      {
+        "message": "Tags should be strings",
+        "ref": undefined,
+        "type": "string",
+      },
+      {
+        "message": "Tags should be strings",
+        "ref": undefined,
+        "type": "string",
+      },
+      {
+        "message": "Tags should be strings",
+        "ref": undefined,
+        "type": "string",
+      },
+    ],
+    "username": {
+      "message": "Invalid type",
+      "ref": {
+        "name": "username",
+      },
+      "type": "non_optional",
+    },
+  },
+  "values": {},
+}
+`;

@@ -93,6 +93,12 @@
       "import": "./arktype/dist/arktype.mjs",
       "require": "./arktype/dist/arktype.js"
     },
+    "./valibot": {
+      "types": "./valibot/dist/index.d.ts",
+      "umd": "./valibot/dist/valibot.umd.js",
+      "import": "./valibot/dist/valibot.mjs",
+      "require": "./valibot/dist/valibot.js"
+    },
     "./package.json": "./package.json",
     "./*": "./*"
   },
@@ -136,7 +142,10 @@
     "typebox/dist",
     "arktype/package.json",
     "arktype/src",
-    "arktype/dist"
+    "arktype/dist",
+    "valibot/package.json",
+    "valibot/src",
+    "valibot/dist"
   ],
   "publishConfig": {
     "access": "public"
@@ -158,6 +167,7 @@
     "build:ajv": "microbundle --cwd ajv --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
     "build:typebox": "microbundle --cwd typebox --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm,@sinclair/typebox/value=value",
     "build:arktype": "microbundle --cwd arktype --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
+    "build:valibot": "microbundle --cwd valibot --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
     "postbuild": "node ./config/node-13-exports.js",
     "lint": "eslint . --ext .ts,.js --ignore-path .gitignore",
     "lint:types": "tsc",
@@ -238,6 +248,7 @@
     "superstruct": "^1.0.3",
     "typanion": "^3.12.1",
     "typescript": "^5.0.4",
+    "valibot": "^0.8.0",
     "vest": "^4.6.9",
     "vite": "^4.2.1",
     "vite-tsconfig-paths": "^4.2.0",
