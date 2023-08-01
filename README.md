@@ -551,14 +551,14 @@ The modular and type safe schema library for validating structural data
 ```typescript jsx
 import { useForm } from 'react-hook-form';
 import { valibotResolver } from '@hookform/resolvers/valibot';
-import { type } from 'arktype';
+import { object, string, minLength, endsWith } from 'valibot';
 
 const schema = object({
-  username: string([
+  username: string('username is required', [
     minLength(3, 'Needs to be at least 3 characters'),
     endsWith('cool', 'Needs to end with `cool`'),
   ]),
-  password: string(),
+  password: string('password is required'),
 });
 
 const App = () => {
