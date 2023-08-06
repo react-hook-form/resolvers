@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 devDependencies:
   '@sinclair/typebox':
     specifier: ^0.27.6
@@ -124,6 +128,9 @@ devDependencies:
   typescript:
     specifier: ^5.0.4
     version: 5.0.4
+  valibot:
+    specifier: ^0.8.0
+    version: 0.8.0
   vest:
     specifier: ^4.6.9
     version: 4.6.9
@@ -6514,6 +6521,10 @@ packages:
 
   /util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
+    dev: true
+
+  /valibot@0.8.0:
+    resolution: {integrity: sha512-wQHXVkVFj6Z0R3297icGCp3UX8S66onuIg03ihJ8aVgMn8pMJvYSfmrKb+aIg7w/Aw08togrklaMSqDP2vKtIA==}
     dev: true
 
   /validate-npm-package-license@3.0.4:
