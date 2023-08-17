@@ -20,6 +20,19 @@ describe('classValidatorResolver', () => {
     expect(schemaSpy).toHaveBeenCalledTimes(1);
     expect(schemaSyncSpy).not.toHaveBeenCalled();
     expect(result).toEqual({ errors: {}, values: validData });
+    expect(result.values).toBeInstanceOf(Schema);
+  });
+
+  it('should return values as a raw object from classValidatorResolver when `rawValues` set to true', async () => {
+    const result = await classValidatorResolver(Schema, undefined, {
+      rawValues: true,
+    })(validData, undefined, {
+      fields,
+      shouldUseNativeValidation,
+    });
+
+    expect(result).toEqual({ errors: {}, values: validData });
+    expect(result.values).not.toBeInstanceOf(Schema);
   });
 
   it('should return values from classValidatorResolver with `mode: sync` when validation pass', async () => {
@@ -33,6 +46,7 @@ describe('classValidatorResolver', () => {
     expect(validateSyncSpy).toHaveBeenCalledTimes(1);
     expect(validateSpy).not.toHaveBeenCalled();
     expect(result).toEqual({ errors: {}, values: validData });
+    expect(result.values).toBeInstanceOf(Schema);
   });
 
   it('should return a single error from classValidatorResolver when validation fails', async () => {
@@ -144,4 +158,31 @@ it('validate data with validator option', async () => {
   });
 
   expect(result).toMatchSnapshot();
+});
+
+it('should return from classValidatorResolver with `excludeExtraneousValues` set to true', async () => {
+  class SchemaTest {
+    @Expose()
+    @IsNumber({}, { message: `Must be a number`, always: true })
+    random: number;
+  }
+
+  const result = await classValidatorResolver(SchemaTest, {
+    transformer: {
+      excludeExtraneousValues: true,
+    },
+  })(
+    {
+      random: 10,
+      extraneousField: true,
+    },
+    undefined,
+    {
+      fields,
+      shouldUseNativeValidation,
+    },
+  );
+
+  expect(result).toEqual({ errors: {}, values: { random: 10 } });
+  expect(result.values).toBeInstanceOf(SchemaTest);
 });
