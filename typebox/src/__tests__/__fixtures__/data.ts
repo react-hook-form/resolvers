@@ -1,10 +1,5 @@
 import { Field, InternalFieldName } from 'react-hook-form';
 import { Static, Type } from '@sinclair/typebox';
-import { TypeSystem } from '@sinclair/typebox/system';
-
-TypeSystem.CreateFormat('email', (value: string) => {
-  return /^\S+@\S+$/.test(value);
-});
 
 export const schema = Type.Object({
   username: Type.String({
@@ -24,7 +19,7 @@ export const schema = Type.Object({
       maximum: 2013,
     }),
   ),
-  email: Type.Optional(Type.String({ format: 'email' })),
+  email: Type.Optional(Type.RegExp(/^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i)),
   tags: Type.Array(Type.String()),
   enabled: Type.Boolean(),
   like: Type.Optional(
@@ -43,7 +38,7 @@ export const validData: Static<typeof schema> = {
   password: 'Password123_',
   repeatPassword: 'Password123_',
   birthYear: 2000,
-  email: 'tsulatsitamim@gmail.com',
+  email: 'google@gmail.com',
   tags: ['tag1', 'tag2'],
   enabled: true,
   accessToken: 'accessToken',

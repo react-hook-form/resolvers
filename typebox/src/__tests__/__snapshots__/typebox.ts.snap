@@ -4,43 +4,43 @@ exports[`typeboxResolver > should return a single error from typeboxResolver whe
 {
   "errors": {
     "accessToken": {
-      "message": "Expected value of union",
+      "message": "Required property",
       "ref": undefined,
-      "type": "53",
+      "type": "45",
     },
     "birthYear": {
       "message": "Expected number",
       "ref": undefined,
-      "type": "29",
+      "type": "41",
     },
     "dateStr": {
-      "message": "Expected Date object",
+      "message": "Required property",
       "ref": undefined,
-      "type": "11",
+      "type": "45",
     },
     "email": {
-      "message": "Expected string to match format 'email'",
+      "message": "Expected string to match '^[a-z0-9!#$%&'*+/=?^_\`{|}~-]+(?:\\\\.[a-z0-9!#$%&'*+/=?^_\`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$'",
       "ref": {
         "name": "email",
       },
-      "type": "48",
+      "type": "52",
     },
     "enabled": {
-      "message": "Expected boolean",
+      "message": "Required property",
       "ref": undefined,
-      "type": "10",
+      "type": "45",
     },
     "like": [
       {
         "id": {
           "message": "Expected number",
           "ref": undefined,
-          "type": "29",
+          "type": "41",
         },
         "name": {
-          "message": "Expected string",
+          "message": "Required property",
           "ref": undefined,
-          "type": "43",
+          "type": "45",
         },
       },
     ],
@@ -49,24 +49,24 @@ exports[`typeboxResolver > should return a single error from typeboxResolver whe
       "ref": {
         "name": "password",
       },
-      "type": "44",
+      "type": "51",
     },
     "repeatPassword": {
-      "message": "Expected string",
+      "message": "Required property",
       "ref": undefined,
-      "type": "43",
+      "type": "45",
     },
     "tags": {
-      "message": "Expected array",
+      "message": "Required property",
       "ref": undefined,
-      "type": "0",
+      "type": "45",
     },
     "username": {
-      "message": "Expected string",
+      "message": "Required property",
       "ref": {
         "name": "username",
       },
-      "type": "43",
+      "type": "45",
     },
   },
   "values": {},
@@ -77,50 +77,48 @@ exports[`typeboxResolver > should return all the errors from typeboxResolver whe
 {
   "errors": {
     "accessToken": {
-      "message": "Expected value of union",
+      "message": "Required property",
       "ref": undefined,
-      "type": "53",
+      "type": "45",
       "types": {
-        "29": "Expected number",
-        "39": "Expected required property",
-        "43": "Expected string",
-        "53": "Expected value of union",
+        "45": "Required property",
+        "61": "Expected union value",
       },
     },
     "birthYear": {
       "message": "Expected number",
       "ref": undefined,
-      "type": "29",
+      "type": "41",
       "types": {
-        "29": "Expected number",
+        "41": "Expected number",
       },
     },
     "dateStr": {
-      "message": "Expected Date object",
+      "message": "Required property",
       "ref": undefined,
-      "type": "11",
+      "type": "45",
       "types": {
-        "11": "Expected Date object",
-        "39": "Expected required property",
+        "20": "Expected Date",
+        "45": "Required property",
       },
     },
     "email": {
-      "message": "Expected string to match format 'email'",
+      "message": "Expected string to match '^[a-z0-9!#$%&'*+/=?^_\`{|}~-]+(?:\\\\.[a-z0-9!#$%&'*+/=?^_\`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$'",
       "ref": {
         "name": "email",
       },
-      "type": "48",
+      "type": "52",
       "types": {
-        "48": "Expected string to match format 'email'",
+        "52": "Expected string to match '^[a-z0-9!#$%&'*+/=?^_\`{|}~-]+(?:\\\\.[a-z0-9!#$%&'*+/=?^_\`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$'",
       },
     },
     "enabled": {
-      "message": "Expected boolean",
+      "message": "Required property",
       "ref": undefined,
-      "type": "10",
+      "type": "45",
       "types": {
-        "10": "Expected boolean",
-        "39": "Expected required property",
+        "14": "Expected boolean",
+        "45": "Required property",
       },
     },
     "like": [
@@ -128,18 +126,18 @@ exports[`typeboxResolver > should return all the errors from typeboxResolver whe
         "id": {
           "message": "Expected number",
           "ref": undefined,
-          "type": "29",
+          "type": "41",
           "types": {
-            "29": "Expected number",
+            "41": "Expected number",
           },
         },
         "name": {
-          "message": "Expected string",
+          "message": "Required property",
           "ref": undefined,
-          "type": "43",
+          "type": "45",
           "types": {
-            "39": "Expected required property",
-            "43": "Expected string",
+            "45": "Required property",
+            "53": "Expected string",
           },
         },
       },
@@ -149,39 +147,39 @@ exports[`typeboxResolver > should return all the errors from typeboxResolver whe
       "ref": {
         "name": "password",
       },
-      "type": "44",
+      "type": "51",
       "types": {
-        "44": "Expected string length greater or equal to 8",
-        "46": "Expected string to match pattern ^(.*[A-Za-z\\\\d].*)$",
+        "51": "Expected string length greater or equal to 8",
+        "52": "Expected string to match '^(.*[A-Za-z\\\\d].*)$'",
       },
     },
     "repeatPassword": {
-      "message": "Expected string",
+      "message": "Required property",
       "ref": undefined,
-      "type": "43",
+      "type": "45",
       "types": {
-        "39": "Expected required property",
-        "43": "Expected string",
+        "45": "Required property",
+        "53": "Expected string",
       },
     },
     "tags": {
-      "message": "Expected array",
+      "message": "Required property",
       "ref": undefined,
-      "type": "0",
+      "type": "45",
       "types": {
-        "0": "Expected array",
-        "39": "Expected required property",
+        "45": "Required property",
+        "6": "Expected array",
       },
     },
     "username": {
-      "message": "Expected string",
+      "message": "Required property",
       "ref": {
         "name": "username",
       },
-      "type": "43",
+      "type": "45",
       "types": {
-        "39": "Expected required property",
-        "43": "Expected string",
+        "45": "Required property",
+        "53": "Expected string",
       },
     },
   },

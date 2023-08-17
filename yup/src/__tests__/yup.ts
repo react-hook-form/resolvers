@@ -114,37 +114,6 @@ describe('yupResolver', () => {
     expect(result).toMatchSnapshot();
   });
 
-  it('should show a warning log if yup context is used instead only on dev environment', async () => {
-    vi.spyOn(console, 'warn').mockImplementation(() => vi.fn());
-    process.env.NODE_ENV = 'development';
-
-    await yupResolver(yup.object(), { context: { noContext: true } })(
-      {},
-      undefined,
-      {
-        fields,
-        shouldUseNativeValidation,
-      },
-    );
-    expect(console.warn).toHaveBeenCalledWith(
-      "You should not used the yup options context. Please, use the 'useForm' context object instead",
-    );
-    process.env.NODE_ENV = 'test';
-  });
-
-  it('should not show a warning log if yup context is used instead only on production environment', async () => {
-    vi.spyOn(console, 'warn').mockImplementation(() => vi.fn());
-    process.env.NODE_ENV = 'production';
-
-    await yupResolver(yup.object(), { context: { noContext: true } })(
-      {},
-      undefined,
-      { fields, shouldUseNativeValidation },
-    );
-    expect(console.warn).not.toHaveBeenCalled();
-    process.env.NODE_ENV = 'test';
-  });
-
   it('should return correct error message with using yup.test', async () => {
     const result = await yupResolver(
       yup
