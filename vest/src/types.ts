@@ -1,20 +1,23 @@
 import {
   FieldValues,
+  FieldName,
   ResolverOptions,
   ResolverResult,
 } from 'react-hook-form';
 import * as Vest from 'vest';
 
-export type ICreateResult = ReturnType<typeof Vest.create>;
+export type ICreateResult<TValues extends FieldValues = FieldValues, TContext = any> = ReturnType<
+  typeof Vest.create<(values: TValues, names?: FieldName<TValues>[], context?: TContext) => void>
+>;
 
-export type Resolver = (
-  schema: ICreateResult,
+export type Resolver = <TValues extends FieldValues, TContext>(
+  schema: ICreateResult<TValues, TContext>,
   schemaOptions?: never,
   factoryOptions?: { mode?: 'async' | 'sync', rawValues?: boolean; },
-) => <TFieldValues extends FieldValues, TContext>(
-  values: TFieldValues,
+) => (
+  values: TValues,
   context: TContext | undefined,
-  options: ResolverOptions<TFieldValues>,
-) => Promise<ResolverResult<TFieldValues>>;
+  options: ResolverOptions<TValues>,
+) => Promise<ResolverResult<TValues>>;
 
 export type VestErrors = Record<string, string[]>;

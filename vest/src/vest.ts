@@ -25,11 +25,11 @@ const parseErrorSchema = (
 
 export const vestResolver: Resolver =
   (schema, _, resolverOptions = {}) =>
-  async (values, _context, options) => {
+  async (values, context, options) => {
     const result =
       resolverOptions.mode === 'sync'
-        ? schema(values)
-        : await promisify(schema)(values);
+        ? schema(values, options.names, context)
+        : await promisify(schema)(values, options.names, context);
 
     if (result.hasErrors()) {
       return {
