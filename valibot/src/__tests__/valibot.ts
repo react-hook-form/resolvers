@@ -75,7 +75,7 @@ describe('valibotResolver', () => {
     expect(result).toEqual({ errors: {}, values: validData });
   });
 
-  it.only('should return all the errors from valibotResolver when validation fails with `validateAllFieldCriteria` set to true', async () => {
+  it('should return all the errors from valibotResolver when validation fails with `validateAllFieldCriteria` set to true', async () => {
     const result = await valibotResolver(schema)(invalidData, undefined, {
       fields,
       criteriaMode: 'all',
