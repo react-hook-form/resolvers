@@ -43,7 +43,7 @@ const parseErrorSchema = (
 };
 
 export function yupResolver<TFieldValues extends FieldValues>(
-  schema: Yup.ObjectSchema<TFieldValues>,
+  schema: Yup.ObjectSchema<TFieldValues> | ReturnType<typeof Yup.lazy>,
   schemaOptions: Parameters<(typeof schema)['validate']>[1] = {},
   resolverOptions: {
     /**
@@ -90,7 +90,7 @@ export function yupResolver<TFieldValues extends FieldValues>(
           parseErrorSchema(
             e,
             !options.shouldUseNativeValidation &&
-              options.criteriaMode === 'all',
+            options.criteriaMode === 'all',
           ),
           options,
         ),
