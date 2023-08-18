@@ -1,17 +1,23 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`valibotResolver > should return a single error from valibotResolver when validation fails 1`] = `
+exports[`valibotResolver > should return all the errors from valibotResolver when validation fails with \`validateAllFieldCriteria\` set to true 1`] = `
 {
   "errors": {
     "accessToken": {
       "message": "Invalid type",
       "ref": undefined,
       "type": "non_optional",
+      "types": {
+        "non_optional": "Invalid type",
+      },
     },
     "birthYear": {
       "message": "Please enter your birth year",
       "ref": undefined,
       "type": "number",
+      "types": {
+        "number": "Please enter your birth year",
+      },
     },
     "email": {
       "message": "Invalid email address",
@@ -19,22 +25,34 @@ exports[`valibotResolver > should return a single error from valibotResolver whe
         "name": "email",
       },
       "type": "email",
+      "types": {
+        "email": "Invalid email address",
+      },
     },
     "enabled": {
       "message": "Invalid type",
       "ref": undefined,
       "type": "non_optional",
+      "types": {
+        "non_optional": "Invalid type",
+      },
     },
     "like": {
       "id": {
         "message": "Like id is required",
         "ref": undefined,
         "type": "number",
+        "types": {
+          "number": "Like id is required",
+        },
       },
       "name": {
         "message": "Invalid type",
         "ref": undefined,
         "type": "non_optional",
+        "types": {
+          "non_optional": "Invalid type",
+        },
       },
     },
     "password": {
@@ -43,27 +61,47 @@ exports[`valibotResolver > should return a single error from valibotResolver whe
         "name": "password",
       },
       "type": "regex",
+      "types": {
+        "min_length": "Must be at least 8 characters in length",
+        "regex": [
+          "One uppercase character",
+          "One lowercase character",
+          "One number",
+        ],
+      },
     },
     "repeatPassword": {
       "message": "Invalid type",
       "ref": undefined,
       "type": "non_optional",
+      "types": {
+        "non_optional": "Invalid type",
+      },
     },
     "tags": [
       {
         "message": "Tags should be strings",
         "ref": undefined,
         "type": "string",
+        "types": {
+          "string": "Tags should be strings",
+        },
       },
       {
         "message": "Tags should be strings",
         "ref": undefined,
         "type": "string",
+        "types": {
+          "string": "Tags should be strings",
+        },
       },
       {
         "message": "Tags should be strings",
         "ref": undefined,
         "type": "string",
+        "types": {
+          "string": "Tags should be strings",
+        },
       },
     ],
     "username": {
@@ -72,6 +110,9 @@ exports[`valibotResolver > should return a single error from valibotResolver whe
         "name": "username",
       },
       "type": "non_optional",
+      "types": {
+        "non_optional": "Invalid type",
+      },
     },
   },
   "values": {},

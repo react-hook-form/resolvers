@@ -7,70 +7,85 @@ import {
   parse,
   parseAsync,
 } from 'valibot';
-import { FieldErrors, FieldError } from 'react-hook-form';
+import { FieldErrors, FieldError, appendErrors } from 'react-hook-form';
+const parseErrors = (
+  valiErrors: ValiError,
+  validateAllFieldCriteria: boolean,
+): FieldErrors => {
+  const errors: Record<string, FieldError> = {};
+  for (; valiErrors.issues.length;) {
+    const error = valiErrors.issues[0];
+    if (!error.path) {
+      continue;
+    }
+    const _path = error.path.map(({ key }) => key).join('.');
 
-type FlatErrors = Record<string, [FieldError, ...FieldError[]]>;
-
-const parseErrors = (error: ValiError): FieldErrors => {
-  const errors = error.issues.reduce<FlatErrors>((flatErrors, issue) => {
-    if (issue.path) {
-      const path = issue.path.map(({ key }) => key).join('.');
-      flatErrors[path] = [
-        ...(flatErrors[path] || []),
-        {
-          message: issue.message,
-          type: issue.validation,
-        },
-      ];
+    if (!errors[_path]) {
+      errors[_path] = { message: error.message, type: error.validation };
     }
 
-    return flatErrors;
-  }, {});
+    if (validateAllFieldCriteria) {
+      const types = errors[_path].types;
+      const messages = types && types[error.validation];
 
-  return Object.entries(errors).reduce<FieldErrors>((acc, [path, errors]) => {
-    const [firstError] = errors;
-    acc[path] = {
-      message: firstError.message,
-      type: firstError.type,
-    };
+      errors[_path] = appendErrors(
+        _path,
+        validateAllFieldCriteria,
+        errors,
+        error.validation,
+        messages
+          ? ([] as string[]).concat(messages as string[], error.message)
+          : error.message,
+      ) as FieldError;
+    }
 
-    return acc;
-  }, {});
+    valiErrors.issues.shift();
+  }
+
+  return errors;
 };
 
 export const valibotResolver: Resolver =
-  (
-    schema,
-    schemaOptions = {
-      abortEarly: false,
-      abortPipeEarly: false,
-    },
-    resolverOptions = {
-      mode: 'async',
-      raw: false,
-    },
-  ) =>
-  async (values, _, options) => {
-    try {
-      const { mode, raw } = resolverOptions;
-      const parsed =
-        mode === 'sync'
-          ? parse(schema as BaseSchema, values, schemaOptions)
-          : await parseAsync(
+  (schema, schemaOptions, resolverOptions = {}) =>
+    async (values, _, options) => {
+      try {
+        const schemaOpts = Object.assign(
+          {},
+          {
+            abortEarly: false,
+            abortPipeEarly: false,
+          },
+          schemaOptions,
+        );
+
+        const parsed =
+          resolverOptions.mode === 'sync'
+            ? parse(schema as BaseSchema, values, schemaOpts)
+            : await parseAsync(
               schema as BaseSchema | BaseSchemaAsync,
               values,
-              schemaOptions,
+              schemaOpts,
             );
 
-      return { values: raw ? values : parsed, errors: {} as FieldErrors };
-    } catch (error) {
-      if (error instanceof ValiError) {
         return {
-          values: {},
-          errors: toNestError(parseErrors(error), options),
+          values: resolverOptions.raw ? values : parsed,
+          errors: {} as FieldErrors,
         };
-      }
+      } catch (error) {
+        if (error instanceof ValiError) {
+          return {
+            values: {},
+            errors: toNestError(
+              parseErrors(
+                error,
+                !options.shouldUseNativeValidation &&
+                options.criteriaMode === 'all',
+              ),
+              options,
+            ),
+          };
+        }
 
-      throw error;
-    }
-  };
+        throw error;
+      }
+    };
