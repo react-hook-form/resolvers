@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { toNestError, validateFieldsNatively } from '@hookform/resolvers';
+import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
 import {
   appendErrors,
   FieldError,
@@ -86,11 +86,11 @@ export function yupResolver<TFieldValues extends FieldValues>(
 
       return {
         values: {},
-        errors: toNestError(
+        errors: toNestErrors(
           parseErrorSchema(
             e,
             !options.shouldUseNativeValidation &&
-            options.criteriaMode === 'all',
+              options.criteriaMode === 'all',
           ),
           options,
         ),

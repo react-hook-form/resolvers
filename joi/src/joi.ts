@@ -1,5 +1,5 @@
 import { appendErrors, FieldError } from 'react-hook-form';
-import { toNestError, validateFieldsNatively } from '@hookform/resolvers';
+import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
 import type { ValidationError } from 'joi';
 import { Resolver } from './types';
 
@@ -61,7 +61,7 @@ export const joiResolver: Resolver =
     if (result.error) {
       return {
         values: {},
-        errors: toNestError(
+        errors: toNestErrors(
           parseErrorSchema(
             result.error,
             !options.shouldUseNativeValidation &&

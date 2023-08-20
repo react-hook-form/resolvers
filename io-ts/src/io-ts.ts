@@ -1,6 +1,6 @@
 import * as Either from 'fp-ts/Either';
 import { pipe } from 'fp-ts/function';
-import { toNestError, validateFieldsNatively } from '@hookform/resolvers';
+import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
 import errorsToRecord from './errorsToRecord';
 import { Resolver } from './types';
 
@@ -13,7 +13,7 @@ export const ioTsResolver: Resolver = (codec) => (values, _context, options) =>
         !options.shouldUseNativeValidation && options.criteriaMode === 'all',
       ),
     ),
-    Either.mapLeft((errors) => toNestError(errors, options)),
+    Either.mapLeft((errors) => toNestErrors(errors, options)),
     Either.fold(
       (errors) => ({
         values: {},

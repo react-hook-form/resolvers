@@ -1,5 +1,5 @@
 import type { FieldErrors } from 'react-hook-form';
-import { toNestError, validateFieldsNatively } from '@hookform/resolvers';
+import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
 import type { Resolver } from './types';
 import type { ValidationError } from 'computed-types';
 
@@ -33,7 +33,7 @@ export const computedTypesResolver: Resolver =
       if (isValidationError(error)) {
         return {
           values: {},
-          errors: toNestError(parseErrorSchema(error), options),
+          errors: toNestErrors(parseErrorSchema(error), options),
         };
       }
 

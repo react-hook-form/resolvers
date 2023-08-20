@@ -1,5 +1,5 @@
 import { FieldError, FieldErrors } from 'react-hook-form';
-import { toNestError, validateFieldsNatively } from '@hookform/resolvers';
+import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
 import type { Resolver } from './types';
 import { Problems } from 'arktype';
 
@@ -28,7 +28,7 @@ export const arktypeResolver: Resolver =
     if (result.problems) {
       return {
         values: {},
-        errors: toNestError(parseErrorSchema(result.problems), options),
+        errors: toNestErrors(parseErrorSchema(result.problems), options),
       };
     }
 

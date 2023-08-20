@@ -1,4 +1,4 @@
-import { toNestError } from '@hookform/resolvers';
+import { toNestErrors } from '@hookform/resolvers';
 import type { Resolver } from './types';
 import {
   BaseSchema,
@@ -13,7 +13,7 @@ const parseErrors = (
   validateAllFieldCriteria: boolean,
 ): FieldErrors => {
   const errors: Record<string, FieldError> = {};
-  for (; valiErrors.issues.length;) {
+  for (; valiErrors.issues.length; ) {
     const error = valiErrors.issues[0];
     if (!error.path) {
       continue;
@@ -47,45 +47,45 @@ const parseErrors = (
 
 export const valibotResolver: Resolver =
   (schema, schemaOptions, resolverOptions = {}) =>
-    async (values, _, options) => {
-      try {
-        const schemaOpts = Object.assign(
-          {},
-          {
-            abortEarly: false,
-            abortPipeEarly: false,
-          },
-          schemaOptions,
-        );
+  async (values, _, options) => {
+    try {
+      const schemaOpts = Object.assign(
+        {},
+        {
+          abortEarly: false,
+          abortPipeEarly: false,
+        },
+        schemaOptions,
+      );
 
-        const parsed =
-          resolverOptions.mode === 'sync'
-            ? parse(schema as BaseSchema, values, schemaOpts)
-            : await parseAsync(
+      const parsed =
+        resolverOptions.mode === 'sync'
+          ? parse(schema as BaseSchema, values, schemaOpts)
+          : await parseAsync(
               schema as BaseSchema | BaseSchemaAsync,
               values,
               schemaOpts,
             );
 
+      return {
+        values: resolverOptions.raw ? values : parsed,
+        errors: {} as FieldErrors,
+      };
+    } catch (error) {
+      if (error instanceof ValiError) {
         return {
-          values: resolverOptions.raw ? values : parsed,
-          errors: {} as FieldErrors,
-        };
-      } catch (error) {
-        if (error instanceof ValiError) {
-          return {
-            values: {},
-            errors: toNestError(
-              parseErrors(
-                error,
-                !options.shouldUseNativeValidation &&
+          values: {},
+          errors: toNestErrors(
+            parseErrors(
+              error,
+              !options.shouldUseNativeValidation &&
                 options.criteriaMode === 'all',
-              ),
-              options,
             ),
-          };
-        }
-
-        throw error;
+            options,
+          ),
+        };
       }
-    };
+
+      throw error;
+    }
+  };

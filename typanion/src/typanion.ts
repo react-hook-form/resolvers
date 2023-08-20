@@ -1,5 +1,5 @@
 import type { FieldError, FieldErrors } from 'react-hook-form';
-import { toNestError, validateFieldsNatively } from '@hookform/resolvers';
+import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
 import type { Resolver } from './types';
 
 const parseErrors = (errors: string[], parsedErrors: FieldErrors = {}) => {
@@ -37,5 +37,5 @@ export const typanionResolver: Resolver =
       return { values, errors: {} };
     }
 
-    return { values: {}, errors: toNestError(parsedErrors, options) };
+    return { values: {}, errors: toNestErrors(parsedErrors, options) };
   };
