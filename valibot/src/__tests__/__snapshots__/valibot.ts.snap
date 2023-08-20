@@ -77,3 +77,342 @@ exports[`valibotResolver > should return a single error from valibotResolver whe
   "values": {},
 }
 `;
+
+exports[`valibotResolver > should return a single error from valibotResolver with \`mode: sync\` when validation fails 1`] = `
+{
+  "errors": {
+    "accessToken": {
+      "message": "Invalid type",
+      "ref": undefined,
+      "type": "non_optional",
+    },
+    "birthYear": {
+      "message": "Please enter your birth year",
+      "ref": undefined,
+      "type": "number",
+    },
+    "email": {
+      "message": "Invalid email address",
+      "ref": {
+        "name": "email",
+      },
+      "type": "email",
+    },
+    "enabled": {
+      "message": "Invalid type",
+      "ref": undefined,
+      "type": "non_optional",
+    },
+    "like": {
+      "id": {
+        "message": "Like id is required",
+        "ref": undefined,
+        "type": "number",
+      },
+      "name": {
+        "message": "Invalid type",
+        "ref": undefined,
+        "type": "non_optional",
+      },
+    },
+    "password": {
+      "message": "One uppercase character",
+      "ref": {
+        "name": "password",
+      },
+      "type": "regex",
+    },
+    "repeatPassword": {
+      "message": "Invalid type",
+      "ref": undefined,
+      "type": "non_optional",
+    },
+    "tags": [
+      {
+        "message": "Tags should be strings",
+        "ref": undefined,
+        "type": "string",
+      },
+      {
+        "message": "Tags should be strings",
+        "ref": undefined,
+        "type": "string",
+      },
+      {
+        "message": "Tags should be strings",
+        "ref": undefined,
+        "type": "string",
+      },
+    ],
+    "username": {
+      "message": "Invalid type",
+      "ref": {
+        "name": "username",
+      },
+      "type": "non_optional",
+    },
+  },
+  "values": {},
+}
+`;
+
+exports[`valibotResolver > should return all the errors from valibotResolver when validation fails with \`validateAllFieldCriteria\` set to true 1`] = `
+{
+  "errors": {
+    "accessToken": {
+      "message": "Invalid type",
+      "ref": undefined,
+      "type": "non_optional",
+      "types": {
+        "non_optional": "Invalid type",
+      },
+    },
+    "birthYear": {
+      "message": "Please enter your birth year",
+      "ref": undefined,
+      "type": "number",
+      "types": {
+        "number": "Please enter your birth year",
+      },
+    },
+    "email": {
+      "message": "Invalid email address",
+      "ref": {
+        "name": "email",
+      },
+      "type": "email",
+      "types": {
+        "email": "Invalid email address",
+      },
+    },
+    "enabled": {
+      "message": "Invalid type",
+      "ref": undefined,
+      "type": "non_optional",
+      "types": {
+        "non_optional": "Invalid type",
+      },
+    },
+    "like": {
+      "id": {
+        "message": "Like id is required",
+        "ref": undefined,
+        "type": "number",
+        "types": {
+          "number": "Like id is required",
+        },
+      },
+      "name": {
+        "message": "Invalid type",
+        "ref": undefined,
+        "type": "non_optional",
+        "types": {
+          "non_optional": "Invalid type",
+        },
+      },
+    },
+    "password": {
+      "message": "One uppercase character",
+      "ref": {
+        "name": "password",
+      },
+      "type": "regex",
+      "types": {
+        "min_length": "Must be at least 8 characters in length",
+        "regex": [
+          "One uppercase character",
+          "One lowercase character",
+          "One number",
+        ],
+      },
+    },
+    "repeatPassword": {
+      "message": "Invalid type",
+      "ref": undefined,
+      "type": "non_optional",
+      "types": {
+        "non_optional": "Invalid type",
+      },
+    },
+    "tags": [
+      {
+        "message": "Tags should be strings",
+        "ref": undefined,
+        "type": "string",
+        "types": {
+          "string": "Tags should be strings",
+        },
+      },
+      {
+        "message": "Tags should be strings",
+        "ref": undefined,
+        "type": "string",
+        "types": {
+          "string": "Tags should be strings",
+        },
+      },
+      {
+        "message": "Tags should be strings",
+        "ref": undefined,
+        "type": "string",
+        "types": {
+          "string": "Tags should be strings",
+        },
+      },
+    ],
+    "username": {
+      "message": "Invalid type",
+      "ref": {
+        "name": "username",
+      },
+      "type": "non_optional",
+      "types": {
+        "non_optional": "Invalid type",
+      },
+    },
+  },
+  "values": {},
+}
+`;
+
+exports[`valibotResolver > should return all the errors from valibotResolver when validation fails with \`validateAllFieldCriteria\` set to true and \`mode: sync\` 1`] = `
+{
+  "errors": {
+    "accessToken": {
+      "message": "Invalid type",
+      "ref": undefined,
+      "type": "non_optional",
+      "types": {
+        "non_optional": "Invalid type",
+      },
+    },
+    "birthYear": {
+      "message": "Please enter your birth year",
+      "ref": undefined,
+      "type": "number",
+      "types": {
+        "number": "Please enter your birth year",
+      },
+    },
+    "email": {
+      "message": "Invalid email address",
+      "ref": {
+        "name": "email",
+      },
+      "type": "email",
+      "types": {
+        "email": "Invalid email address",
+      },
+    },
+    "enabled": {
+      "message": "Invalid type",
+      "ref": undefined,
+      "type": "non_optional",
+      "types": {
+        "non_optional": "Invalid type",
+      },
+    },
+    "like": {
+      "id": {
+        "message": "Like id is required",
+        "ref": undefined,
+        "type": "number",
+        "types": {
+          "number": "Like id is required",
+        },
+      },
+      "name": {
+        "message": "Invalid type",
+        "ref": undefined,
+        "type": "non_optional",
+        "types": {
+          "non_optional": "Invalid type",
+        },
+      },
+    },
+    "password": {
+      "message": "One uppercase character",
+      "ref": {
+        "name": "password",
+      },
+      "type": "regex",
+      "types": {
+        "min_length": "Must be at least 8 characters in length",
+        "regex": [
+          "One uppercase character",
+          "One lowercase character",
+          "One number",
+        ],
+      },
+    },
+    "repeatPassword": {
+      "message": "Invalid type",
+      "ref": undefined,
+      "type": "non_optional",
+      "types": {
+        "non_optional": "Invalid type",
+      },
+    },
+    "tags": [
+      {
+        "message": "Tags should be strings",
+        "ref": undefined,
+        "type": "string",
+        "types": {
+          "string": "Tags should be strings",
+        },
+      },
+      {
+        "message": "Tags should be strings",
+        "ref": undefined,
+        "type": "string",
+        "types": {
+          "string": "Tags should be strings",
+        },
+      },
+      {
+        "message": "Tags should be strings",
+        "ref": undefined,
+        "type": "string",
+        "types": {
+          "string": "Tags should be strings",
+        },
+      },
+    ],
+    "username": {
+      "message": "Invalid type",
+      "ref": {
+        "name": "username",
+      },
+      "type": "non_optional",
+      "types": {
+        "non_optional": "Invalid type",
+      },
+    },
+  },
+  "values": {},
+}
+`;
+
+exports[`valibotResolver > should return parsed values from valibotResolver with \`mode: sync\` when validation pass 1`] = `
+{
+  "errors": {},
+  "values": {
+    "accessToken": "accessToken",
+    "birthYear": 2000,
+    "email": "john@doe.com",
+    "enabled": true,
+    "like": {
+      "id": 1,
+      "name": "name",
+    },
+    "password": "Password123_",
+    "repeatPassword": "Password123_",
+    "tags": [
+      "tag1",
+      "tag2",
+    ],
+    "username": "Doe",
+  },
+}
+`;
