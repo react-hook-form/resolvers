@@ -9,7 +9,7 @@ import {
 } from 'react-hook-form';
 import { validateFieldsNatively } from './validateFieldsNatively';
 
-export const toNestError = <TFieldValues extends FieldValues>(
+export const toNestErrors = <TFieldValues extends FieldValues>(
   errors: FieldErrors,
   options: ResolverOptions<TFieldValues>,
 ): FieldErrors<TFieldValues> => {

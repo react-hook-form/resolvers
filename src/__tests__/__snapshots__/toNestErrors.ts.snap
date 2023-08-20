@@ -1,0 +1,67 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`transforms flat object to nested object 1`] = `
+{
+  "name": {
+    "message": "first message",
+    "ref": {
+      "reportValidity": [MockFunction spy],
+      "setCustomValidity": [MockFunction spy],
+    },
+    "type": "st",
+  },
+  "test": [
+    {
+      "name": {
+        "message": "second message",
+        "ref": undefined,
+        "type": "nd",
+      },
+    },
+  ],
+}
+`;
+
+exports[`transforms flat object to nested object and shouldUseNativeValidation: true 1`] = `
+{
+  "name": {
+    "message": "first message",
+    "ref": {
+      "reportValidity": [MockFunction spy] {
+        "calls": [
+          [],
+        ],
+        "results": [
+          {
+            "type": "return",
+            "value": undefined,
+          },
+        ],
+      },
+      "setCustomValidity": [MockFunction spy] {
+        "calls": [
+          [
+            "first message",
+          ],
+        ],
+        "results": [
+          {
+            "type": "return",
+            "value": undefined,
+          },
+        ],
+      },
+    },
+    "type": "st",
+  },
+  "test": [
+    {
+      "name": {
+        "message": "second message",
+        "ref": undefined,
+        "type": "nd",
+      },
+    },
+  ],
+}
+`;

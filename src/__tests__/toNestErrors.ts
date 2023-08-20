@@ -1,5 +1,5 @@
 import { Field, FieldError, InternalFieldName } from 'react-hook-form';
-import { toNestError } from '../toNestError';
+import { toNestErrors } from '../toNestErrors';
 
 const flatObject: Record<string, FieldError> = {
   name: { type: 'st', message: 'first message' },
@@ -20,13 +20,13 @@ const fields = {
 
 test('transforms flat object to nested object', () => {
   expect(
-    toNestError(flatObject, { fields, shouldUseNativeValidation: false }),
+    toNestErrors(flatObject, { fields, shouldUseNativeValidation: false }),
   ).toMatchSnapshot();
 });
 
 test('transforms flat object to nested object and shouldUseNativeValidation: true', () => {
   expect(
-    toNestError(flatObject, { fields, shouldUseNativeValidation: true }),
+    toNestErrors(flatObject, { fields, shouldUseNativeValidation: true }),
   ).toMatchSnapshot();
   expect(
     (fields.name.ref as HTMLInputElement).reportValidity,
@@ -40,7 +40,7 @@ test('transforms flat object to nested object and shouldUseNativeValidation: tru
 });
 
 test('transforms flat object to nested object with root error for field array', () => {
-  const result = toNestError(
+  const result = toNestErrors(
     {
       username: { type: 'username', message: 'username is required' },
       'fieldArrayWithRootError.0.name': {
