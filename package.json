@@ -209,10 +209,10 @@
   "devDependencies": {
     "@sinclair/typebox": "^0.31.1",
     "@testing-library/dom": "^9.3.1",
-    "@testing-library/jest-dom": "^6.0.0",
+    "@testing-library/jest-dom": "^6.0.1",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
-    "@types/node": "^20.5.0",
+    "@types/node": "^20.5.1",
     "@types/react": "^18.2.20",
     "@typescript-eslint/eslint-plugin": "^6.4.0",
     "@typescript-eslint/parser": "^6.4.0",
@@ -251,9 +251,9 @@
     "vest": "^4.6.11",
     "vite": "^4.4.9",
     "vite-tsconfig-paths": "^4.2.0",
-    "vitest": "^0.34.1",
+    "vitest": "^0.34.2",
     "yup": "^1.2.0",
-    "zod": "^3.22.1"
+    "zod": "^3.22.2"
   },
   "peerDependencies": {
     "react-hook-form": "^7.0.0"
