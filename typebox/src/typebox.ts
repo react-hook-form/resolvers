@@ -1,5 +1,5 @@
 import { appendErrors, FieldError, FieldErrors } from 'react-hook-form';
-import { toNestError, validateFieldsNatively } from '@hookform/resolvers';
+import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
 import type { Resolver } from './types';
 import { Value, ValueError } from '@sinclair/typebox/value';
 
@@ -53,7 +53,7 @@ export const typeboxResolver: Resolver =
 
     return {
       values: {},
-      errors: toNestError(
+      errors: toNestErrors(
         parseErrorSchema(
           errors,
           !options.shouldUseNativeValidation && options.criteriaMode === 'all',

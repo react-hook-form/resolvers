@@ -1,4 +1,4 @@
-import { toNestError, validateFieldsNatively } from '@hookform/resolvers';
+import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
 import { FieldError } from 'react-hook-form';
 import promisify from 'vest/promisify';
 import type { VestErrors, Resolver } from './types';
@@ -34,7 +34,7 @@ export const vestResolver: Resolver =
     if (result.hasErrors()) {
       return {
         values: {},
-        errors: toNestError(
+        errors: toNestErrors(
           parseErrorSchema(
             result.getErrors(),
             !options.shouldUseNativeValidation &&

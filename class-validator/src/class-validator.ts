@@ -1,5 +1,5 @@
 import { FieldErrors } from 'react-hook-form';
-import { toNestError, validateFieldsNatively } from '@hookform/resolvers';
+import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
 import { plainToClass } from 'class-transformer';
 import { validate, validateSync, ValidationError } from 'class-validator';
 import type { Resolver } from './types';
@@ -47,7 +47,7 @@ export const classValidatorResolver: Resolver =
     if (rawErrors.length) {
       return {
         values: {},
-        errors: toNestError(
+        errors: toNestErrors(
           parseErrors(
             rawErrors,
             !options.shouldUseNativeValidation &&

@@ -1,5 +1,5 @@
-import type {FieldError, FieldErrors} from 'react-hook-form';
-import { toNestError, validateFieldsNatively } from '@hookform/resolvers';
+import type { FieldError, FieldErrors } from 'react-hook-form';
+import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
 import type { ShapeErrors } from 'nope-validator/lib/cjs/types';
 import type { Resolver } from './types';
 
@@ -37,7 +37,7 @@ export const nopeResolver: Resolver =
       | undefined;
 
     if (result) {
-      return { values: {}, errors: toNestError(parseErrors(result), options) };
+      return { values: {}, errors: toNestErrors(parseErrors(result), options) };
     }
 
     options.shouldUseNativeValidation && validateFieldsNatively({}, options);
