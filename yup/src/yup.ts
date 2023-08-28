@@ -43,7 +43,9 @@ const parseErrorSchema = (
 };
 
 export function yupResolver<TFieldValues extends FieldValues>(
-  schema: Yup.ObjectSchema<TFieldValues> | ReturnType<typeof Yup.lazy>,
+  schema:
+    | Yup.ObjectSchema<TFieldValues>
+    | ReturnType<typeof Yup.lazy<Yup.ObjectSchema<TFieldValues>>>,
   schemaOptions: Parameters<(typeof schema)['validate']>[1] = {},
   resolverOptions: {
     /**
@@ -56,7 +58,7 @@ export function yupResolver<TFieldValues extends FieldValues>(
      */
     raw?: boolean;
   } = {},
-): Resolver<TFieldValues> {
+): Resolver<Yup.InferType<typeof schema>> {
   return async (values, context, options) => {
     try {
       if (schemaOptions.context && process.env.NODE_ENV === 'development') {
