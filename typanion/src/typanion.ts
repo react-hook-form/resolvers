@@ -4,10 +4,13 @@ import type { Resolver } from './types';
 
 const parseErrors = (errors: string[], parsedErrors: FieldErrors = {}) => {
   return errors.reduce((acc, error) => {
-    const e = error.split(':');
+    const fieldIndex = error.indexOf(':');
 
-    acc[e[0].slice(1)] = {
-      message: e[1].trim(),
+    const field = error.slice(1, fieldIndex);
+    const message = error.slice(fieldIndex + 1).trim();
+
+    acc[field] = {
+      message,
     } as FieldError;
 
     return acc;
