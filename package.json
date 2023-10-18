@@ -173,7 +173,9 @@
     "lint:types": "tsc",
     "test": "vitest run",
     "test:watch": "vitest watch",
-    "check:all": "npm-run-all --parallel lint:* test"
+    "check:all": "npm-run-all --parallel lint:* test",
+    "csb:install": "pnpx replace-json-property@1.9.0 package.json prepare \"node -e 'process.exit(0)'\" && pnpm i --no-frozen-lockfile",
+    "csb:build": "cross-env npm-run-all --sequential 'build:*'"
   },
   "keywords": [
     "scheme",
