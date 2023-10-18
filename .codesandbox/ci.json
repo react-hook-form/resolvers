@@ -1,6 +1,5 @@
 {
-  "installCommand": "csb:install",
-  "buildCommand": "csb:build",
+  "buildCommand": "build-s",
   "node": "18",
   "silent": true
 }
