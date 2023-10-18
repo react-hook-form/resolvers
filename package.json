@@ -174,7 +174,7 @@
     "test": "vitest run",
     "test:watch": "vitest watch",
     "check:all": "npm-run-all --parallel lint:* test",
-    "csb:install": "pnpm i --ignore-scripts --no-frozen-lockfile",
+    "csb:install": "echo -e '\nignore-scripts=true' >> .npmrc && pnpm i --no-frozen-lockfile",
     "csb:build": "cross-env npm-run-all --sequential 'build:*'"
   },
   "keywords": [
