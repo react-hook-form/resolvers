@@ -152,9 +152,7 @@
   },
   "scripts": {
     "prepare": "run-s build:src build && check-export-map && husky install",
-    "build": "pnpm build-p",
-    "build-p": "cross-env npm-run-all --parallel 'build:*'",
-    "build-s": "cross-env npm-run-all --sequential 'build:*'",
+    "build": "cross-env npm-run-all --parallel 'build:*'",
     "build:src": "microbundle build --globals react-hook-form=ReactHookForm",
     "build:zod": "microbundle --cwd zod --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
     "build:yup": "microbundle --cwd yup --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
@@ -175,7 +173,9 @@
     "lint:types": "tsc",
     "test": "vitest run",
     "test:watch": "vitest watch",
-    "check:all": "npm-run-all --parallel lint:* test"
+    "check:all": "npm-run-all --parallel lint:* test",
+    "csb:install": "pnpm i --ignore-scripts --no-frozen-lockfile",
+    "csb:build": "cross-env npm-run-all --sequential 'build:*'"
   },
   "keywords": [
     "scheme",
