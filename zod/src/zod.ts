@@ -1,4 +1,5 @@
-import { appendErrors, FieldError, FieldErrors } from 'react-hook-form';
+import { appendErrors } from 'react-hook-form/logic';
+import type { FieldError, FieldErrors } from 'react-hook-form';
 import { z, ZodError } from 'zod';
 import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
 import type { Resolver } from './types';

@@ -1,5 +1,5 @@
-import {
-  get,
+import { get } from 'react-hook-form/utils';
+import type {
   FieldError,
   ResolverOptions,
   Ref,

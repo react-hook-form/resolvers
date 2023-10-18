@@ -1,6 +1,5 @@
-import {
-  set,
-  get,
+import { set, get } from 'react-hook-form/utils';
+import type {
   FieldErrors,
   Field,
   ResolverOptions,

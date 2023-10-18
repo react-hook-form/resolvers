@@ -242,7 +242,7 @@
     "prettier": "^3.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-hook-form": "^7.45.4",
+    "react-hook-form": "https://pkg.csb.dev/react-hook-form/react-hook-form/commit/24d23694/react-hook-form/_pkg.tgz",
     "reflect-metadata": "^0.1.13",
     "superstruct": "^1.0.3",
     "typanion": "^3.14.0",
