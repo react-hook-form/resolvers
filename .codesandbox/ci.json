@@ -1,4 +1,6 @@
 {
-  "node": "14",
+  "installCommand": "csb:install",
+  "buildCommand": "csb:build",
+  "node": "18",
   "silent": true
 }
