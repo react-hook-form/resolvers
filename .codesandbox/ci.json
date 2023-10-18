@@ -1,4 +1,5 @@
 {
+  "buildCommand": "build-s",
   "node": "18",
   "silent": true
 }
