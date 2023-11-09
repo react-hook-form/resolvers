@@ -1,4 +1,4 @@
-import { zodResolver } from '..';
+import { zodResolver, zodResolverSync } from '..';
 import { schema, validData, invalidData, fields } from './__fixtures__/data';
 
 const shouldUseNativeValidation = false;
@@ -22,9 +22,7 @@ describe('zodResolver', () => {
     const parseSpy = vi.spyOn(schema, 'parse');
     const parseAsyncSpy = vi.spyOn(schema, 'parseAsync');
 
-    const result = await zodResolver(schema, undefined, {
-      mode: 'sync',
-    })(validData, undefined, { fields, shouldUseNativeValidation });
+    const result = await zodResolverSync(schema, undefined)(validData, undefined, { fields, shouldUseNativeValidation });
 
     expect(parseSpy).toHaveBeenCalledTimes(1);
     expect(parseAsyncSpy).not.toHaveBeenCalled();
@@ -45,9 +43,7 @@ describe('zodResolver', () => {
     const parseSpy = vi.spyOn(schema, 'parse');
     const parseAsyncSpy = vi.spyOn(schema, 'parseAsync');
 
-    const result = await zodResolver(schema, undefined, {
-      mode: 'sync',
-    })(invalidData, undefined, { fields, shouldUseNativeValidation });
+    const result = await zodResolverSync(schema, undefined)(invalidData, undefined, { fields, shouldUseNativeValidation });
 
     expect(parseSpy).toHaveBeenCalledTimes(1);
     expect(parseAsyncSpy).not.toHaveBeenCalled();
@@ -65,7 +61,7 @@ describe('zodResolver', () => {
   });
 
   it('should return all the errors from zodResolver when validation fails with `validateAllFieldCriteria` set to true and `mode: sync`', async () => {
-    const result = await zodResolver(schema, undefined, { mode: 'sync' })(
+    const result = await zodResolverSync(schema, undefined)(
       invalidData,
       undefined,
       {
