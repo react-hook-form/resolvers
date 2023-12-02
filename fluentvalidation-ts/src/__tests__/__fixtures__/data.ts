@@ -1,6 +1,8 @@
 import { Validator } from 'fluentvalidation-ts';
 import { Field, InternalFieldName } from 'react-hook-form';
 
+const beNumeric = (value: string | number | undefined) => !isNaN(Number(value));
+
 export type Schema = {
   username: string;
   password: string;
@@ -44,10 +46,16 @@ export class SchemaValidator extends Validator<Schema> {
       .minLength(8)
       .withMessage('Must be at least 8 characters in length');
 
-    this.ruleFor('repeatPassword').equal('password');
+    this.ruleFor('repeatPassword')
+      .notEmpty()
+      .must((repeatPassword, data) => repeatPassword === data.password);
 
     this.ruleFor('accessToken');
-    this.ruleFor('birthYear').inclusiveBetween(1900, 2013);
+    this.ruleFor('birthYear')
+      .must(beNumeric)
+      .inclusiveBetween(1900, 2013)
+      .when((birthYear) => birthYear != undefined);
+
     this.ruleFor('email').emailAddress();
     this.ruleFor('tags');
     this.ruleFor('enabled');
@@ -69,10 +77,10 @@ export class LikeValidator extends Validator<{
 }
 
 export const validData = {
-  username: 'doe',
-  password: 'password123_',
-  repeatPassword: 'password123_',
-  birthyear: 2000,
+  username: 'Doe',
+  password: 'Password123_',
+  repeatPassword: 'Password123_',
+  birthYear: 2000,
   email: 'john@doe.com',
   tags: ['tag1', 'tag2'],
   enabled: true,

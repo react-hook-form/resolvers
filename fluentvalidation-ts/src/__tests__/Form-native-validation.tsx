@@ -29,6 +29,7 @@ interface Props {
 function TestComponent({ onSubmit }: Props) {
   const { register, handleSubmit } = useForm<FormData>({
     resolver: fluentValidationResolver(new FormDataValidator()),
+    shouldUseNativeValidation: true,
   });
 
   return (

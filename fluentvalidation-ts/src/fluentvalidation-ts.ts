@@ -6,8 +6,8 @@ import {
   Validator,
 } from 'fluentvalidation-ts';
 
-function traverseObject(
-  object: any,
+function traverseObject<T>(
+  object: ValidationErrors<T>,
   errors: Record<string, FieldError>,
   parentIndices: (string | number)[] = [],
 ) {
@@ -72,9 +72,10 @@ export function fluentValidationResolver<TFieldValues extends FieldValues>(
   };
 }
 
-export function fluentAsyncValidationResolver<TFieldValues extends FieldValues>(
-  validator: AsyncValidator<TFieldValues>,
-): Resolver<TFieldValues> {
+export function fluentAsyncValidationResolver<
+  TFieldValues extends FieldValues,
+  TValidator extends AsyncValidator<TFieldValues>,
+>(validator: TValidator): Resolver<TFieldValues> {
   return async (values, _context, options) => {
     const validationResult = await validator.validateAsync(values);
     const isValid = Object.keys(validationResult).length === 0;

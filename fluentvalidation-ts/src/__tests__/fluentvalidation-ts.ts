@@ -13,7 +13,6 @@ const validator = new SchemaValidator();
 
 describe('fluentValidationResolver', () => {
   it('should return values from fluentValidationResolver when validation pass', async () => {
-    const validator = new SchemaValidator();
     const validatorSpy = vi.spyOn(validator, 'validate');
 
     const result = await fluentValidationResolver(validator)(
@@ -64,7 +63,7 @@ describe('fluentValidationResolver', () => {
       { fields, shouldUseNativeValidation },
     );
 
-    expect(validateSpy).not.toHaveBeenCalled();
+    expect(validateSpy).toHaveBeenCalledTimes(1);
     expect(result).toMatchSnapshot();
   });
 
