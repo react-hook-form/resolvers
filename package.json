@@ -99,6 +99,12 @@
       "import": "./valibot/dist/valibot.mjs",
       "require": "./valibot/dist/valibot.js"
     },
+    "./fluentvalidation-ts": {
+      "types": "./fluentvalidation-ts/dist/index.d.ts",
+      "umd": "./fluentvalidation-ts/dist/fluentvalidation-ts.umd.js",
+      "import": "./fluentvalidation-ts/dist/fluentvalidation-ts.mjs",
+      "require": "./fluentvalidation-ts/dist/fluentvalidation-ts.js"
+    },
     "./package.json": "./package.json",
     "./*": "./*"
   },
@@ -145,7 +151,10 @@
     "arktype/dist",
     "valibot/package.json",
     "valibot/src",
-    "valibot/dist"
+    "valibot/dist",
+    "fluentvalidation-ts/package.json",
+    "fluentvalidation-ts/src",
+    "fluentvalidation-ts/dist"
   ],
   "publishConfig": {
     "access": "public"
@@ -168,11 +177,13 @@
     "build:typebox": "microbundle --cwd typebox --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm,@sinclair/typebox/value=value",
     "build:arktype": "microbundle --cwd arktype --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
     "build:valibot": "microbundle --cwd valibot --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
+    "build:fluentvaliation-ts": "microbundle --cwd fluentvalidation-ts --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
     "postbuild": "node ./config/node-13-exports.js",
     "lint": "eslint . --ext .ts,.js --ignore-path .gitignore",
     "lint:types": "tsc",
     "test": "vitest run",
     "test:watch": "vitest watch",
+    "test:fluent": "vitest run fluent",
     "check:all": "npm-run-all --parallel lint:* test",
     "csb:install": "pnpx replace-json-property@1.9.0 package.json prepare \"node -e 'process.exit(0)'\" && pnpm i --no-frozen-lockfile",
     "csb:build": "cross-env npm-run-all --sequential 'build:*'"
@@ -196,7 +207,8 @@
     "typanion",
     "ajv",
     "TypeBox",
-    "arktype"
+    "arktype",
+    "fluentvalidation-ts"
   ],
   "repository": {
     "type": "git",
@@ -229,6 +241,7 @@
     "cross-env": "^7.0.3",
     "eslint": "^8.47.0",
     "eslint-config-prettier": "^9.0.0",
+    "fluentvalidation-ts": "^3.1.0",
     "fp-ts": "^2.16.1",
     "husky": "^8.0.3",
     "io-ts": "^2.2.20",
