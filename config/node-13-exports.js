@@ -16,6 +16,7 @@ const subRepositories = [
   'typebox',
   'arktype',
   'valibot',
+  'fluentvalidation-ts',
 ];
 
 const copySrc = () => {
