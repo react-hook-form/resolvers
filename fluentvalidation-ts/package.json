@@ -12,6 +12,7 @@
   "license": "MIT",
   "peerDependencies": {
     "react-hook-form": "^7.0.0",
-    "@hookform/resolvers": "^2.0.0"
+    "@hookform/resolvers": "^2.0.0",
+    "fluentvalidation-ts": "^3.0.0"
   }
 }
