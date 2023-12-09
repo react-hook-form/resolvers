@@ -1,7 +1,11 @@
-import { appendErrors, FieldError, FieldErrors } from 'react-hook-form';
+import {
+  appendErrors,
+  FieldError,
+  FieldErrors,
+  Resolver,
+} from 'react-hook-form';
 import { z, ZodError } from 'zod';
 import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
-import type { Resolver } from './types';
 
 const isZodError = (error: any): error is ZodError => error.errors != null;
 
@@ -55,19 +59,35 @@ const parseErrorSchema = (
   return errors;
 };
 
-export const zodResolver: Resolver =
-  (schema, schemaOptions, resolverOptions = {}) =>
+type FactoryOptions = {
+  /**
+   * @default async
+   */
+  mode?: 'async' | 'sync';
+  /**
+   * Return the raw input values rather than the parsed values.
+   * @default false
+   */
+  raw?: boolean;
+}
+
+export const zodResolver =
+  <T extends z.ZodTypeAny>(
+    schema: T,
+    schemaOptions?: Partial<z.ParseParams>,
+    factoryOptions?: FactoryOptions,
+  ): Resolver<z.infer<T>> =>
   async (values, _, options) => {
     try {
       const data = await schema[
-        resolverOptions.mode === 'sync' ? 'parse' : 'parseAsync'
+        factoryOptions?.mode === 'sync' ? 'parse' : 'parseAsync'
       ](values, schemaOptions);
 
       options.shouldUseNativeValidation && validateFieldsNatively({}, options);
 
       return {
         errors: {} as FieldErrors,
-        values: resolverOptions.raw ? values : data,
+        values: factoryOptions?.raw ? values : data,
       };
     } catch (error: any) {
       if (isZodError(error)) {
