@@ -12,7 +12,9 @@ import {
   array,
   boolean,
   required,
-  union
+  union,
+  variant,
+  literal,
 } from 'valibot';
 
 export const schema = required(
@@ -29,7 +31,13 @@ export const schema = required(
       minLength(8, 'Must be at least 8 characters in length'),
     ]),
     repeatPassword: string('Repeat Password is required'),
-    accessToken: union([string('Access token should be a string'), number('Access token  should be a number')], "access token is required"),
+    accessToken: union(
+      [
+        string('Access token should be a string'),
+        number('Access token  should be a number'),
+      ],
+      'access token is required',
+    ),
     birthYear: number('Please enter your birth year', [
       minValue(1900),
       maxValue(2013),
@@ -45,6 +53,14 @@ export const schema = required(
     ),
   }),
 );
+
+export const schemaError = variant('type', [
+  object({ type: literal('a') }),
+  object({ type: literal('b') }),
+]);
+
+export const validSchemaErrorData = { type: 'a' };
+export const invalidSchemaErrorData = { type: 'c' };
 
 export const validData = {
   username: 'Doe',
