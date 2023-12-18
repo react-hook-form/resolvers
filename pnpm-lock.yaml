@@ -126,8 +126,8 @@ devDependencies:
     specifier: ^5.1.6
     version: 5.1.6
   valibot:
-    specifier: ^0.12.0
-    version: 0.12.0
+    specifier: ^0.24.1
+    version: 0.24.1
   vest:
     specifier: ^4.6.11
     version: 4.6.11
@@ -6239,8 +6239,8 @@ packages:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
     dev: true
 
-  /valibot@0.12.0:
-    resolution: {integrity: sha512-EGx/uDUpRa9wB9NkD7fsktc02rvXWlJzDTC/ihbE+NybhzAsMhns2OOdNv2R4BtdGnDvaCEGi/DbgR5RvgCS8A==}
+  /valibot@0.24.1:
+    resolution: {integrity: sha512-Toclbuy20XsECZiueh2dkQ63he2AGaBIj/FJRDAFti2kueFldm9bjJzSYvPaL5CE1HXDMRhq7olak8at7xCz5A==}
     dev: true
 
   /validate-npm-package-license@3.0.4:
