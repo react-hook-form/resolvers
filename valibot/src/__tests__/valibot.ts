@@ -1,6 +1,14 @@
 /* eslint-disable no-console, @typescript-eslint/ban-ts-comment */
 import { valibotResolver } from '..';
-import { schema, validData, fields, invalidData } from './__fixtures__/data';
+import {
+  schema,
+  validData,
+  fields,
+  invalidData,
+  schemaError,
+  validSchemaErrorData,
+  invalidSchemaErrorData,
+} from './__fixtures__/data';
 import * as valibot from 'valibot';
 
 const shouldUseNativeValidation = false;
@@ -97,5 +105,35 @@ describe('valibotResolver', () => {
     );
 
     expect(result).toMatchSnapshot();
+  });
+
+  it('should be able to validate variants', async () => {
+    const result = await valibotResolver(schemaError, undefined, {
+      mode: 'sync',
+    })(validSchemaErrorData, undefined, {
+      fields,
+      shouldUseNativeValidation,
+    });
+
+    expect(result).toEqual({
+      errors: {},
+      values: {
+        type: 'a',
+      },
+    });
+  });
+
+  it('should exit issue resolution if no path is set', async () => {
+    const result = await valibotResolver(schemaError, undefined, {
+      mode: 'sync',
+    })(invalidSchemaErrorData, undefined, {
+      fields,
+      shouldUseNativeValidation,
+    });
+
+    expect(result).toEqual({
+      errors: {},
+      values: {},
+    });
   });
 });

@@ -42,7 +42,7 @@ function TestComponent({ onSubmit }: Props) {
   );
 }
 
-test("form's native validation with Zod", async () => {
+test("form's native validation with Valibot", async () => {
   const handleSubmit = vi.fn();
   render(<TestComponent onSubmit={handleSubmit} />);
 

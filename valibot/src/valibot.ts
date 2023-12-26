@@ -13,8 +13,8 @@ const parseErrors = (
   validateAllFieldCriteria: boolean,
 ): FieldErrors => {
   const errors: Record<string, FieldError> = {};
-  for (; valiErrors.issues.length; ) {
-    const error = valiErrors.issues[0];
+
+  for (const error of valiErrors.issues) {
     if (!error.path) {
       continue;
     }
@@ -38,8 +38,6 @@ const parseErrors = (
           : error.message,
       ) as FieldError;
     }
-
-    valiErrors.issues.shift();
   }
 
   return errors;
