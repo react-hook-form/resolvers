@@ -204,3 +204,54 @@ test('transforms flat object to nested object with root error for field array', 
     ],
   });
 });
+
+test('ensures consistent ordering when a field array has a root error and an error in the non-first element', () => {
+  const result = toNestErrors(
+    {
+      'fieldArrayWithRootError.1.name': {
+        type: 'second',
+        message: 'second message',
+      },
+      fieldArrayWithRootError: { type: 'root-error', message: 'root message' },
+    },
+    {
+      fields: {
+        fieldArrayWithRootError: {
+          name: 'fieldArrayWithRootError',
+          ref: { name: 'fieldArrayWithRootError' },
+        },
+        'fieldArrayWithRootError.0.name': {
+          name: 'fieldArrayWithRootError.0.name',
+          ref: { name: 'fieldArrayWithRootError.0.name' },
+        },
+        'fieldArrayWithRootError.1.name': {
+          name: 'fieldArrayWithRootError.1.name',
+          ref: { name: 'fieldArrayWithRootError.1.name' },
+        },
+      },
+      names: [
+        'fieldArrayWithRootError',
+        'fieldArrayWithRootError.0.name',
+        'fieldArrayWithRootError.1.name',
+      ],
+      shouldUseNativeValidation: false,
+    },
+  );
+
+  expect(result).toEqual({
+    fieldArrayWithRootError: {
+      '1': {
+        name: {
+          type: 'second',
+          message: 'second message',
+          ref: { name: 'fieldArrayWithRootError.1.name' },
+        },
+      },
+      root: {
+        type: 'root-error',
+        message: 'root message',
+        ref: { name: 'fieldArrayWithRootError' },
+      },
+    },
+  });
+});
