@@ -23,10 +23,7 @@ export const toNestErrors = <TFieldValues extends FieldValues>(
     });
 
     if (isNameInFieldArray(options.names || Object.keys(errors), path)) {
-      const fieldArrayErrors = Object.assign(
-        {},
-        compact(get(fieldErrors, path)),
-      );
+      const fieldArrayErrors = Object.assign({}, get(fieldErrors, path));
 
       set(fieldArrayErrors, 'root', error);
       set(fieldErrors, path, fieldArrayErrors);
@@ -37,9 +34,6 @@ export const toNestErrors = <TFieldValues extends FieldValues>(
 
   return fieldErrors;
 };
-
-const compact = <TValue>(value: TValue[]) =>
-  Array.isArray(value) ? value.filter(Boolean) : [];
 
 const isNameInFieldArray = (
   names: InternalFieldName[],
