@@ -65,6 +65,9 @@ devDependencies:
   eslint-config-prettier:
     specifier: ^9.0.0
     version: 9.0.0(eslint@8.47.0)
+  fluentvalidation-ts:
+    specifier: ^3.1.0
+    version: 3.1.0
   fp-ts:
     specifier: ^2.16.1
     version: 2.16.1
@@ -3465,6 +3468,10 @@ packages:
 
   /flatted@3.2.7:
     resolution: {integrity: sha512-5nqDSxl8nn5BSNxyR3n4I6eDmbolI6WT+QqR547RwxQapgjQBmtktdP+HTBb/a/zLsbzERTONyUB5pefh5TtjQ==}
+    dev: true
+
+  /fluentvalidation-ts@3.1.0:
+    resolution: {integrity: sha512-uZgHS21ko/wFZfVw1mUqbeH6zpyyKAYHmZZL1XirShRi3lZixxlQJNYN/RAb2eDWYwRHBe3mX6mKt6EUEMuaLQ==}
     dev: true
 
   /for-each@0.3.3:
