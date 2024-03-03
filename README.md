@@ -45,6 +45,7 @@
   - [TypeBox](#typebox)
   - [ArkType](#arktype)
   - [Valibot](#valibot)
+  - [TypeSchema](#typeschema)
 - [Backers](#backers)
   - [Sponsors](#sponsors)
 - [Contributors](#contributors)
@@ -564,6 +565,38 @@ const schema = object({
 const App = () => {
   const { register, handleSubmit } = useForm({
     resolver: valibotResolver(schema),
+  });
+
+  return (
+    <form onSubmit={handleSubmit((d) => console.log(d))}>
+      <input {...register('username')} />
+      <input type="password" {...register('password')} />
+      <input type="submit" />
+    </form>
+  );
+};
+```
+
+### [TypeSchema](https://typeschema.com)
+
+Universal adapter for schema validation, compatible with [any validation library](https://typeschema.com/#coverage)
+
+[![npm](https://img.shields.io/bundlephobia/minzip/@typeschema/main?style=for-the-badge)](https://bundlephobia.com/result?p=@typeschema/main)
+
+```typescript jsx
+import { useForm } from 'react-hook-form';
+import { typeschemaResolver } from '@hookform/resolvers/typeschema';
+import * as z from 'zod';
+
+// Use your favorite validation library
+const schema = z.object({
+  username: z.string().min(1, { message: 'Required' }),
+  password: z.number().min(1, { message: 'Required' }),
+});
+
+const App = () => {
+  const { register, handleSubmit } = useForm({
+    resolver: typeschemaResolver(schema),
   });
 
   return (
