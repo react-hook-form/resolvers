@@ -554,11 +554,12 @@ import { valibotResolver } from '@hookform/resolvers/valibot';
 import { object, string, minLength, endsWith } from 'valibot';
 
 const schema = object({
-  username: string('username is required', [
+  username: string([
+    minLength(1, 'username is required'),
     minLength(3, 'Needs to be at least 3 characters'),
     endsWith('cool', 'Needs to end with `cool`'),
   ]),
-  password: string('password is required'),
+  password: string([minLength(1,'password is required')]),
 });
 
 const App = () => {
