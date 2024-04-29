@@ -1,7 +1,8 @@
 import { appendErrors, FieldError, FieldErrors } from 'react-hook-form';
 import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
 import type { Resolver } from './types';
-import { Value, ValueError } from '@sinclair/typebox/value';
+import { Value, type ValueError } from '@sinclair/typebox/value';
+import { TypeCheck } from '@sinclair/typebox/compiler';
 
 const parseErrorSchema = (
   _errors: ValueError[],
@@ -40,7 +41,7 @@ const parseErrorSchema = (
 
 export const typeboxResolver: Resolver =
   (schema) => async (values, _, options) => {
-    const errors = Array.from(Value.Errors(schema, values));
+    const errors = Array.from(schema instanceof TypeCheck ? schema.Errors(values) : Value.Errors(schema, values));
 
     options.shouldUseNativeValidation && validateFieldsNatively({}, options);
 

@@ -5,11 +5,14 @@ import user from '@testing-library/user-event';
 import { typeboxResolver } from '..';
 
 import { Type, Static } from '@sinclair/typebox';
+import { TypeCompiler } from '@sinclair/typebox/compiler';
 
 const schema = Type.Object({
   username: Type.String({ minLength: 1 }),
   password: Type.String({ minLength: 1 }),
 });
+
+const typecheck = TypeCompiler.Compile(schema)
 
 type FormData = Static<typeof schema>;
 
@@ -19,7 +22,7 @@ interface Props {
 
 function TestComponent({ onSubmit }: Props) {
   const { register, handleSubmit } = useForm<FormData>({
-    resolver: typeboxResolver(schema),
+    resolver: typeboxResolver(typecheck),
     shouldUseNativeValidation: true,
   });
 
@@ -34,7 +37,7 @@ function TestComponent({ onSubmit }: Props) {
   );
 }
 
-test("form's native validation with Typebox", async () => {
+test("form's native validation with Typebox (with compiler)", async () => {
   const handleSubmit = vi.fn();
   render(<TestComponent onSubmit={handleSubmit} />);
 
