@@ -99,6 +99,12 @@
       "import": "./valibot/dist/valibot.mjs",
       "require": "./valibot/dist/valibot.js"
     },
+    "./effect-ts": {
+      "types": "./effect-ts/dist/index.d.ts",
+      "umd": "./effect-ts/dist/effect-ts.umd.js",
+      "import": "./effect-ts/dist/effect-ts.mjs",
+      "require": "./effect-ts/dist/effect-ts.js"
+    },
     "./package.json": "./package.json",
     "./*": "./*"
   },
@@ -145,7 +151,10 @@
     "arktype/dist",
     "valibot/package.json",
     "valibot/src",
-    "valibot/dist"
+    "valibot/dist",
+    "effect-ts/package.json",
+    "effect-ts/src",
+    "effect-ts/dist"
   ],
   "publishConfig": {
     "access": "public"
@@ -168,6 +177,7 @@
     "build:typebox": "microbundle --cwd typebox --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm,@sinclair/typebox/value=value",
     "build:arktype": "microbundle --cwd arktype --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
     "build:valibot": "microbundle --cwd valibot --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
+    "build:effect-ts": "microbundle --cwd effect-ts --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
     "postbuild": "node ./config/node-13-exports.js",
     "lint": "eslint . --ext .ts,.js --ignore-path .gitignore",
     "lint:types": "tsc",
@@ -191,6 +201,7 @@
     "vest",
     "class-validator",
     "io-ts",
+    "effect-ts",
     "nope",
     "computed-types",
     "typanion",
@@ -209,6 +220,7 @@
   },
   "homepage": "https://react-hook-form.com",
   "devDependencies": {
+    "@effect/schema": "^0.66.14",
     "@sinclair/typebox": "^0.31.1",
     "@testing-library/dom": "^9.3.1",
     "@testing-library/jest-dom": "^6.0.1",
@@ -227,6 +239,7 @@
     "class-validator": "^0.14.0",
     "computed-types": "^1.11.2",
     "cross-env": "^7.0.3",
+    "effect": "^3.1.2",
     "eslint": "^8.47.0",
     "eslint-config-prettier": "^9.0.0",
     "fp-ts": "^2.16.1",
