@@ -15,10 +15,8 @@ export const effectTsResolver: Resolver =
       Effect.mapError((issues) => {
         const errors = issues.reduce((acc, current) => {
           const key = current.path.join('.');
-          return {
-            ...acc,
-            [key]: { message: current.message, type: current._tag },
-          };
+          acc[key] = { message: current.message, type: current._tag };
+          return acc;
         }, {} as FieldErrors);
 
         return toNestErrors(errors, options);
