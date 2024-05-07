@@ -16,6 +16,7 @@ const subRepositories = [
   'typebox',
   'arktype',
   'valibot',
+  'effect-ts',
 ];
 
 const copySrc = () => {
