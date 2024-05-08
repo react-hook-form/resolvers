@@ -45,6 +45,7 @@
   - [TypeBox](#typebox)
   - [ArkType](#arktype)
   - [Valibot](#valibot)
+  - [effect-ts](#effect-ts)
 - [Backers](#backers)
   - [Sponsors](#sponsors)
 - [Contributors](#contributors)
@@ -574,6 +575,57 @@ const App = () => {
     </form>
   );
 };
+```
+
+### [effect-ts](https://github.com/Effect-TS/effect)
+
+A powerful TypeScript framework that provides a fully-fledged functional effect system with a rich standard library.
+
+[![npm](https://img.shields.io/bundlephobia/minzip/effect?style=for-the-badge)]
+
+```typescript jsx
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { effectTsResolver } from '@hookform/resolvers/effect-ts';
+import { Schema } from '@effect/schema';
+
+const schema = Schema.Struct({
+  username: Schema.String.pipe(
+    Schema.nonEmpty({ message: () => 'username required' }),
+  ),
+  password: Schema.String.pipe(
+    Schema.nonEmpty({ message: () => 'password required' }),
+  ),
+});
+
+type FormData = Schema.Schema.Type<typeof schema>;
+
+interface Props {
+  onSubmit: (data: FormData) => void;
+}
+
+function TestComponent({ onSubmit }: Props) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    // provide generic if TS has issues inferring types
+  } = useForm<FormData>({
+    resolver: effectTsResolver(schema),
+  });
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <input {...register('username')} />
+      {errors.username && <span role="alert">{errors.username.message}</span>}
+
+      <input {...register('password')} />
+      {errors.password && <span role="alert">{errors.password.message}</span>}
+
+      <button type="submit">submit</button>
+    </form>
+  );
+}
 ```
 
 ## Backers
