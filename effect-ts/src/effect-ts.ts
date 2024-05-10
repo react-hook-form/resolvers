@@ -1,17 +1,18 @@
-import { Schema } from '@effect/schema';
-import { formatErrorSync } from '@effect/schema/ArrayFormatter';
+import { decodeUnknown } from '@effect/schema/ParseResult';
+import { formatIssue } from '@effect/schema/ArrayFormatter';
 import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
-import { Effect, pipe } from 'effect';
+import * as Effect from 'effect/Effect';
 import type { FieldErrors } from 'react-hook-form';
-import { Resolver } from './types';
+import type { Resolver } from './types';
 
 export const effectTsResolver: Resolver =
   (schema, config = { errors: 'all', onExcessProperty: 'ignore' }) =>
   (values, _, options) => {
-    return pipe(
-      values,
-      Schema.decodeUnknownEither(schema, config),
-      Effect.mapError(formatErrorSync),
+    return decodeUnknown(
+      schema,
+      config,
+    )(values).pipe(
+      Effect.catchAll((parseIssue) => Effect.flip(formatIssue(parseIssue))),
       Effect.mapError((issues) => {
         const errors = issues.reduce((acc, current) => {
           const key = current.path.join('.');

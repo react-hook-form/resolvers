@@ -28,8 +28,8 @@ function TestComponent({ onSubmit }: Props) {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({
-    resolver: effectTsResolver(schema), // Useful to check TypeScript regressions
+  } = useForm({
+    resolver: effectTsResolver(schema),
   });
 
   return (
