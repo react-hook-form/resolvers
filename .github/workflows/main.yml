@@ -60,8 +60,6 @@ jobs:
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
-          with:
-            node-version: 20
         with:
           node-version: 20
           cache: 'pnpm'
