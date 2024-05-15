@@ -581,7 +581,7 @@ const App = () => {
 
 A powerful TypeScript framework that provides a fully-fledged functional effect system with a rich standard library.
 
-[![npm](https://img.shields.io/bundlephobia/minzip/effect?style=for-the-badge)]
+[![npm](https://img.shields.io/bundlephobia/minzip/valibot?style=for-the-badge)](https://bundlephobia.com/result?p=effect)
 
 ```typescript jsx
 import React from 'react';
