@@ -6,7 +6,7 @@ import {
   FieldValues,
   InternalFieldName,
 } from 'react-hook-form';
-import { dset } from 'dset';
+import set from 'lodash.set';
 import { validateFieldsNatively } from './validateFieldsNatively';
 
 export const toNestErrors = <TFieldValues extends FieldValues>(
@@ -25,10 +25,10 @@ export const toNestErrors = <TFieldValues extends FieldValues>(
     if (isNameInFieldArray(options.names || Object.keys(errors), path)) {
       const fieldArrayErrors = Object.assign({}, get(fieldErrors, path));
 
-      dset(fieldArrayErrors, 'root', error);
-      dset(fieldErrors, path, fieldArrayErrors);
+      set(fieldArrayErrors, 'root', error);
+      set(fieldErrors, path, fieldArrayErrors);
     } else {
-      dset(fieldErrors, path, error);
+      set(fieldErrors, path, error);
     }
   }
 
