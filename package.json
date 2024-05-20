@@ -280,9 +280,5 @@
     "*.{md,json,yml}": [
       "prettier --write"
     ]
-  },
-  "dependencies": {
-    "@types/lodash.set": "^4.3.9",
-    "lodash.set": "^4.3.2"
   }
 }
