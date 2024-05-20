@@ -1,5 +1,4 @@
 import {
-  set,
   get,
   FieldErrors,
   Field,
@@ -7,6 +6,7 @@ import {
   FieldValues,
   InternalFieldName,
 } from 'react-hook-form';
+import { dset } from 'dset';
 import { validateFieldsNatively } from './validateFieldsNatively';
 
 export const toNestErrors = <TFieldValues extends FieldValues>(
@@ -25,10 +25,10 @@ export const toNestErrors = <TFieldValues extends FieldValues>(
     if (isNameInFieldArray(options.names || Object.keys(errors), path)) {
       const fieldArrayErrors = Object.assign({}, get(fieldErrors, path));
 
-      set(fieldArrayErrors, 'root', error);
-      set(fieldErrors, path, fieldArrayErrors);
+      dset(fieldArrayErrors, 'root', error);
+      dset(fieldErrors, path, fieldArrayErrors);
     } else {
-      set(fieldErrors, path, error);
+      dset(fieldErrors, path, error);
     }
   }
 
