@@ -3,72 +3,463 @@
 exports[`arktypeResolver > should return a single error from arktypeResolver when validation fails 1`] = `
 {
   "errors": {
-    "accessToken": {
-      "message": "accessToken must be defined",
+    "accessToken": ArkError {
+      "code": "required",
+      "data": {
+        "birthYear": "birthYear",
+        "email": "",
+        "like": [
+          {
+            "id": "z",
+          },
+        ],
+        "password": "___",
+        "url": "abc",
+      },
+      "input": {
+        "code": "required",
+        "missingValueDescription": "a number or a string",
+        "relativePath": [
+          "accessToken",
+        ],
+      },
+      "missingValueDescription": "a number or a string",
+      "nodeConfig": {
+        "actual": [Function],
+        "description": [Function],
+        "expected": [Function],
+        "message": [Function],
+        "problem": [Function],
+      },
+      "path": [
+        "accessToken",
+      ],
       "ref": undefined,
-      "type": "missing",
+      "relativePath": [
+        "accessToken",
+      ],
+      "type": "required",
+      Symbol(ArkTypeInternalKind): "error",
     },
-    "birthYear": {
-      "message": "birthYear must be a number (was string)",
+    "birthYear": ArkError {
+      "code": "domain",
+      "data": "birthYear",
+      "description": "a number",
+      "domain": "number",
+      "input": {
+        "code": "domain",
+        "description": "a number",
+        "domain": "number",
+      },
+      "nodeConfig": {
+        "actual": [Function],
+        "description": [Function],
+        "expected": [Function],
+        "message": [Function],
+        "problem": [Function],
+      },
+      "path": [
+        "birthYear",
+      ],
       "ref": undefined,
       "type": "domain",
+      Symbol(ArkTypeInternalKind): "error",
     },
-    "dateStr": {
-      "message": "dateStr must be defined",
+    "dateStr": ArkError {
+      "code": "required",
+      "data": {
+        "birthYear": "birthYear",
+        "email": "",
+        "like": [
+          {
+            "id": "z",
+          },
+        ],
+        "password": "___",
+        "url": "abc",
+      },
+      "input": {
+        "code": "required",
+        "missingValueDescription": "a Date",
+        "relativePath": [
+          "dateStr",
+        ],
+      },
+      "missingValueDescription": "a Date",
+      "nodeConfig": {
+        "actual": [Function],
+        "description": [Function],
+        "expected": [Function],
+        "message": [Function],
+        "problem": [Function],
+      },
+      "path": [
+        "dateStr",
+      ],
       "ref": undefined,
-      "type": "missing",
+      "relativePath": [
+        "dateStr",
+      ],
+      "type": "required",
+      Symbol(ArkTypeInternalKind): "error",
     },
-    "email": {
-      "message": "email must be a valid email (was '')",
+    "email": ArkError {
+      "code": "regex",
+      "data": "",
+      "description": "a valid email",
+      "flags": "",
+      "input": {
+        "code": "regex",
+        "description": "a valid email",
+        "flags": "",
+        "rule": "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\\\.[A-Za-z]{2,}$",
+      },
+      "nodeConfig": {
+        "actual": [Function],
+        "description": [Function],
+        "expected": [Function],
+        "message": [Function],
+        "problem": [Function],
+      },
+      "path": [
+        "email",
+      ],
       "ref": {
         "name": "email",
       },
+      "rule": "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\\\.[A-Za-z]{2,}$",
       "type": "regex",
+      Symbol(ArkTypeInternalKind): "error",
     },
-    "enabled": {
-      "message": "enabled must be defined",
+    "enabled": ArkError {
+      "code": "required",
+      "data": {
+        "birthYear": "birthYear",
+        "email": "",
+        "like": [
+          {
+            "id": "z",
+          },
+        ],
+        "password": "___",
+        "url": "abc",
+      },
+      "input": {
+        "code": "required",
+        "missingValueDescription": "boolean",
+        "relativePath": [
+          "enabled",
+        ],
+      },
+      "missingValueDescription": "boolean",
+      "nodeConfig": {
+        "actual": [Function],
+        "description": [Function],
+        "expected": [Function],
+        "message": [Function],
+        "problem": [Function],
+      },
+      "path": [
+        "enabled",
+      ],
       "ref": undefined,
-      "type": "missing",
+      "relativePath": [
+        "enabled",
+      ],
+      "type": "required",
+      Symbol(ArkTypeInternalKind): "error",
     },
     "like": [
       {
-        "id": {
-          "message": "like/0/id must be a number (was string)",
+        "id": ArkError {
+          "code": "domain",
+          "data": "z",
+          "description": "a number",
+          "domain": "number",
+          "input": {
+            "code": "domain",
+            "description": "a number",
+            "domain": "number",
+          },
+          "nodeConfig": {
+            "actual": [Function],
+            "description": [Function],
+            "expected": [Function],
+            "message": [Function],
+            "problem": [Function],
+          },
+          "path": [
+            "like",
+            0,
+            "id",
+          ],
           "ref": undefined,
           "type": "domain",
+          Symbol(ArkTypeInternalKind): "error",
         },
-        "name": {
-          "message": "like/0/name must be defined",
+        "name": ArkError {
+          "code": "required",
+          "data": {
+            "id": "z",
+          },
+          "input": {
+            "code": "required",
+            "missingValueDescription": "a string and more than length 3",
+            "relativePath": [
+              "name",
+            ],
+          },
+          "missingValueDescription": "a string and more than length 3",
+          "nodeConfig": {
+            "actual": [Function],
+            "description": [Function],
+            "expected": [Function],
+            "message": [Function],
+            "problem": [Function],
+          },
+          "path": [
+            "like",
+            0,
+            "name",
+          ],
           "ref": undefined,
-          "type": "missing",
+          "relativePath": [
+            "name",
+          ],
+          "type": "required",
+          Symbol(ArkTypeInternalKind): "error",
         },
       },
     ],
-    "password": {
-      "message": "At password, '___' must be...
-• more than 8 characters
-• a string matching /.*[A-Za-z].*/",
+    "password": ArkError {
+      "code": "union",
+      "data": "___",
+      "errors": [
+        ArkError {
+          "code": "regex",
+          "data": "___",
+          "description": "matched by .*[A-Za-z].*",
+          "input": {
+            "code": "regex",
+            "description": "matched by .*[A-Za-z].*",
+            "rule": ".*[A-Za-z].*",
+          },
+          "nodeConfig": {
+            "actual": [Function],
+            "description": [Function],
+            "expected": [Function],
+            "message": [Function],
+            "problem": [Function],
+          },
+          "path": [
+            "password",
+          ],
+          "rule": ".*[A-Za-z].*",
+          Symbol(ArkTypeInternalKind): "error",
+        },
+        ArkError {
+          "code": "regex",
+          "data": "___",
+          "description": "matched by .*\\\\d.*",
+          "input": {
+            "code": "regex",
+            "description": "matched by .*\\\\d.*",
+            "rule": ".*\\\\d.*",
+          },
+          "nodeConfig": {
+            "actual": [Function],
+            "description": [Function],
+            "expected": [Function],
+            "message": [Function],
+            "problem": [Function],
+          },
+          "path": [
+            "password",
+          ],
+          "rule": ".*\\\\d.*",
+          Symbol(ArkTypeInternalKind): "error",
+        },
+      ],
+      "input": {
+        "code": "union",
+        "errors": [
+          ArkError {
+            "code": "regex",
+            "data": "___",
+            "description": "matched by .*[A-Za-z].*",
+            "input": {
+              "code": "regex",
+              "description": "matched by .*[A-Za-z].*",
+              "rule": ".*[A-Za-z].*",
+            },
+            "nodeConfig": {
+              "actual": [Function],
+              "description": [Function],
+              "expected": [Function],
+              "message": [Function],
+              "problem": [Function],
+            },
+            "path": [
+              "password",
+            ],
+            "rule": ".*[A-Za-z].*",
+            Symbol(ArkTypeInternalKind): "error",
+          },
+          ArkError {
+            "code": "regex",
+            "data": "___",
+            "description": "matched by .*\\\\d.*",
+            "input": {
+              "code": "regex",
+              "description": "matched by .*\\\\d.*",
+              "rule": ".*\\\\d.*",
+            },
+            "nodeConfig": {
+              "actual": [Function],
+              "description": [Function],
+              "expected": [Function],
+              "message": [Function],
+              "problem": [Function],
+            },
+            "path": [
+              "password",
+            ],
+            "rule": ".*\\\\d.*",
+            Symbol(ArkTypeInternalKind): "error",
+          },
+        ],
+      },
+      "nodeConfig": {
+        "actual": [Function],
+        "description": [Function],
+        "expected": [Function],
+        "message": [Function],
+        "problem": [Function],
+      },
+      "path": [
+        "password",
+      ],
       "ref": {
         "name": "password",
       },
-      "type": "multi",
+      "type": "union",
+      Symbol(ArkTypeInternalKind): "error",
     },
-    "repeatPassword": {
-      "message": "repeatPassword must be defined",
+    "repeatPassword": ArkError {
+      "code": "required",
+      "data": {
+        "birthYear": "birthYear",
+        "email": "",
+        "like": [
+          {
+            "id": "z",
+          },
+        ],
+        "password": "___",
+        "url": "abc",
+      },
+      "input": {
+        "code": "required",
+        "missingValueDescription": "a string and more than length 1",
+        "relativePath": [
+          "repeatPassword",
+        ],
+      },
+      "missingValueDescription": "a string and more than length 1",
+      "nodeConfig": {
+        "actual": [Function],
+        "description": [Function],
+        "expected": [Function],
+        "message": [Function],
+        "problem": [Function],
+      },
+      "path": [
+        "repeatPassword",
+      ],
       "ref": undefined,
-      "type": "missing",
+      "relativePath": [
+        "repeatPassword",
+      ],
+      "type": "required",
+      Symbol(ArkTypeInternalKind): "error",
     },
-    "tags": {
-      "message": "tags must be defined",
+    "tags": ArkError {
+      "code": "required",
+      "data": {
+        "birthYear": "birthYear",
+        "email": "",
+        "like": [
+          {
+            "id": "z",
+          },
+        ],
+        "password": "___",
+        "url": "abc",
+      },
+      "input": {
+        "code": "required",
+        "missingValueDescription": "string[]",
+        "relativePath": [
+          "tags",
+        ],
+      },
+      "missingValueDescription": "string[]",
+      "nodeConfig": {
+        "actual": [Function],
+        "description": [Function],
+        "expected": [Function],
+        "message": [Function],
+        "problem": [Function],
+      },
+      "path": [
+        "tags",
+      ],
       "ref": undefined,
-      "type": "missing",
+      "relativePath": [
+        "tags",
+      ],
+      "type": "required",
+      Symbol(ArkTypeInternalKind): "error",
     },
-    "username": {
-      "message": "username must be defined",
+    "username": ArkError {
+      "code": "required",
+      "data": {
+        "birthYear": "birthYear",
+        "email": "",
+        "like": [
+          {
+            "id": "z",
+          },
+        ],
+        "password": "___",
+        "url": "abc",
+      },
+      "input": {
+        "code": "required",
+        "missingValueDescription": "a string and more than length 2",
+        "relativePath": [
+          "username",
+        ],
+      },
+      "missingValueDescription": "a string and more than length 2",
+      "nodeConfig": {
+        "actual": [Function],
+        "description": [Function],
+        "expected": [Function],
+        "message": [Function],
+        "problem": [Function],
+      },
+      "path": [
+        "username",
+      ],
       "ref": {
         "name": "username",
       },
-      "type": "missing",
+      "relativePath": [
+        "username",
+      ],
+      "type": "required",
+      Symbol(ArkTypeInternalKind): "error",
     },
   },
   "values": {},

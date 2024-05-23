@@ -1,7 +1,7 @@
 {
   "name": "@hookform/resolvers/arktype",
   "amdName": "hookformResolversArktype",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
   "description": "React Hook Form validation resolver: arktype",
   "main": "dist/arktype.js",

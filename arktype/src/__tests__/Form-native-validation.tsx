@@ -57,14 +57,14 @@ test("form's native validation with Zod", async () => {
   usernameField = screen.getByPlaceholderText(/username/i) as HTMLInputElement;
   expect(usernameField.validity.valid).toBe(false);
   expect(usernameField.validationMessage).toBe(
-    'username must be more than 1 characters (was 0)',
+    'username must be more than length 1 (was 0)',
   );
 
   // password
   passwordField = screen.getByPlaceholderText(/password/i) as HTMLInputElement;
   expect(passwordField.validity.valid).toBe(false);
   expect(passwordField.validationMessage).toBe(
-    'password must be more than 1 characters (was 0)',
+    'password must be more than length 1 (was 0)',
   );
 
   await user.type(screen.getByPlaceholderText(/username/i), 'joe');

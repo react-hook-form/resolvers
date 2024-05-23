@@ -47,10 +47,10 @@ test("form's validation with arkType and TypeScript's integration", async () => 
   await user.click(screen.getByText(/submit/i));
 
   expect(
-    screen.getByText('username must be more than 1 characters (was 0)'),
+    screen.getByText('username must be more than length 1 (was 0)'),
   ).toBeInTheDocument();
   expect(
-    screen.getByText('password must be more than 1 characters (was 0)'),
+    screen.getByText('password must be more than length 1 (was 0)'),
   ).toBeInTheDocument();
   expect(handleSubmit).not.toHaveBeenCalled();
 });
