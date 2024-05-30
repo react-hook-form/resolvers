@@ -22,17 +22,16 @@ type RequiredParamError = {
 const findRequiredParamError = (
   errorParams: Record<string, unknown>,
 ): false | RequiredParamError => {
-  let requiredParamError: unknown = false;
-
   if (!errorParams.errors || !Array.isArray(errorParams.errors)) {
     return false;
   }
 
-  requiredParamError = errorParams.errors.find(
+  const requiredParamError = errorParams.errors.find(
     (error: unknown) =>
       isObject<Record<string, unknown>>(error) && error.keyword === 'required',
   );
 
+  // Check if the correct properties are present in the error object
   if (
     requiredParamError &&
     isObject<Record<string, unknown>>(requiredParamError) &&
