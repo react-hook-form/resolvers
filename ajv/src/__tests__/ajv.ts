@@ -1,5 +1,12 @@
 import { ajvResolver } from '..';
-import { fields, invalidData, invalidDataWithUndefined, schema, validData } from './__fixtures__/data';
+import {
+  fields,
+  invalidData,
+  invalidDataWithUndefined,
+  schema,
+  validData,
+  errorMessageSchema,
+} from './__fixtures__/data';
 
 const shouldUseNativeValidation = false;
 
@@ -85,6 +92,19 @@ describe('ajvResolver', () => {
   it('should return all the error messages from ajvResolver when some property is undefined and result will keep the input data structure', async () => {
     expect(
       await ajvResolver(schema, undefined, { mode: 'sync' })(
+        invalidDataWithUndefined,
+        undefined,
+        {
+          fields,
+          shouldUseNativeValidation,
+        },
+      ),
+    ).toMatchSnapshot();
+  });
+
+  it('should return all the custom error messages from ajvResolver when some property is undefined and result will keep the input data structure', async () => {
+    expect(
+      await ajvResolver(errorMessageSchema, undefined, { mode: 'sync' })(
         invalidDataWithUndefined,
         undefined,
         {

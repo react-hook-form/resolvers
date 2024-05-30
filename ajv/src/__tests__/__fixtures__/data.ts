@@ -39,6 +39,48 @@ export const schema: JSONSchemaType<Data> = {
   additionalProperties: false,
 };
 
+export const errorMessageSchema: JSONSchemaType<Data> = {
+  type: 'object',
+  properties: {
+    username: {
+      type: 'string',
+      minLength: 3,
+    },
+    password: {
+      type: 'string',
+      pattern: '.*[A-Z].*',
+      errorMessage: {
+        pattern: 'One uppercase character',
+      },
+    },
+    deepObject: {
+      type: 'object',
+      properties: {
+        data: { type: 'string' },
+        twoLayersDeep: {
+          type: 'object',
+          properties: { name: { type: 'string' } },
+          additionalProperties: false,
+          required: ['name'],
+        },
+      },
+      required: ['data', 'twoLayersDeep'],
+      errorMessage: {
+        required: {
+          data: 'Data is required',
+        },
+      },
+    },
+  },
+  required: ['username', 'password', 'deepObject'],
+  additionalProperties: false,
+  errorMessage: {
+    required: {
+      password: 'Password is required',
+    },
+  },
+};
+
 export const validData: Data = {
   username: 'jsun969',
   password: 'validPassword',
