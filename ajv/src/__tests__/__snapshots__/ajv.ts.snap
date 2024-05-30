@@ -1,5 +1,41 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`ajvResolver > should return all the custom and native error messages from ajvResolver when properties are undefined and result will keep the input data structure 1`] = `
+{
+  "errors": {
+    "deepObject": {
+      "data": {
+        "message": "Data is required",
+        "ref": undefined,
+        "type": "errorMessage",
+      },
+      "twoLayersDeep": {
+        "name": {
+          "message": "Name is required",
+          "ref": undefined,
+          "type": "errorMessage",
+        },
+      },
+    },
+    "password": {
+      "message": "Password is required",
+      "ref": {
+        "name": "password",
+      },
+      "type": "errorMessage",
+    },
+    "username": {
+      "message": "must have required property 'username'",
+      "ref": {
+        "name": "username",
+      },
+      "type": "required",
+    },
+  },
+  "values": {},
+}
+`;
+
 exports[`ajvResolver > should return all the custom error messages from ajvResolver when some property is undefined and result will keep the input data structure 1`] = `
 {
   "errors": {

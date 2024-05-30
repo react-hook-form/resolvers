@@ -62,6 +62,11 @@ export const errorMessageSchema: JSONSchemaType<Data> = {
           properties: { name: { type: 'string' } },
           additionalProperties: false,
           required: ['name'],
+          errorMessage: {
+            required: {
+              name: 'Name is required',
+            },
+          },
         },
       },
       required: ['data', 'twoLayersDeep'],
@@ -107,6 +112,17 @@ export const invalidDataWithUndefined = {
   deepObject: {
     twoLayersDeep: {
       name: 'deeper',
+    },
+    data: undefined,
+  },
+};
+
+export const invalidDataWithAllUndefined = {
+  username: undefined,
+  password: undefined,
+  deepObject: {
+    twoLayersDeep: {
+      name: undefined,
     },
     data: undefined,
   },
