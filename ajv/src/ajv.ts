@@ -50,7 +50,8 @@ const parseErrorSchema = (
   ajvErrors: ErrorObject[],
   validateAllFieldCriteria: boolean,
 ) => {
-  ajvErrors?.forEach((error) => {
+  // Ajv will return empty instancePath when require error
+  ajvErrors.forEach((error) => {
     if (error.keyword === 'required') {
       error.instancePath += '/' + error.params.missingProperty;
     }
