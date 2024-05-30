@@ -261,7 +261,7 @@
     "reflect-metadata": "^0.1.13",
     "superstruct": "^1.0.3",
     "typanion": "^3.14.0",
-    "typescript": "^5.1.6",
+    "typescript": "5.1.6",
     "valibot": "^0.24.1",
     "vest": "^4.6.11",
     "vite": "^4.4.9",
