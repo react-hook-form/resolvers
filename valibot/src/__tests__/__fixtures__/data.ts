@@ -1,62 +1,52 @@
 import { Field, InternalFieldName } from 'react-hook-form';
-import {
-  object,
-  string,
-  minLength,
-  maxLength,
-  regex,
-  number,
-  minValue,
-  maxValue,
-  email,
-  array,
-  boolean,
-  required,
-  union,
-  variant,
-  literal,
-} from 'valibot';
+import * as v from 'valibot';
 
-export const schema = required(
-  object({
-    username: string([minLength(2), maxLength(30), regex(/^\w+$/)]),
-    password: string('New Password is required', [
-      regex(new RegExp('.*[A-Z].*'), 'One uppercase character'),
-      regex(new RegExp('.*[a-z].*'), 'One lowercase character'),
-      regex(new RegExp('.*\\d.*'), 'One number'),
-      regex(
-        new RegExp('.*[`~<>?,./!@#$%^&*()\\-_+="\'|{}\\[\\];:\\\\].*'),
-        'One special character',
-      ),
-      minLength(8, 'Must be at least 8 characters in length'),
-    ]),
-    repeatPassword: string('Repeat Password is required'),
-    accessToken: union(
-      [
-        string('Access token should be a string'),
-        number('Access token  should be a number'),
-      ],
-      'access token is required',
+export const schema = v.object({
+  username: v.pipe(
+    v.string(),
+    v.minLength(2),
+    v.maxLength(30),
+    v.regex(/^\w+$/),
+  ),
+  password: v.pipe(
+    v.string('New Password is required'),
+    v.regex(new RegExp('.*[A-Z].*'), 'One uppercase character'),
+    v.regex(new RegExp('.*[a-z].*'), 'One lowercase character'),
+    v.regex(new RegExp('.*\\d.*'), 'One number'),
+    v.regex(
+      new RegExp('.*[`~<>?,./!@#$%^&*()\\-_+="\'|{}\\[\\];:\\\\].*'),
+      'One special character',
     ),
-    birthYear: number('Please enter your birth year', [
-      minValue(1900),
-      maxValue(2013),
-    ]),
-    email: string([email('Invalid email address')]),
-    tags: array(string('Tags should be strings')),
-    enabled: boolean(),
-    like: required(
-      object({
-        id: number('Like id is required'),
-        name: string('Like name is required', [minLength(4, 'Too short')]),
-      }),
+    v.minLength(8, 'Must be at least 8 characters in length'),
+  ),
+  repeatPassword: v.string('Repeat Password is required'),
+  accessToken: v.union(
+    [
+      v.string('Access token should be a string'),
+      v.number('Access token  should be a number'),
+    ],
+    'access token is required',
+  ),
+  birthYear: v.pipe(
+    v.number('Please enter your birth year'),
+    v.minValue(1900),
+    v.maxValue(2013),
+  ),
+  email: v.pipe(v.string(), v.email('Invalid email address')),
+  tags: v.array(v.string('Tags should be strings')),
+  enabled: v.boolean(),
+  like: v.object({
+    id: v.number('Like id is required'),
+    name: v.pipe(
+      v.string('Like name is required'),
+      v.minLength(4, 'Too short'),
     ),
   }),
-);
+});
 
-export const schemaError = variant('type', [
-  object({ type: literal('a') }),
-  object({ type: literal('b') }),
+export const schemaError = v.variant('type', [
+  v.object({ type: v.literal('a') }),
+  v.object({ type: v.literal('b') }),
 ]);
 
 export const validSchemaErrorData = { type: 'a' };

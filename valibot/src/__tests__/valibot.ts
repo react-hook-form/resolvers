@@ -21,15 +21,13 @@ describe('valibotResolver', () => {
         ...a,
       };
     });
-    const parseSpy = vi.spyOn(valibot, 'parse');
-    const parseAsyncSpy = vi.spyOn(valibot, 'parseAsync');
+    const funcSpy = vi.spyOn(valibot, 'safeParseAsync');
 
     const result = await valibotResolver(schema, undefined, {
       mode: 'sync',
     })(validData, undefined, { fields, shouldUseNativeValidation });
 
-    expect(parseSpy).toHaveBeenCalledTimes(1);
-    expect(parseAsyncSpy).not.toHaveBeenCalled();
+    expect(funcSpy).toHaveBeenCalledTimes(1);
     expect(result.errors).toEqual({});
     expect(result).toMatchSnapshot();
   });
@@ -42,15 +40,13 @@ describe('valibotResolver', () => {
         ...a,
       };
     });
-    const parseSpy = vi.spyOn(valibot, 'parse');
-    const parseAsyncSpy = vi.spyOn(valibot, 'parseAsync');
+    const funcSpy = vi.spyOn(valibot, 'safeParseAsync');
 
     const result = await valibotResolver(schema, undefined, {
       mode: 'sync',
     })(invalidData, undefined, { fields, shouldUseNativeValidation });
 
-    expect(parseSpy).toHaveBeenCalledTimes(1);
-    expect(parseAsyncSpy).not.toHaveBeenCalled();
+    expect(funcSpy).toHaveBeenCalledTimes(1);
     expect(result).toMatchSnapshot();
   });
 
@@ -107,7 +103,7 @@ describe('valibotResolver', () => {
     expect(result).toMatchSnapshot();
   });
 
-  it('should be able to validate variants', async () => {
+  it('should be able to validate variants without errors', async () => {
     const result = await valibotResolver(schemaError, undefined, {
       mode: 'sync',
     })(validSchemaErrorData, undefined, {
@@ -123,7 +119,7 @@ describe('valibotResolver', () => {
     });
   });
 
-  it('should exit issue resolution if no path is set', async () => {
+  it('should be able to validate variants with errors', async () => {
     const result = await valibotResolver(schemaError, undefined, {
       mode: 'sync',
     })(invalidSchemaErrorData, undefined, {
@@ -132,7 +128,13 @@ describe('valibotResolver', () => {
     });
 
     expect(result).toEqual({
-      errors: {},
+      errors: {
+        type: {
+          message: 'Invalid type: Expected "a" | "b" but received "c"',
+          ref: undefined,
+          type: 'variant',
+        },
+      },
       values: {},
     });
   });
