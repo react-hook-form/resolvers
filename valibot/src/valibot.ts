@@ -1,6 +1,6 @@
 import { toNestErrors } from '@hookform/resolvers';
 import { FieldError, appendErrors, FieldValues } from 'react-hook-form';
-import { safeParseAsync } from 'valibot';
+import { getDotPath, safeParseAsync } from 'valibot';
 import type { Resolver } from './types';
 
 export const valibotResolver: Resolver =
@@ -23,47 +23,31 @@ export const valibotResolver: Resolver =
 
       // Iterate over issues to add them to errors object
       for (const issue of result.issues) {
-        if (issue.path) {
-          // Create path string from issue path
-          let path = '';
-          for (const item of issue.path) {
-            if (
-              'key' in item &&
-              (typeof item.key === 'string' || typeof item.key === 'number')
-            ) {
-              if (path) {
-                path += `.${item.key}`;
-              } else {
-                path += item.key;
-              }
-            } else {
-              break;
-            }
+        // Create dot path from issue
+        const path = getDotPath(issue);
+
+        if (path) {
+          // Add first error of path to errors object
+          if (!errors[path]) {
+            errors[path] = { message: issue.message, type: issue.type };
           }
 
-          if (path) {
-            // Add first error of path to errors object
-            if (!errors[path]) {
-              errors[path] = { message: issue.message, type: issue.type };
-            }
-
-            // If configured, add all errors of path to errors object
-            if (validateAllFieldCriteria) {
-              const types = errors[path].types;
-              const messages = types && types[issue.type];
-              errors[path] = appendErrors(
-                path,
-                validateAllFieldCriteria,
-                errors,
-                issue.type,
-                messages
-                  ? ([] as string[]).concat(
-                      messages as string | string[],
-                      issue.message,
-                    )
-                  : issue.message,
-              ) as FieldError;
-            }
+          // If configured, add all errors of path to errors object
+          if (validateAllFieldCriteria) {
+            const types = errors[path].types;
+            const messages = types && types[issue.type];
+            errors[path] = appendErrors(
+              path,
+              validateAllFieldCriteria,
+              errors,
+              issue.type,
+              messages
+                ? ([] as string[]).concat(
+                    messages as string | string[],
+                    issue.message,
+                  )
+                : issue.message,
+            ) as FieldError;
           }
         }
       }
