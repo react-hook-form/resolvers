@@ -1,34 +1,24 @@
 import { FieldError, FieldErrors } from 'react-hook-form';
 import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
 import type { Resolver } from './types';
-import { Problems } from 'arktype';
+import { ArkErrors } from 'arktype';
 
-const parseErrorSchema = (e: Problems) => {
-  const errors: Record<string, FieldError> = {};
-  for (; e.length; ) {
-    const error = e[0];
-    const _path = error.path.join('.');
-
-    if (!errors[_path]) {
-      errors[_path] = { message: error.message, type: error.code };
-    }
-
-    // @ts-expect-error - false positive Property 'shift' does not exist on type 'Problems'.
-    e.shift();
-  }
-
-  return errors;
+const parseErrorSchema = (e: ArkErrors): Record<string, FieldError> => {
+  // copy code to type to match FieldError shape
+  e.forEach((e) => Object.assign(e, { type: e.code }));
+  // need to cast here because TS doesn't understand we added the type field
+  return e.byPath as never;
 };
 
 export const arktypeResolver: Resolver =
   (schema, _schemaOptions, resolverOptions = {}) =>
   (values, _, options) => {
-    const result = schema(values);
+    const out = schema(values);
 
-    if (result.problems) {
+    if (out instanceof ArkErrors) {
       return {
         values: {},
-        errors: toNestErrors(parseErrorSchema(result.problems), options),
+        errors: toNestErrors(parseErrorSchema(out), options),
       };
     }
 
@@ -36,6 +26,6 @@ export const arktypeResolver: Resolver =
 
     return {
       errors: {} as FieldErrors,
-      values: resolverOptions.raw ? values : result.data,
+      values: resolverOptions.raw ? values : out,
     };
   };
