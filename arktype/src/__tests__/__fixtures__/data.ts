@@ -1,22 +1,20 @@
 import { Field, InternalFieldName } from 'react-hook-form';
-import { type, arrayOf, union } from 'arktype';
+import { type } from 'arktype';
 
 export const schema = type({
   username: 'string>2',
-  password: union(['string>8', '&', '/.*[A-Za-z].*/'], ['/.*\\d.*/']),
+  password: '/.*[A-Za-z].*/>8|/.*\\d.*/',
   repeatPassword: 'string>1',
-  accessToken: union('string', 'number'),
+  accessToken: 'string|number',
   birthYear: '1900<number<2013',
   email: 'email',
-  tags: arrayOf('string'),
+  tags: 'string[]',
   enabled: 'boolean',
   url: 'string>1',
-  'like?': arrayOf(
-    type({
-      id: 'number',
-      name: 'string>3',
-    }),
-  ),
+  'like?': type({
+    id: 'number',
+    name: 'string>3',
+  }).array(),
   dateStr: 'Date',
 });
 

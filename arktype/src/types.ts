@@ -3,7 +3,7 @@ import { Type } from 'arktype';
 
 export type Resolver = <T extends Type<any>>(
   schema: T,
-  schemaOptions?: never,
+  schemaOptions?: undefined,
   factoryOptions?: {
     /**
      * Return the raw input values rather than the parsed values.

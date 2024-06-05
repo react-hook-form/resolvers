@@ -48,8 +48,8 @@ importers:
         specifier: ^3.0.0
         version: 3.0.0(ajv@8.12.0)
       arktype:
-        specifier: 1.0.19-alpha
-        version: 1.0.19-alpha
+        specifier: 2.0.0-dev.14
+        version: 2.0.0-dev.14
       check-export-map:
         specifier: ^1.3.0
         version: 1.3.0
@@ -168,6 +168,12 @@ packages:
   '@ampproject/remapping@2.2.1':
     resolution: {integrity: sha512-lFMjJTrFL3j7L9yBxwYfCq2k6qqwHyzuUl/XBnif78PWTJYyL/dfowQHWE3sp6U6ZzqWiiIZnpTMO96zhkjwtg==}
     engines: {node: '>=6.0.0'}
+
+  '@arktype/schema@0.1.6':
+    resolution: {integrity: sha512-VqNFO2iEFfdVTHmWtUB0DKt9ieO+2PP57jPXU/iF58m3Rmm6vMNOMqNxpi5M7hl0Xskj0M1/xErGYmTpM8gReg==}
+
+  '@arktype/util@0.0.44':
+    resolution: {integrity: sha512-zC5E/+fPtc4q+yQdSnQvRzoJQkYq42QH5chKL4TSB1uFdZPTRS0FpoOnNoIZMnpFAUUt6eI6tRGV5uMa3RGTyA==}
 
   '@babel/code-frame@7.22.10':
     resolution: {integrity: sha512-/KKIMG4UEL35WmI9OlvMhurwtytjvXoFcGNrOvyG9zIzA8YmPjVtIZUf7b05+TPO7G7/GEmLHDaoCgACHl9hhA==}
@@ -1324,8 +1330,8 @@ packages:
   aria-query@5.3.0:
     resolution: {integrity: sha512-b0P0sZPKtyu8HkeRAfCq0IfURZK+SuwMjY1UXGBU27wpAiTwQAIlq56IbIO+ytk/JjS1fMR14ee5WBBfKi5J6A==}
 
-  arktype@1.0.19-alpha:
-    resolution: {integrity: sha512-tcmWSZupIjjG/hBYAlL9JzheY3WP3upCPlD7UCbY65AbzZegLZXrbCM4+TI03t2rKRwT2TuSioH27Bdqst757Q==}
+  arktype@2.0.0-dev.14:
+    resolution: {integrity: sha512-Iu0xsil97Xps+AobQAQgCeL1plDcq9iwFiLwxvTt+xvT38BbPCr2CVSW/fMeiim+9eKfUCuqZ0Bq6m7kcVfIXA==}
 
   array-buffer-byte-length@1.0.0:
     resolution: {integrity: sha512-LPuwb2P+NrQw3XhxGc36+XSvuBPopovXYTR9Ew++Du9Yb/bx5AzBfrIsBoj0EZUifjQU+sHL21sseZ3jerWO/A==}
@@ -3688,6 +3694,12 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.3
       '@jridgewell/trace-mapping': 0.3.19
 
+  '@arktype/schema@0.1.6':
+    dependencies:
+      '@arktype/util': 0.0.44
+
+  '@arktype/util@0.0.44': {}
+
   '@babel/code-frame@7.22.10':
     dependencies:
       '@babel/highlight': 7.22.10
@@ -4950,7 +4962,10 @@ snapshots:
     dependencies:
       dequal: 2.0.3
 
-  arktype@1.0.19-alpha: {}
+  arktype@2.0.0-dev.14:
+    dependencies:
+      '@arktype/schema': 0.1.6
+      '@arktype/util': 0.0.44
 
   array-buffer-byte-length@1.0.0:
     dependencies:
