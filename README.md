@@ -631,38 +631,15 @@ function TestComponent({ onSubmit }: Props) {
 
 ## Backers
 
-Thanks goes to all our backers! [[Become a backer](https://opencollective.com/react-hook-form#backer)].
+Thanks go to all our backers! [[Become a backer](https://opencollective.com/react-hook-form#backer)].
 
 <a href="https://opencollective.com/react-hook-form#backers">
     <img src="https://opencollective.com/react-hook-form/backers.svg?width=950" />
 </a>
 
-### Sponsors
-
-Thanks go to these kind and lovely sponsors!
-
-<a target="_blank" href='https://wantedlyinc.com'>
-    <img width="94" src="https://images.opencollective.com/wantedly/d94e44e/logo/256.png" />
-</a>
-<a target="_blank" href='https://toss.im'>
-    <img width="94" src="https://images.opencollective.com/toss/3ed69b3/logo/256.png" />
-</a>
-<a target="_blank" href="https://graphcms.com">
-    <img width="94" src="https://avatars.githubusercontent.com/u/31031438" />
-</a>
-<a target="_blank" href="https://www.beekai.com/">
-    <img width="94" src="https://www.beekai.com/marketing/logo/logo.svg" />
-</a>
-<a target="_blank" href="https://kanamekey.com">
-    <img width="94" src="https://images.opencollective.com/kaname/d15fd98/logo/256.png" />
-</a>
-<a target="_blank" href="https://formcarry.com/">
-    <img width="94" src="https://images.opencollective.com/formcarry/a40a4ea/logo/256.png" />
-</a>
-
 ## Contributors
 
-Thanks goes to these wonderful people! [[Become a contributor](CONTRIBUTING.md)].
+Thanks go to these wonderful people! [[Become a contributor](CONTRIBUTING.md)].
 
 <a href="https://github.com/react-hook-form/react-hook-form/graphs/contributors">
     <img src="https://opencollective.com/react-hook-form/contributors.svg?width=950" />
