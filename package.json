@@ -262,7 +262,7 @@
     "superstruct": "^1.0.3",
     "typanion": "^3.14.0",
     "typescript": "^5.1.6",
-    "valibot": "^0.24.1",
+    "valibot": "0.31.0-rc.12",
     "vest": "^4.6.11",
     "vite": "^4.4.9",
     "vite-tsconfig-paths": "^4.2.0",

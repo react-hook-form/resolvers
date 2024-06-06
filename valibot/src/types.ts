@@ -1,9 +1,21 @@
 import { FieldValues, ResolverResult, ResolverOptions } from 'react-hook-form';
-import { BaseSchema, BaseSchemaAsync, ParseInfo } from 'valibot';
+import {
+  BaseIssue,
+  BaseSchema,
+  BaseSchemaAsync,
+  Config,
+  InferIssue,
+} from 'valibot';
 
-export type Resolver = <T extends BaseSchema | BaseSchemaAsync>(
+export type Resolver = <
+  T extends
+    | BaseSchema<unknown, unknown, BaseIssue<unknown>>
+    | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
+>(
   schema: T,
-  schemaOptions?: Partial<Pick<ParseInfo, 'abortEarly' | 'abortPipeEarly'>>,
+  schemaOptions?: Partial<
+    Omit<Config<InferIssue<T>>, 'abortPipeEarly' | 'skipPipe'>
+  >,
   resolverOptions?: {
     /**
      * @default async

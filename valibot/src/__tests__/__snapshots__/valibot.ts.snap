@@ -4,9 +4,9 @@ exports[`valibotResolver > should return a single error from valibotResolver whe
 {
   "errors": {
     "accessToken": {
-      "message": "Invalid type",
+      "message": "access token is required",
       "ref": undefined,
-      "type": "non_optional",
+      "type": "union",
     },
     "birthYear": {
       "message": "Please enter your birth year",
@@ -21,9 +21,9 @@ exports[`valibotResolver > should return a single error from valibotResolver whe
       "type": "email",
     },
     "enabled": {
-      "message": "Invalid type",
+      "message": "Invalid type: Expected boolean but received undefined",
       "ref": undefined,
-      "type": "non_optional",
+      "type": "boolean",
     },
     "like": {
       "id": {
@@ -32,9 +32,9 @@ exports[`valibotResolver > should return a single error from valibotResolver whe
         "type": "number",
       },
       "name": {
-        "message": "Invalid type",
+        "message": "Like name is required",
         "ref": undefined,
-        "type": "non_optional",
+        "type": "string",
       },
     },
     "password": {
@@ -45,9 +45,9 @@ exports[`valibotResolver > should return a single error from valibotResolver whe
       "type": "regex",
     },
     "repeatPassword": {
-      "message": "Invalid type",
+      "message": "Repeat Password is required",
       "ref": undefined,
-      "type": "non_optional",
+      "type": "string",
     },
     "tags": [
       {
@@ -67,11 +67,11 @@ exports[`valibotResolver > should return a single error from valibotResolver whe
       },
     ],
     "username": {
-      "message": "Invalid type",
+      "message": "Invalid type: Expected string but received undefined",
       "ref": {
         "name": "username",
       },
-      "type": "non_optional",
+      "type": "string",
     },
   },
   "values": {},
@@ -82,9 +82,9 @@ exports[`valibotResolver > should return a single error from valibotResolver wit
 {
   "errors": {
     "accessToken": {
-      "message": "Invalid type",
+      "message": "access token is required",
       "ref": undefined,
-      "type": "non_optional",
+      "type": "union",
     },
     "birthYear": {
       "message": "Please enter your birth year",
@@ -99,9 +99,9 @@ exports[`valibotResolver > should return a single error from valibotResolver wit
       "type": "email",
     },
     "enabled": {
-      "message": "Invalid type",
+      "message": "Invalid type: Expected boolean but received undefined",
       "ref": undefined,
-      "type": "non_optional",
+      "type": "boolean",
     },
     "like": {
       "id": {
@@ -110,9 +110,9 @@ exports[`valibotResolver > should return a single error from valibotResolver wit
         "type": "number",
       },
       "name": {
-        "message": "Invalid type",
+        "message": "Like name is required",
         "ref": undefined,
-        "type": "non_optional",
+        "type": "string",
       },
     },
     "password": {
@@ -123,9 +123,9 @@ exports[`valibotResolver > should return a single error from valibotResolver wit
       "type": "regex",
     },
     "repeatPassword": {
-      "message": "Invalid type",
+      "message": "Repeat Password is required",
       "ref": undefined,
-      "type": "non_optional",
+      "type": "string",
     },
     "tags": [
       {
@@ -145,11 +145,11 @@ exports[`valibotResolver > should return a single error from valibotResolver wit
       },
     ],
     "username": {
-      "message": "Invalid type",
+      "message": "Invalid type: Expected string but received undefined",
       "ref": {
         "name": "username",
       },
-      "type": "non_optional",
+      "type": "string",
     },
   },
   "values": {},
@@ -160,11 +160,11 @@ exports[`valibotResolver > should return all the errors from valibotResolver whe
 {
   "errors": {
     "accessToken": {
-      "message": "Invalid type",
+      "message": "access token is required",
       "ref": undefined,
-      "type": "non_optional",
+      "type": "union",
       "types": {
-        "non_optional": "Invalid type",
+        "union": "access token is required",
       },
     },
     "birthYear": {
@@ -186,11 +186,11 @@ exports[`valibotResolver > should return all the errors from valibotResolver whe
       },
     },
     "enabled": {
-      "message": "Invalid type",
+      "message": "Invalid type: Expected boolean but received undefined",
       "ref": undefined,
-      "type": "non_optional",
+      "type": "boolean",
       "types": {
-        "non_optional": "Invalid type",
+        "boolean": "Invalid type: Expected boolean but received undefined",
       },
     },
     "like": {
@@ -203,11 +203,11 @@ exports[`valibotResolver > should return all the errors from valibotResolver whe
         },
       },
       "name": {
-        "message": "Invalid type",
+        "message": "Like name is required",
         "ref": undefined,
-        "type": "non_optional",
+        "type": "string",
         "types": {
-          "non_optional": "Invalid type",
+          "string": "Like name is required",
         },
       },
     },
@@ -227,11 +227,11 @@ exports[`valibotResolver > should return all the errors from valibotResolver whe
       },
     },
     "repeatPassword": {
-      "message": "Invalid type",
+      "message": "Repeat Password is required",
       "ref": undefined,
-      "type": "non_optional",
+      "type": "string",
       "types": {
-        "non_optional": "Invalid type",
+        "string": "Repeat Password is required",
       },
     },
     "tags": [
@@ -261,13 +261,13 @@ exports[`valibotResolver > should return all the errors from valibotResolver whe
       },
     ],
     "username": {
-      "message": "Invalid type",
+      "message": "Invalid type: Expected string but received undefined",
       "ref": {
         "name": "username",
       },
-      "type": "non_optional",
+      "type": "string",
       "types": {
-        "non_optional": "Invalid type",
+        "string": "Invalid type: Expected string but received undefined",
       },
     },
   },
@@ -279,11 +279,11 @@ exports[`valibotResolver > should return all the errors from valibotResolver whe
 {
   "errors": {
     "accessToken": {
-      "message": "Invalid type",
+      "message": "access token is required",
       "ref": undefined,
-      "type": "non_optional",
+      "type": "union",
       "types": {
-        "non_optional": "Invalid type",
+        "union": "access token is required",
       },
     },
     "birthYear": {
@@ -305,11 +305,11 @@ exports[`valibotResolver > should return all the errors from valibotResolver whe
       },
     },
     "enabled": {
-      "message": "Invalid type",
+      "message": "Invalid type: Expected boolean but received undefined",
       "ref": undefined,
-      "type": "non_optional",
+      "type": "boolean",
       "types": {
-        "non_optional": "Invalid type",
+        "boolean": "Invalid type: Expected boolean but received undefined",
       },
     },
     "like": {
@@ -322,11 +322,11 @@ exports[`valibotResolver > should return all the errors from valibotResolver whe
         },
       },
       "name": {
-        "message": "Invalid type",
+        "message": "Like name is required",
         "ref": undefined,
-        "type": "non_optional",
+        "type": "string",
         "types": {
-          "non_optional": "Invalid type",
+          "string": "Like name is required",
         },
       },
     },
@@ -346,11 +346,11 @@ exports[`valibotResolver > should return all the errors from valibotResolver whe
       },
     },
     "repeatPassword": {
-      "message": "Invalid type",
+      "message": "Repeat Password is required",
       "ref": undefined,
-      "type": "non_optional",
+      "type": "string",
       "types": {
-        "non_optional": "Invalid type",
+        "string": "Repeat Password is required",
       },
     },
     "tags": [
@@ -380,13 +380,13 @@ exports[`valibotResolver > should return all the errors from valibotResolver whe
       },
     ],
     "username": {
-      "message": "Invalid type",
+      "message": "Invalid type: Expected string but received undefined",
       "ref": {
         "name": "username",
       },
-      "type": "non_optional",
+      "type": "string",
       "types": {
-        "non_optional": "Invalid type",
+        "string": "Invalid type: Expected string but received undefined",
       },
     },
   },

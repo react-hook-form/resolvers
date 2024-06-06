@@ -552,14 +552,15 @@ The modular and type safe schema library for validating structural data
 ```typescript jsx
 import { useForm } from 'react-hook-form';
 import { valibotResolver } from '@hookform/resolvers/valibot';
-import { object, string, minLength, endsWith } from 'valibot';
+import * as v from 'valibot';
 
-const schema = object({
-  username: string('username is required', [
-    minLength(3, 'Needs to be at least 3 characters'),
-    endsWith('cool', 'Needs to end with `cool`'),
-  ]),
-  password: string('password is required'),
+const schema = v.object({
+  username: v.pipe(
+    v.string('username is required'),
+    v.minLength(3, 'Needs to be at least 3 characters'),
+    v.endsWith('cool', 'Needs to end with `cool`'),
+  ),
+  password: v.string('password is required'),
 });
 
 const App = () => {
@@ -581,7 +582,7 @@ const App = () => {
 
 A powerful TypeScript framework that provides a fully-fledged functional effect system with a rich standard library.
 
-[![npm](https://img.shields.io/bundlephobia/minzip/valibot?style=for-the-badge)](https://bundlephobia.com/result?p=effect)
+[![npm](https://img.shields.io/bundlephobia/minzip/@effect/schema?style=for-the-badge)](https://bundlephobia.com/result?p=effect)
 
 ```typescript jsx
 import React from 'react';

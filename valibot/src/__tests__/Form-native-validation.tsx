@@ -2,22 +2,22 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { render, screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
-import { string, required, object, minLength } from 'valibot';
+import * as v from 'valibot';
 import { valibotResolver } from '..';
 
-const USERNAME_REQUIRED_MESSAGE = 'username field is required';
-const PASSWORD_REQUIRED_MESSAGE = 'password field is required';
+const USERNAME_REQUIRED_MESSAGE = 'username field is v.required';
+const PASSWORD_REQUIRED_MESSAGE = 'password field is v.required';
 
-const schema = required(
-  object({
-    username: string(USERNAME_REQUIRED_MESSAGE, [
-      minLength(2, USERNAME_REQUIRED_MESSAGE),
-    ]),
-    password: string(PASSWORD_REQUIRED_MESSAGE, [
-      minLength(2, PASSWORD_REQUIRED_MESSAGE),
-    ]),
-  }),
-);
+const schema = v.object({
+  username: v.pipe(
+    v.string(USERNAME_REQUIRED_MESSAGE),
+    v.minLength(2, USERNAME_REQUIRED_MESSAGE),
+  ),
+  password: v.pipe(
+    v.string(PASSWORD_REQUIRED_MESSAGE),
+    v.minLength(2, PASSWORD_REQUIRED_MESSAGE),
+  ),
+});
 
 type FormData = { username: string; password: string };
 
