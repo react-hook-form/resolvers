@@ -3,7 +3,7 @@ import { z, ZodError } from 'zod';
 import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
 import type { Resolver } from './types';
 
-const isZodError = (error: any): error is ZodError => error.errors != null;
+const isZodError = (error: any): error is ZodError => Array.isArray(error?.errors);
 
 const parseErrorSchema = (
   zodErrors: z.ZodIssue[],
