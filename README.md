@@ -43,6 +43,8 @@
   - [typanion](#typanion)
   - [Ajv](#ajv)
   - [TypeBox](#typebox)
+    - [With `ValueCheck`](#with-valuecheck)
+    - [With `TypeCompiler`](#with-typecompiler)
   - [ArkType](#arktype)
   - [Valibot](#valibot)
   - [TypeSchema](#typeschema)
@@ -489,6 +491,8 @@ JSON Schema Type Builder with Static Type Resolution for TypeScript
 
 [![npm](https://img.shields.io/bundlephobia/minzip/@sinclair/typebox?style=for-the-badge)](https://bundlephobia.com/result?p=@sinclair/typebox)
 
+#### With `ValueCheck`
+
 ```typescript jsx
 import { useForm } from 'react-hook-form';
 import { typeboxResolver } from '@hookform/resolvers/typebox';
@@ -502,6 +506,38 @@ const schema = Type.Object({
 const App = () => {
   const { register, handleSubmit } = useForm({
     resolver: typeboxResolver(schema),
+  });
+
+  return (
+    <form onSubmit={handleSubmit((d) => console.log(d))}>
+      <input {...register('username')} />
+      <input type="password" {...register('password')} />
+      <input type="submit" />
+    </form>
+  );
+};
+```
+
+#### With `TypeCompiler`
+
+A high-performance JIT of `TypeBox`, [read more](https://github.com/sinclairzx81/typebox#typecompiler)
+
+```typescript jsx
+import { useForm } from 'react-hook-form';
+import { typeboxResolver } from '@hookform/resolvers/typebox';
+import { Type } from '@sinclair/typebox';
+import { TypeCompiler } from '@sinclair/typebox/compiler';
+
+const schema = Type.Object({
+  username: Type.String({ minLength: 1 }),
+  password: Type.String({ minLength: 1 }),
+});
+
+const typecheck = TypeCompiler.Compile(schema);
+
+const App = () => {
+  const { register, handleSubmit } = useForm({
+    resolver: typeboxResolver(typecheck),
   });
 
   return (
