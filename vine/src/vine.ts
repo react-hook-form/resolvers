@@ -9,26 +9,28 @@ const parseErrorSchema = (
 ) => {
   const schemaErrors: Record<string, FieldError> = {};
 
-  for (const error of vineErrors) {
-    const { field, rule, message } = error;
-    const path = field;
+  for (; vineErrors.length; ) {
+    const error = vineErrors[0];
+    const path = error.field;
 
     if (!(path in schemaErrors)) {
-      schemaErrors[path] = { message, type: rule };
+      schemaErrors[path] = { message: error.message, type: error.rule };
     }
 
     if (validateAllFieldCriteria) {
       const { types } = schemaErrors[path];
-      const messages = types && types[rule];
+      const messages = types && types[error.rule];
 
       schemaErrors[path] = appendErrors(
         path,
         validateAllFieldCriteria,
         schemaErrors,
-        rule,
-        messages ? [...(messages as string[]), message] : message,
+        error.rule,
+        messages ? [...(messages as string[]), error.message] : error.message,
       ) as FieldError;
     }
+
+    vineErrors.shift();
   }
 
   return schemaErrors;
