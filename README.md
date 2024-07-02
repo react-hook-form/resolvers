@@ -46,6 +46,7 @@
   - [ArkType](#arktype)
   - [Valibot](#valibot)
   - [effect-ts](#effect-ts)
+  - [VineJS](#vinejs)
 - [Backers](#backers)
   - [Sponsors](#sponsors)
 - [Contributors](#contributors)
@@ -627,6 +628,41 @@ function TestComponent({ onSubmit }: Props) {
     </form>
   );
 }
+```
+
+### [VineJS](https://github.com/vinejs/vine)
+
+VineJS is a form data validation library for Node.js
+
+[![npm](https://img.shields.io/bundlephobia/minzip/@vinejs/vine?style=for-the-badge)](https://bundlephobia.com/result?p=@vinejs/vine)
+
+```typescript jsx
+import { useForm } from 'react-hook-form';
+import { vineResolver } from '@hookform/resolvers/vine';
+import vine from '@vinejs/vine';
+
+const schema = vine.compile(
+  vine.object({
+    username: vine.string().minLength(1),
+    password: vine.string().minLength(1),
+  }),
+);
+
+const App = () => {
+  const { register, handleSubmit } = useForm({
+    resolver: vineResolver(schema),
+  });
+
+  return (
+    <form onSubmit={handleSubmit((d) => console.log(d))}>
+      <input {...register('username')} />
+      {errors.username && <span role="alert">{errors.username.message}</span>}
+      <input {...register('password')} />
+      {errors.password && <span role="alert">{errors.password.message}</span>}
+      <button type="submit">submit</button>
+    </form>
+  );
+};
 ```
 
 ## Backers

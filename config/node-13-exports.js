@@ -17,6 +17,7 @@ const subRepositories = [
   'arktype',
   'valibot',
   'effect-ts',
+  'vine',
 ];
 
 const copySrc = () => {

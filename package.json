@@ -2,7 +2,7 @@
   "name": "@hookform/resolvers",
   "amdName": "hookformResolvers",
   "version": "2.9.1",
-  "description": "React Hook Form validation resolvers: Yup, Joi, Superstruct, Zod, Vest, Class Validator, io-ts, Nope, computed-types, TypeBox, arktype, Typanion and Effect-TS",
+  "description": "React Hook Form validation resolvers: Yup, Joi, Superstruct, Zod, Vest, Class Validator, io-ts, Nope, computed-types, TypeBox, arktype, Typanion, Effect-TS and VineJS",
   "main": "dist/resolvers.js",
   "module": "dist/resolvers.module.js",
   "umd:main": "dist/resolvers.umd.js",
@@ -105,6 +105,12 @@
       "import": "./effect-ts/dist/effect-ts.mjs",
       "require": "./effect-ts/dist/effect-ts.js"
     },
+    "./vine": {
+      "types": "./vine/dist/index.d.ts",
+      "umd": "./vine/dist/vine.umd.js",
+      "import": "./vine/dist/vine.mjs",
+      "require": "./vine/dist/vine.js"
+    },
     "./package.json": "./package.json",
     "./*": "./*"
   },
@@ -154,7 +160,10 @@
     "valibot/dist",
     "effect-ts/package.json",
     "effect-ts/src",
-    "effect-ts/dist"
+    "effect-ts/dist",
+    "vine/package.json",
+    "vine/src",
+    "vine/dist"
   ],
   "publishConfig": {
     "access": "public"
@@ -178,6 +187,7 @@
     "build:arktype": "microbundle --cwd arktype --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
     "build:valibot": "microbundle --cwd valibot --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
     "build:effect-ts": "microbundle --cwd effect-ts --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm,@effect/schema=EffectSchema,@effect/schema/AST=EffectSchemaAST,@effect/schema/ArrayFormatter=EffectSchemaArrayFormatter",
+    "build:vine": "microbundle --cwd vine --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm,@vinejs/vine=vine",
     "postbuild": "node ./config/node-13-exports.js",
     "lint": "eslint . --ext .ts,.js --ignore-path .gitignore",
     "lint:types": "tsc",
@@ -207,7 +217,8 @@
     "typanion",
     "ajv",
     "TypeBox",
-    "arktype"
+    "arktype",
+    "vine"
   ],
   "repository": {
     "type": "git",
@@ -230,6 +241,7 @@
     "@types/react": "^18.2.20",
     "@typescript-eslint/eslint-plugin": "^6.4.1",
     "@typescript-eslint/parser": "^6.4.1",
+    "@vinejs/vine": "^2.0.0",
     "@vitejs/plugin-react": "^4.0.4",
     "ajv": "^8.12.0",
     "ajv-errors": "^3.0.0",
