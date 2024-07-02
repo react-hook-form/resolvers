@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { ajvResolver } from '..';
 
 const USERNAME_REQUIRED_MESSAGE = 'username field is required';
+const CUSTOM_USERNAME_REQUIRED_MESSAGE = 'Username is required';
 const PASSWORD_REQUIRED_MESSAGE = 'password field is required';
 
 type FormData = { username: string; password: string };
@@ -26,13 +27,19 @@ const schema: JSONSchemaType<FormData> = {
   },
   required: ['username', 'password'],
   additionalProperties: false,
+  errorMessage: {
+    required: {
+      username: CUSTOM_USERNAME_REQUIRED_MESSAGE,
+    },
+  },
 };
 
 interface Props {
   onSubmit: (data: FormData) => void;
+  isInitialValueUndefined?: boolean;
 }
 
-function TestComponent({ onSubmit }: Props) {
+function TestComponent({ onSubmit, isInitialValueUndefined }: Props) {
   const { register, handleSubmit } = useForm<FormData>({
     resolver: ajvResolver(schema),
     shouldUseNativeValidation: true,
@@ -40,9 +47,21 @@ function TestComponent({ onSubmit }: Props) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <input {...register('username')} placeholder="username" />
+      <input
+        {...register('username', {
+          setValueAs: (value) =>
+            isInitialValueUndefined ? value || undefined : value,
+        })}
+        placeholder="username"
+      />
 
-      <input {...register('password')} placeholder="password" />
+      <input
+        {...register('password', {
+          setValueAs: (value) =>
+            isInitialValueUndefined ? value || undefined : value,
+        })}
+        placeholder="password"
+      />
 
       <button type="submit">submit</button>
     </form>
@@ -78,6 +97,54 @@ test("form's native validation with Ajv", async () => {
   passwordField = screen.getByPlaceholderText(/password/i) as HTMLInputElement;
   expect(passwordField.validity.valid).toBe(false);
   expect(passwordField.validationMessage).toBe(PASSWORD_REQUIRED_MESSAGE);
+
+  await user.type(screen.getByPlaceholderText(/username/i), 'joe');
+  await user.type(screen.getByPlaceholderText(/password/i), 'password');
+
+  // username
+  usernameField = screen.getByPlaceholderText(/username/i) as HTMLInputElement;
+  expect(usernameField.validity.valid).toBe(true);
+  expect(usernameField.validationMessage).toBe('');
+
+  // password
+  passwordField = screen.getByPlaceholderText(/password/i) as HTMLInputElement;
+  expect(passwordField.validity.valid).toBe(true);
+  expect(passwordField.validationMessage).toBe('');
+});
+
+test("form's native validation with Ajv for required fields with custom error messages", async () => {
+  const handleSubmit = vi.fn();
+  render(<TestComponent onSubmit={handleSubmit} isInitialValueUndefined />);
+
+  // username
+  let usernameField = screen.getByPlaceholderText(
+    /username/i,
+  ) as HTMLInputElement;
+  expect(usernameField.validity.valid).toBe(true);
+  expect(usernameField.validationMessage).toBe('');
+
+  // password
+  let passwordField = screen.getByPlaceholderText(
+    /password/i,
+  ) as HTMLInputElement;
+  expect(passwordField.validity.valid).toBe(true);
+  expect(passwordField.validationMessage).toBe('');
+
+  await user.click(screen.getByText(/submit/i));
+
+  // username
+  usernameField = screen.getByPlaceholderText(/username/i) as HTMLInputElement;
+  expect(usernameField.validity.valid).toBe(false);
+  expect(usernameField.validationMessage).toBe(
+    CUSTOM_USERNAME_REQUIRED_MESSAGE,
+  );
+
+  // password
+  passwordField = screen.getByPlaceholderText(/password/i) as HTMLInputElement;
+  expect(passwordField.validity.valid).toBe(false);
+  expect(passwordField.validationMessage).toBe(
+    "must have required property 'password'",
+  );
 
   await user.type(screen.getByPlaceholderText(/username/i), 'joe');
   await user.type(screen.getByPlaceholderText(/password/i), 'password');

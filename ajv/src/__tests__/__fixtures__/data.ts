@@ -39,6 +39,53 @@ export const schema: JSONSchemaType<Data> = {
   additionalProperties: false,
 };
 
+export const errorMessageSchema: JSONSchemaType<Data> = {
+  type: 'object',
+  properties: {
+    username: {
+      type: 'string',
+      minLength: 3,
+    },
+    password: {
+      type: 'string',
+      pattern: '.*[A-Z].*',
+      errorMessage: {
+        pattern: 'One uppercase character',
+      },
+    },
+    deepObject: {
+      type: 'object',
+      properties: {
+        data: { type: 'string' },
+        twoLayersDeep: {
+          type: 'object',
+          properties: { name: { type: 'string' } },
+          additionalProperties: false,
+          required: ['name'],
+          errorMessage: {
+            required: {
+              name: 'Name is required',
+            },
+          },
+        },
+      },
+      required: ['data', 'twoLayersDeep'],
+      errorMessage: {
+        required: {
+          data: 'Data is required',
+        },
+      },
+    },
+  },
+  required: ['username', 'password', 'deepObject'],
+  additionalProperties: false,
+  errorMessage: {
+    required: {
+      password: 'Password is required',
+    },
+  },
+};
+
 export const validData: Data = {
   username: 'jsun969',
   password: 'validPassword',
@@ -65,6 +112,17 @@ export const invalidDataWithUndefined = {
   deepObject: {
     twoLayersDeep: {
       name: 'deeper',
+    },
+    data: undefined,
+  },
+};
+
+export const invalidDataWithAllUndefined = {
+  username: undefined,
+  password: undefined,
+  deepObject: {
+    twoLayersDeep: {
+      name: undefined,
     },
     data: undefined,
   },
