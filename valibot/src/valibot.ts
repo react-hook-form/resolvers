@@ -1,89 +1,67 @@
 import { toNestErrors } from '@hookform/resolvers';
+import { FieldError, appendErrors, FieldValues } from 'react-hook-form';
+import { getDotPath, safeParseAsync } from 'valibot';
 import type { Resolver } from './types';
-import {
-  BaseSchema,
-  BaseSchemaAsync,
-  ValiError,
-  parse,
-  parseAsync,
-} from 'valibot';
-import { FieldErrors, FieldError, appendErrors } from 'react-hook-form';
-const parseErrors = (
-  valiErrors: ValiError,
-  validateAllFieldCriteria: boolean,
-): FieldErrors => {
-  const errors: Record<string, FieldError> = {};
-
-  for (const error of valiErrors.issues) {
-    if (!error.path) {
-      continue;
-    }
-    const _path = error.path.map(({ key }) => key).join('.');
-
-    if (!errors[_path]) {
-      errors[_path] = { message: error.message, type: error.validation };
-    }
-
-    if (validateAllFieldCriteria) {
-      const types = errors[_path].types;
-      const messages = types && types[error.validation];
-
-      errors[_path] = appendErrors(
-        _path,
-        validateAllFieldCriteria,
-        errors,
-        error.validation,
-        messages
-          ? ([] as string[]).concat(messages as string[], error.message)
-          : error.message,
-      ) as FieldError;
-    }
-  }
-
-  return errors;
-};
 
 export const valibotResolver: Resolver =
   (schema, schemaOptions, resolverOptions = {}) =>
   async (values, _, options) => {
-    try {
-      const schemaOpts = Object.assign(
-        {},
-        {
-          abortEarly: false,
-          abortPipeEarly: false,
-        },
-        schemaOptions,
-      );
+    // Check if we should validate all field criteria
+    const validateAllFieldCriteria =
+      !options.shouldUseNativeValidation && options.criteriaMode === 'all';
 
-      const parsed =
-        resolverOptions.mode === 'sync'
-          ? parse(schema as BaseSchema, values, schemaOpts)
-          : await parseAsync(
-              schema as BaseSchema | BaseSchemaAsync,
-              values,
-              schemaOpts,
-            );
+    // Parse values with Valibot schema
+    const result = await safeParseAsync(schema, values, {
+      ...schemaOptions,
+      abortPipeEarly: !validateAllFieldCriteria,
+    });
 
-      return {
-        values: resolverOptions.raw ? values : parsed,
-        errors: {} as FieldErrors,
-      };
-    } catch (error) {
-      if (error instanceof ValiError) {
-        return {
-          values: {},
-          errors: toNestErrors(
-            parseErrors(
-              error,
-              !options.shouldUseNativeValidation &&
-                options.criteriaMode === 'all',
-            ),
-            options,
-          ),
-        };
+    // If there are issues, return them as errors
+    if (result.issues) {
+      // Create errors object
+      const errors: Record<string, FieldError> = {};
+
+      // Iterate over issues to add them to errors object
+      for (const issue of result.issues) {
+        // Create dot path from issue
+        const path = getDotPath(issue);
+
+        if (path) {
+          // Add first error of path to errors object
+          if (!errors[path]) {
+            errors[path] = { message: issue.message, type: issue.type };
+          }
+
+          // If configured, add all errors of path to errors object
+          if (validateAllFieldCriteria) {
+            const types = errors[path].types;
+            const messages = types && types[issue.type];
+            errors[path] = appendErrors(
+              path,
+              validateAllFieldCriteria,
+              errors,
+              issue.type,
+              messages
+                ? ([] as string[]).concat(
+                    messages as string | string[],
+                    issue.message,
+                  )
+                : issue.message,
+            ) as FieldError;
+          }
+        }
       }
 
-      throw error;
+      // Return resolver result with errors
+      return {
+        values: {},
+        errors: toNestErrors(errors, options),
+      } as const;
     }
+
+    // Otherwise, return resolver result with values
+    return {
+      values: resolverOptions.raw ? values : (result.output as FieldValues),
+      errors: {},
+    };
   };

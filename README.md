@@ -47,6 +47,7 @@
   - [Valibot](#valibot)
   - [TypeSchema](#typeschema)
   - [effect-ts](#effect-ts)
+  - [VineJS](#vinejs)
 - [Backers](#backers)
   - [Sponsors](#sponsors)
 - [Contributors](#contributors)
@@ -553,14 +554,15 @@ The modular and type safe schema library for validating structural data
 ```typescript jsx
 import { useForm } from 'react-hook-form';
 import { valibotResolver } from '@hookform/resolvers/valibot';
-import { object, string, minLength, endsWith } from 'valibot';
+import * as v from 'valibot';
 
-const schema = object({
-  username: string('username is required', [
-    minLength(3, 'Needs to be at least 3 characters'),
-    endsWith('cool', 'Needs to end with `cool`'),
-  ]),
-  password: string('password is required'),
+const schema = v.object({
+  username: v.pipe(
+    v.string('username is required'),
+    v.minLength(3, 'Needs to be at least 3 characters'),
+    v.endsWith('cool', 'Needs to end with `cool`'),
+  ),
+  password: v.string('password is required'),
 });
 
 const App = () => {
@@ -614,7 +616,7 @@ const App = () => {
 
 A powerful TypeScript framework that provides a fully-fledged functional effect system with a rich standard library.
 
-[![npm](https://img.shields.io/bundlephobia/minzip/effect?style=for-the-badge)]
+[![npm](https://img.shields.io/bundlephobia/minzip/@effect/schema?style=for-the-badge)](https://bundlephobia.com/result?p=effect)
 
 ```typescript jsx
 import React from 'react';
@@ -661,40 +663,52 @@ function TestComponent({ onSubmit }: Props) {
 }
 ```
 
+### [VineJS](https://github.com/vinejs/vine)
+
+VineJS is a form data validation library for Node.js
+
+[![npm](https://img.shields.io/bundlephobia/minzip/@vinejs/vine?style=for-the-badge)](https://bundlephobia.com/result?p=@vinejs/vine)
+
+```typescript jsx
+import { useForm } from 'react-hook-form';
+import { vineResolver } from '@hookform/resolvers/vine';
+import vine from '@vinejs/vine';
+
+const schema = vine.compile(
+  vine.object({
+    username: vine.string().minLength(1),
+    password: vine.string().minLength(1),
+  }),
+);
+
+const App = () => {
+  const { register, handleSubmit } = useForm({
+    resolver: vineResolver(schema),
+  });
+
+  return (
+    <form onSubmit={handleSubmit((d) => console.log(d))}>
+      <input {...register('username')} />
+      {errors.username && <span role="alert">{errors.username.message}</span>}
+      <input {...register('password')} />
+      {errors.password && <span role="alert">{errors.password.message}</span>}
+      <button type="submit">submit</button>
+    </form>
+  );
+};
+```
+
 ## Backers
 
-Thanks goes to all our backers! [[Become a backer](https://opencollective.com/react-hook-form#backer)].
+Thanks go to all our backers! [[Become a backer](https://opencollective.com/react-hook-form#backer)].
 
 <a href="https://opencollective.com/react-hook-form#backers">
     <img src="https://opencollective.com/react-hook-form/backers.svg?width=950" />
 </a>
 
-### Sponsors
-
-Thanks go to these kind and lovely sponsors!
-
-<a target="_blank" href='https://wantedlyinc.com'>
-    <img width="94" src="https://images.opencollective.com/wantedly/d94e44e/logo/256.png" />
-</a>
-<a target="_blank" href='https://toss.im'>
-    <img width="94" src="https://images.opencollective.com/toss/3ed69b3/logo/256.png" />
-</a>
-<a target="_blank" href="https://graphcms.com">
-    <img width="94" src="https://avatars.githubusercontent.com/u/31031438" />
-</a>
-<a target="_blank" href="https://www.beekai.com/">
-    <img width="94" src="https://www.beekai.com/marketing/logo/logo.svg" />
-</a>
-<a target="_blank" href="https://kanamekey.com">
-    <img width="94" src="https://images.opencollective.com/kaname/d15fd98/logo/256.png" />
-</a>
-<a target="_blank" href="https://formcarry.com/">
-    <img width="94" src="https://images.opencollective.com/formcarry/a40a4ea/logo/256.png" />
-</a>
-
 ## Contributors
 
-Thanks goes to these wonderful people! [[Become a contributor](CONTRIBUTING.md)].
+Thanks go to these wonderful people! [[Become a contributor](CONTRIBUTING.md)].
 
 <a href="https://github.com/react-hook-form/react-hook-form/graphs/contributors">
     <img src="https://opencollective.com/react-hook-form/contributors.svg?width=950" />

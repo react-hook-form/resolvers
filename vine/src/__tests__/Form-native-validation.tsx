@@ -2,24 +2,18 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { render, screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
-import * as v from 'valibot';
-import { valibotResolver } from '..';
+import { vineResolver } from '..';
+import vine from '@vinejs/vine';
+import { Infer } from '@vinejs/vine/build/src/types';
 
-const USERNAME_REQUIRED_MESSAGE = 'username field is v.required';
-const PASSWORD_REQUIRED_MESSAGE = 'password field is v.required';
+const schema = vine.compile(
+  vine.object({
+    username: vine.string().minLength(1),
+    password: vine.string().minLength(1),
+  }),
+);
 
-const schema = v.object({
-  username: v.pipe(
-    v.string(USERNAME_REQUIRED_MESSAGE),
-    v.minLength(2, USERNAME_REQUIRED_MESSAGE),
-  ),
-  password: v.pipe(
-    v.string(PASSWORD_REQUIRED_MESSAGE),
-    v.minLength(2, PASSWORD_REQUIRED_MESSAGE),
-  ),
-});
-
-type FormData = { username: string; password: string };
+type FormData = Infer<typeof schema> & { unusedProperty: string };
 
 interface Props {
   onSubmit: (data: FormData) => void;
@@ -27,7 +21,7 @@ interface Props {
 
 function TestComponent({ onSubmit }: Props) {
   const { register, handleSubmit } = useForm<FormData>({
-    resolver: valibotResolver(schema),
+    resolver: vineResolver(schema),
     shouldUseNativeValidation: true,
   });
 
@@ -42,7 +36,7 @@ function TestComponent({ onSubmit }: Props) {
   );
 }
 
-test("form's native validation with Valibot", async () => {
+test("form's native validation with Zod", async () => {
   const handleSubmit = vi.fn();
   render(<TestComponent onSubmit={handleSubmit} />);
 
@@ -65,14 +59,20 @@ test("form's native validation with Valibot", async () => {
   // username
   usernameField = screen.getByPlaceholderText(/username/i) as HTMLInputElement;
   expect(usernameField.validity.valid).toBe(false);
-  expect(usernameField.validationMessage).toBe(USERNAME_REQUIRED_MESSAGE);
+  expect(usernameField.validationMessage).toBe('The username field must have at least 1 characters');
 
   // password
   passwordField = screen.getByPlaceholderText(/password/i) as HTMLInputElement;
   expect(passwordField.validity.valid).toBe(false);
-  expect(passwordField.validationMessage).toBe(PASSWORD_REQUIRED_MESSAGE);
+  expect(passwordField.validationMessage).toBe('The password field must have at least 1 characters');
 
+  await user.type(screen.getByPlaceholderText(/username/i), 'joe');
   await user.type(screen.getByPlaceholderText(/password/i), 'password');
+
+  // username
+  usernameField = screen.getByPlaceholderText(/username/i) as HTMLInputElement;
+  expect(usernameField.validity.valid).toBe(true);
+  expect(usernameField.validationMessage).toBe('');
 
   // password
   passwordField = screen.getByPlaceholderText(/password/i) as HTMLInputElement;

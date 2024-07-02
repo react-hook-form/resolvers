@@ -2,7 +2,7 @@
   "name": "@hookform/resolvers",
   "amdName": "hookformResolvers",
   "version": "2.9.1",
-  "description": "React Hook Form validation resolvers: Yup, Joi, Superstruct, Zod, Vest, Class Validator, io-ts, Nope, computed-types, TypeBox, arktype, Typanion and Effect-TS",
+  "description": "React Hook Form validation resolvers: Yup, Joi, Superstruct, Zod, Vest, Class Validator, io-ts, Nope, computed-types, TypeBox, arktype, Typanion, Effect-TS and VineJS",
   "main": "dist/resolvers.js",
   "module": "dist/resolvers.module.js",
   "umd:main": "dist/resolvers.umd.js",
@@ -111,6 +111,12 @@
       "import": "./effect-ts/dist/effect-ts.mjs",
       "require": "./effect-ts/dist/effect-ts.js"
     },
+    "./vine": {
+      "types": "./vine/dist/index.d.ts",
+      "umd": "./vine/dist/vine.umd.js",
+      "import": "./vine/dist/vine.mjs",
+      "require": "./vine/dist/vine.js"
+    },
     "./package.json": "./package.json",
     "./*": "./*"
   },
@@ -163,7 +169,13 @@
     "typeschema/dist",
     "effect-ts/package.json",
     "effect-ts/src",
-    "effect-ts/dist"
+    "effect-ts/dist",
+    "effect-ts/package.json",
+    "effect-ts/src",
+    "effect-ts/dist",
+    "vine/package.json",
+    "vine/src",
+    "vine/dist"
   ],
   "publishConfig": {
     "access": "public"
@@ -188,6 +200,7 @@
     "build:valibot": "microbundle --cwd valibot --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
     "build:typeschema": "microbundle --cwd typeschema --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
     "build:effect-ts": "microbundle --cwd effect-ts --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm,@effect/schema=EffectSchema,@effect/schema/AST=EffectSchemaAST,@effect/schema/ArrayFormatter=EffectSchemaArrayFormatter",
+    "build:vine": "microbundle --cwd vine --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm,@vinejs/vine=vine",
     "postbuild": "node ./config/node-13-exports.js",
     "lint": "eslint . --ext .ts,.js --ignore-path .gitignore",
     "lint:types": "tsc",
@@ -218,7 +231,8 @@
     "ajv",
     "TypeBox",
     "arktype",
-    "typeschema"
+    "typeschema",
+    "vine"
   ],
   "repository": {
     "type": "git",
@@ -244,10 +258,11 @@
     "@typeschema/zod": "^0.13.3",
     "@typescript-eslint/eslint-plugin": "^6.4.1",
     "@typescript-eslint/parser": "^6.4.1",
+    "@vinejs/vine": "^2.0.0",
     "@vitejs/plugin-react": "^4.0.4",
     "ajv": "^8.12.0",
     "ajv-errors": "^3.0.0",
-    "arktype": "1.0.19-alpha",
+    "arktype": "2.0.0-dev.14",
     "check-export-map": "^1.3.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
@@ -276,7 +291,7 @@
     "superstruct": "^1.0.3",
     "typanion": "^3.14.0",
     "typescript": "^5.1.6",
-    "valibot": "^0.24.1",
+    "valibot": "0.35.0",
     "vest": "^4.6.11",
     "vite": "^4.4.9",
     "vite-tsconfig-paths": "^4.2.0",

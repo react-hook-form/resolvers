@@ -18,6 +18,7 @@ const subRepositories = [
   'valibot',
   'typeschema',
   'effect-ts',
+  'vine',
 ];
 
 const copySrc = () => {

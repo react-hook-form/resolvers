@@ -11,8 +11,8 @@
   "types": "dist/index.d.ts",
   "license": "MIT",
   "peerDependencies": {
-    "react-hook-form": "^7.0.0",
     "@hookform/resolvers": "^2.0.0",
-    "valibot": ">=0.8"
+    "react-hook-form": "^7.0.0",
+    "valibot": ">=0.33.0 <1"
   }
 }
