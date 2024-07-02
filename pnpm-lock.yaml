@@ -135,8 +135,8 @@ importers:
         specifier: ^5.1.6
         version: 5.1.6
       valibot:
-        specifier: 0.31.0-rc.12
-        version: 0.31.0-rc.12
+        specifier: 0.35.0
+        version: 0.35.0
       vest:
         specifier: ^4.6.11
         version: 4.6.11
@@ -3478,8 +3478,8 @@ packages:
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
-  valibot@0.31.0-rc.12:
-    resolution: {integrity: sha512-vAI18A65Og1BwuVqC3Zvr0+yNxOANLHDVo3r5VOTsVItfBl6KcykmY7fioSU5CVSlrj2JgViHjcsfAofO2h0rw==}
+  valibot@0.35.0:
+    resolution: {integrity: sha512-+i2aCRkReTrd5KBN/dW2BrPOvFnU5LXTV2xjZnjnqUIO8YUx6P2+MgRrkwF2FhkexgyKq/NIZdPdknhHf5A/Ww==}
 
   validate-npm-package-license@3.0.4:
     resolution: {integrity: sha512-DpKm2Ui/xN7/HQKCtpZxoRWBhZ9Z0kqtygG8XCgNQ8ZlDnxuQmWhj566j8fN4Cu3/JmbhsDo7fcAJq4s9h27Ew==}
@@ -7254,7 +7254,7 @@ snapshots:
 
   util-deprecate@1.0.2: {}
 
-  valibot@0.31.0-rc.12: {}
+  valibot@0.35.0: {}
 
   validate-npm-package-license@3.0.4:
     dependencies:
