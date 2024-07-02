@@ -4,11 +4,14 @@ import user from '@testing-library/user-event';
 import { useForm } from 'react-hook-form';
 import { typeboxResolver } from '..';
 import { Type, Static } from '@sinclair/typebox';
+import { TypeCompiler } from '@sinclair/typebox/compiler';
 
 const schema = Type.Object({
   username: Type.String({ minLength: 1 }),
   password: Type.String({ minLength: 1 }),
 });
+
+const typecheck = TypeCompiler.Compile(schema)
 
 type FormData = Static<typeof schema> & { unusedProperty: string };
 
@@ -22,7 +25,7 @@ function TestComponent({ onSubmit }: Props) {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({
-    resolver: typeboxResolver(schema), // Useful to check TypeScript regressions
+    resolver: typeboxResolver(typecheck), // Useful to check TypeScript regressions
   });
 
   return (
@@ -38,7 +41,7 @@ function TestComponent({ onSubmit }: Props) {
   );
 }
 
-test("form's validation with Typebox and TypeScript's integration", async () => {
+test("form's validation with Typebox (with compiler) and TypeScript's integration", async () => {
   const handleSubmit = vi.fn();
   render(<TestComponent onSubmit={handleSubmit} />);
 
