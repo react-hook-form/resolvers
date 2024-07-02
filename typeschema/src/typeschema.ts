@@ -10,7 +10,9 @@ const parseErrorSchema = (
 ): FieldErrors => {
   const errors: Record<string, FieldError> = {};
 
-  for (const error of typeschemaErrors) {
+  for (; typeschemaErrors.length; ) {
+    const error = typeschemaErrors[0];
+
     if (!error.path) {
       continue;
     }
@@ -34,6 +36,8 @@ const parseErrorSchema = (
           : error.message,
       ) as FieldError;
     }
+
+    typeschemaErrors.shift();
   }
 
   return errors;
