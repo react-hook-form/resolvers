@@ -1,7 +1,7 @@
 import { appendErrors, FieldError, FieldErrors } from 'react-hook-form';
 import { z, ZodError } from 'zod';
 import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
-import type { Resolver } from './types';
+import type { Resolver, ResolverSync } from './types';
 
 const isZodError = (error: any): error is ZodError => error.errors != null;
 
@@ -59,9 +59,38 @@ export const zodResolver: Resolver =
   (schema, schemaOptions, resolverOptions = {}) =>
   async (values, _, options) => {
     try {
-      const data = await schema[
-        resolverOptions.mode === 'sync' ? 'parse' : 'parseAsync'
-      ](values, schemaOptions);
+      const data = await schema.parseAsync(values, schemaOptions);
+
+      options.shouldUseNativeValidation && validateFieldsNatively({}, options);
+
+      return {
+        errors: {} as FieldErrors,
+        values: resolverOptions.raw ? values : data,
+      };
+    } catch (error: any) {
+      if (isZodError(error)) {
+        return {
+          values: {},
+          errors: toNestErrors(
+            parseErrorSchema(
+              error.errors,
+              !options.shouldUseNativeValidation &&
+                options.criteriaMode === 'all',
+            ),
+            options,
+          ),
+        };
+      }
+
+      throw error;
+    }
+  };
+
+export const zodResolverSync: ResolverSync =
+  (schema, schemaOptions, resolverOptions = {}) =>
+  (values, _, options) => {
+    try {
+      const data = schema.parse(values, schemaOptions);
 
       options.shouldUseNativeValidation && validateFieldsNatively({}, options);
 
