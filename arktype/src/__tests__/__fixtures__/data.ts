@@ -1,5 +1,5 @@
-import { Field, InternalFieldName } from 'react-hook-form';
 import { type } from 'arktype';
+import { Field, InternalFieldName } from 'react-hook-form';
 
 export const schema = type({
   username: 'string>2',

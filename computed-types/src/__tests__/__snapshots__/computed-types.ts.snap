@@ -16,7 +16,7 @@ exports[`computedTypesResolver > should return a single error from computedTypes
       },
     },
     "birthYear": {
-      "message": "Expect value to be \\"number\\"",
+      "message": "Expect value to be "number"",
       "ref": undefined,
       "type": "ValidationError",
     },
@@ -28,18 +28,18 @@ exports[`computedTypesResolver > should return a single error from computedTypes
       "type": "ValidationError",
     },
     "enabled": {
-      "message": "Expect value to be \\"boolean\\"",
+      "message": "Expect value to be "boolean"",
       "ref": undefined,
       "type": "ValidationError",
     },
     "like": {
       "id": {
-        "message": "Expect value to be \\"number\\"",
+        "message": "Expect value to be "number"",
         "ref": undefined,
         "type": "ValidationError",
       },
       "name": {
-        "message": "Expect value to be \\"string\\"",
+        "message": "Expect value to be "string"",
         "ref": undefined,
         "type": "ValidationError",
       },
@@ -52,7 +52,7 @@ exports[`computedTypesResolver > should return a single error from computedTypes
       "type": "ValidationError",
     },
     "repeatPassword": {
-      "message": "Expect value to be \\"string\\"",
+      "message": "Expect value to be "string"",
       "ref": undefined,
       "type": "ValidationError",
     },
@@ -62,7 +62,7 @@ exports[`computedTypesResolver > should return a single error from computedTypes
       "type": "ValidationError",
     },
     "username": {
-      "message": "Expect value to be \\"string\\"",
+      "message": "Expect value to be "string"",
       "ref": {
         "name": "username",
       },

@@ -1,5 +1,5 @@
 import { arktypeResolver } from '..';
-import { schema, validData, invalidData, fields } from './__fixtures__/data';
+import { fields, invalidData, schema, validData } from './__fixtures__/data';
 
 const shouldUseNativeValidation = false;
 

@@ -1,5 +1,5 @@
 import { typanionResolver } from '..';
-import { isSchema, validData, fields, invalidData } from './__fixtures__/data';
+import { fields, invalidData, isSchema, validData } from './__fixtures__/data';
 
 const tmpObj = {
   validate: isSchema,

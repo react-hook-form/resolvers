@@ -1,10 +1,10 @@
 import {
-  get,
   FieldError,
-  ResolverOptions,
-  Ref,
   FieldErrors,
   FieldValues,
+  Ref,
+  ResolverOptions,
+  get,
 } from 'react-hook-form';
 
 const setCustomValidity = (

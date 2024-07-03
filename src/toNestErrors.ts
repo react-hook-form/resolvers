@@ -1,16 +1,18 @@
 import {
-  get,
-  FieldErrors,
   Field,
-  ResolverOptions,
+  FieldErrors,
   FieldValues,
   InternalFieldName,
+  ResolverOptions,
+  get,
 } from 'react-hook-form';
 import { validateFieldsNatively } from './validateFieldsNatively';
 
-export const isDateObject = (value: unknown): value is Date => value instanceof Date;
+export const isDateObject = (value: unknown): value is Date =>
+  value instanceof Date;
 
-export const isNullOrUndefined = (value: unknown): value is null | undefined => value == null;
+export const isNullOrUndefined = (value: unknown): value is null | undefined =>
+  value == null;
 
 export const isObjectType = (value: unknown): value is object =>
   typeof value === 'object';
@@ -53,7 +55,6 @@ const set = (object: FieldValues, path: string, value?: unknown) => {
   }
   return object;
 };
-
 
 export const toNestErrors = <TFieldValues extends FieldValues>(
   errors: FieldErrors,

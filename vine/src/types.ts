@@ -1,6 +1,6 @@
-import { FieldValues, ResolverResult, ResolverOptions } from 'react-hook-form';
 import { VineValidator } from '@vinejs/vine';
 import { ValidationOptions } from '@vinejs/vine/build/src/types';
+import { FieldValues, ResolverOptions, ResolverResult } from 'react-hook-form';
 
 export type Resolver = <T extends VineValidator<any, any>>(
   schema: T,

@@ -1,9 +1,9 @@
 import { vestResolver } from '..';
 import {
-  invalidData,
-  validationSuite,
-  validData,
   fields,
+  invalidData,
+  validData,
+  validationSuite,
 } from './__fixtures__/data';
 
 const shouldUseNativeValidation = false;
@@ -72,13 +72,19 @@ describe('vestResolver', () => {
   it('should call a suite with values, validated field names and a context as arguments', async () => {
     const suite = vi.fn(validationSuite) as any as typeof validationSuite;
 
-    await vestResolver(suite)(validData, { some: 'context' }, {
-      fields: { username: fields.username },
-      names: ['username'],
-      shouldUseNativeValidation,
-    });
+    await vestResolver(suite)(
+      validData,
+      { some: 'context' },
+      {
+        fields: { username: fields.username },
+        names: ['username'],
+        shouldUseNativeValidation,
+      },
+    );
 
     expect(suite).toHaveBeenCalledTimes(1);
-    expect(suite).toHaveBeenCalledWith(validData, ['username'], { some: 'context' });
+    expect(suite).toHaveBeenCalledWith(validData, ['username'], {
+      some: 'context',
+    });
   });
 });

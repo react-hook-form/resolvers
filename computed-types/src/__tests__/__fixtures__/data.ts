@@ -1,5 +1,5 @@
-import { Field, InternalFieldName } from 'react-hook-form';
 import Schema, { Type, string, number, array, boolean } from 'computed-types';
+import { Field, InternalFieldName } from 'react-hook-form';
 
 export const schema = Schema({
   username: string.regexp(/^\w+$/).min(3).max(30),

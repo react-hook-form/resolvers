@@ -1,8 +1,8 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
-import { useForm } from 'react-hook-form';
 import * as Joi from 'joi';
+import React from 'react';
+import { useForm } from 'react-hook-form';
 import { joiResolver } from '..';
 
 const schema = Joi.object({

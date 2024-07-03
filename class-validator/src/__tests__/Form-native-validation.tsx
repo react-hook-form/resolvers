@@ -1,9 +1,9 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
+import { IsNotEmpty } from 'class-validator';
+import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { classValidatorResolver } from '..';
-import { IsNotEmpty } from 'class-validator';
 
 class Schema {
   @IsNotEmpty()

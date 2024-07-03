@@ -1,15 +1,15 @@
+import * as valibot from 'valibot';
 /* eslint-disable no-console, @typescript-eslint/ban-ts-comment */
 import { valibotResolver } from '..';
 import {
-  schema,
-  validData,
   fields,
   invalidData,
-  schemaError,
-  validSchemaErrorData,
   invalidSchemaErrorData,
+  schema,
+  schemaError,
+  validData,
+  validSchemaErrorData,
 } from './__fixtures__/data';
-import * as valibot from 'valibot';
 
 const shouldUseNativeValidation = false;
 describe('valibotResolver', () => {

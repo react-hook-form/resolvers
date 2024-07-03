@@ -1,10 +1,10 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
 import { render, screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
-import { vineResolver } from '..';
 import vine from '@vinejs/vine';
 import { Infer } from '@vinejs/vine/build/src/types';
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { vineResolver } from '..';
 
 const schema = vine.compile(
   vine.object({
@@ -59,12 +59,16 @@ test("form's native validation with Zod", async () => {
   // username
   usernameField = screen.getByPlaceholderText(/username/i) as HTMLInputElement;
   expect(usernameField.validity.valid).toBe(false);
-  expect(usernameField.validationMessage).toBe('The username field must have at least 1 characters');
+  expect(usernameField.validationMessage).toBe(
+    'The username field must have at least 1 characters',
+  );
 
   // password
   passwordField = screen.getByPlaceholderText(/password/i) as HTMLInputElement;
   expect(passwordField.validity.valid).toBe(false);
-  expect(passwordField.validationMessage).toBe('The password field must have at least 1 characters');
+  expect(passwordField.validationMessage).toBe(
+    'The password field must have at least 1 characters',
+  );
 
   await user.type(screen.getByPlaceholderText(/username/i), 'joe');
   await user.type(screen.getByPlaceholderText(/password/i), 'password');

@@ -31,7 +31,7 @@ const getfields = (mockReportValidity: any, mockSetCustomValidity: any) =>
         },
       ],
     },
-  } as any as Record<InternalFieldName, Field['_f']>);
+  }) as any as Record<InternalFieldName, Field['_f']>;
 
 test('validates natively fields', () => {
   const mockReportValidity = vi.fn();

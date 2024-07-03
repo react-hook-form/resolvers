@@ -1,9 +1,5 @@
-import {
-  FieldValues,
-  ResolverOptions,
-  ResolverResult,
-} from 'react-hook-form';
 import type { AsyncValidationOptions, Schema } from 'joi';
+import { FieldValues, ResolverOptions, ResolverResult } from 'react-hook-form';
 
 export type Resolver = <T extends Schema>(
   schema: T,

@@ -1,5 +1,5 @@
-import { Field, InternalFieldName } from 'react-hook-form';
 import Nope from 'nope-validator';
+import { Field, InternalFieldName } from 'react-hook-form';
 
 export const schema = Nope.object().shape({
   username: Nope.string().regex(/^\w+$/).min(2).max(30).required(),

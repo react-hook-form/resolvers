@@ -1,8 +1,8 @@
-import { appendErrors, FieldError, FieldErrors } from 'react-hook-form';
 import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
-import type { Resolver } from './types';
 import type { ValidationIssue } from '@typeschema/core';
 import { validate } from '@typeschema/main';
+import { FieldError, FieldErrors, appendErrors } from 'react-hook-form';
+import type { Resolver } from './types';
 
 const parseErrorSchema = (
   typeschemaErrors: ValidationIssue[],

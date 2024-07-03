@@ -1,5 +1,11 @@
 import { ajvResolver } from '..';
-import { fields, invalidData, invalidDataWithUndefined, schema, validData } from './__fixtures__/data';
+import {
+  fields,
+  invalidData,
+  invalidDataWithUndefined,
+  schema,
+  validData,
+} from './__fixtures__/data';
 
 const shouldUseNativeValidation = false;
 

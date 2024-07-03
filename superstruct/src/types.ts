@@ -1,5 +1,5 @@
 import { FieldValues, ResolverOptions, ResolverResult } from 'react-hook-form';
-import { validate, Struct } from 'superstruct';
+import { Struct, validate } from 'superstruct';
 
 type Options = Parameters<typeof validate>[2];
 

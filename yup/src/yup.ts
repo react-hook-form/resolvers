@@ -1,11 +1,11 @@
-import * as Yup from 'yup';
 import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
 import {
-  appendErrors,
   FieldError,
   FieldValues,
   Resolver,
+  appendErrors,
 } from 'react-hook-form';
+import * as Yup from 'yup';
 
 /**
  * Why `path!` ? because it could be `undefined` in some case

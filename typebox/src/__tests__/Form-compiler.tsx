@@ -1,17 +1,17 @@
-import React from 'react';
+import { Static, Type } from '@sinclair/typebox';
+import { TypeCompiler } from '@sinclair/typebox/compiler';
 import { render, screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { typeboxResolver } from '..';
-import { Type, Static } from '@sinclair/typebox';
-import { TypeCompiler } from '@sinclair/typebox/compiler';
 
 const schema = Type.Object({
   username: Type.String({ minLength: 1 }),
   password: Type.String({ minLength: 1 }),
 });
 
-const typecheck = TypeCompiler.Compile(schema)
+const typecheck = TypeCompiler.Compile(schema);
 
 type FormData = Static<typeof schema> & { unusedProperty: string };
 

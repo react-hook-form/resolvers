@@ -4,7 +4,7 @@ exports[`effectTsResolver > should return a single error from effectTsResolver w
 {
   "errors": {
     "animal": {
-      "message": "Expected \\"snake\\", actual [\\"dog\\"]",
+      "message": "Expected "snake", actual ["dog"]",
       "ref": undefined,
       "type": "Type",
     },
@@ -12,7 +12,7 @@ exports[`effectTsResolver > should return a single error from effectTsResolver w
       ,
       ,
       {
-        "message": "Expected a number, actual \\"3\\"",
+        "message": "Expected number, actual "3"",
         "ref": undefined,
         "type": "Type",
       },

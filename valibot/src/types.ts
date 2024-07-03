@@ -1,4 +1,4 @@
-import { FieldValues, ResolverResult, ResolverOptions } from 'react-hook-form';
+import { FieldValues, ResolverOptions, ResolverResult } from 'react-hook-form';
 import {
   BaseIssue,
   BaseSchema,

@@ -1,8 +1,8 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
-import { useForm } from 'react-hook-form';
 import type { Infer } from '@typeschema/main';
+import React from 'react';
+import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { typeschemaResolver } from '..';
 

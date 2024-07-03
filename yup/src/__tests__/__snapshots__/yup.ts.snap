@@ -4,14 +4,14 @@ exports[`yupResolver > should return a single error from yupResolver when valida
 {
   "errors": {
     "birthYear": {
-      "message": "birthYear must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"birthYear\\"\`).",
+      "message": "birthYear must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`"birthYear"\`).",
       "ref": undefined,
       "type": "typeError",
     },
     "like": [
       {
         "id": {
-          "message": "like[0].id must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"z\\"\`).",
+          "message": "like[0].id must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`"z"\`).",
           "ref": undefined,
           "type": "typeError",
         },
@@ -45,14 +45,14 @@ exports[`yupResolver > should return a single error from yupResolver with \`mode
 {
   "errors": {
     "birthYear": {
-      "message": "birthYear must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"birthYear\\"\`).",
+      "message": "birthYear must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`"birthYear"\`).",
       "ref": undefined,
       "type": "typeError",
     },
     "like": [
       {
         "id": {
-          "message": "like[0].id must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"z\\"\`).",
+          "message": "like[0].id must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`"z"\`).",
           "ref": undefined,
           "type": "typeError",
         },
@@ -86,21 +86,21 @@ exports[`yupResolver > should return all the errors from yupResolver when valida
 {
   "errors": {
     "birthYear": {
-      "message": "birthYear must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"birthYear\\"\`).",
+      "message": "birthYear must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`"birthYear"\`).",
       "ref": undefined,
       "type": "typeError",
       "types": {
-        "typeError": "birthYear must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"birthYear\\"\`).",
+        "typeError": "birthYear must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`"birthYear"\`).",
       },
     },
     "like": [
       {
         "id": {
-          "message": "like[0].id must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"z\\"\`).",
+          "message": "like[0].id must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`"z"\`).",
           "ref": undefined,
           "type": "typeError",
           "types": {
-            "typeError": "like[0].id must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"z\\"\`).",
+            "typeError": "like[0].id must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`"z"\`).",
           },
         },
         "name": {
@@ -147,21 +147,21 @@ exports[`yupResolver > should return all the errors from yupResolver when valida
 {
   "errors": {
     "birthYear": {
-      "message": "birthYear must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"birthYear\\"\`).",
+      "message": "birthYear must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`"birthYear"\`).",
       "ref": undefined,
       "type": "typeError",
       "types": {
-        "typeError": "birthYear must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"birthYear\\"\`).",
+        "typeError": "birthYear must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`"birthYear"\`).",
       },
     },
     "like": [
       {
         "id": {
-          "message": "like[0].id must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"z\\"\`).",
+          "message": "like[0].id must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`"z"\`).",
           "ref": undefined,
           "type": "typeError",
           "types": {
-            "typeError": "like[0].id must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"z\\"\`).",
+            "typeError": "like[0].id must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`"z"\`).",
           },
         },
         "name": {
@@ -234,7 +234,7 @@ exports[`yupResolver > should throw an error without inner property 1`] = `
 {
   "errors": {
     "value": {
-      "message": "value must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`\\"\\"\`).",
+      "message": "value must be a \`number\` type, but the final value was: \`NaN\` (cast from the value \`""\`).",
       "ref": undefined,
       "type": "typeError",
     },

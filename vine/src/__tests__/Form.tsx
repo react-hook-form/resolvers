@@ -1,10 +1,10 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
-import { useForm } from 'react-hook-form';
-import { vineResolver } from '..';
 import vine from '@vinejs/vine';
 import { Infer } from '@vinejs/vine/build/src/types';
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { vineResolver } from '..';
 
 const schema = vine.compile(
   vine.object({
@@ -49,7 +49,11 @@ test("form's validation with Vine and TypeScript's integration", async () => {
 
   await user.click(screen.getByText(/submit/i));
 
-  expect(screen.getByText(/The username field must have at least 1 characters/i)).toBeInTheDocument();
-  expect(screen.getByText(/The password field must have at least 1 characters/i)).toBeInTheDocument();
+  expect(
+    screen.getByText(/The username field must have at least 1 characters/i),
+  ).toBeInTheDocument();
+  expect(
+    screen.getByText(/The password field must have at least 1 characters/i),
+  ).toBeInTheDocument();
   expect(handleSubmit).not.toHaveBeenCalled();
 });

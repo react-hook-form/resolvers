@@ -1,5 +1,5 @@
 import { toNestErrors } from '@hookform/resolvers';
-import { FieldError, appendErrors, FieldValues } from 'react-hook-form';
+import { FieldError, FieldValues, appendErrors } from 'react-hook-form';
 import { getDotPath, safeParseAsync } from 'valibot';
 import type { Resolver } from './types';
 

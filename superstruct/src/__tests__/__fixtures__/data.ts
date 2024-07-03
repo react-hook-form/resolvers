@@ -1,18 +1,18 @@
 import { Field, InternalFieldName } from 'react-hook-form';
 import {
-  object,
+  Infer,
+  array,
+  boolean,
+  define,
+  max,
+  min,
   number,
-  string,
+  object,
   optional,
   pattern,
   size,
+  string,
   union,
-  min,
-  max,
-  Infer,
-  define,
-  array,
-  boolean,
 } from 'superstruct';
 
 const Password = define(

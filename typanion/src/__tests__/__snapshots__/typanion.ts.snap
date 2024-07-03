@@ -8,11 +8,11 @@ exports[`typanionResolver > should return a single error from typanionResolver w
       "ref": undefined,
     },
     "birthYear": {
-      "message": "Expected a number (got \\"birthYear\\")",
+      "message": "Expected a number (got "birthYear")",
       "ref": undefined,
     },
     "email": {
-      "message": "Expected to match the pattern /^\\\\S+@\\\\S+$/ (got an empty string)",
+      "message": "Expected to match the pattern /^\\S+@\\S+$/ (got an empty string)",
       "ref": {
         "name": "email",
       },
@@ -23,7 +23,7 @@ exports[`typanionResolver > should return a single error from typanionResolver w
     },
     "like": {
       "id": {
-        "message": "Expected a number (got \\"z\\")",
+        "message": "Expected a number (got "z")",
         "ref": undefined,
       },
       "name": {
@@ -32,7 +32,7 @@ exports[`typanionResolver > should return a single error from typanionResolver w
       },
     },
     "password": {
-      "message": "Expected to match the pattern /.*[A-Z].*/ (got \\"___\\")",
+      "message": "Expected to match the pattern /.*[A-Z].*/ (got "___")",
       "ref": {
         "name": "password",
       },

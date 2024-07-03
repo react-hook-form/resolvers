@@ -1,6 +1,6 @@
-import type { FieldError, FieldErrors } from 'react-hook-form';
 import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
 import type { ShapeErrors } from 'nope-validator/lib/cjs/types';
+import type { FieldError, FieldErrors } from 'react-hook-form';
 import type { Resolver } from './types';
 
 const parseErrors = (

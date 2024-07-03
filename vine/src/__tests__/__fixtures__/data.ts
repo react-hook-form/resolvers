@@ -1,6 +1,6 @@
-import { Field, InternalFieldName } from 'react-hook-form';
 import vine from '@vinejs/vine';
 import { Infer } from '@vinejs/vine/build/src/types';
+import { Field, InternalFieldName } from 'react-hook-form';
 
 export const schema = vine.compile(
   vine.object({
@@ -25,7 +25,9 @@ export const schema = vine.compile(
         name: vine.string().fixedLength(4),
       }),
     ),
-    dateStr: vine.string().transform((value: string) => new Date(value).toISOString()),
+    dateStr: vine
+      .string()
+      .transform((value: string) => new Date(value).toISOString()),
   }),
 );
 

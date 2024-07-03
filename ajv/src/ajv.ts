@@ -1,7 +1,7 @@
 import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
 import Ajv, { DefinedError } from 'ajv';
 import ajvErrors from 'ajv-errors';
-import { appendErrors, FieldError } from 'react-hook-form';
+import { FieldError, appendErrors } from 'react-hook-form';
 import { Resolver } from './types';
 
 const parseErrorSchema = (

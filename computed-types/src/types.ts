@@ -1,7 +1,7 @@
 import type {
   FieldValues,
-  ResolverResult,
   ResolverOptions,
+  ResolverResult,
 } from 'react-hook-form';
 
 export type Resolver = (

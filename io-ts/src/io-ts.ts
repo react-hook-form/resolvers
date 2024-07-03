@@ -1,6 +1,6 @@
+import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
 import * as Either from 'fp-ts/Either';
 import { pipe } from 'fp-ts/function';
-import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
 import errorsToRecord from './errorsToRecord';
 import { Resolver } from './types';
 
