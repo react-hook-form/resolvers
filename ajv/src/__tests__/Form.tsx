@@ -23,13 +23,19 @@ const schema: JSONSchemaType<FormData> = {
   },
   required: ['username', 'password'],
   additionalProperties: false,
+  errorMessage: {
+    required: {
+      username: 'Username is required',
+    },
+  },
 };
 
 interface Props {
   onSubmit: (data: FormData) => void;
+  isInitialValueUndefined?: boolean;
 }
 
-function TestComponent({ onSubmit }: Props) {
+function TestComponent({ onSubmit, isInitialValueUndefined }: Props) {
   const {
     register,
     formState: { errors },
@@ -40,10 +46,20 @@ function TestComponent({ onSubmit }: Props) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <input {...register('username')} />
+      <input
+        {...register('username', {
+          setValueAs: (value) =>
+            isInitialValueUndefined ? value || undefined : value,
+        })}
+      />
       {errors.username && <span role="alert">{errors.username.message}</span>}
 
-      <input {...register('password')} />
+      <input
+        {...register('password', {
+          setValueAs: (value) =>
+            isInitialValueUndefined ? value || undefined : value,
+        })}
+      />
       {errors.password && <span role="alert">{errors.password.message}</span>}
 
       <button type="submit">submit</button>
@@ -61,5 +77,20 @@ test("form's validation with Ajv and TypeScript's integration", async () => {
 
   expect(screen.getByText(/username field is required/i)).toBeInTheDocument();
   expect(screen.getByText(/password field is required/i)).toBeInTheDocument();
+  expect(handleSubmit).not.toHaveBeenCalled();
+});
+
+test("form's validation with Ajv and TypeScript's integration for required fields with custom error messages", async () => {
+  const handleSubmit = vi.fn();
+  render(<TestComponent isInitialValueUndefined onSubmit={handleSubmit} />);
+
+  expect(screen.queryAllByRole('alert')).toHaveLength(0);
+
+  await user.click(screen.getByText(/submit/i));
+
+  expect(screen.getByText(/Username is required/i)).toBeInTheDocument();
+  expect(
+    screen.getByText(/must have required property 'password'/i),
+  ).toBeInTheDocument();
   expect(handleSubmit).not.toHaveBeenCalled();
 });

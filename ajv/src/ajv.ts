@@ -1,17 +1,66 @@
-import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
-import Ajv, { DefinedError } from 'ajv';
+import {
+  toNestErrors,
+  validateFieldsNatively,
+  isObject,
+} from '@hookform/resolvers';
+import Ajv, { type ErrorObject } from 'ajv';
 import ajvErrors from 'ajv-errors';
-import { appendErrors, FieldError } from 'react-hook-form';
-import { Resolver } from './types';
+import { appendErrors, type FieldError } from 'react-hook-form';
+import type { Resolver } from './types';
+
+type RequiredParamError = {
+  params: {
+    missingProperty: string;
+  };
+};
+
+/**
+ * Get the error object for the required field when `errorMessage` keyword is used
+ * @param errorParams The error params object
+ * @returns `False` if there is no error object for the required field, otherwise the error object
+ */
+const findRequiredParamError = (
+  errorParams: Record<string, unknown>,
+): false | RequiredParamError => {
+  if (!errorParams.errors || !Array.isArray(errorParams.errors)) {
+    return false;
+  }
+
+  const requiredParamError = errorParams.errors.find(
+    (error: unknown) =>
+      isObject<Record<string, unknown>>(error) && error.keyword === 'required',
+  );
+
+  // Check if the correct properties are present in the error object
+  if (
+    requiredParamError &&
+    isObject<Record<string, unknown>>(requiredParamError) &&
+    requiredParamError.params &&
+    isObject<Record<string, unknown>>(requiredParamError.params) &&
+    requiredParamError.params.missingProperty
+  ) {
+    return requiredParamError as RequiredParamError;
+  }
+
+  return false;
+};
 
 const parseErrorSchema = (
-  ajvErrors: DefinedError[],
+  ajvErrors: ErrorObject[],
   validateAllFieldCriteria: boolean,
 ) => {
   // Ajv will return empty instancePath when require error
   ajvErrors.forEach((error) => {
     if (error.keyword === 'required') {
       error.instancePath += '/' + error.params.missingProperty;
+    }
+
+    if (error.keyword === 'errorMessage') {
+      const requiredParamError = findRequiredParamError(error.params);
+
+      if (requiredParamError) {
+        error.instancePath += '/' + requiredParamError.params.missingProperty;
+      }
     }
   });
 
@@ -72,13 +121,14 @@ export const ajvResolver: Resolver =
 
     options.shouldUseNativeValidation && validateFieldsNatively({}, options);
 
-    return valid
+    // If the data is valid and there are no errors
+    return valid || !validate.errors
       ? { values, errors: {} }
       : {
           values: {},
           errors: toNestErrors(
             parseErrorSchema(
-              validate.errors as DefinedError[],
+              validate.errors,
               !options.shouldUseNativeValidation &&
                 options.criteriaMode === 'all',
             ),
