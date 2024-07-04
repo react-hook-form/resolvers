@@ -1,8 +1,6 @@
 import { Field, InternalFieldName } from 'react-hook-form';
 import * as t from 'typanion';
 
-
-
 export const isSchema = t.isObject({
   username: t.applyCascade(t.isString(), [
     t.matchesRegExp(/^\w+$/),
@@ -13,24 +11,31 @@ export const isSchema = t.isObject({
     t.matchesRegExp(new RegExp('.*[A-Z].*')), // one uppercase character
     t.matchesRegExp(new RegExp('.*[a-z].*')), // one lowercase character
     t.matchesRegExp(new RegExp('.*\\d.*')), // one number
-    t.matchesRegExp(new RegExp('.*[`~<>?,./!@#$%^&*()\\-_+="\'|{}\\[\\];:\\\\].*')), // one special character
+    t.matchesRegExp(
+      new RegExp('.*[`~<>?,./!@#$%^&*()\\-_+="\'|{}\\[\\];:\\\\].*'),
+    ), // one special character
     t.hasMinLength(8), // Must be at least 8 characters in length
   ]),
   repeatPassword: t.applyCascade(t.isString(), [
     t.matchesRegExp(new RegExp('.*[A-Z].*')), // one uppercase character
     t.matchesRegExp(new RegExp('.*[a-z].*')), // one lowercase character
     t.matchesRegExp(new RegExp('.*\\d.*')), // one number
-    t.matchesRegExp(new RegExp('.*[`~<>?,./!@#$%^&*()\\-_+="\'|{}\\[\\];:\\\\].*')), // one special character
+    t.matchesRegExp(
+      new RegExp('.*[`~<>?,./!@#$%^&*()\\-_+="\'|{}\\[\\];:\\\\].*'),
+    ), // one special character
     t.hasMinLength(8), // Must be at least 8 characters in length
   ]),
   accessToken: t.isString(),
-  birthYear: t.applyCascade(t.isNumber(), [t.isInteger(), t.isInInclusiveRange(1900, 2013)]),
+  birthYear: t.applyCascade(t.isNumber(), [
+    t.isInteger(),
+    t.isInInclusiveRange(1900, 2013),
+  ]),
   email: t.applyCascade(t.isString(), [t.matchesRegExp(/^\S+@\S+$/)]),
-  tags: t.isArray(t.isString()), 
+  tags: t.isArray(t.isString()),
   enabled: t.isBoolean(),
   like: t.isObject({
     id: t.applyCascade(t.isNumber(), [t.isInteger(), t.isPositive()]),
-    name: t.applyCascade(t.isString(), [t.hasMinLength(4)])
+    name: t.applyCascade(t.isString(), [t.hasMinLength(4)]),
   }),
 });
 

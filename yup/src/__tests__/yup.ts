@@ -2,11 +2,11 @@
 import * as yup from 'yup';
 import { yupResolver } from '..';
 import {
-  schema,
-  validData,
   fields,
   invalidData,
+  schema,
   schemaWithWhen,
+  validData,
 } from './__fixtures__/data';
 
 const shouldUseNativeValidation = false;
@@ -191,20 +191,22 @@ describe('yupResolver', () => {
   });
 
   it('shoud validate a lazy schema with success', async () => {
-    const lazySchema = yup.lazy(() => yup.object().shape({ firstName: yup.string().optional() }));
+    const lazySchema = yup.lazy(() =>
+      yup.object().shape({ firstName: yup.string().optional() }),
+    );
 
     const schemaSpy = vi.spyOn(lazySchema, 'validate');
     const schemaSyncSpy = vi.spyOn(lazySchema, 'validateSync');
 
-    const result = await yupResolver(lazySchema, undefined,)(
-      { firstName: "resolver" },
+    const result = await yupResolver(lazySchema, undefined)(
+      { firstName: 'resolver' },
       undefined,
       {
         fields: {
           firstName: {
             ref: { name: 'firstName' },
             name: 'firstName',
-          }
+          },
         },
         shouldUseNativeValidation,
       },
@@ -212,6 +214,6 @@ describe('yupResolver', () => {
 
     expect(schemaSpy).toHaveBeenCalledTimes(1);
     expect(schemaSyncSpy).not.toHaveBeenCalled();
-    expect(result).toEqual({ errors: {}, values: { firstName: "resolver" } });
+    expect(result).toEqual({ errors: {}, values: { firstName: 'resolver' } });
   });
 });

@@ -1,12 +1,11 @@
 import { TypeCompiler } from '@sinclair/typebox/compiler';
 import { typeboxResolver } from '..';
-import { schema, validData, invalidData, fields } from './__fixtures__/data';
+import { fields, invalidData, schema, validData } from './__fixtures__/data';
 
 const shouldUseNativeValidation = false;
 
 describe('typeboxResolver (with compiler)', () => {
-
-  const typecheck = TypeCompiler.Compile(schema)
+  const typecheck = TypeCompiler.Compile(schema);
 
   it('should return a single error from typeboxResolver when validation fails', async () => {
     const result = await typeboxResolver(typecheck)(invalidData, undefined, {

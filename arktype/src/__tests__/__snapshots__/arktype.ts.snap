@@ -104,15 +104,15 @@ exports[`arktypeResolver > should return a single error from arktypeResolver whe
       Symbol(ArkTypeInternalKind): "error",
     },
     "email": ArkError {
-      "code": "regex",
+      "code": "pattern",
       "data": "",
       "description": "a valid email",
       "flags": "",
       "input": {
-        "code": "regex",
+        "code": "pattern",
         "description": "a valid email",
         "flags": "",
-        "rule": "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\\\.[A-Za-z]{2,}$",
+        "rule": "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$",
       },
       "nodeConfig": {
         "actual": [Function],
@@ -127,8 +127,8 @@ exports[`arktypeResolver > should return a single error from arktypeResolver whe
       "ref": {
         "name": "email",
       },
-      "rule": "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\\\.[A-Za-z]{2,}$",
-      "type": "regex",
+      "rule": "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$",
+      "type": "pattern",
       Symbol(ArkTypeInternalKind): "error",
     },
     "enabled": ArkError {
@@ -204,12 +204,12 @@ exports[`arktypeResolver > should return a single error from arktypeResolver whe
           },
           "input": {
             "code": "required",
-            "missingValueDescription": "a string and more than length 3",
+            "missingValueDescription": "a string",
             "relativePath": [
               "name",
             ],
           },
-          "missingValueDescription": "a string and more than length 3",
+          "missingValueDescription": "a string",
           "nodeConfig": {
             "actual": [Function],
             "description": [Function],
@@ -236,11 +236,11 @@ exports[`arktypeResolver > should return a single error from arktypeResolver whe
       "data": "___",
       "errors": [
         ArkError {
-          "code": "regex",
+          "code": "pattern",
           "data": "___",
           "description": "matched by .*[A-Za-z].*",
           "input": {
-            "code": "regex",
+            "code": "pattern",
             "description": "matched by .*[A-Za-z].*",
             "rule": ".*[A-Za-z].*",
           },
@@ -258,13 +258,13 @@ exports[`arktypeResolver > should return a single error from arktypeResolver whe
           Symbol(ArkTypeInternalKind): "error",
         },
         ArkError {
-          "code": "regex",
+          "code": "pattern",
           "data": "___",
-          "description": "matched by .*\\\\d.*",
+          "description": "matched by .*\\d.*",
           "input": {
-            "code": "regex",
-            "description": "matched by .*\\\\d.*",
-            "rule": ".*\\\\d.*",
+            "code": "pattern",
+            "description": "matched by .*\\d.*",
+            "rule": ".*\\d.*",
           },
           "nodeConfig": {
             "actual": [Function],
@@ -276,7 +276,7 @@ exports[`arktypeResolver > should return a single error from arktypeResolver whe
           "path": [
             "password",
           ],
-          "rule": ".*\\\\d.*",
+          "rule": ".*\\d.*",
           Symbol(ArkTypeInternalKind): "error",
         },
       ],
@@ -284,11 +284,11 @@ exports[`arktypeResolver > should return a single error from arktypeResolver whe
         "code": "union",
         "errors": [
           ArkError {
-            "code": "regex",
+            "code": "pattern",
             "data": "___",
             "description": "matched by .*[A-Za-z].*",
             "input": {
-              "code": "regex",
+              "code": "pattern",
               "description": "matched by .*[A-Za-z].*",
               "rule": ".*[A-Za-z].*",
             },
@@ -306,13 +306,13 @@ exports[`arktypeResolver > should return a single error from arktypeResolver whe
             Symbol(ArkTypeInternalKind): "error",
           },
           ArkError {
-            "code": "regex",
+            "code": "pattern",
             "data": "___",
-            "description": "matched by .*\\\\d.*",
+            "description": "matched by .*\\d.*",
             "input": {
-              "code": "regex",
-              "description": "matched by .*\\\\d.*",
-              "rule": ".*\\\\d.*",
+              "code": "pattern",
+              "description": "matched by .*\\d.*",
+              "rule": ".*\\d.*",
             },
             "nodeConfig": {
               "actual": [Function],
@@ -324,7 +324,7 @@ exports[`arktypeResolver > should return a single error from arktypeResolver whe
             "path": [
               "password",
             ],
-            "rule": ".*\\\\d.*",
+            "rule": ".*\\d.*",
             Symbol(ArkTypeInternalKind): "error",
           },
         ],
@@ -360,12 +360,12 @@ exports[`arktypeResolver > should return a single error from arktypeResolver whe
       },
       "input": {
         "code": "required",
-        "missingValueDescription": "a string and more than length 1",
+        "missingValueDescription": "a string",
         "relativePath": [
           "repeatPassword",
         ],
       },
-      "missingValueDescription": "a string and more than length 1",
+      "missingValueDescription": "a string",
       "nodeConfig": {
         "actual": [Function],
         "description": [Function],
@@ -398,12 +398,12 @@ exports[`arktypeResolver > should return a single error from arktypeResolver whe
       },
       "input": {
         "code": "required",
-        "missingValueDescription": "string[]",
+        "missingValueDescription": "an array",
         "relativePath": [
           "tags",
         ],
       },
-      "missingValueDescription": "string[]",
+      "missingValueDescription": "an array",
       "nodeConfig": {
         "actual": [Function],
         "description": [Function],
@@ -436,12 +436,12 @@ exports[`arktypeResolver > should return a single error from arktypeResolver whe
       },
       "input": {
         "code": "required",
-        "missingValueDescription": "a string and more than length 2",
+        "missingValueDescription": "a string",
         "relativePath": [
           "username",
         ],
       },
-      "missingValueDescription": "a string and more than length 2",
+      "missingValueDescription": "a string",
       "nodeConfig": {
         "actual": [Function],
         "description": [Function],

@@ -1,9 +1,9 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
+import { type } from 'arktype';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { arktypeResolver } from '..';
-import { type } from 'arktype';
 
 const schema = type({
   username: 'string>1',

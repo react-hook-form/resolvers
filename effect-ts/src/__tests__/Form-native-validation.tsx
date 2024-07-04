@@ -1,9 +1,9 @@
-import React from 'react';
+import { Schema } from '@effect/schema';
 import { render, screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { effectTsResolver } from '..';
-import { Schema } from '@effect/schema';
 
 const USERNAME_REQUIRED_MESSAGE = 'username field is required';
 const PASSWORD_REQUIRED_MESSAGE = 'password field is required';

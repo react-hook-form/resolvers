@@ -1,12 +1,12 @@
 import {
-  get,
-  FieldErrors,
   Field,
-  ResolverOptions,
+  FieldErrors,
   FieldValues,
   InternalFieldName,
+  ResolverOptions,
+  set,
+  get,
 } from 'react-hook-form';
-import set from 'lodash.set';
 import { validateFieldsNatively } from './validateFieldsNatively';
 
 export const toNestErrors = <TFieldValues extends FieldValues>(

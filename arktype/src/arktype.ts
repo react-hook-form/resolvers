@@ -1,7 +1,7 @@
-import { FieldError, FieldErrors } from 'react-hook-form';
 import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
-import type { Resolver } from './types';
 import { ArkErrors } from 'arktype';
+import { FieldError, FieldErrors } from 'react-hook-form';
+import type { Resolver } from './types';
 
 const parseErrorSchema = (e: ArkErrors): Record<string, FieldError> => {
   // copy code to type to match FieldError shape

@@ -16,6 +16,7 @@ const subRepositories = [
   'typebox',
   'arktype',
   'valibot',
+  'typeschema',
   'effect-ts',
   'vine',
 ];

@@ -1,9 +1,9 @@
+import { Expose, Type } from 'class-transformer';
+import * as classValidator from 'class-validator';
+import { IsDefined, IsNumber, Max, Min } from 'class-validator';
 /* eslint-disable no-console, @typescript-eslint/ban-ts-comment */
 import { classValidatorResolver } from '..';
-import { Schema, validData, fields, invalidData } from './__fixtures__/data';
-import * as classValidator from 'class-validator';
-import { Expose, Type } from 'class-transformer';
-import { IsDefined, IsNumber, Max, Min } from 'class-validator';
+import { Schema, fields, invalidData, validData } from './__fixtures__/data';
 
 const shouldUseNativeValidation = false;
 

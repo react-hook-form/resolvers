@@ -1,5 +1,5 @@
 import { ioTsResolver } from '..';
-import { schema, validData, fields, invalidData } from './__fixtures__/data';
+import { fields, invalidData, schema, validData } from './__fixtures__/data';
 
 const shouldUseNativeValidation = false;
 

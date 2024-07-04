@@ -1,7 +1,7 @@
 import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
 import { FieldError } from 'react-hook-form';
 import promisify from 'vest/promisify';
-import type { VestErrors, Resolver } from './types';
+import type { Resolver, VestErrors } from './types';
 
 const parseErrorSchema = (
   vestError: VestErrors,

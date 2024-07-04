@@ -1,7 +1,7 @@
-import { FieldErrors } from 'react-hook-form';
 import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
 import { plainToClass } from 'class-transformer';
-import { validate, validateSync, ValidationError } from 'class-validator';
+import { ValidationError, validate, validateSync } from 'class-validator';
+import { FieldErrors } from 'react-hook-form';
 import type { Resolver } from './types';
 
 const parseErrors = (

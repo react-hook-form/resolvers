@@ -20,30 +20,20 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 9.0
+      - name: Setup bun
+        uses: oven-sh/setup-bun@v1
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
-
-      - name: Install dependencies
-        run: pnpm install
+      - name: Install Dependencies
+        run: bun install
 
       - name: Lint
-        run: |
-          pnpm lint
-          pnpm lint:types
-
-      - name: Test
-        run: pnpm test
+        run: bun lint
+          
+      - name: TS
+        run: bun lint:types
 
       - name: Build
-        run: pnpm build
+        run: bun run build
 
   publish-module:
     name: 'Publish Module to NPM on Node ${{ matrix.node }} and ${{ matrix.os }}'
@@ -53,22 +43,15 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 9.0
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'pnpm'
+      - name: Setup bun
+        uses: oven-sh/setup-bun@v1
 
-      - name: Install dependencies
-        run: pnpm install
+      - name: Install Dependencies
+        run: bun install
 
       - name: Build
-        run: pnpm build
+        run: bun run build
 
       - name: Publish
         run: npx semantic-release

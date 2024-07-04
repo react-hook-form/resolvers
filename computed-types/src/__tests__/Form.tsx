@@ -1,8 +1,8 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
-import { useForm } from 'react-hook-form';
 import Schema, { Type, string } from 'computed-types';
+import React from 'react';
+import { useForm } from 'react-hook-form';
 import { computedTypesResolver } from '..';
 
 const schema = Schema({

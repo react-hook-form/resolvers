@@ -1,7 +1,7 @@
-import type { FieldErrors } from 'react-hook-form';
 import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
-import type { Resolver } from './types';
 import type { ValidationError } from 'computed-types';
+import type { FieldErrors } from 'react-hook-form';
+import type { Resolver } from './types';
 
 const isValidationError = (error: any): error is ValidationError =>
   error.errors != null;

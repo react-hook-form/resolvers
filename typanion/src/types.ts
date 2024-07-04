@@ -3,9 +3,9 @@ import type {
   ResolverOptions,
   ResolverResult,
 } from 'react-hook-form';
-import { ValidationState, AnyStrictValidator} from 'typanion'
+import { AnyStrictValidator, ValidationState } from 'typanion';
 
-type ValidateOptions = Pick<ValidationState, 'coercions' | 'coercion'>
+type ValidateOptions = Pick<ValidationState, 'coercions' | 'coercion'>;
 
 type RHFResolver = <TFieldValues extends FieldValues, TContext>(
   values: TFieldValues,
@@ -16,5 +16,5 @@ type RHFResolver = <TFieldValues extends FieldValues, TContext>(
 export type Resolver = <UnknownValidator extends AnyStrictValidator>(
   validator: UnknownValidator,
   validatorOptions?: ValidateOptions,
-  resolverOptions?: { mode?: 'async' | 'sync', rawValues?: boolean; },
-)=> RHFResolver
+  resolverOptions?: { mode?: 'async' | 'sync'; rawValues?: boolean },
+) => RHFResolver;

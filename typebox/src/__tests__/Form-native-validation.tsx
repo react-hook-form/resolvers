@@ -1,10 +1,10 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
 import { render, screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
+import React from 'react';
+import { useForm } from 'react-hook-form';
 import { typeboxResolver } from '..';
 
-import { Type, Static } from '@sinclair/typebox';
+import { Static, Type } from '@sinclair/typebox';
 
 const schema = Type.Object({
   username: Type.String({ minLength: 1 }),

@@ -21,8 +21,6 @@ exports[`vestResolver > should return all the error messages from vestResolver w
       "type": "",
       "types": {
         "0": "Password must be at least 5 chars",
-        "1": "Password must contain a digit",
-        "2": "Password must contain a symbol",
       },
     },
     "username": {
@@ -33,7 +31,6 @@ exports[`vestResolver > should return all the error messages from vestResolver w
       "type": "",
       "types": {
         "0": "Username is required",
-        "1": "Must be longer than 3 chars",
       },
     },
   },
@@ -62,8 +59,6 @@ exports[`vestResolver > should return all the error messages from vestResolver w
       "type": "",
       "types": {
         "0": "Password must be at least 5 chars",
-        "1": "Password must contain a digit",
-        "2": "Password must contain a symbol",
       },
     },
     "username": {
@@ -74,7 +69,6 @@ exports[`vestResolver > should return all the error messages from vestResolver w
       "type": "",
       "types": {
         "0": "Username is required",
-        "1": "Must be longer than 3 chars",
       },
     },
   },

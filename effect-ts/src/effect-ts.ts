@@ -1,5 +1,5 @@
-import { decodeUnknown } from '@effect/schema/ParseResult';
 import { formatIssue } from '@effect/schema/ArrayFormatter';
+import { decodeUnknown } from '@effect/schema/ParseResult';
 import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
 import * as Effect from 'effect/Effect';
 import type { FieldErrors } from 'react-hook-form';

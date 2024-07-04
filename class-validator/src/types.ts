@@ -1,6 +1,6 @@
-import { FieldValues, ResolverOptions, ResolverResult } from 'react-hook-form';
-import { ValidatorOptions } from 'class-validator';
 import { ClassConstructor, ClassTransformOptions } from 'class-transformer';
+import { ValidatorOptions } from 'class-validator';
+import { FieldValues, ResolverOptions, ResolverResult } from 'react-hook-form';
 
 export type Resolver = <T extends { [_: string]: any }>(
   schema: ClassConstructor<T>,

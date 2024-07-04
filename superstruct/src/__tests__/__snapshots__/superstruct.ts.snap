@@ -4,12 +4,12 @@ exports[`superstructResolver > should return a single error from superstructReso
 {
   "errors": {
     "birthYear": {
-      "message": "Expected a number, but received: \\"birthYear\\"",
+      "message": "Expected a number, but received: "birthYear"",
       "ref": undefined,
       "type": "number",
     },
     "email": {
-      "message": "Expected a string matching \`/^[\\\\w-\\\\.]+@([\\\\w-]+\\\\.)+[\\\\w-]{2,4}$/\` but received \\"\\"",
+      "message": "Expected a string matching \`/^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$/\` but received """,
       "ref": {
         "name": "email",
       },
@@ -23,7 +23,7 @@ exports[`superstructResolver > should return a single error from superstructReso
     "like": [
       {
         "id": {
-          "message": "Expected a number, but received: \\"z\\"",
+          "message": "Expected a number, but received: "z"",
           "ref": undefined,
           "type": "number",
         },
@@ -35,7 +35,7 @@ exports[`superstructResolver > should return a single error from superstructReso
       },
     ],
     "password": {
-      "message": "Expected a string matching \`/^[a-zA-Z0-9]{3,30}/\` but received \\"___\\"",
+      "message": "Expected a string matching \`/^[a-zA-Z0-9]{3,30}/\` but received "___"",
       "ref": {
         "name": "password",
       },

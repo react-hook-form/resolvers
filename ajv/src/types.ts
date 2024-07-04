@@ -1,9 +1,5 @@
-import {
-  FieldValues,
-  ResolverOptions,
-  ResolverResult,
-} from 'react-hook-form';
 import * as Ajv from 'ajv';
+import { FieldValues, ResolverOptions, ResolverResult } from 'react-hook-form';
 
 export type Resolver = <T>(
   schema: Ajv.JSONSchemaType<T>,

@@ -1,8 +1,8 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
+import React from 'react';
 import { useForm } from 'react-hook-form';
-import { object, string, Infer, size } from 'superstruct';
+import { Infer, object, size, string } from 'superstruct';
 import { superstructResolver } from '..';
 
 const schema = object({

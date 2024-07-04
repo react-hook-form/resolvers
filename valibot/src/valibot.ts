@@ -1,5 +1,5 @@
 import { toNestErrors } from '@hookform/resolvers';
-import { FieldError, appendErrors, FieldValues } from 'react-hook-form';
+import { FieldError, FieldValues, appendErrors } from 'react-hook-form';
 import { getDotPath, safeParseAsync } from 'valibot';
 import type { Resolver } from './types';
 
@@ -11,10 +11,13 @@ export const valibotResolver: Resolver =
       !options.shouldUseNativeValidation && options.criteriaMode === 'all';
 
     // Parse values with Valibot schema
-    const result = await safeParseAsync(schema, values, {
-      ...schemaOptions,
-      abortPipeEarly: !validateAllFieldCriteria,
-    });
+    const result = await safeParseAsync(
+      schema,
+      values,
+      Object.assign({}, schemaOptions, {
+        abortPipeEarly: !validateAllFieldCriteria,
+      }),
+    );
 
     // If there are issues, return them as errors
     if (result.issues) {
@@ -22,7 +25,8 @@ export const valibotResolver: Resolver =
       const errors: Record<string, FieldError> = {};
 
       // Iterate over issues to add them to errors object
-      for (const issue of result.issues) {
+      for (; result.issues.length; ) {
+        const issue = result.issues[0];
         // Create dot path from issue
         const path = getDotPath(issue);
 
@@ -50,6 +54,8 @@ export const valibotResolver: Resolver =
             ) as FieldError;
           }
         }
+
+        result.issues.shift();
       }
 
       // Return resolver result with errors

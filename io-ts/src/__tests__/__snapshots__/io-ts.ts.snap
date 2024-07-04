@@ -4,7 +4,7 @@ exports[`ioTsResolver > should return a single error from ioTsResolver when vali
 {
   "errors": {
     "animal": {
-      "message": "expected string but got [\\"dog\\"]",
+      "message": "expected string but got ["dog"]",
       "ref": undefined,
       "type": "string",
     },
@@ -21,7 +21,7 @@ exports[`ioTsResolver > should return a single error from ioTsResolver when vali
       ,
       ,
       {
-        "message": "expected number but got \\"3\\"",
+        "message": "expected number but got "3"",
         "ref": undefined,
         "type": "number",
       },
@@ -45,14 +45,14 @@ exports[`ioTsResolver > should return all the errors from ioTsResolver when vali
 {
   "errors": {
     "animal": {
-      "message": "expected \\"snake\\" but got [\\"dog\\"]",
+      "message": "expected "snake" but got ["dog"]",
       "ref": undefined,
-      "type": "\\"snake\\"",
+      "type": ""snake"",
       "types": {
-        "\\"bird\\"": "expected \\"bird\\" but got [\\"dog\\"]",
-        "\\"snake\\"": "expected \\"snake\\" but got [\\"dog\\"]",
-        "number": "expected number but got [\\"dog\\"]",
-        "string": "expected string but got [\\"dog\\"]",
+        ""bird"": "expected "bird" but got ["dog"]",
+        ""snake"": "expected "snake" but got ["dog"]",
+        "number": "expected number but got ["dog"]",
+        "string": "expected string but got ["dog"]",
       },
     },
     "like": [
@@ -68,7 +68,7 @@ exports[`ioTsResolver > should return all the errors from ioTsResolver when vali
       ,
       ,
       {
-        "message": "expected number but got \\"3\\"",
+        "message": "expected number but got "3"",
         "ref": undefined,
         "type": "number",
       },

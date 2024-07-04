@@ -1,4 +1,4 @@
-import { FieldValues, ResolverResult, ResolverOptions } from 'react-hook-form';
+import { FieldValues, ResolverOptions, ResolverResult } from 'react-hook-form';
 import { z } from 'zod';
 
 export type Resolver = <T extends z.Schema<any, any>>(

@@ -1,9 +1,9 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
 import { render, screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
-import { arktypeResolver } from '..';
 import { type } from 'arktype';
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { arktypeResolver } from '..';
 
 const schema = type({
   username: 'string>1',
@@ -57,14 +57,14 @@ test("form's native validation with Zod", async () => {
   usernameField = screen.getByPlaceholderText(/username/i) as HTMLInputElement;
   expect(usernameField.validity.valid).toBe(false);
   expect(usernameField.validationMessage).toBe(
-    'username must be more than length 1 (was 0)',
+    'username must be more than length 1',
   );
 
   // password
   passwordField = screen.getByPlaceholderText(/password/i) as HTMLInputElement;
   expect(passwordField.validity.valid).toBe(false);
   expect(passwordField.validationMessage).toBe(
-    'password must be more than length 1 (was 0)',
+    'password must be more than length 1',
   );
 
   await user.type(screen.getByPlaceholderText(/username/i), 'joe');
