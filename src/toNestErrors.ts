@@ -4,8 +4,8 @@ import {
   FieldValues,
   InternalFieldName,
   ResolverOptions,
-  set,
   get,
+  set,
 } from 'react-hook-form';
 import { validateFieldsNatively } from './validateFieldsNatively';
 

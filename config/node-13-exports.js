@@ -19,6 +19,7 @@ const subRepositories = [
   'typeschema',
   'effect-ts',
   'vine',
+  'fluentvalidation-ts',
 ];
 
 const copySrc = () => {

@@ -50,6 +50,7 @@
   - [TypeSchema](#typeschema)
   - [effect-ts](#effect-ts)
   - [VineJS](#vinejs)
+  - [fluentvalidation-ts](#fluentvalidation-ts)
 - [Backers](#backers)
   - [Sponsors](#sponsors)
 - [Contributors](#contributors)
@@ -720,6 +721,48 @@ const schema = vine.compile(
 const App = () => {
   const { register, handleSubmit } = useForm({
     resolver: vineResolver(schema),
+  });
+
+  return (
+    <form onSubmit={handleSubmit((d) => console.log(d))}>
+      <input {...register('username')} />
+      {errors.username && <span role="alert">{errors.username.message}</span>}
+      <input {...register('password')} />
+      {errors.password && <span role="alert">{errors.password.message}</span>}
+      <button type="submit">submit</button>
+    </form>
+  );
+};
+```
+
+
+### [fluentvalidation-ts](https://github.com/AlexJPotter/fluentvalidation-ts)
+
+A TypeScript-first library for building strongly-typed validation rules
+
+[![npm](https://img.shields.io/bundlephobia/minzip/@vinejs/vine?style=for-the-badge)](https://bundlephobia.com/result?p=@vinejs/vine)
+
+```typescript jsx
+import { useForm } from 'react-hook-form';
+import { fluentValidationResolver } from '@hookform/resolvers/fluentvalidation-ts';
+import { Validator } from 'fluentvalidation-ts';
+
+class FormDataValidator extends Validator<FormData> {
+  constructor() {
+    super();
+
+    this.ruleFor('username')
+      .notEmpty()
+      .withMessage('username is a required field');
+    this.ruleFor('password')
+      .notEmpty()
+      .withMessage('password is a required field');
+  }
+}
+
+const App = () => {
+  const { register, handleSubmit } = useForm({
+    resolver: fluentValidationResolver(new FormDataValidator()),
   });
 
   return (
