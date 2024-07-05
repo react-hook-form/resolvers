@@ -117,6 +117,12 @@
       "import": "./vine/dist/vine.mjs",
       "require": "./vine/dist/vine.js"
     },
+    "./fluentvalidation-ts": {
+      "types": "./fluentvalidation-ts/dist/index.d.ts",
+      "umd": "./fluentvalidation-ts/dist/fluentvalidation-ts.umd.js",
+      "import": "./fluentvalidation-ts/dist/fluentvalidation-ts.mjs",
+      "require": "./fluentvalidation-ts/dist/fluentvalidation-ts.js"
+    },
     "./package.json": "./package.json",
     "./*": "./*"
   },
@@ -175,13 +181,16 @@
     "effect-ts/dist",
     "vine/package.json",
     "vine/src",
-    "vine/dist"
+    "vine/dist",
+    "fluentvalidation-ts/package.json",
+    "fluentvalidation-ts/src",
+    "fluentvalidation-ts/dist"
   ],
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
-    "prepare": "run-s build:src build && check-export-map",
+    "prepare": "run-s build:src",
     "build": "cross-env npm-run-all --parallel 'build:*'",
     "build:src": "microbundle build --globals react-hook-form=ReactHookForm",
     "build:zod": "microbundle --cwd zod --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
@@ -201,7 +210,8 @@
     "build:typeschema": "microbundle --cwd typeschema --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm,@typeschema/main=main",
     "build:effect-ts": "microbundle --cwd effect-ts --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm,@effect/schema=EffectSchema,@effect/schema/AST=EffectSchemaAST,@effect/schema/ArrayFormatter=EffectSchemaArrayFormatter,@effect/schema/ParseResult=EffectSchemaArrayFormatter,effect/Effect=Effect",
     "build:vine": "microbundle --cwd vine --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm,@vinejs/vine=vine",
-    "postbuild": "node ./config/node-13-exports.js",
+    "build:fluentvalidation-ts": "microbundle --cwd fluentvalidation-ts --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
+    "postbuild": "node ./config/node-13-exports.js && check-export-map",
     "lint": "bunx @biomejs/biome check --write --vcs-use-ignore-file=true .",
     "lint:types": "tsc",
     "test": "vitest run",
@@ -232,7 +242,8 @@
     "TypeBox",
     "arktype",
     "typeschema",
-    "vine"
+    "vine",
+    "fluentvalidation-ts"
   ],
   "repository": {
     "type": "git",
@@ -245,9 +256,9 @@
   },
   "homepage": "https://react-hook-form.com",
   "devDependencies": {
-    "@effect/schema": "^0.68.15",
+    "@effect/schema": "^0.68.17",
     "@sinclair/typebox": "^0.32.34",
-    "@testing-library/dom": "^10.3.0",
+    "@testing-library/dom": "^10.3.1",
     "@testing-library/jest-dom": "^6.4.6",
     "@testing-library/react": "^16.0.0",
     "@testing-library/user-event": "^14.5.2",
@@ -266,7 +277,7 @@
     "class-validator": "^0.14.1",
     "computed-types": "^1.11.2",
     "cross-env": "^7.0.3",
-    "effect": "^3.4.6",
+    "effect": "^3.4.7",
     "fp-ts": "^2.16.7",
     "io-ts": "^2.2.21",
     "io-ts-types": "^0.5.19",
@@ -291,7 +302,8 @@
     "vite-tsconfig-paths": "^4.3.2",
     "vitest": "^1.6.0",
     "yup": "^1.4.0",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "fluentvalidation-ts": "^3.2.0"
   },
   "peerDependencies": {
     "react-hook-form": "^7.0.0"
