@@ -442,6 +442,8 @@ The fastest JSON validator for Node.js and browser
 
 [![npm](https://img.shields.io/bundlephobia/minzip/ajv?style=for-the-badge)](https://bundlephobia.com/result?p=ajv)
 
+> ⚠️ Example below uses the `@hookform/resolvers/ajv` > `v3.0.0.` which requires seperate installation of `ajv` and `ajv-errors`
+
 ```tsx
 import { useForm } from 'react-hook-form';
 import { ajvResolver } from '@hookform/resolvers/ajv';
