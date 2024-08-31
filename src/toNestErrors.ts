@@ -38,4 +38,4 @@ export const toNestErrors = <TFieldValues extends FieldValues>(
 const isNameInFieldArray = (
   names: InternalFieldName[],
   name: InternalFieldName,
-) => names.some((n) => n.startsWith(name + '.'));
+) => names.some((n) => n.match(`^${name}\\.\\d+`));

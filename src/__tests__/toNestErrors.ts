@@ -39,6 +39,35 @@ test('transforms flat object to nested object and shouldUseNativeValidation: tru
   ).toHaveBeenCalledWith(flatObject.name.message);
 });
 
+test('transforms flat object to nested object with names option', () => {
+  const result = toNestErrors(
+    {
+      username: {
+        type: 'custom',
+        message: 'error',
+      },
+    },
+    {
+      names: ['username', 'username.first'],
+      fields: {
+        username: {
+          name: 'username',
+          ref: { name: 'username' },
+        },
+      },
+      shouldUseNativeValidation: false,
+    },
+  );
+
+  expect(result).toEqual({
+    username: {
+      type: 'custom',
+      message: 'error',
+      ref: { name: 'username' },
+    },
+  });
+});
+
 test('transforms flat object to nested object with root error for field array', () => {
   const result = toNestErrors(
     {
