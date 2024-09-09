@@ -465,14 +465,14 @@ const schema = {
   additionalProperties: false,
 };
 
+const resolver = ajvResolver(schema);
+
 const App = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    resolver: ajvResolver(schema),
-  });
+  } = useForm({ resolver });
 
   return (
     <form onSubmit={handleSubmit((data) => console.log(data))}>
