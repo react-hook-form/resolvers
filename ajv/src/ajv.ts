@@ -45,28 +45,31 @@ const parseErrorSchema = (
   }, {});
 };
 
-export const ajvResolver: Resolver =
-  (schema, schemaOptions, resolverOptions = {}) =>
-  async (values, _, options) => {
-    const ajv = new Ajv(
-      Object.assign(
-        {},
-        {
-          allErrors: true,
-          validateSchema: true,
-        },
-        schemaOptions,
-      ),
-    );
+export const ajvResolver: Resolver = (
+  schema,
+  schemaOptions,
+  resolverOptions = {},
+) => {
+  const ajv = new Ajv(
+    Object.assign(
+      {},
+      {
+        allErrors: true,
+        validateSchema: true,
+      },
+      schemaOptions,
+    ),
+  );
 
-    ajvErrors(ajv);
+  ajvErrors(ajv);
 
-    const validate = ajv.compile(
-      Object.assign(
-        { $async: resolverOptions && resolverOptions.mode === 'async' },
-        schema,
-      ),
-    );
+  const modifiedSchema = Object.assign(
+    { $async: resolverOptions && resolverOptions.mode === 'async' },
+    schema,
+  );
+
+  return async (values, _, options) => {
+    const validate = ajv.compile(modifiedSchema);
 
     const valid = validate(values);
 
@@ -86,3 +89,4 @@ export const ajvResolver: Resolver =
           ),
         };
   };
+};
