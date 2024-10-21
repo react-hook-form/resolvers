@@ -1,9 +1,9 @@
-import { Schema } from '@effect/schema';
+import { Schema } from 'effect';
 import { Field, InternalFieldName } from 'react-hook-form';
 
 export const schema = Schema.Struct({
   username: Schema.String.pipe(
-    Schema.nonEmpty({ message: () => 'A username is required' }),
+    Schema.nonEmptyString({ message: () => 'A username is required' }),
   ),
   password: Schema.String.pipe(
     Schema.pattern(new RegExp('.*[A-Z].*'), {

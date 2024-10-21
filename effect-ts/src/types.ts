@@ -1,5 +1,5 @@
-import { Schema } from '@effect/schema';
-import { ParseOptions } from '@effect/schema/AST';
+import { Schema } from 'effect';
+import { ParseOptions } from 'effect/SchemaAST';
 import { FieldValues, ResolverOptions, ResolverResult } from 'react-hook-form';
 
 export type Resolver = <A extends FieldValues, I, TContext>(
