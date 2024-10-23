@@ -276,7 +276,7 @@
     "class-validator": "^0.14.1",
     "computed-types": "^1.11.2",
     "cross-env": "^7.0.3",
-    "effect": "^3.10.0",
+    "effect": "^3.10.1",
     "fluentvalidation-ts": "^3.2.0",
     "fp-ts": "^2.16.7",
     "io-ts": "^2.2.21",
