@@ -12,7 +12,6 @@
   "license": "MIT",
   "peerDependencies": {
     "@hookform/resolvers": "^2.0.0",
-    "@effect/schema": "^0.66.14",
     "effect": "^3.10.1",
     "react-hook-form": "^7.0.0"
   }
