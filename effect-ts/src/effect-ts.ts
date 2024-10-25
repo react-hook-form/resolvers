@@ -1,5 +1,6 @@
 import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
-import * as Effect from 'effect/Effect';
+import { Effect } from 'effect';
+
 import { ArrayFormatter, decodeUnknown } from 'effect/ParseResult';
 import type { FieldErrors } from 'react-hook-form';
 import type { Resolver } from './types';
