@@ -653,13 +653,13 @@ const App = () => {
 
 A powerful TypeScript framework that provides a fully-fledged functional effect system with a rich standard library.
 
-[![npm](https://img.shields.io/bundlephobia/minzip/@effect/schema?style=for-the-badge)](https://bundlephobia.com/result?p=effect)
+[![npm](https://img.shields.io/bundlephobia/minzip/effect?style=for-the-badge)](https://bundlephobia.com/result?p=effect)
 
 ```typescript jsx
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { effectTsResolver } from '@hookform/resolvers/effect-ts';
-import { Schema } from '@effect/schema';
+import { Schema } from 'effect';
 
 const schema = Schema.Struct({
   username: Schema.String.pipe(
