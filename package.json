@@ -208,7 +208,7 @@
     "build:arktype": "microbundle --cwd arktype --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
     "build:valibot": "microbundle --cwd valibot --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
     "build:typeschema": "microbundle --cwd typeschema --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm,@typeschema/main=main",
-    "build:effect-ts": "microbundle --cwd effect-ts --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm,@effect/schema=EffectSchema,@effect/schema/AST=EffectSchemaAST,@effect/schema/ArrayFormatter=EffectSchemaArrayFormatter,@effect/schema/ParseResult=EffectSchemaArrayFormatter,effect/Effect=Effect",
+    "build:effect-ts": "microbundle --cwd effect-ts --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm,effect/Schema=EffectSchema,effect/Schema/AST=EffectSchemaAST,effect/ParseResult=EffectParseResult,effect/Effect=Effect",
     "build:vine": "microbundle --cwd vine --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm,@vinejs/vine=vine",
     "build:fluentvalidation-ts": "microbundle --cwd fluentvalidation-ts --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
     "postbuild": "node ./config/node-13-exports.js && check-export-map",
