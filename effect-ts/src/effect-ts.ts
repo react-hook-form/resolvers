@@ -1,20 +1,21 @@
-import { formatIssue } from '@effect/schema/ArrayFormatter';
-import { decodeUnknown } from '@effect/schema/ParseResult';
 import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
-import * as Effect from 'effect/Effect';
+import { Effect, ParseResult } from 'effect';
+import { decodeUnknown } from 'effect/Schema';
 import type { FieldErrors } from 'react-hook-form';
 import type { Resolver } from './types';
 
 export const effectTsResolver: Resolver =
   (schema, config = { errors: 'all', onExcessProperty: 'ignore' }) =>
-  (values, _, options) => {
-    return decodeUnknown(
+  (values, _, options) =>
+    decodeUnknown(
       schema,
       config,
     )(values).pipe(
-      Effect.catchAll((parseIssue) => Effect.flip(formatIssue(parseIssue))),
-      Effect.mapError((issues) => {
-        const errors = issues.reduce((acc, current) => {
+      Effect.catchAll((parseError) =>
+        Effect.flip(ParseResult.TreeFormatter.formatIssue(parseError.issue)),
+      ),
+      Effect.mapError((issues: any) => {
+        const errors = (issues as any[]).reduce((acc: any, current: any) => {
           const key = current.path.join('.');
           acc[key] = { message: current.message, type: current._tag };
           return acc;
@@ -35,4 +36,3 @@ export const effectTsResolver: Resolver =
       }),
       Effect.runPromise,
     );
-  };
