@@ -1,6 +1,6 @@
-import { Schema } from '@effect/schema';
 import { render, screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
+import { Schema } from 'effect';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { effectTsResolver } from '..';
@@ -10,10 +10,10 @@ const PASSWORD_REQUIRED_MESSAGE = 'password field is required';
 
 const schema = Schema.Struct({
   username: Schema.String.pipe(
-    Schema.nonEmpty({ message: () => USERNAME_REQUIRED_MESSAGE }),
+    Schema.nonEmptyString({ message: () => USERNAME_REQUIRED_MESSAGE }),
   ),
   password: Schema.String.pipe(
-    Schema.nonEmpty({ message: () => PASSWORD_REQUIRED_MESSAGE }),
+    Schema.nonEmptyString({ message: () => PASSWORD_REQUIRED_MESSAGE }),
   ),
 });
 
