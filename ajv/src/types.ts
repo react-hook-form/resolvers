@@ -1,4 +1,5 @@
 import * as Ajv from 'ajv';
+import type { DefinedError, ErrorObject } from 'ajv';
 import { FieldValues, ResolverOptions, ResolverResult } from 'react-hook-form';
 
 export type Resolver = <T>(
@@ -10,3 +11,10 @@ export type Resolver = <T>(
   context: TContext | undefined,
   options: ResolverOptions<TFieldValues>,
 ) => Promise<ResolverResult<TFieldValues>>;
+
+// ajv doesn't export any types for errors with `keyword='errorMessage'`
+type ErrorMessage = ErrorObject<
+  'errorMessage',
+  { errors: (DefinedError & { emUsed: boolean })[] }
+>;
+export type AjvError = ErrorMessage | DefinedError;

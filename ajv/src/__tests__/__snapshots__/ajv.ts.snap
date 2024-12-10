@@ -104,9 +104,9 @@ exports[`ajvResolver > should return all the error messages from ajvResolver whe
       "ref": {
         "name": "password",
       },
-      "type": "errorMessage",
+      "type": "pattern",
       "types": {
-        "errorMessage": "One uppercase character",
+        "pattern": "One uppercase character",
       },
     },
     "username": {
@@ -152,9 +152,9 @@ exports[`ajvResolver > should return all the error messages from ajvResolver whe
       "ref": {
         "name": "password",
       },
-      "type": "errorMessage",
+      "type": "pattern",
       "types": {
-        "errorMessage": "One uppercase character",
+        "pattern": "One uppercase character",
       },
     },
     "username": {
@@ -194,7 +194,7 @@ exports[`ajvResolver > should return single error message from ajvResolver when 
       "ref": {
         "name": "password",
       },
-      "type": "errorMessage",
+      "type": "pattern",
     },
     "username": {
       "message": "must NOT have fewer than 3 characters",
@@ -230,7 +230,7 @@ exports[`ajvResolver > should return single error message from ajvResolver when 
       "ref": {
         "name": "password",
       },
-      "type": "errorMessage",
+      "type": "pattern",
     },
     "username": {
       "message": "must NOT have fewer than 3 characters",

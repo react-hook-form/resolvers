@@ -1,0 +1,462 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ajvResolver with errorMessage > should return a default message if there is no specific message for the error when requirement fails 1`] = `
+{
+  "errors": {
+    "bar": {
+      "message": "data should have properties "foo" and "bar" only",
+      "ref": {
+        "name": "bar",
+      },
+      "type": "required",
+      "types": {
+        "required": "data should have properties "foo" and "bar" only",
+      },
+    },
+    "foo": {
+      "message": "data should have properties "foo" and "bar" only",
+      "ref": {
+        "name": "foo",
+      },
+      "type": "required",
+      "types": {
+        "required": "data should have properties "foo" and "bar" only",
+      },
+    },
+  },
+  "values": {},
+}
+`;
+
+exports[`ajvResolver with errorMessage > should return a default message if there is no specific message for the error when some properties are undefined 1`] = `
+{
+  "errors": {
+    "bar": {
+      "message": "data should have properties "foo" and "bar" only",
+      "ref": {
+        "name": "bar",
+      },
+      "type": "required",
+      "types": {
+        "required": "data should have properties "foo" and "bar" only",
+      },
+    },
+    "foo": {
+      "message": "data.foo should be integer >= 2",
+      "ref": {
+        "name": "foo",
+      },
+      "type": "minimum",
+      "types": {
+        "minimum": "data.foo should be integer >= 2",
+      },
+    },
+  },
+  "values": {},
+}
+`;
+
+exports[`ajvResolver with errorMessage > should return a default message if there is no specific message for the error when walidation fails 1`] = `
+{
+  "errors": {
+    "bar": {
+      "message": "data should have properties "foo" and "bar" only",
+      "ref": {
+        "name": "bar",
+      },
+      "type": "required",
+      "types": {
+        "required": "data should have properties "foo" and "bar" only",
+      },
+    },
+    "foo": {
+      "message": "data should have properties "foo" and "bar" only",
+      "ref": {
+        "name": "foo",
+      },
+      "type": "required",
+      "types": {
+        "required": "data should have properties "foo" and "bar" only",
+      },
+    },
+  },
+  "values": {},
+}
+`;
+
+exports[`ajvResolver with errorMessage > should return customized error messages for certain keywords when requirement fails 1`] = `
+{
+  "errors": {
+    "foo": {
+      "message": "should have property foo",
+      "ref": {
+        "name": "foo",
+      },
+      "type": "required",
+      "types": {
+        "required": "should have property foo",
+      },
+    },
+  },
+  "values": {},
+}
+`;
+
+exports[`ajvResolver with errorMessage > should return customized error messages for certain keywords when some properties are undefined 1`] = `
+{
+  "errors": {
+    "foo": {
+      "message": "should have property foo",
+      "ref": {
+        "name": "foo",
+      },
+      "type": "required",
+      "types": {
+        "required": "should have property foo",
+      },
+    },
+  },
+  "values": {},
+}
+`;
+
+exports[`ajvResolver with errorMessage > should return customized error messages for certain keywords when walidation fails 1`] = `
+{
+  "errors": {
+    "": {
+      "message": "should not have properties other than foo",
+      "ref": undefined,
+      "type": "additionalProperties",
+      "types": {
+        "additionalProperties": "should not have properties other than foo",
+      },
+    },
+    "foo": {
+      "message": "must be integer",
+      "ref": {
+        "name": "foo",
+      },
+      "type": "type",
+      "types": {
+        "type": "must be integer",
+      },
+    },
+  },
+  "values": {},
+}
+`;
+
+exports[`ajvResolver with errorMessage > should return customized error messages when requirement fails 1`] = `
+{
+  "errors": {
+    "password": {
+      "message": "password field is required",
+      "ref": {
+        "name": "password",
+      },
+      "type": "required",
+      "types": {
+        "required": "password field is required",
+      },
+    },
+    "username": {
+      "message": "username field is required",
+      "ref": {
+        "name": "username",
+      },
+      "type": "required",
+      "types": {
+        "required": "username field is required",
+      },
+    },
+  },
+  "values": {},
+}
+`;
+
+exports[`ajvResolver with errorMessage > should return customized error messages when some properties are undefined 1`] = `
+{
+  "errors": {
+    "password": {
+      "message": "password field is required",
+      "ref": {
+        "name": "password",
+      },
+      "type": "required",
+      "types": {
+        "required": "password field is required",
+      },
+    },
+    "username": {
+      "message": "username field is required",
+      "ref": {
+        "name": "username",
+      },
+      "type": "required",
+      "types": {
+        "required": "username field is required",
+      },
+    },
+  },
+  "values": {},
+}
+`;
+
+exports[`ajvResolver with errorMessage > should return customized error messages when validation fails 1`] = `
+{
+  "errors": {
+    "password": {
+      "message": "One uppercase character",
+      "ref": {
+        "name": "password",
+      },
+      "type": "pattern",
+      "types": {
+        "minLength": "passwords should be at least eight characters long",
+        "pattern": "One uppercase character",
+      },
+    },
+    "username": {
+      "message": "username should be at least three characters long",
+      "ref": {
+        "name": "username",
+      },
+      "type": "minLength",
+      "types": {
+        "minLength": "username should be at least three characters long",
+      },
+    },
+  },
+  "values": {},
+}
+`;
+
+exports[`ajvResolver with errorMessage > should return customized errors for properties/items when requirement fails 1`] = `
+{
+  "errors": {
+    "bar": {
+      "message": "must have required property 'bar'",
+      "ref": {
+        "name": "bar",
+      },
+      "type": "required",
+      "types": {
+        "required": "must have required property 'bar'",
+      },
+    },
+    "foo": {
+      "message": "must have required property 'foo'",
+      "ref": {
+        "name": "foo",
+      },
+      "type": "required",
+      "types": {
+        "required": "must have required property 'foo'",
+      },
+    },
+  },
+  "values": {},
+}
+`;
+
+exports[`ajvResolver with errorMessage > should return customized errors for properties/items when some properties are undefined 1`] = `
+{
+  "errors": {
+    "bar": {
+      "message": "must have required property 'bar'",
+      "ref": {
+        "name": "bar",
+      },
+      "type": "required",
+      "types": {
+        "required": "must have required property 'bar'",
+      },
+    },
+    "foo": {
+      "message": "must have required property 'foo'",
+      "ref": {
+        "name": "foo",
+      },
+      "type": "required",
+      "types": {
+        "required": "must have required property 'foo'",
+      },
+    },
+  },
+  "values": {},
+}
+`;
+
+exports[`ajvResolver with errorMessage > should return customized errors for properties/items when walidation fails 1`] = `
+{
+  "errors": {
+    "bar": {
+      "message": "data.bar should be string with length >= 2",
+      "ref": {
+        "name": "bar",
+      },
+      "type": "minLength",
+      "types": {
+        "minLength": "data.bar should be string with length >= 2",
+      },
+    },
+    "foo": {
+      "message": "data.foo should be integer >= 2",
+      "ref": {
+        "name": "foo",
+      },
+      "type": "minimum",
+      "types": {
+        "minimum": "data.foo should be integer >= 2",
+      },
+    },
+  },
+  "values": {},
+}
+`;
+
+exports[`ajvResolver with errorMessage > should return different messages for different properties when requirement fails 1`] = `
+{
+  "errors": {
+    "bar": {
+      "message": "should have a string property "bar"",
+      "ref": {
+        "name": "bar",
+      },
+      "type": "required",
+      "types": {
+        "required": "should have a string property "bar"",
+      },
+    },
+    "foo": {
+      "message": "should have an integer property "foo"",
+      "ref": {
+        "name": "foo",
+      },
+      "type": "required",
+      "types": {
+        "required": "should have an integer property "foo"",
+      },
+    },
+  },
+  "values": {},
+}
+`;
+
+exports[`ajvResolver with errorMessage > should return different messages for different properties when some properties are undefined 1`] = `
+{
+  "errors": {
+    "bar": {
+      "message": "should have a string property "bar"",
+      "ref": {
+        "name": "bar",
+      },
+      "type": "required",
+      "types": {
+        "required": "should have a string property "bar"",
+      },
+    },
+    "foo": {
+      "message": "should have an integer property "foo"",
+      "ref": {
+        "name": "foo",
+      },
+      "type": "required",
+      "types": {
+        "required": "should have an integer property "foo"",
+      },
+    },
+  },
+  "values": {},
+}
+`;
+
+exports[`ajvResolver with errorMessage > should return different messages for different properties when walidation fails 1`] = `
+{
+  "errors": {
+    "bar": {
+      "message": "must be string",
+      "ref": {
+        "name": "bar",
+      },
+      "type": "type",
+      "types": {
+        "type": "must be string",
+      },
+    },
+    "foo": {
+      "message": "must be integer",
+      "ref": {
+        "name": "foo",
+      },
+      "type": "type",
+      "types": {
+        "type": "must be integer",
+      },
+    },
+  },
+  "values": {},
+}
+`;
+
+exports[`ajvResolver with errorMessage > should return the same customized error message when requirement fails 1`] = `
+{
+  "errors": {
+    "foo": {
+      "message": "should be an object with an integer property foo only",
+      "ref": {
+        "name": "foo",
+      },
+      "type": "required",
+      "types": {
+        "required": "should be an object with an integer property foo only",
+      },
+    },
+  },
+  "values": {},
+}
+`;
+
+exports[`ajvResolver with errorMessage > should return the same customized message for all validation failures 1`] = `
+{
+  "errors": {
+    "": {
+      "message": "should be an object with an integer property foo only",
+      "ref": undefined,
+      "type": "additionalProperties",
+      "types": {
+        "additionalProperties": "should be an object with an integer property foo only",
+      },
+    },
+    "foo": {
+      "message": "should be an object with an integer property foo only",
+      "ref": {
+        "name": "foo",
+      },
+      "type": "type",
+      "types": {
+        "type": "should be an object with an integer property foo only",
+      },
+    },
+  },
+  "values": {},
+}
+`;
+
+exports[`ajvResolver with errorMessage > should return the same customized message when some properties are undefined 1`] = `
+{
+  "errors": {
+    "foo": {
+      "message": "should be an object with an integer property foo only",
+      "ref": {
+        "name": "foo",
+      },
+      "type": "required",
+      "types": {
+        "required": "should be an object with an integer property foo only",
+      },
+    },
+  },
+  "values": {},
+}
+`;

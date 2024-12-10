@@ -2,47 +2,67 @@ import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
 import Ajv, { DefinedError } from 'ajv';
 import ajvErrors from 'ajv-errors';
 import { FieldError, appendErrors } from 'react-hook-form';
-import { Resolver } from './types';
+import { AjvError, Resolver } from './types';
+
+// Ajv will return empty instancePath when require error
+const setRequiredErrorInstancePath = (error: DefinedError) => {
+  if (error.keyword === 'required') {
+    error.instancePath += `/${error.params.missingProperty}`;
+  }
+};
 
 const parseErrorSchema = (
-  ajvErrors: DefinedError[],
+  ajvErrors: AjvError[],
   validateAllFieldCriteria: boolean,
 ) => {
-  // Ajv will return empty instancePath when require error
+  const normalizedErrors: AjvError[] = [];
+
   ajvErrors.forEach((error) => {
-    if (error.keyword === 'required') {
-      error.instancePath += '/' + error.params.missingProperty;
+    if (error.keyword === 'errorMessage') {
+      error.params.errors.forEach((originalError) => {
+        if (originalError.emUsed) {
+          setRequiredErrorInstancePath(originalError);
+          originalError.message = error.message;
+          normalizedErrors.push(originalError);
+        }
+      });
+    } else {
+      setRequiredErrorInstancePath(error);
+      normalizedErrors.push(error);
     }
   });
 
-  return ajvErrors.reduce<Record<string, FieldError>>((previous, error) => {
-    // `/deepObject/data` -> `deepObject.data`
-    const path = error.instancePath.substring(1).replace(/\//g, '.');
+  return normalizedErrors.reduce<Record<string, FieldError>>(
+    (previous, error) => {
+      // `/deepObject/data` -> `deepObject.data`
+      const path = error.instancePath.substring(1).replace(/\//g, '.');
 
-    if (!previous[path]) {
-      previous[path] = {
-        message: error.message,
-        type: error.keyword,
-      };
-    }
+      if (!previous[path]) {
+        previous[path] = {
+          message: error.message,
+          type: error.keyword,
+        };
+      }
 
-    if (validateAllFieldCriteria) {
-      const types = previous[path].types;
-      const messages = types && types[error.keyword];
+      if (validateAllFieldCriteria) {
+        const types = previous[path].types;
+        const messages = types && types[error.keyword];
 
-      previous[path] = appendErrors(
-        path,
-        validateAllFieldCriteria,
-        previous,
-        error.keyword,
-        messages
-          ? ([] as string[]).concat(messages as string[], error.message || '')
-          : error.message,
-      ) as FieldError;
-    }
+        previous[path] = appendErrors(
+          path,
+          validateAllFieldCriteria,
+          previous,
+          error.keyword,
+          messages
+            ? ([] as string[]).concat(messages as string[], error.message || '')
+            : error.message,
+        ) as FieldError;
+      }
 
-    return previous;
-  }, {});
+      return previous;
+    },
+    {},
+  );
 };
 
 export const ajvResolver: Resolver =
