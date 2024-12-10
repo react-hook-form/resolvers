@@ -10,10 +10,7 @@ const parseErrorSchema = (
 ) => {
   const parsedErrors: Record<string, FieldError> = {};
 
-  const parseAndSaveError = (
-    error: AjvError,
-    parsedErrors: Record<string, FieldError>,
-  ) => {
+  const reduceError = (error: AjvError) => {
     // Ajv will return empty instancePath when require error
     if (error.keyword === 'required') {
       error.instancePath += `/${error.params.missingProperty}`;
@@ -51,10 +48,10 @@ const parseErrorSchema = (
     if (error.keyword === 'errorMessage') {
       error.params.errors.forEach((originalError) => {
         originalError.message = error.message;
-        parseAndSaveError(originalError, parsedErrors);
+        reduceError(originalError);
       });
     } else {
-      parseAndSaveError(error, parsedErrors);
+      reduceError(error);
     }
   }
 
