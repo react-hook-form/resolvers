@@ -670,7 +670,7 @@ const schema = Schema.Struct({
   ),
 });
 
-type FormData = Schema.Schema.Type<typeof schema>;
+type FormData = typeof schema.Type;
 
 interface Props {
   onSubmit: (data: FormData) => void;
