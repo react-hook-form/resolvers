@@ -2,47 +2,60 @@ import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
 import Ajv, { DefinedError } from 'ajv';
 import ajvErrors from 'ajv-errors';
 import { FieldError, appendErrors } from 'react-hook-form';
-import { Resolver } from './types';
+import { AjvError, Resolver } from './types';
 
 const parseErrorSchema = (
-  ajvErrors: DefinedError[],
+  ajvErrors: AjvError[],
   validateAllFieldCriteria: boolean,
 ) => {
-  // Ajv will return empty instancePath when require error
-  ajvErrors.forEach((error) => {
-    if (error.keyword === 'required') {
-      error.instancePath += '/' + error.params.missingProperty;
-    }
-  });
+  const parsedErrors: Record<string, FieldError> = {};
 
-  return ajvErrors.reduce<Record<string, FieldError>>((previous, error) => {
+  const reduceError = (error: AjvError) => {
+    // Ajv will return empty instancePath when require error
+    if (error.keyword === 'required') {
+      error.instancePath += `/${error.params.missingProperty}`;
+    }
+
     // `/deepObject/data` -> `deepObject.data`
     const path = error.instancePath.substring(1).replace(/\//g, '.');
 
-    if (!previous[path]) {
-      previous[path] = {
+    if (!parsedErrors[path]) {
+      parsedErrors[path] = {
         message: error.message,
         type: error.keyword,
       };
     }
 
     if (validateAllFieldCriteria) {
-      const types = previous[path].types;
+      const types = parsedErrors[path].types;
       const messages = types && types[error.keyword];
 
-      previous[path] = appendErrors(
+      parsedErrors[path] = appendErrors(
         path,
         validateAllFieldCriteria,
-        previous,
+        parsedErrors,
         error.keyword,
         messages
           ? ([] as string[]).concat(messages as string[], error.message || '')
           : error.message,
       ) as FieldError;
     }
+  };
 
-    return previous;
-  }, {});
+  for (let index = 0; index < ajvErrors.length; index += 1) {
+    const error = ajvErrors[index];
+
+    if (error.keyword === 'errorMessage') {
+      error.params.errors.forEach((originalError) => {
+        originalError.message = error.message;
+        reduceError(originalError);
+      });
+    } else {
+      reduceError(error);
+    }
+  }
+
+  return parsedErrors;
 };
 
 export const ajvResolver: Resolver =
