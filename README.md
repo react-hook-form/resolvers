@@ -663,10 +663,10 @@ import { Schema } from 'effect';
 
 const schema = Schema.Struct({
   username: Schema.String.pipe(
-    Schema.nonEmpty({ message: () => 'username required' }),
+    Schema.nonEmptyString({ message: () => 'username required' }),
   ),
   password: Schema.String.pipe(
-    Schema.nonEmpty({ message: () => 'password required' }),
+    Schema.nonEmptyString({ message: () => 'password required' }),
   ),
 });
 
