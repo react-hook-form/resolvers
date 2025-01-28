@@ -1,7 +1,7 @@
 import { Type } from 'arktype';
 import { FieldValues, ResolverOptions, ResolverResult } from 'react-hook-form';
 
-export type Resolver = <T extends Type<any>>(
+export type Resolver = <T extends Type<any, any>>(
   schema: T,
   schemaOptions?: undefined,
   factoryOptions?: {
