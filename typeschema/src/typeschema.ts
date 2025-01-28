@@ -53,7 +53,9 @@ export const typeschemaResolver: Resolver =
     if (result.success) {
       return {
         errors: {} as FieldErrors,
-        values: resolverOptions.raw ? values : (result.data as any),
+        values: resolverOptions.raw
+          ? Object.assign({}, values)
+          : (result.data as any),
       };
     }
 

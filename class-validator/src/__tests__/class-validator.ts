@@ -25,7 +25,7 @@ describe('classValidatorResolver', () => {
 
   it('should return values as a raw object from classValidatorResolver when `rawValues` set to true', async () => {
     const result = await classValidatorResolver(Schema, undefined, {
-      rawValues: true,
+      raw: true,
     })(validData, undefined, {
       fields,
       shouldUseNativeValidation,

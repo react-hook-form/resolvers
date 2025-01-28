@@ -67,7 +67,9 @@ export const valibotResolver: Resolver =
 
     // Otherwise, return resolver result with values
     return {
-      values: resolverOptions.raw ? values : (result.output as FieldValues),
+      values: resolverOptions.raw
+        ? Object.assign({}, values)
+        : (result.output as FieldValues),
       errors: {},
     };
   };

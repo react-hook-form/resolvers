@@ -46,7 +46,7 @@ export const vineResolver: Resolver =
 
       return {
         errors: {} as FieldErrors,
-        values: resolverOptions.raw ? values : data,
+        values: resolverOptions.raw ? Object.assign({}, values) : data,
       };
     } catch (error: any) {
       if (error instanceof errors.E_VALIDATION_ERROR) {

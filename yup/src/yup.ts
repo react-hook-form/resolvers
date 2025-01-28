@@ -78,7 +78,7 @@ export function yupResolver<TFieldValues extends FieldValues>(
       options.shouldUseNativeValidation && validateFieldsNatively({}, options);
 
       return {
-        values: resolverOptions.raw ? values : result,
+        values: resolverOptions.raw ? Object.assign({}, values) : result,
         errors: {},
       };
     } catch (e: any) {
