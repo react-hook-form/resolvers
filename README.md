@@ -119,7 +119,7 @@ TypeScript-first schema validation with static type inference
 ```tsx
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
+import { z } from 'zod';
 
 const schema = z.object({
   name: z.string().min(1, { message: 'Required' }),
@@ -626,7 +626,7 @@ Universal adapter for schema validation, compatible with [any validation library
 ```typescript jsx
 import { useForm } from 'react-hook-form';
 import { typeschemaResolver } from '@hookform/resolvers/typeschema';
-import * as z from 'zod';
+import { z } from 'zod';
 
 // Use your favorite validation library
 const schema = z.object({
