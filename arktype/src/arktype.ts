@@ -3,11 +3,22 @@ import { ArkErrors } from 'arktype';
 import { FieldError, FieldErrors } from 'react-hook-form';
 import type { Resolver } from './types';
 
-const parseErrorSchema = (e: ArkErrors): Record<string, FieldError> => {
-  // copy code to type to match FieldError shape
-  e.forEach((e) => Object.assign(e, { type: e.code }));
-  // need to cast here because TS doesn't understand we added the type field
-  return e.byPath as never;
+const parseErrorSchema = (arkErrors: ArkErrors): Record<string, FieldError> => {
+  const errors = [...arkErrors];
+  const fieldsErrors: Record<string, FieldError> = {};
+
+  for (; errors.length; ) {
+    const error = errors[0];
+    const _path = error.path.join('.');
+
+    if (!fieldsErrors[_path]) {
+      fieldsErrors[_path] = { message: error.message, type: error.code };
+    }
+
+    errors.shift();
+  }
+
+  return fieldsErrors;
 };
 
 export const arktypeResolver: Resolver =
