@@ -7,7 +7,7 @@ export const schema = type({
   repeatPassword: 'string>1',
   accessToken: 'string|number',
   birthYear: '1900<number<2013',
-  email: 'email',
+  email: 'string.email',
   tags: 'string[]',
   enabled: 'boolean',
   url: 'string>1',

@@ -4,7 +4,7 @@ exports[`typeboxResolver > should return a single error from typeboxResolver whe
 {
   "errors": {
     "accessToken": {
-      "message": "Required property",
+      "message": "Expected required property",
       "ref": undefined,
       "type": "45",
     },
@@ -14,7 +14,7 @@ exports[`typeboxResolver > should return a single error from typeboxResolver whe
       "type": "41",
     },
     "dateStr": {
-      "message": "Required property",
+      "message": "Expected required property",
       "ref": undefined,
       "type": "45",
     },
@@ -26,7 +26,7 @@ exports[`typeboxResolver > should return a single error from typeboxResolver whe
       "type": "48",
     },
     "enabled": {
-      "message": "Required property",
+      "message": "Expected required property",
       "ref": undefined,
       "type": "45",
     },
@@ -38,7 +38,7 @@ exports[`typeboxResolver > should return a single error from typeboxResolver whe
           "type": "41",
         },
         "name": {
-          "message": "Required property",
+          "message": "Expected required property",
           "ref": undefined,
           "type": "45",
         },
@@ -52,17 +52,17 @@ exports[`typeboxResolver > should return a single error from typeboxResolver whe
       "type": "52",
     },
     "repeatPassword": {
-      "message": "Required property",
+      "message": "Expected required property",
       "ref": undefined,
       "type": "45",
     },
     "tags": {
-      "message": "Required property",
+      "message": "Expected required property",
       "ref": undefined,
       "type": "45",
     },
     "username": {
-      "message": "Required property",
+      "message": "Expected required property",
       "ref": {
         "name": "username",
       },
@@ -77,11 +77,11 @@ exports[`typeboxResolver > should return all the errors from typeboxResolver whe
 {
   "errors": {
     "accessToken": {
-      "message": "Required property",
+      "message": "Expected required property",
       "ref": undefined,
       "type": "45",
       "types": {
-        "45": "Required property",
+        "45": "Expected required property",
         "62": "Expected union value",
       },
     },
@@ -94,12 +94,12 @@ exports[`typeboxResolver > should return all the errors from typeboxResolver whe
       },
     },
     "dateStr": {
-      "message": "Required property",
+      "message": "Expected required property",
       "ref": undefined,
       "type": "45",
       "types": {
         "20": "Expected Date",
-        "45": "Required property",
+        "45": "Expected required property",
       },
     },
     "email": {
@@ -113,12 +113,12 @@ exports[`typeboxResolver > should return all the errors from typeboxResolver whe
       },
     },
     "enabled": {
-      "message": "Required property",
+      "message": "Expected required property",
       "ref": undefined,
       "type": "45",
       "types": {
         "14": "Expected boolean",
-        "45": "Required property",
+        "45": "Expected required property",
       },
     },
     "like": [
@@ -132,11 +132,11 @@ exports[`typeboxResolver > should return all the errors from typeboxResolver whe
           },
         },
         "name": {
-          "message": "Required property",
+          "message": "Expected required property",
           "ref": undefined,
           "type": "45",
           "types": {
-            "45": "Required property",
+            "45": "Expected required property",
             "54": "Expected string",
           },
         },
@@ -154,31 +154,31 @@ exports[`typeboxResolver > should return all the errors from typeboxResolver whe
       },
     },
     "repeatPassword": {
-      "message": "Required property",
+      "message": "Expected required property",
       "ref": undefined,
       "type": "45",
       "types": {
-        "45": "Required property",
+        "45": "Expected required property",
         "54": "Expected string",
       },
     },
     "tags": {
-      "message": "Required property",
+      "message": "Expected required property",
       "ref": undefined,
       "type": "45",
       "types": {
-        "45": "Required property",
+        "45": "Expected required property",
         "6": "Expected array",
       },
     },
     "username": {
-      "message": "Required property",
+      "message": "Expected required property",
       "ref": {
         "name": "username",
       },
       "type": "45",
       "types": {
-        "45": "Required property",
+        "45": "Expected required property",
         "54": "Expected string",
       },
     },
