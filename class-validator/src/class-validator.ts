@@ -61,7 +61,7 @@ export const classValidatorResolver: Resolver =
     options.shouldUseNativeValidation && validateFieldsNatively({}, options);
 
     return {
-      values: resolverOptions.rawValues ? values : data,
+      values: resolverOptions.raw ? Object.assign({}, values) : data,
       errors: {},
     };
   };

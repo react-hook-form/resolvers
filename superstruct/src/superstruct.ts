@@ -29,7 +29,7 @@ export const superstructResolver: Resolver =
     options.shouldUseNativeValidation && validateFieldsNatively({}, options);
 
     return {
-      values: resolverOptions.raw ? values : result[1],
+      values: resolverOptions.raw ? Object.assign({}, values) : result[1],
       errors: {},
     };
   };

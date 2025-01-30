@@ -130,7 +130,7 @@ describe('valibotResolver', () => {
     expect(result).toEqual({
       errors: {
         type: {
-          message: 'Invalid type: Expected "a" | "b" but received "c"',
+          message: 'Invalid type: Expected ("a" | "b") but received "c"',
           ref: undefined,
           type: 'variant',
         },

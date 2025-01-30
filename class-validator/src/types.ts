@@ -8,7 +8,7 @@ export type Resolver = <T extends { [_: string]: any }>(
     validator?: ValidatorOptions;
     transformer?: ClassTransformOptions;
   },
-  resolverOptions?: { mode?: 'async' | 'sync'; rawValues?: boolean },
+  resolverOptions?: { mode?: 'async' | 'sync'; raw?: boolean },
 ) => <TFieldValues extends FieldValues, TContext>(
   values: TFieldValues,
   context: TContext | undefined,

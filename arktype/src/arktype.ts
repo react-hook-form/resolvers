@@ -26,6 +26,6 @@ export const arktypeResolver: Resolver =
 
     return {
       errors: {} as FieldErrors,
-      values: resolverOptions.raw ? values : out,
+      values: resolverOptions.raw ? Object.assign({}, values) : out,
     };
   };

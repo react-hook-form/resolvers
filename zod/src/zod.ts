@@ -68,7 +68,7 @@ export const zodResolver: Resolver =
 
       return {
         errors: {} as FieldErrors,
-        values: resolverOptions.raw ? values : data,
+        values: resolverOptions.raw ? Object.assign({}, values) : data,
       };
     } catch (error: any) {
       if (isZodError(error)) {
