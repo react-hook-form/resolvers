@@ -1,7 +1,12 @@
 import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
-import { FieldError, FieldErrors, appendErrors } from 'react-hook-form';
+import {
+  FieldError,
+  FieldErrors,
+  FieldValues,
+  appendErrors,
+  Resolver,
+} from 'react-hook-form';
 import { ZodError, z } from 'zod';
-import type { Resolver } from './types';
 
 const isZodError = (error: any): error is ZodError =>
   Array.isArray(error?.errors);
@@ -56,9 +61,22 @@ const parseErrorSchema = (
   return errors;
 };
 
-export const zodResolver: Resolver =
-  (schema, schemaOptions, resolverOptions = {}) =>
-  async (values, _, options) => {
+export function zodResolver<TFieldValues extends FieldValues>(
+  schema: z.ZodSchema<TFieldValues, any, any>,
+  schemaOptions?: Partial<z.ParseParams>,
+  resolverOptions: {
+    /**
+     * @default async
+     */
+    mode?: 'async' | 'sync';
+    /**
+     * Return the raw input values rather than the parsed values.
+     * @default false
+     */
+    raw?: boolean;
+  } = {},
+): Resolver<z.infer<typeof schema>> {
+  return async (values, _, options) => {
     try {
       const data = await schema[
         resolverOptions.mode === 'sync' ? 'parse' : 'parseAsync'
@@ -88,3 +106,4 @@ export const zodResolver: Resolver =
       throw error;
     }
   };
+}

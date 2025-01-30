@@ -41,7 +41,7 @@ export const schema = z
     path: ['confirm'],
   });
 
-export const validData: z.input<typeof schema> = {
+export const validData = {
   username: 'Doe',
   password: 'Password123_',
   repeatPassword: 'Password123_',
@@ -58,7 +58,7 @@ export const validData: z.input<typeof schema> = {
     },
   ],
   dateStr: '2020-01-01',
-};
+} as any as z.infer<typeof schema>;
 
 export const invalidData = {
   password: '___',
@@ -66,7 +66,7 @@ export const invalidData = {
   birthYear: 'birthYear',
   like: [{ id: 'z' }],
   url: 'abc',
-};
+} as any as z.infer<typeof schema>;
 
 export const fields: Record<InternalFieldName, Field['_f']> = {
   username: {

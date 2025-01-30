@@ -11,10 +11,10 @@ import * as Yup from 'yup';
  * Why `path!` ? because it could be `undefined` in some case
  * https://github.com/jquense/yup#validationerrorerrors-string--arraystring-value-any-path-string
  */
-const parseErrorSchema = (
+function parseErrorSchema(
   error: Yup.ValidationError,
   validateAllFieldCriteria: boolean,
-) => {
+) {
   return (error.inner || []).reduce<Record<string, FieldError>>(
     (previous, error) => {
       if (!previous[error.path!]) {
@@ -40,7 +40,7 @@ const parseErrorSchema = (
     },
     {},
   );
-};
+}
 
 export function yupResolver<TFieldValues extends FieldValues>(
   schema:
