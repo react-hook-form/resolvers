@@ -18,6 +18,8 @@
 
 ## Install
 
+Install your preferred validation library alongside `@hookform/resolvers`.
+
     npm install @hookform/resolvers
 
 ## Links
