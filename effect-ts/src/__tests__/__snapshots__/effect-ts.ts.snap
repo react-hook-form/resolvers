@@ -4,7 +4,7 @@ exports[`effectTsResolver > should return a single error from effectTsResolver w
 {
   "errors": {
     "animal": {
-      "message": "Expected "snake", actual ["dog"]",
+      "message": "Expected string, actual ["dog"]",
       "ref": undefined,
       "type": "Type",
     },
@@ -34,6 +34,40 @@ exports[`effectTsResolver > should return a single error from effectTsResolver w
         },
       },
     ],
+  },
+  "values": {},
+}
+`;
+
+exports[`effectTsResolver > should return all the errors from effectTsResolver when validation fails with \`validateAllFieldCriteria\` set to true 1`] = `
+{
+  "errors": {
+    "phoneNumber": {
+      "message": "Please enter a valid phone number in international format.",
+      "ref": {
+        "name": "phoneNumber",
+      },
+      "type": "Refinement",
+      "types": {
+        "Refinement": "Please enter a valid phone number in international format.",
+        "Type": "Expected undefined, actual "123"",
+      },
+    },
+  },
+  "values": {},
+}
+`;
+
+exports[`effectTsResolver > should return the first error from effectTsResolver when validation fails with \`validateAllFieldCriteria\` set to firstError 1`] = `
+{
+  "errors": {
+    "phoneNumber": {
+      "message": "Please enter a valid phone number in international format.",
+      "ref": {
+        "name": "phoneNumber",
+      },
+      "type": "Refinement",
+    },
   },
   "values": {},
 }

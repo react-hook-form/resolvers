@@ -2,7 +2,7 @@ import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
 import { Effect } from 'effect';
 
 import { ArrayFormatter, decodeUnknown } from 'effect/ParseResult';
-import type { FieldErrors } from 'react-hook-form';
+import { appendErrors, type FieldError } from 'react-hook-form';
 import type { Resolver } from './types';
 
 export const effectTsResolver: Resolver =
@@ -16,11 +16,36 @@ export const effectTsResolver: Resolver =
         Effect.flip(ArrayFormatter.formatIssue(parseIssue)),
       ),
       Effect.mapError((issues) => {
-        const errors = issues.reduce((acc, current) => {
-          const key = current.path.join('.');
-          acc[key] = { message: current.message, type: current._tag };
-          return acc;
-        }, {} as FieldErrors);
+        const validateAllFieldCriteria =
+          !options.shouldUseNativeValidation && options.criteriaMode === 'all';
+
+        const errors = issues.reduce(
+          (acc, error) => {
+            const key = error.path.join('.');
+
+            if (!acc[key]) {
+              acc[key] = { message: error.message, type: error._tag };
+            }
+
+            if (validateAllFieldCriteria) {
+              const types = acc[key].types;
+              const messages = types && types[String(error._tag)];
+
+              acc[key] = appendErrors(
+                key,
+                validateAllFieldCriteria,
+                acc,
+                error._tag,
+                messages
+                  ? ([] as string[]).concat(messages as string[], error.message)
+                  : error.message,
+              ) as FieldError;
+            }
+
+            return acc;
+          },
+          {} as Record<string, FieldError>,
+        );
 
         return toNestErrors(errors, options);
       }),
