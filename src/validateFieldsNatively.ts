@@ -29,7 +29,7 @@ export const validateFieldsNatively = <TFieldValues extends FieldValues>(
     const field = options.fields[fieldPath];
     if (field && field.ref && 'reportValidity' in field.ref) {
       setCustomValidity(field.ref, fieldPath, errors);
-    } else if (field.refs) {
+    } else if (field && field.refs) {
       field.refs.forEach((ref: HTMLInputElement) =>
         setCustomValidity(ref, fieldPath, errors),
       );
