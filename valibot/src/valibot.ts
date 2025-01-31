@@ -1,11 +1,39 @@
 import { toNestErrors } from '@hookform/resolvers';
-import { FieldError, FieldValues, appendErrors } from 'react-hook-form';
+import {
+  FieldError,
+  FieldValues,
+  Resolver,
+  appendErrors,
+} from 'react-hook-form';
 import { getDotPath, safeParseAsync } from 'valibot';
-import type { Resolver } from './types';
+import {
+  BaseSchema,
+  BaseSchemaAsync,
+  Config,
+  InferIssue,
+  InferOutput,
+} from 'valibot';
 
-export const valibotResolver: Resolver =
-  (schema, schemaOptions, resolverOptions = {}) =>
-  async (values, _, options) => {
+export function valibotResolver<TFieldValues extends FieldValues>(
+  schema:
+    | BaseSchema<TFieldValues, TFieldValues, any>
+    | BaseSchemaAsync<TFieldValues, TFieldValues, any>,
+  schemaOptions?: Partial<
+    Omit<Config<InferIssue<typeof schema>>, 'abortPipeEarly' | 'skipPipe'>
+  >,
+  resolverOptions: {
+    /**
+     * @default async
+     */
+    mode?: 'sync' | 'async';
+    /**
+     * Return the raw input values rather than the parsed values.
+     * @default false
+     */
+    raw?: boolean;
+  } = {},
+): Resolver<InferOutput<typeof schema>> {
+  return async (values, _, options) => {
     // Check if we should validate all field criteria
     const validateAllFieldCriteria =
       !options.shouldUseNativeValidation && options.criteriaMode === 'all';
@@ -73,3 +101,4 @@ export const valibotResolver: Resolver =
       errors: {},
     };
   };
+}

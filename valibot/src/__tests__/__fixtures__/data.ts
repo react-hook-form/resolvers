@@ -49,8 +49,12 @@ export const schemaError = v.variant('type', [
   v.object({ type: v.literal('b') }),
 ]);
 
-export const validSchemaErrorData = { type: 'a' };
-export const invalidSchemaErrorData = { type: 'c' };
+export const validSchemaErrorData = { type: 'a' } as v.InferOutput<
+  typeof schemaError
+>;
+export const invalidSchemaErrorData = { type: 'c' } as any as v.InferOutput<
+  typeof schemaError
+>;
 
 export const validData = {
   username: 'Doe',
@@ -73,7 +77,7 @@ export const invalidData = {
   birthYear: 'birthYear',
   like: { id: 'z' },
   tags: [1, 2, 3],
-};
+} as any as v.InferOutput<typeof schema>;
 
 export const fields: Record<InternalFieldName, Field['_f']> = {
   username: {
