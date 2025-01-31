@@ -13,14 +13,12 @@ const schema = vine.compile(
   }),
 );
 
-type FormData = Infer<typeof schema> & { unusedProperty: string };
-
 interface Props {
-  onSubmit: (data: FormData) => void;
+  onSubmit: (data: Infer<typeof schema>) => void;
 }
 
 function TestComponent({ onSubmit }: Props) {
-  const { register, handleSubmit } = useForm<FormData>({
+  const { register, handleSubmit } = useForm({
     resolver: vineResolver(schema),
     shouldUseNativeValidation: true,
   });

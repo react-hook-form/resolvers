@@ -2,7 +2,7 @@ import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
 import { Effect } from 'effect';
 
 import { ArrayFormatter, decodeUnknown } from 'effect/ParseResult';
-import { appendErrors, type FieldError } from 'react-hook-form';
+import { type FieldError, appendErrors } from 'react-hook-form';
 import type { Resolver } from './types';
 
 export const effectTsResolver: Resolver =

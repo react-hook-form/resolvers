@@ -22,7 +22,3 @@ pre-commit:
     typescript:
       glob: '*.{ts,tsx}'
       run: bun tsc --noEmit
-    format:
-      glob: '*.{js,ts,jsx,tsx}'
-      run: bun format {staged_files}
-      stage_fixed: true

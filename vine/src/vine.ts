@@ -1,12 +1,17 @@
 import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
-import { SimpleErrorReporter, errors } from '@vinejs/vine';
-import { FieldError, FieldErrors, appendErrors } from 'react-hook-form';
-import type { Resolver } from './types';
+import { SimpleErrorReporter, VineValidator, errors } from '@vinejs/vine';
+import { Infer, ValidationOptions } from '@vinejs/vine/build/src/types';
+import {
+  FieldError,
+  FieldErrors,
+  Resolver,
+  appendErrors,
+} from 'react-hook-form';
 
-const parseErrorSchema = (
+function parseErrorSchema(
   vineErrors: SimpleErrorReporter['errors'],
   validateAllFieldCriteria: boolean,
-) => {
+) {
   const schemaErrors: Record<string, FieldError> = {};
 
   for (; vineErrors.length; ) {
@@ -34,11 +39,14 @@ const parseErrorSchema = (
   }
 
   return schemaErrors;
-};
+}
 
-export const vineResolver: Resolver =
-  (schema, schemaOptions, resolverOptions = {}) =>
-  async (values, _, options) => {
+export function vineResolver<T extends VineValidator<any, any>>(
+  schema: T,
+  schemaOptions?: ValidationOptions<any>,
+  resolverOptions: { raw?: boolean } = {},
+): Resolver<Infer<typeof schema>> {
+  return async (values, _, options) => {
     try {
       const data = await schema.validate(values, schemaOptions);
 
@@ -66,3 +74,4 @@ export const vineResolver: Resolver =
       throw error;
     }
   };
+}

@@ -12,8 +12,9 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema> & { unusedProperty: string };
 
-
-function TestComponent({ onSubmit }: {onSubmit: (data: z.infer<typeof schema>) => void}) {
+function TestComponent({
+  onSubmit,
+}: { onSubmit: (data: z.infer<typeof schema>) => void }) {
   const {
     register,
     handleSubmit,
@@ -48,8 +49,9 @@ test("form's validation with Zod and TypeScript's integration", async () => {
   expect(handleSubmit).not.toHaveBeenCalled();
 });
 
-
-export function TestComponentManualType({ onSubmit }: {
+export function TestComponentManualType({
+  onSubmit,
+}: {
   onSubmit: (data: FormData) => void;
 }) {
   const {
