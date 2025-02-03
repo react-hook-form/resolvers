@@ -53,6 +53,7 @@ Install your preferred validation library alongside `@hookform/resolvers`.
   - [effect-ts](#effect-ts)
   - [VineJS](#vinejs)
   - [fluentvalidation-ts](#fluentvalidation-ts)
+  - [standard-schema](#standard-schema)
 - [Backers](#backers)
   - [Sponsors](#sponsors)
 - [Contributors](#contributors)
@@ -774,6 +775,72 @@ const App = () => {
       <input {...register('password')} />
       {errors.password && <span role="alert">{errors.password.message}</span>}
       <button type="submit">submit</button>
+    </form>
+  );
+};
+```
+
+### [standard-schema](https://github.com/standard-schema/standard-schema)
+
+A standard interface for TypeScript schema validation libraries
+
+[![npm](https://img.shields.io/bundlephobia/minzip/@standard-schema/spec?style=for-the-badge)](https://bundlephobia.com/result?p=@standard-schema/spec)
+
+Example zod
+
+```typescript jsx
+import { useForm } from 'react-hook-form';
+import { standardSchemaResolver } from '@hookform/resolvers/standard-schema';
+import { z } from 'zod';
+
+const schema = z.object({
+  name: z.string().min(1, { message: 'Required' }),
+  age: z.number().min(10),
+});
+
+const App = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: standardSchemaResolver(schema),
+  });
+
+  return (
+    <form onSubmit={handleSubmit((d) => console.log(d))}>
+      <input {...register('name')} />
+      {errors.name?.message && <p>{errors.name?.message}</p>}
+      <input type="number" {...register('age', { valueAsNumber: true })} />
+      {errors.age?.message && <p>{errors.age?.message}</p>}
+      <input type="submit" />
+    </form>
+  );
+};
+```
+
+Example arkType
+
+```typescript jsx
+import { useForm } from 'react-hook-form';
+import { standardSchemaResolver } from '@hookform/resolvers/standard-schema';
+import { type } from 'arktype';
+
+const schema = type({
+  username: 'string>1',
+  password: 'string>1',
+});
+
+const App = () => {
+  const { register, handleSubmit } = useForm({
+    resolver: standardSchemaResolver(schema),
+  });
+
+  return (
+    <form onSubmit={handleSubmit((d) => console.log(d))}>
+      <input {...register('username')} />
+      <input type="password" {...register('password')} />
+      <input type="submit" />
     </form>
   );
 };

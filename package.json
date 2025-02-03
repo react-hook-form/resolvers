@@ -123,6 +123,12 @@
       "import": "./fluentvalidation-ts/dist/fluentvalidation-ts.mjs",
       "require": "./fluentvalidation-ts/dist/fluentvalidation-ts.js"
     },
+    "./standard-schema": {
+      "types": "./standard-schema/dist/index.d.ts",
+      "umd": "./standard-schema/dist/standard-schema.umd.js",
+      "import": "./standard-schema/dist/standard-schema.mjs",
+      "require": "./standard-schema/dist/standard-schema.js"
+    },
     "./package.json": "./package.json",
     "./*": "./*"
   },
@@ -184,7 +190,10 @@
     "vine/dist",
     "fluentvalidation-ts/package.json",
     "fluentvalidation-ts/src",
-    "fluentvalidation-ts/dist"
+    "fluentvalidation-ts/dist",
+    "standard-schema/package.json",
+    "standard-schema/src",
+    "standard-schema/dist"
   ],
   "publishConfig": {
     "access": "public"
@@ -211,6 +220,7 @@
     "build:effect-ts": "microbundle --cwd effect-ts --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm,effect=Effect,effect/SchemaAST=EffectSchemaAST,effect/ParseResult=EffectParseResult",
     "build:vine": "microbundle --cwd vine --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm,@vinejs/vine=vine",
     "build:fluentvalidation-ts": "microbundle --cwd fluentvalidation-ts --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
+    "build:standard-schema": "microbundle --cwd standard-schema --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm,@standard-schema/spec=standardSchema",
     "postbuild": "node ./config/node-13-exports.js && check-export-map",
     "lint": "bunx @biomejs/biome check --write --vcs-use-ignore-file=true .",
     "lint:types": "tsc",
@@ -243,7 +253,8 @@
     "arktype",
     "typeschema",
     "vine",
-    "fluentvalidation-ts"
+    "fluentvalidation-ts",
+    "standard-schema"
   ],
   "repository": {
     "type": "git",
@@ -257,6 +268,7 @@
   "homepage": "https://react-hook-form.com",
   "devDependencies": {
     "@sinclair/typebox": "^0.34.15",
+    "@standard-schema/spec": "^1.0.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
