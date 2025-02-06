@@ -11,10 +11,10 @@ import { ZodError, z } from 'zod';
 const isZodError = (error: any): error is ZodError =>
   Array.isArray(error?.errors);
 
-const parseErrorSchema = (
+function parseErrorSchema(
   zodErrors: z.ZodIssue[],
   validateAllFieldCriteria: boolean,
-) => {
+) {
   const errors: Record<string, FieldError> = {};
   for (; zodErrors.length; ) {
     const error = zodErrors[0];
@@ -59,7 +59,7 @@ const parseErrorSchema = (
   }
 
   return errors;
-};
+}
 
 export function zodResolver<TFieldValues extends FieldValues>(
   schema: z.ZodSchema<TFieldValues, any, any>,
