@@ -1,9 +1,8 @@
 import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
 import { StandardSchemaV1 } from '@standard-schema/spec';
-import { FieldError } from 'react-hook-form';
-import type { Resolver } from './types';
+import { FieldError, FieldValues, Resolver } from 'react-hook-form';
 
-const parseIssues = (issues: readonly StandardSchemaV1.Issue[]) => {
+function parseIssues(issues: readonly StandardSchemaV1.Issue[]) {
   const errors: Record<string, FieldError> = {};
 
   for (let i = 0; i < issues.length; i++) {
@@ -18,10 +17,15 @@ const parseIssues = (issues: readonly StandardSchemaV1.Issue[]) => {
   }
 
   return errors;
-};
+}
 
-export const standardSchemaResolver: Resolver =
-  (schema) => async (values, _, options) => {
+export function standardSchemaResolver<
+  TFieldValues extends FieldValues,
+  Schema extends StandardSchemaV1<TFieldValues, any>,
+>(
+  schema: Schema,
+): Resolver<NonNullable<(typeof schema)['~standard']['types']>['output']> {
+  return async (values: TFieldValues, _, options) => {
     let result = schema['~standard'].validate(values);
     if (result instanceof Promise) {
       result = await result;
@@ -43,3 +47,4 @@ export const standardSchemaResolver: Resolver =
       errors: {},
     };
   };
+}
