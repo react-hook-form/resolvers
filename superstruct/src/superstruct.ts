@@ -1,11 +1,9 @@
 import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
-import { FieldError } from 'react-hook-form';
+import { FieldError, FieldValues, Resolver } from 'react-hook-form';
+import { Infer, Struct, StructError, validate } from 'superstruct';
 
-import { StructError, validate } from 'superstruct';
-import { Resolver } from './types';
-
-const parseErrorSchema = (error: StructError) =>
-  error.failures().reduce<Record<string, FieldError>>(
+function parseErrorSchema(error: StructError) {
+  return error.failures().reduce<Record<string, FieldError>>(
     (previous, error) =>
       (previous[error.path.join('.')] = {
         message: error.message,
@@ -13,10 +11,20 @@ const parseErrorSchema = (error: StructError) =>
       }) && previous,
     {},
   );
+}
 
-export const superstructResolver: Resolver =
-  (schema, schemaOptions, resolverOptions = {}) =>
-  (values, _, options) => {
+export function superstructResolver<TFieldValues extends FieldValues>(
+  schema: Struct<TFieldValues, any>,
+  schemaOptions?: Parameters<typeof validate>[2],
+  resolverOptions: {
+    /**
+     * Return the raw input values rather than the parsed values.
+     * @default false
+     */
+    raw?: boolean;
+  } = {},
+): Resolver<Infer<typeof schema>> {
+  return (values, _, options) => {
     const result = validate(values, schema, schemaOptions);
 
     if (result[0]) {
@@ -33,3 +41,4 @@ export const superstructResolver: Resolver =
       errors: {},
     };
   };
+}
