@@ -19,11 +19,11 @@ const schema = Schema.Struct({
 
 type FormData = Schema.Schema.Type<typeof schema>;
 
-interface Props {
+function TestComponent({
+  onSubmit,
+}: {
   onSubmit: (data: FormData) => void;
-}
-
-function TestComponent({ onSubmit }: Props) {
+}) {
   const {
     register,
     handleSubmit,
@@ -57,3 +57,29 @@ test("form's validation with Zod and TypeScript's integration", async () => {
   expect(screen.getByText(/password field is required/i)).toBeInTheDocument();
   expect(handleSubmit).not.toHaveBeenCalled();
 });
+
+export function TestComponentManualType({
+  onSubmit,
+}: {
+  onSubmit: (data: FormData) => void;
+}) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Schema.Schema.Type<typeof schema>, undefined, FormData>({
+    resolver: effectTsResolver(schema), // Useful to check TypeScript regressions
+  });
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <input {...register('username')} />
+      {errors.username && <span role="alert">{errors.username.message}</span>}
+
+      <input {...register('password')} />
+      {errors.password && <span role="alert">{errors.password.message}</span>}
+
+      <button type="submit">submit</button>
+    </form>
+  );
+}

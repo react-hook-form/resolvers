@@ -102,7 +102,7 @@ export const invalidData = {
     { type: 'car', brand: 'BMW', horsepower: 150 },
     { type: 'car', brand: 'Mercedes' },
   ],
-};
+} as any as Schema.Schema.Type<typeof schema>;
 
 export const fields: Record<InternalFieldName, Field['_f']> = {
   username: {

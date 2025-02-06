@@ -1,16 +1,23 @@
 import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
-import { Effect } from 'effect';
+import { Effect, Schema } from 'effect';
+import { ParseOptions } from 'effect/SchemaAST';
 
 import { ArrayFormatter, decodeUnknown } from 'effect/ParseResult';
-import { type FieldError, appendErrors } from 'react-hook-form';
-import type { Resolver } from './types';
+import {
+  type FieldError,
+  FieldValues,
+  Resolver,
+  appendErrors,
+} from 'react-hook-form';
 
-export const effectTsResolver: Resolver =
-  (schema, config = { errors: 'all', onExcessProperty: 'ignore' }) =>
-  (values, _, options) => {
+export function effectTsResolver<TFieldValues extends FieldValues, I>(
+  schema: Schema.Schema<TFieldValues, I>,
+  schemaOptions: ParseOptions = { errors: 'all', onExcessProperty: 'ignore' },
+): Resolver<Schema.Schema.Type<typeof schema>> {
+  return (values, _, options) => {
     return decodeUnknown(
       schema,
-      config,
+      schemaOptions,
     )(values).pipe(
       Effect.catchAll((parseIssue) =>
         Effect.flip(ArrayFormatter.formatIssue(parseIssue)),
@@ -63,3 +70,4 @@ export const effectTsResolver: Resolver =
       Effect.runPromise,
     );
   };
+}
