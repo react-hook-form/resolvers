@@ -1,8 +1,8 @@
 import { typanionResolver } from '..';
-import { fields, invalidData, isSchema, validData } from './__fixtures__/data';
+import { fields, invalidData, schema, validData } from './__fixtures__/data';
 
 const tmpObj = {
-  validate: isSchema,
+  validate: schema,
 };
 
 const shouldUseNativeValidation = false;
@@ -25,7 +25,7 @@ describe('typanionResolver', () => {
   });
 
   it('should return a single error from typanionResolver when validation fails', async () => {
-    const result = await typanionResolver(isSchema)(invalidData, undefined, {
+    const result = await typanionResolver(schema)(invalidData, undefined, {
       fields,
       shouldUseNativeValidation,
     });

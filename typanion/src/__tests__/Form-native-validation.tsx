@@ -9,22 +9,14 @@ const ERROR_MESSAGE =
   'Expected to have a length of at least 1 elements (got 0)';
 
 const schema = t.isObject({
-  username: t.applyCascade(t.isString(), [t.hasMinLength(1)]),
-  password: t.applyCascade(t.isString(), [t.hasMinLength(1)]),
+  username: t.cascade(t.isString(), [t.hasMinLength(1)]),
+  password: t.cascade(t.isString(), [t.hasMinLength(1)]),
 });
 
-interface FormData {
-  unusedProperty: string;
-  username: string;
-  password: string;
-}
-
-interface Props {
-  onSubmit: (data: FormData) => void;
-}
-
-function TestComponent({ onSubmit }: Props) {
-  const { register, handleSubmit } = useForm<FormData>({
+function TestComponent({
+  onSubmit,
+}: { onSubmit: (data: t.InferType<typeof schema>) => void }) {
+  const { register, handleSubmit } = useForm({
     resolver: typanionResolver(schema),
     shouldUseNativeValidation: true,
   });
