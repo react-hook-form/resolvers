@@ -1,0 +1,63 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`standardSchemaResolver > should return a single error from standardSchemaResolver when validation fails 1`] = `
+{
+  "errors": {
+    "accessToken": {
+      "message": "accessToken must be a number or a string (was missing)",
+      "ref": undefined,
+    },
+    "birthYear": {
+      "message": "birthYear must be a number (was a string)",
+      "ref": undefined,
+    },
+    "dateStr": {
+      "message": "dateStr must be a Date (was missing)",
+      "ref": undefined,
+    },
+    "email": {
+      "message": "email must be an email address (was "")",
+      "ref": {
+        "name": "email",
+      },
+    },
+    "enabled": {
+      "message": "enabled must be boolean (was missing)",
+      "ref": undefined,
+    },
+    "like": [
+      {
+        "id": {
+          "message": "like[0].id must be a number (was a string)",
+          "ref": undefined,
+        },
+        "name": {
+          "message": "like[0].name must be a string (was missing)",
+          "ref": undefined,
+        },
+      },
+    ],
+    "password": {
+      "message": "password must be matched by .*[A-Za-z].* or matched by .*\\d.* (was "___")",
+      "ref": {
+        "name": "password",
+      },
+    },
+    "repeatPassword": {
+      "message": "repeatPassword must be a string (was missing)",
+      "ref": undefined,
+    },
+    "tags": {
+      "message": "tags must be an array (was missing)",
+      "ref": undefined,
+    },
+    "username": {
+      "message": "username must be a string (was missing)",
+      "ref": {
+        "name": "username",
+      },
+    },
+  },
+  "values": {},
+}
+`;

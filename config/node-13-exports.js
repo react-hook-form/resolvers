@@ -20,6 +20,7 @@ const subRepositories = [
   'effect-ts',
   'vine',
   'fluentvalidation-ts',
+  'standard-schema',
 ];
 
 const copySrc = () => {

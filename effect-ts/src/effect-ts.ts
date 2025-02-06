@@ -1,8 +1,7 @@
 import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
 import { Effect, Schema } from 'effect';
-import { ParseOptions } from 'effect/SchemaAST';
-
 import { ArrayFormatter, decodeUnknown } from 'effect/ParseResult';
+import { ParseOptions } from 'effect/SchemaAST';
 import {
   type FieldError,
   FieldValues,
