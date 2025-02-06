@@ -43,7 +43,7 @@ export const invalidData = {
   birthYear: 'birthYear',
   like: [{ id: 'z' }],
   url: 'abc',
-};
+} as any as typeof schema.infer;
 
 export const fields: Record<InternalFieldName, Field['_f']> = {
   username: {

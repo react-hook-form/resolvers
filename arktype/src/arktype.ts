@@ -1,9 +1,8 @@
 import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
-import { ArkErrors } from 'arktype';
-import { FieldError, FieldErrors } from 'react-hook-form';
-import type { Resolver } from './types';
+import { ArkErrors, Type } from 'arktype';
+import { FieldError, FieldErrors, Resolver } from 'react-hook-form';
 
-const parseErrorSchema = (arkErrors: ArkErrors): Record<string, FieldError> => {
+function parseErrorSchema(arkErrors: ArkErrors): Record<string, FieldError> {
   const errors = [...arkErrors];
   const fieldsErrors: Record<string, FieldError> = {};
 
@@ -19,11 +18,20 @@ const parseErrorSchema = (arkErrors: ArkErrors): Record<string, FieldError> => {
   }
 
   return fieldsErrors;
-};
+}
 
-export const arktypeResolver: Resolver =
-  (schema, _schemaOptions, resolverOptions = {}) =>
-  (values, _, options) => {
+export function arktypeResolver<Schema extends Type<any, any>>(
+  schema: Schema,
+  _schemaOptions?: never,
+  resolverOptions: {
+    /**
+     * Return the raw input values rather than the parsed values.
+     * @default false
+     */
+    raw?: boolean;
+  } = {},
+): Resolver<Schema['inferOut']> {
+  return (values, _, options) => {
     const out = schema(values);
 
     if (out instanceof ArkErrors) {
@@ -40,3 +48,4 @@ export const arktypeResolver: Resolver =
       values: resolverOptions.raw ? Object.assign({}, values) : out,
     };
   };
+}
