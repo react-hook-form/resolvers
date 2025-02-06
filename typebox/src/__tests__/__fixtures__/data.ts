@@ -61,7 +61,7 @@ export const invalidData = {
   birthYear: 'birthYear',
   like: [{ id: 'z' }],
   url: 'abc',
-};
+} as any as Static<typeof schema>;
 
 export const fields: Record<InternalFieldName, Field['_f']> = {
   username: {

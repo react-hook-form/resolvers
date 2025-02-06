@@ -1,13 +1,19 @@
 import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
+import { Static, Type } from '@sinclair/typebox';
 import { TypeCheck } from '@sinclair/typebox/compiler';
 import { Value, type ValueError } from '@sinclair/typebox/value';
-import { FieldError, FieldErrors, appendErrors } from 'react-hook-form';
-import type { Resolver } from './types';
+import {
+  FieldError,
+  FieldErrors,
+  FieldValues,
+  Resolver,
+  appendErrors,
+} from 'react-hook-form';
 
-const parseErrorSchema = (
+function parseErrorSchema(
   _errors: ValueError[],
   validateAllFieldCriteria: boolean,
-) => {
+) {
   const errors: Record<string, FieldError> = {};
   for (; _errors.length; ) {
     const error = _errors[0];
@@ -37,10 +43,13 @@ const parseErrorSchema = (
   }
 
   return errors;
-};
+}
 
-export const typeboxResolver: Resolver =
-  (schema) => async (values, _, options) => {
+export function typeboxResolver<
+  TFieldValues extends FieldValues,
+  Schema extends ReturnType<typeof Type.Object<TFieldValues>>,
+>(schema: Schema | TypeCheck<Schema>): Resolver<Static<Schema>> {
+  return async (values, _, options) => {
     const errors = Array.from(
       schema instanceof TypeCheck
         ? schema.Errors(values)
@@ -67,3 +76,4 @@ export const typeboxResolver: Resolver =
       ),
     };
   };
+}
