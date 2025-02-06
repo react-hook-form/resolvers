@@ -14,17 +14,10 @@ const schema = t.type({
   password: tt.withMessage(tt.NonEmptyString, () => PASSWORD_REQUIRED_MESSAGE),
 });
 
-interface FormData {
-  username: string;
-  password: string;
-}
-
-interface Props {
-  onSubmit: (data: FormData) => void;
-}
-
-function TestComponent({ onSubmit }: Props) {
-  const { register, handleSubmit } = useForm<FormData>({
+function TestComponent({
+  onSubmit,
+}: { onSubmit: (data: t.OutputOf<typeof schema>) => void }) {
+  const { register, handleSubmit } = useForm({
     resolver: ioTsResolver(schema),
     shouldUseNativeValidation: true,
   });

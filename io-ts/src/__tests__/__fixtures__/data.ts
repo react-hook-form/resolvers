@@ -50,24 +50,7 @@ export const schema = t.intersection([
   }),
 ]);
 
-interface Data {
-  username: string;
-  password: string;
-  accessToken: string;
-  birthYear?: number;
-  luckyNumbers: number[];
-  email?: string;
-  animal: string | number;
-  tags: { name: string }[];
-  enabled: boolean;
-  like: { id: number; name: string }[];
-  vehicles: Array<
-    | { type: 'car'; brand: string; horsepower: number }
-    | { type: 'bike'; speed: number }
-  >;
-}
-
-export const validData: Data = {
+export const validData: t.OutputOf<typeof schema> = {
   username: 'Doe',
   password: 'Password123',
   accessToken: 'c2883927-5178-4ad1-bbee-07ba33a5de19',
@@ -107,7 +90,7 @@ export const invalidData = {
     { type: 'car', brand: 'BMW', horsepower: 150 },
     { type: 'car', brand: 'Mercedes' },
   ],
-};
+} as any as t.OutputOf<typeof schema>;
 
 export const fields: Record<InternalFieldName, Field['_f']> = {
   username: {

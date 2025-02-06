@@ -22,16 +22,14 @@ interface FormData {
   password: string;
 }
 
-interface Props {
-  onSubmit: (data: FormData) => void;
-}
-
-function TestComponent({ onSubmit }: Props) {
+function TestComponent({
+  onSubmit,
+}: { onSubmit: (data: t.OutputOf<typeof schema>) => void }) {
   const {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm<FormData>({
+  } = useForm({
     resolver: ioTsResolver(schema),
     criteriaMode: 'all',
   });
@@ -61,3 +59,29 @@ test("form's validation with io-ts and TypeScript's integration", async () => {
   expect(screen.getByText(/password is a required field/i)).toBeInTheDocument();
   expect(handleSubmit).not.toHaveBeenCalled();
 });
+
+export function TestComponentManualType({
+  onSubmit,
+}: {
+  onSubmit: (data: FormData) => void;
+}) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<t.OutputOf<typeof schema>, undefined, FormData>({
+    resolver: ioTsResolver(schema), // Useful to check TypeScript regressions
+  });
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <input {...register('username')} />
+      {errors.username && <span role="alert">{errors.username.message}</span>}
+
+      <input {...register('password')} />
+      {errors.password && <span role="alert">{errors.password.message}</span>}
+
+      <button type="submit">submit</button>
+    </form>
+  );
+}
