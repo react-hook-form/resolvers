@@ -19,8 +19,37 @@
 ## Install
 
 Install your preferred validation library alongside `@hookform/resolvers`.
+    
+    npm install @hookform/resolvers # npm
+    yarn add @hookform/resolvers # yarn
+    pnpm install @hookform/resolvers # pnpm
+    bun install @hookform/resolvers # bun
 
-    npm install @hookform/resolvers
+<details>
+  <summary>Resolver Comparison</summary>
+ 
+| resolver  | Infer values <br /> from schema |
+|---|---|
+| AJV  | ❌  |
+| Arktype |  ✅ |
+| class-validator  | ✅  |
+| computed-types  | ✅  |
+| Effect  | ✅  |
+| fluentvalidation-ts  | ❌  |
+| io-ts  | ✅  |
+| joi |  ❌ |
+| Nope  | ❌  |
+| Standard Schema  | ✅  |
+| Superstruct  | ✅  |
+| typanion  | ✅  |
+| typebox  | ✅  |
+| typeschema  | ❌  |
+| valibot  | ✅  |
+| vest  | ❌  |
+| vine  | ✅  |
+| yup  | ✅  |
+| zod  | ✅ |
+</details>
 
 ## Links
 
