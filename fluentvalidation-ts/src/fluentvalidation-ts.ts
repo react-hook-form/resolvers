@@ -30,10 +30,10 @@ function traverseObject<T>(
   }
 }
 
-const parseErrorSchema = <T>(
+function parseErrorSchema<T>(
   validationErrors: ValidationErrors<T>,
   validateAllFieldCriteria: boolean,
-) => {
+) {
   if (validateAllFieldCriteria) {
     // TODO: check this but i think its always one validation error
   }
@@ -42,7 +42,7 @@ const parseErrorSchema = <T>(
   traverseObject(validationErrors, errors);
 
   return errors;
-};
+}
 
 export function fluentValidationResolver<TFieldValues extends FieldValues>(
   validator: Validator<TFieldValues>,
