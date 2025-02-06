@@ -122,11 +122,16 @@ it('validate data with transformer option', async () => {
     {
       mode: 'sync',
     },
-  )(invalidData, undefined, {
-    fields,
-    criteriaMode: 'all',
-    shouldUseNativeValidation,
-  });
+  )(
+    // @ts-expect-error - Just for testing purposes
+    invalidData,
+    undefined,
+    {
+      fields,
+      criteriaMode: 'all',
+      shouldUseNativeValidation,
+    },
+  );
 
   expect(result).toMatchSnapshot();
 });
@@ -151,11 +156,16 @@ it('validate data with validator option', async () => {
     {
       mode: 'sync',
     },
-  )(invalidData, undefined, {
-    fields,
-    criteriaMode: 'all',
-    shouldUseNativeValidation,
-  });
+  )(
+    // @ts-expect-error - Just for testing purposes
+    invalidData,
+    undefined,
+    {
+      fields,
+      criteriaMode: 'all',
+      shouldUseNativeValidation,
+    },
+  );
 
   expect(result).toMatchSnapshot();
 });
@@ -174,6 +184,7 @@ it('should return from classValidatorResolver with `excludeExtraneousValues` set
   })(
     {
       random: 10,
+      // @ts-expect-error - Just for testing purposes
       extraneousField: true,
     },
     undefined,

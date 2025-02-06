@@ -1,15 +1,23 @@
 import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
-import { plainToClass } from 'class-transformer';
-import { ValidationError, validate, validateSync } from 'class-validator';
-import { FieldErrors } from 'react-hook-form';
-import type { Resolver } from './types';
+import {
+  ClassConstructor,
+  ClassTransformOptions,
+  plainToClass,
+} from 'class-transformer';
+import {
+  ValidationError,
+  ValidatorOptions,
+  validate,
+  validateSync,
+} from 'class-validator';
+import { FieldErrors, Resolver } from 'react-hook-form';
 
-const parseErrors = (
+function parseErrorSchema(
   errors: ValidationError[],
   validateAllFieldCriteria: boolean,
   parsedErrors: FieldErrors = {},
   path = '',
-) => {
+) {
   return errors.reduce((acc, error) => {
     const _path = path ? `${path}.${error.property}` : error.property;
 
@@ -27,16 +35,22 @@ const parseErrors = (
     }
 
     if (error.children && error.children.length) {
-      parseErrors(error.children, validateAllFieldCriteria, acc, _path);
+      parseErrorSchema(error.children, validateAllFieldCriteria, acc, _path);
     }
 
     return acc;
   }, parsedErrors);
-};
+}
 
-export const classValidatorResolver: Resolver =
-  (schema, schemaOptions = {}, resolverOptions = {}) =>
-  async (values, _, options) => {
+export function classValidatorResolver<Schema extends Record<string, any>>(
+  schema: ClassConstructor<Schema>,
+  schemaOptions: {
+    validator?: ValidatorOptions;
+    transformer?: ClassTransformOptions;
+  } = {},
+  resolverOptions: { mode?: 'async' | 'sync'; raw?: boolean } = {},
+): Resolver<Schema> {
+  return async (values, _, options) => {
     const { transformer, validator } = schemaOptions;
     const data = plainToClass(schema, values, transformer);
 
@@ -48,7 +62,7 @@ export const classValidatorResolver: Resolver =
       return {
         values: {},
         errors: toNestErrors(
-          parseErrors(
+          parseErrorSchema(
             rawErrors,
             !options.shouldUseNativeValidation &&
               options.criteriaMode === 'all',
@@ -65,3 +79,4 @@ export const classValidatorResolver: Resolver =
       errors: {},
     };
   };
+}
