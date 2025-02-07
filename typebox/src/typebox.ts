@@ -45,6 +45,22 @@ function parseErrorSchema(
   return errors;
 }
 
+/**
+ * Creates a resolver for react-hook-form using Typebox schema validation
+ * @param {Schema | TypeCheck<Schema>} schema - The Typebox schema to validate against
+ * @param {Object} options - Additional resolver configuration
+ * @param {string} [options.mode='async'] - Validation mode
+ * @returns {Resolver<Static<Schema>>} A resolver function compatible with react-hook-form
+ * @example
+ * const schema = Type.Object({
+ *   name: Type.String(),
+ *   age: Type.Number()
+ * });
+ *
+ * useForm({
+ *   resolver: typeboxResolver(schema)
+ * });
+ */
 export function typeboxResolver<
   TFieldValues extends FieldValues,
   Schema extends ReturnType<typeof Type.Object<TFieldValues>>,

@@ -44,6 +44,27 @@ function parseErrorSchema<T>(
   return errors;
 }
 
+/**
+ * Creates a resolver for react-hook-form using FluentValidation schema validation
+ * @param {Validator<TFieldValues>} validator - The FluentValidation validator to use
+ * @returns {Resolver<TFieldValues>} A resolver function compatible with react-hook-form
+ * @example
+ * import { Validator } from 'fluentvalidation-ts';
+ *
+ * class SchemaValidator extends Validator<Schema> {
+ *   constructor() {
+ *     super();
+ *     this.ruleFor('username').notEmpty();
+ *     this.ruleFor('password').notEmpty();
+ *   }
+ * }
+ *
+ * const validator = new SchemaValidator();
+ *
+ * useForm({
+ *   resolver: fluentValidationResolver(validator)
+ * });
+ */
 export function fluentValidationResolver<TFieldValues extends FieldValues>(
   validator: Validator<TFieldValues>,
 ): Resolver<TFieldValues> {
