@@ -24,7 +24,7 @@ Install your preferred validation library alongside `@hookform/resolvers`.
 
 ## Links
 
-- [React-hook-form validation resolver documentation ](https://react-hook-form.com/api/useform/#resolver)
+- [React-hook-form validation resolver documentation ](https://react-hook-form.com/docs/useform#resolver)
 
 ### Supported resolvers
 
