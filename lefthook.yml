@@ -18,6 +18,7 @@ pre-commit:
     lint:
       glob: '*.{js,ts,jsx,tsx}'
       run: bun lint {staged_files}
+      stage_fixed: true
     typescript:
       glob: '*.{ts,tsx}'
       run: bun tsc --noEmit

@@ -19,8 +19,37 @@
 ## Install
 
 Install your preferred validation library alongside `@hookform/resolvers`.
+    
+    npm install @hookform/resolvers # npm
+    yarn add @hookform/resolvers # yarn
+    pnpm install @hookform/resolvers # pnpm
+    bun install @hookform/resolvers # bun
 
-    npm install @hookform/resolvers
+<details>
+  <summary>Resolver Comparison</summary>
+ 
+| resolver  | Infer values <br /> from schema | [criteriaMode](https://react-hook-form.com/docs/useform#criteriaMode) |
+|---|---|---|
+| AJV  | ❌  | `firstError | all` |
+| Arktype |  ✅ | `firstError` |
+| class-validator  | ✅  | `firstError | all` |
+| computed-types  | ✅  | `firstError` |
+| Effect  | ✅  | `firstError | all` |
+| fluentvalidation-ts  | ❌  | `firstError` |
+| io-ts  | ✅  | `firstError` |
+| joi |  ❌ | `firstError | all` |
+| Nope  | ❌  | `firstError` |
+| Standard Schema  | ✅  | `firstError | all` |
+| Superstruct  | ✅  | `firstError` |
+| typanion  | ✅  | `firstError` |
+| typebox  | ✅  | `firstError | all` |
+| typeschema  | ❌  | `firstError | all` |
+| valibot  | ✅  | `firstError | all` |
+| vest  | ❌  | `firstError | all` |
+| vine  | ✅  | `firstError | all` |
+| yup  | ✅  | `firstError | all` |
+| zod  | ✅ | `firstError | all` |
+</details>
 
 ## Links
 

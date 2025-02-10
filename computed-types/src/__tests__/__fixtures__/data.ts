@@ -64,7 +64,7 @@ export const invalidData = {
     city: '',
     zipCode: '123',
   },
-};
+} as any as Type<typeof schema>;
 
 export const fields: Record<InternalFieldName, Field['_f']> = {
   username: {

@@ -13,8 +13,11 @@ import {
   UnionType,
   ValidationError,
 } from 'io-ts';
+import { FieldError } from 'react-hook-form';
 import arrayToPath from './arrayToPath';
-import { ErrorObject, FieldErrorWithPath } from './types';
+
+export type ErrorObject = Record<string, FieldError>;
+export type FieldErrorWithPath = FieldError & { path: string };
 
 const INSTANCE_TYPES_TO_FILTER = [
   TaggedUnionType,

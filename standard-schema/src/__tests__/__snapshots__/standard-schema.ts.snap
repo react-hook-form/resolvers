@@ -4,60 +4,247 @@ exports[`standardSchemaResolver > should return a single error from standardSche
 {
   "errors": {
     "accessToken": {
-      "message": "accessToken must be a number or a string (was missing)",
+      "message": "Invalid input",
       "ref": undefined,
+      "type": "",
     },
     "birthYear": {
-      "message": "birthYear must be a number (was a string)",
+      "message": "Expected number, received string",
       "ref": undefined,
+      "type": "",
     },
     "dateStr": {
-      "message": "dateStr must be a Date (was missing)",
+      "message": "Required",
       "ref": undefined,
+      "type": "",
     },
     "email": {
-      "message": "email must be an email address (was "")",
+      "message": "Invalid email",
       "ref": {
         "name": "email",
       },
+      "type": "",
     },
     "enabled": {
-      "message": "enabled must be boolean (was missing)",
+      "message": "Required",
       "ref": undefined,
+      "type": "",
     },
     "like": [
       {
         "id": {
-          "message": "like[0].id must be a number (was a string)",
+          "message": "Expected number, received string",
           "ref": undefined,
+          "type": "",
         },
         "name": {
-          "message": "like[0].name must be a string (was missing)",
+          "message": "Required",
           "ref": undefined,
+          "type": "",
         },
       },
     ],
     "password": {
-      "message": "password must be matched by .*[A-Za-z].* or matched by .*\\d.* (was "___")",
+      "message": "One uppercase character",
       "ref": {
         "name": "password",
       },
+      "type": "",
     },
     "repeatPassword": {
-      "message": "repeatPassword must be a string (was missing)",
+      "message": "Required",
       "ref": undefined,
+      "type": "",
     },
     "tags": {
-      "message": "tags must be an array (was missing)",
+      "message": "Required",
       "ref": undefined,
+      "type": "",
+    },
+    "url": {
+      "message": "Custom error url",
+      "ref": undefined,
+      "type": "",
     },
     "username": {
-      "message": "username must be a string (was missing)",
+      "message": "Required",
       "ref": {
         "name": "username",
+      },
+      "type": "",
+    },
+  },
+  "values": {},
+}
+`;
+
+exports[`standardSchemaResolver > should return all the errors from standardSchemaResolver when validation fails with \`validateAllFieldCriteria\` set to true 1`] = `
+{
+  "errors": {
+    "accessToken": {
+      "message": "Invalid input",
+      "ref": undefined,
+      "type": "",
+      "types": {
+        "0": "Invalid input",
+      },
+    },
+    "birthYear": {
+      "message": "Expected number, received string",
+      "ref": undefined,
+      "type": "",
+      "types": {
+        "0": "Expected number, received string",
+      },
+    },
+    "dateStr": {
+      "message": "Required",
+      "ref": undefined,
+      "type": "",
+      "types": {
+        "0": "Required",
+      },
+    },
+    "email": {
+      "message": "Invalid email",
+      "ref": {
+        "name": "email",
+      },
+      "type": "",
+      "types": {
+        "0": "Invalid email",
+      },
+    },
+    "enabled": {
+      "message": "Required",
+      "ref": undefined,
+      "type": "",
+      "types": {
+        "0": "Required",
+      },
+    },
+    "like": [
+      {
+        "id": {
+          "message": "Expected number, received string",
+          "ref": undefined,
+          "type": "",
+          "types": {
+            "0": "Expected number, received string",
+          },
+        },
+        "name": {
+          "message": "Required",
+          "ref": undefined,
+          "type": "",
+          "types": {
+            "0": "Required",
+          },
+        },
+      },
+    ],
+    "password": {
+      "message": "One uppercase character",
+      "ref": {
+        "name": "password",
+      },
+      "type": "",
+      "types": {
+        "0": "One uppercase character",
+        "1": "One lowercase character",
+        "2": "One number",
+        "3": "Must be at least 8 characters in length",
+      },
+    },
+    "repeatPassword": {
+      "message": "Required",
+      "ref": undefined,
+      "type": "",
+      "types": {
+        "0": "Required",
+      },
+    },
+    "tags": {
+      "message": "Required",
+      "ref": undefined,
+      "type": "",
+      "types": {
+        "0": "Required",
+      },
+    },
+    "url": {
+      "message": "Custom error url",
+      "ref": undefined,
+      "type": "",
+      "types": {
+        "0": "Custom error url",
+      },
+    },
+    "username": {
+      "message": "Required",
+      "ref": {
+        "name": "username",
+      },
+      "type": "",
+      "types": {
+        "0": "Required",
       },
     },
   },
   "values": {},
+}
+`;
+
+exports[`standardSchemaResolver > should return values from standardSchemaResolver when validation pass & raw=true 1`] = `
+{
+  "errors": {},
+  "values": {
+    "accessToken": "accessToken",
+    "birthYear": 2000,
+    "dateStr": "2020-01-01T00:00:00.000Z",
+    "email": "john@doe.com",
+    "enabled": true,
+    "like": [
+      {
+        "id": 1,
+        "name": "name",
+      },
+    ],
+    "password": "Password123_",
+    "repeatPassword": "Password123_",
+    "tags": [
+      "tag1",
+      "tag2",
+    ],
+    "url": "https://react-hook-form.com/",
+    "username": "Doe",
+  },
+}
+`;
+
+exports[`standardSchemaResolver > should return values from standardSchemaResolver when validation pass 1`] = `
+{
+  "errors": {},
+  "values": {
+    "accessToken": "accessToken",
+    "birthYear": 2000,
+    "dateStr": 2020-01-01T00:00:00.000Z,
+    "email": "john@doe.com",
+    "enabled": true,
+    "like": [
+      {
+        "id": 1,
+        "name": "name",
+      },
+    ],
+    "password": "Password123_",
+    "repeatPassword": "Password123_",
+    "tags": [
+      "tag1",
+      "tag2",
+    ],
+    "url": "https://react-hook-form.com/",
+    "username": "Doe",
+  },
 }
 `;

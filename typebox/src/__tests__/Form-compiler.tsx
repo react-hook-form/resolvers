@@ -13,18 +13,14 @@ const schema = Type.Object({
 
 const typecheck = TypeCompiler.Compile(schema);
 
-type FormData = Static<typeof schema> & { unusedProperty: string };
-
-interface Props {
-  onSubmit: (data: FormData) => void;
-}
-
-function TestComponent({ onSubmit }: Props) {
+function TestComponent({
+  onSubmit,
+}: { onSubmit: (data: Static<typeof schema>) => void }) {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({
+  } = useForm({
     resolver: typeboxResolver(typecheck), // Useful to check TypeScript regressions
   });
 

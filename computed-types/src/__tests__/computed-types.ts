@@ -26,7 +26,9 @@ describe('computedTypesResolver', () => {
     const schemaWithCustomError = schema.transform(() => {
       throw Error('custom error');
     });
+
     const promise = computedTypesResolver(schemaWithCustomError)(
+      // @ts-expect-error expect to throw
       validData,
       undefined,
       {

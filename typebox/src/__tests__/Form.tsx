@@ -12,16 +12,16 @@ const schema = Type.Object({
 
 type FormData = Static<typeof schema> & { unusedProperty: string };
 
-interface Props {
-  onSubmit: (data: FormData) => void;
-}
-
-function TestComponent({ onSubmit }: Props) {
+function TestComponent({
+  onSubmit,
+}: {
+  onSubmit: (data: Static<typeof schema>) => void;
+}) {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({
+  } = useForm({
     resolver: typeboxResolver(schema), // Useful to check TypeScript regressions
   });
 
@@ -52,3 +52,29 @@ test("form's validation with Typebox and TypeScript's integration", async () => 
 
   expect(handleSubmit).not.toHaveBeenCalled();
 });
+
+export function TestComponentManualType({
+  onSubmit,
+}: {
+  onSubmit: (data: FormData) => void;
+}) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Static<typeof schema>, undefined, FormData>({
+    resolver: typeboxResolver(schema), // Useful to check TypeScript regressions
+  });
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <input {...register('username')} />
+      {errors.username && <span role="alert">{errors.username.message}</span>}
+
+      <input {...register('password')} />
+      {errors.password && <span role="alert">{errors.password.message}</span>}
+
+      <button type="submit">submit</button>
+    </form>
+  );
+}

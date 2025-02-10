@@ -13,14 +13,12 @@ const schema = Schema({
   password: string.min(2).error(PASSWORD_REQUIRED_MESSAGE),
 });
 
-type FormData = Type<typeof schema> & { unusedProperty: string };
-
 interface Props {
-  onSubmit: (data: FormData) => void;
+  onSubmit: (data: Type<typeof schema>) => void;
 }
 
 function TestComponent({ onSubmit }: Props) {
-  const { register, handleSubmit } = useForm<FormData>({
+  const { register, handleSubmit } = useForm({
     resolver: computedTypesResolver(schema),
     shouldUseNativeValidation: true,
   });

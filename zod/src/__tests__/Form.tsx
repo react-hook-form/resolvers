@@ -12,16 +12,14 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema> & { unusedProperty: string };
 
-interface Props {
-  onSubmit: (data: FormData) => void;
-}
-
-function TestComponent({ onSubmit }: Props) {
+function TestComponent({
+  onSubmit,
+}: { onSubmit: (data: z.infer<typeof schema>) => void }) {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({
+  } = useForm({
     resolver: zodResolver(schema), // Useful to check TypeScript regressions
   });
 
@@ -50,3 +48,29 @@ test("form's validation with Zod and TypeScript's integration", async () => {
   expect(screen.getByText(/password field is required/i)).toBeInTheDocument();
   expect(handleSubmit).not.toHaveBeenCalled();
 });
+
+export function TestComponentManualType({
+  onSubmit,
+}: {
+  onSubmit: (data: FormData) => void;
+}) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<z.infer<typeof schema>, undefined, FormData>({
+    resolver: zodResolver(schema), // Useful to check TypeScript regressions
+  });
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <input {...register('username')} />
+      {errors.username && <span role="alert">{errors.username.message}</span>}
+
+      <input {...register('password')} />
+      {errors.password && <span role="alert">{errors.password.message}</span>}
+
+      <button type="submit">submit</button>
+    </form>
+  );
+}

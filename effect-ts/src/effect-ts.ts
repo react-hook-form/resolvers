@@ -1,16 +1,37 @@
 import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
-import { Effect } from 'effect';
-
+import { Effect, Schema } from 'effect';
 import { ArrayFormatter, decodeUnknown } from 'effect/ParseResult';
-import { type FieldError, appendErrors } from 'react-hook-form';
-import type { Resolver } from './types';
+import { ParseOptions } from 'effect/SchemaAST';
+import {
+  type FieldError,
+  FieldValues,
+  Resolver,
+  appendErrors,
+} from 'react-hook-form';
 
-export const effectTsResolver: Resolver =
-  (schema, config = { errors: 'all', onExcessProperty: 'ignore' }) =>
-  (values, _, options) => {
+/**
+ * Creates a resolver for react-hook-form using Effect.ts schema validation
+ * @param {Schema.Schema<TFieldValues, I>} schema - The Effect.ts schema to validate against
+ * @param {ParseOptions} [schemaOptions] - Optional Effect.ts validation options
+ * @returns {Resolver<Schema.Schema.Type<typeof schema>>} A resolver function compatible with react-hook-form
+ * @example
+ * const schema = Schema.Struct({
+ *   name: Schema.String,
+ *   age: Schema.Number
+ * });
+ *
+ * useForm({
+ *   resolver: effectTsResolver(schema)
+ * });
+ */
+export function effectTsResolver<TFieldValues extends FieldValues, I>(
+  schema: Schema.Schema<TFieldValues, I>,
+  schemaOptions: ParseOptions = { errors: 'all', onExcessProperty: 'ignore' },
+): Resolver<Schema.Schema.Type<typeof schema>> {
+  return (values, _, options) => {
     return decodeUnknown(
       schema,
-      config,
+      schemaOptions,
     )(values).pipe(
       Effect.catchAll((parseIssue) =>
         Effect.flip(ArrayFormatter.formatIssue(parseIssue)),
@@ -63,3 +84,4 @@ export const effectTsResolver: Resolver =
       Effect.runPromise,
     );
   };
+}

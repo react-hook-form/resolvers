@@ -66,7 +66,7 @@ export const invalidData = {
   email: '',
   birthYear: 'birthYear',
   like: [{ id: 'z' }],
-};
+} as any as Schema;
 
 export const fields: Record<InternalFieldName, Field['_f']> = {
   username: {

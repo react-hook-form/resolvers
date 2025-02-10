@@ -1,24 +1,47 @@
-import { type } from 'arktype';
 import { Field, InternalFieldName } from 'react-hook-form';
+import { z } from 'zod';
 
-export const schema = type({
-  username: 'string>2',
-  password: '/.*[A-Za-z].*/>8|/.*\\d.*/',
-  repeatPassword: 'string>1',
-  accessToken: 'string|number',
-  birthYear: '1900<number<2013',
-  email: 'string.email',
-  tags: 'string[]',
-  enabled: 'boolean',
-  url: 'string>1',
-  'like?': type({
-    id: 'number',
-    name: 'string>3',
-  }).array(),
-  dateStr: 'Date',
-});
+export const schema = z
+  .object({
+    username: z.string().regex(/^\w+$/).min(3).max(30),
+    password: z
+      .string()
+      .regex(new RegExp('.*[A-Z].*'), 'One uppercase character')
+      .regex(new RegExp('.*[a-z].*'), 'One lowercase character')
+      .regex(new RegExp('.*\\d.*'), 'One number')
+      .regex(
+        new RegExp('.*[`~<>?,./!@#$%^&*()\\-_+="\'|{}\\[\\];:\\\\].*'),
+        'One special character',
+      )
+      .min(8, 'Must be at least 8 characters in length'),
+    repeatPassword: z.string(),
+    accessToken: z.union([z.string(), z.number()]),
+    birthYear: z.number().min(1900).max(2013).optional(),
+    email: z.string().email().optional(),
+    tags: z.array(z.string()),
+    enabled: z.boolean(),
+    url: z.string().url('Custom error url').or(z.literal('')),
+    like: z
+      .array(
+        z.object({
+          id: z.number(),
+          name: z.string().length(4),
+        }),
+      )
+      .optional(),
+    dateStr: z
+      .string()
+      .transform((value) => new Date(value))
+      .refine((value) => !isNaN(value.getTime()), {
+        message: 'Invalid date',
+      }),
+  })
+  .refine((obj) => obj.password === obj.repeatPassword, {
+    message: 'Passwords do not match',
+    path: ['confirm'],
+  });
 
-export const validData: typeof schema.infer = {
+export const validData = {
   username: 'Doe',
   password: 'Password123_',
   repeatPassword: 'Password123_',
@@ -34,8 +57,8 @@ export const validData: typeof schema.infer = {
       name: 'name',
     },
   ],
-  dateStr: new Date('2020-01-01'),
-};
+  dateStr: '2020-01-01T00:00:00.000Z',
+} as any as z.infer<typeof schema>;
 
 export const invalidData = {
   password: '___',
@@ -43,7 +66,7 @@ export const invalidData = {
   birthYear: 'birthYear',
   like: [{ id: 'z' }],
   url: 'abc',
-};
+} as any as z.infer<typeof schema>;
 
 export const fields: Record<InternalFieldName, Field['_f']> = {
   username: {
