@@ -52,15 +52,14 @@ function parseIssues(
  * ```
  */
 export function standardSchemaResolver<
-  TFieldValues extends FieldValues,
-  Schema extends StandardSchemaV1<TFieldValues, any>,
+  Schema extends StandardSchemaV1<FieldValues>,
 >(
   schema: Schema,
   resolverOptions: {
     raw?: boolean;
   } = {},
-): Resolver<NonNullable<(typeof schema)['~standard']['types']>['output']> {
-  return async (values: TFieldValues, _, options) => {
+): Resolver<StandardSchemaV1.InferOutput<Schema>> {
+  return async (values, _, options) => {
     let result = schema['~standard'].validate(values);
     if (result instanceof Promise) {
       result = await result;
