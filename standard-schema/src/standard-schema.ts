@@ -1,5 +1,6 @@
 import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
 import { StandardSchemaV1 } from '@standard-schema/spec';
+import { getDotPath } from '@standard-schema/utils';
 import { FieldError, FieldValues, Resolver } from 'react-hook-form';
 
 function parseIssues(
@@ -10,7 +11,7 @@ function parseIssues(
 
   for (let i = 0; i < issues.length; i++) {
     const error = issues[i];
-    const path = error.path?.join('.');
+    const path = getDotPath(error);
 
     if (path) {
       if (!errors[path]) {

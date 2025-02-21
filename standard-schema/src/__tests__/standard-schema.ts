@@ -1,5 +1,11 @@
 import { standardSchemaResolver } from '..';
-import { fields, invalidData, schema, validData } from './__fixtures__/data';
+import {
+  customSchema,
+  fields,
+  invalidData,
+  schema,
+  validData,
+} from './__fixtures__/data';
 
 const shouldUseNativeValidation = false;
 
@@ -51,6 +57,18 @@ describe('standardSchemaResolver', () => {
     });
 
     expect(validateSpy).toHaveBeenCalledTimes(1);
+    expect(result).toMatchSnapshot();
+  });
+  it('should correctly handle path segments that are objects', async () => {
+    const result = await standardSchemaResolver(customSchema)(
+      validData,
+      undefined,
+      {
+        fields,
+        shouldUseNativeValidation,
+      },
+    );
+
     expect(result).toMatchSnapshot();
   });
 });
