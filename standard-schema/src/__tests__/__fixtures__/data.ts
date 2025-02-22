@@ -1,3 +1,4 @@
+import { StandardSchemaV1 } from '@standard-schema/spec';
 import { Field, InternalFieldName } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -84,5 +85,27 @@ export const fields: Record<InternalFieldName, Field['_f']> = {
   birthday: {
     ref: { name: 'birthday' },
     name: 'birthday',
+  },
+};
+
+export const customSchema: StandardSchemaV1<
+  StandardSchemaV1.InferInput<typeof schema>,
+  StandardSchemaV1.InferOutput<typeof schema>
+> = {
+  '~standard': {
+    version: 1,
+    vendor: 'custom',
+    validate: () => ({
+      issues: [
+        {
+          path: [{ key: 'username' }],
+          message: 'Custom error',
+        },
+        {
+          path: [{ key: 'like' }, { key: 0 }, { key: 'id' }],
+          message: 'Custom error',
+        },
+      ],
+    }),
   },
 };

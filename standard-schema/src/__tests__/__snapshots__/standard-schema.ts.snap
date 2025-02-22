@@ -1,5 +1,29 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`standardSchemaResolver > should correctly handle path segments that are objects 1`] = `
+{
+  "errors": {
+    "like": [
+      {
+        "id": {
+          "message": "Custom error",
+          "ref": undefined,
+          "type": "",
+        },
+      },
+    ],
+    "username": {
+      "message": "Custom error",
+      "ref": {
+        "name": "username",
+      },
+      "type": "",
+    },
+  },
+  "values": {},
+}
+`;
+
 exports[`standardSchemaResolver > should return a single error from standardSchemaResolver when validation fails 1`] = `
 {
   "errors": {

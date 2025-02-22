@@ -1,5 +1,6 @@
 import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
 import { StandardSchemaV1 } from '@standard-schema/spec';
+import { getDotPath } from '@standard-schema/utils';
 import { FieldError, FieldValues, Resolver } from 'react-hook-form';
 
 function parseIssues(
@@ -10,7 +11,7 @@ function parseIssues(
 
   for (let i = 0; i < issues.length; i++) {
     const error = issues[i];
-    const path = error.path?.join('.');
+    const path = getDotPath(error);
 
     if (path) {
       if (!errors[path]) {
@@ -52,15 +53,14 @@ function parseIssues(
  * ```
  */
 export function standardSchemaResolver<
-  TFieldValues extends FieldValues,
-  Schema extends StandardSchemaV1<TFieldValues, any>,
+  Schema extends StandardSchemaV1<FieldValues>,
 >(
   schema: Schema,
   resolverOptions: {
     raw?: boolean;
   } = {},
-): Resolver<NonNullable<(typeof schema)['~standard']['types']>['output']> {
-  return async (values: TFieldValues, _, options) => {
+): Resolver<StandardSchemaV1.InferOutput<Schema>> {
+  return async (values, _, options) => {
     let result = schema['~standard'].validate(values);
     if (result instanceof Promise) {
       result = await result;

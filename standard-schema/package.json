@@ -13,6 +13,7 @@
   "peerDependencies": {
     "react-hook-form": "^7.0.0",
     "@standard-schema/spec": "^1.0.0",
+    "@standard-schema/utils": "^0.3.0",
     "@hookform/resolvers": "^2.0.0"
   }
 }
