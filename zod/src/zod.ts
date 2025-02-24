@@ -68,7 +68,7 @@ function parseErrorSchema(
  * @param {Object} [resolverOptions] - Optional resolver-specific configuration
  * @param {('async'|'sync')} [resolverOptions.mode='async'] - Validation mode. Use 'sync' for synchronous validation
  * @param {boolean} [resolverOptions.raw=false] - If true, returns the raw form values instead of the parsed data
- * @returns {Resolver<z.infer<typeof schema>>} A resolver function compatible with react-hook-form
+ * @returns {Resolver<z.input<typeof schema>>} A resolver function compatible with react-hook-form
  * @throws {Error} Throws if validation fails with a non-Zod error
  * @example
  * const schema = z.object({
@@ -87,7 +87,7 @@ export function zodResolver<TFieldValues extends FieldValues>(
     mode?: 'async' | 'sync';
     raw?: boolean;
   } = {},
-): Resolver<z.infer<typeof schema>> {
+): Resolver<z.input<typeof schema>> {
   return async (values, _, options) => {
     try {
       const data = await schema[

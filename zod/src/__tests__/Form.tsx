@@ -10,17 +10,22 @@ const schema = z.object({
   password: z.string().nonempty({ message: 'password field is required' }),
 });
 
-type FormData = z.infer<typeof schema> & { unusedProperty: string };
+type SchemaInput = z.input<typeof schema>;
+type FormData = z.output<typeof schema> & { unusedProperty: string };
 
 function TestComponent({
   onSubmit,
-}: { onSubmit: (data: z.infer<typeof schema>) => void }) {
+}: { onSubmit: (data: z.output<typeof schema>) => void }) {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<SchemaInput, unknown, FormData>({
     resolver: zodResolver(schema), // Useful to check TypeScript regressions
+    defaultValues: {
+      username: '',
+      password: '',
+    },
   });
 
   return (
@@ -58,7 +63,7 @@ export function TestComponentManualType({
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<z.infer<typeof schema>, undefined, FormData>({
+  } = useForm<SchemaInput, undefined, FormData>({
     resolver: zodResolver(schema), // Useful to check TypeScript regressions
   });
 
