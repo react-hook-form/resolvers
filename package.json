@@ -269,7 +269,6 @@
   "devDependencies": {
     "@sinclair/typebox": "^0.34.15",
     "@standard-schema/spec": "^1.0.0",
-    "@standard-schema/utils": "^0.3.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
@@ -321,6 +320,6 @@
     "react-hook-form": "^7.0.0"
   },
   "dependencies": {
-    "caniuse-lite": "^1.0.30001698"
+    "@standard-schema/utils": "^0.3.0"
   }
 }
