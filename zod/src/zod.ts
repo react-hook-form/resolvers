@@ -63,12 +63,12 @@ function parseErrorSchema(
 
 /**
  * Creates a resolver function for react-hook-form that validates form data using a Zod schema
- * @param {z.ZodSchema<TFieldValues>} schema - The Zod schema used to validate the form data
+ * @param {z.ZodSchema<Input>} schema - The Zod schema used to validate the form data
  * @param {Partial<z.ParseParams>} [schemaOptions] - Optional configuration options for Zod parsing
  * @param {Object} [resolverOptions] - Optional resolver-specific configuration
  * @param {('async'|'sync')} [resolverOptions.mode='async'] - Validation mode. Use 'sync' for synchronous validation
  * @param {boolean} [resolverOptions.raw=false] - If true, returns the raw form values instead of the parsed data
- * @returns {Resolver<z.infer<typeof schema>>} A resolver function compatible with react-hook-form
+ * @returns {Resolver<z.ouput<typeof schema>>} A resolver function compatible with react-hook-form
  * @throws {Error} Throws if validation fails with a non-Zod error
  * @example
  * const schema = z.object({
@@ -80,14 +80,23 @@ function parseErrorSchema(
  *   resolver: zodResolver(schema)
  * });
  */
-export function zodResolver<TFieldValues extends FieldValues>(
-  schema: z.ZodSchema<TFieldValues, any, any>,
+export function zodResolver<
+  Input extends FieldValues,
+  Context = any,
+  Output = undefined,
+  Schema extends z.ZodSchema<any, any, any> = z.ZodSchema<any, any, any>,
+>(
+  schema: Schema,
   schemaOptions?: Partial<z.ParseParams>,
   resolverOptions: {
     mode?: 'async' | 'sync';
     raw?: boolean;
   } = {},
-): Resolver<z.infer<typeof schema>> {
+): Resolver<
+  Input,
+  Context,
+  Output extends undefined ? z.output<Schema> : Output
+> {
   return async (values, _, options) => {
     try {
       const data = await schema[
