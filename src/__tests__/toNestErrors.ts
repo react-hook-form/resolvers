@@ -284,3 +284,24 @@ test('ensures consistent ordering when a field array has a root error and an err
     },
   });
 });
+
+test('should correctly validate object with special characters', () => {
+  const result = toNestErrors(
+    { '[array-2]': { type: 'string', message: 'string is required' } },
+    {
+      names: ['[array-2]'],
+      fields: {
+        '[array-2]': { name: '[array-2]', ref: { name: '[array-2]' } },
+      },
+      shouldUseNativeValidation: false,
+    },
+  );
+
+  expect(result).toEqual({
+    'array-2': {
+      type: 'string',
+      message: 'string is required',
+      ref: { name: '[array-2]' },
+    },
+  });
+});

@@ -38,4 +38,18 @@ export const toNestErrors = <TFieldValues extends FieldValues>(
 const isNameInFieldArray = (
   names: InternalFieldName[],
   name: InternalFieldName,
-) => names.some((n) => n.match(`^${name}\\.\\d+`));
+) => {
+  const path = escapeBrackets(name);
+  return names.some((n) => escapeBrackets(n).match(`^${path}\\.\\d+`));
+};
+
+/**
+ * Escapes special characters in a string to be used in a regex pattern.
+ * it removes the brackets from the string to match the `set` method.
+ *
+ * @param input - The input string to escape.
+ * @returns The escaped string.
+ */
+function escapeBrackets(input: string): string {
+  return input.replace(/\]|\[/g, '');
+}
