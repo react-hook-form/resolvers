@@ -85,7 +85,7 @@ useForm<{ id: string }>({
 });
 
 // Force the output type
-useForm<z.input<typeof schema>, any, { id: boolean }>({
+useForm<z.input<typeof schema>, any, z.output<typeof schema>>({
   resolver: zodResolver(schema),
 });
 ```
