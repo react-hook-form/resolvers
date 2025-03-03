@@ -82,9 +82,9 @@ function parseErrorSchema(
  */
 export function zodResolver<
   Input extends FieldValues,
-  Context = any,
-  Output = undefined,
-  Schema extends z.ZodSchema<any, any, any> = z.ZodSchema<any, any, any>,
+  Context,
+  Output,
+  Schema extends z.ZodSchema<Output, any, any> = z.ZodSchema<Output, any, any>,
 >(
   schema: Schema,
   schemaOptions?: Partial<z.ParseParams>,
@@ -95,7 +95,11 @@ export function zodResolver<
 ): Resolver<
   Input,
   Context,
-  Output extends undefined ? z.output<Schema> : Output
+  (typeof resolverOptions)['raw'] extends true
+    ? Input
+    : unknown extends Output
+      ? z.output<Schema>
+      : Output
 > {
   return async (values, _, options) => {
     try {
