@@ -130,7 +130,7 @@ describe('zodResolver', () => {
   it('should correctly infer the output type from a Zod schema for the handleSubmit function in useForm', () => {
     const schema = z.object({ id: z.number() });
 
-    const form = useForm<{ id: number}, unknown, { id: number }>({
+    const form = useForm({
       resolver: zodResolver(schema),
     });
 
