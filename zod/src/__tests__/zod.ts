@@ -1,4 +1,4 @@
-import { FieldValues, Resolver, SubmitHandler, useForm } from 'react-hook-form';
+import { Resolver, SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '..';
 import { fields, invalidData, schema, validData } from './__fixtures__/data';
@@ -99,7 +99,7 @@ describe('zodResolver', () => {
     const resolver = zodResolver(z.object({ id: z.number() }));
 
     expectTypeOf(resolver).toEqualTypeOf<
-      Resolver<FieldValues, unknown, { id: number }>
+      Resolver<{ id: number }, unknown, { id: number }>
     >();
   });
 
@@ -109,7 +109,7 @@ describe('zodResolver', () => {
     );
 
     expectTypeOf(resolver).toEqualTypeOf<
-      Resolver<FieldValues, unknown, { id: string }>
+      Resolver<{ id: number }, unknown, { id: string }>
     >();
   });
 
@@ -130,7 +130,7 @@ describe('zodResolver', () => {
   it('should correctly infer the output type from a Zod schema for the handleSubmit function in useForm', () => {
     const schema = z.object({ id: z.number() });
 
-    const form = useForm({
+    const form = useForm<{ id: number}, unknown, { id: number }>({
       resolver: zodResolver(schema),
     });
 
@@ -145,7 +145,7 @@ describe('zodResolver', () => {
 
   it('should correctly infer the output type from a Zod schema when different input and output types are specified for the handleSubmit function in useForm', () => {
     const { handleSubmit } = useForm<{ id: string }, any, { id: boolean }>({
-      resolver: zodResolver(z.object({ id: z.boolean() })),
+      resolver: zodResolver(z.object({ id: z.string().transform((s) => !!s) })),
     });
 
     expectTypeOf(handleSubmit).parameter(0).toEqualTypeOf<

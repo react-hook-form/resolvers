@@ -1,9 +1,10 @@
 import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
 import {
   FieldError,
-  FieldErrors,
   FieldValues,
   Resolver,
+  ResolverError,
+  ResolverSuccess,
   appendErrors,
 } from 'react-hook-form';
 import { ZodError, z } from 'zod';
@@ -84,13 +85,8 @@ export function zodResolver<
   Input extends FieldValues,
   Context,
   Output,
-  Schema extends z.ZodSchema<Output, any, Input> = z.ZodSchema<
-    Output,
-    any,
-    Input
-  >,
 >(
-  schema: Schema,
+  schema: z.ZodSchema<Output, any, Input>,
   schemaOptions?: Partial<z.ParseParams>,
   resolverOptions: {
     mode?: 'async' | 'sync';
@@ -99,24 +95,20 @@ export function zodResolver<
 ): Resolver<
   Input,
   Context,
-  (typeof resolverOptions)['raw'] extends true
-    ? Input
-    : unknown extends Output
-      ? z.output<Schema>
-      : Output
+  Output
 > {
-  return async (values, _, options) => {
+  return async (values: Input, _, options) => {
     try {
-      const data = await schema[
-        resolverOptions.mode === 'sync' ? 'parse' : 'parseAsync'
-      ](values, schemaOptions);
+      const data = resolverOptions.mode === 'sync'
+        ? schema.parse(values, schemaOptions)
+        : await schema.parseAsync(values, schemaOptions);
 
       options.shouldUseNativeValidation && validateFieldsNatively({}, options);
 
       return {
-        errors: {} as FieldErrors,
-        values: resolverOptions.raw ? Object.assign({}, values) : data,
-      };
+        errors: {},
+        values: data,
+      } satisfies ResolverSuccess<Output>;
     } catch (error) {
       if (isZodError(error)) {
         return {
@@ -129,7 +121,7 @@ export function zodResolver<
             ),
             options,
           ),
-        };
+        } satisfies ResolverError<Input>;
       }
 
       throw error;
