@@ -81,11 +81,26 @@ function parseErrorSchema(
  *   resolver: zodResolver(schema)
  * });
  */
-export function zodResolver<
-  Input extends FieldValues,
-  Context,
-  Output,
->(
+// passing `resolverOptions.raw: false` (or omitting) you get the transformed output type
+export function zodResolver<Input extends FieldValues, Context, Output>(
+  schema: z.ZodSchema<Output, any, Input>,
+  schemaOptions?: Partial<z.ParseParams>,
+  resolverOptions?: {
+    mode?: 'async' | 'sync';
+    raw?: false;
+  },
+): Resolver<Input, Context, Output>
+// passing `resolverOptions.raw: true` you get back the input type
+export function zodResolver<Input extends FieldValues, Context, Output>(
+  schema: z.ZodSchema<Output, any, Input>,
+  schemaOptions: Partial<z.ParseParams> | undefined,
+  resolverOptions: {
+    mode?: 'async' | 'sync';
+    raw: true;
+  },
+): Resolver<Input, Context, Input>
+// implementation
+export function zodResolver< Input extends FieldValues, Context, Output>(
   schema: z.ZodSchema<Output, any, Input>,
   schemaOptions?: Partial<z.ParseParams>,
   resolverOptions: {
@@ -95,7 +110,7 @@ export function zodResolver<
 ): Resolver<
   Input,
   Context,
-  Output
+  Output | Input // consumers never see this type; they only see types from overload signatures
 > {
   return async (values: Input, _, options) => {
     try {
@@ -107,8 +122,8 @@ export function zodResolver<
 
       return {
         errors: {},
-        values: data,
-      } satisfies ResolverSuccess<Output>;
+        values: resolverOptions.raw ? Object.assign({}, values) : data,
+      } satisfies ResolverSuccess<Input | Output>;
     } catch (error) {
       if (isZodError(error)) {
         return {

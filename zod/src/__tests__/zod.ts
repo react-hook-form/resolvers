@@ -154,4 +154,31 @@ describe('zodResolver', () => {
       }>
     >();
   });
+
+  it('should correctly infer the output type from a zod schema using a transform with schemaOptions.raw', () => {
+    const resolver1 = zodResolver(
+      z.object({ id: z.number().transform((val) => String(val)) }),
+      undefined,
+      { raw: true },
+    );
+    expectTypeOf(resolver1).toEqualTypeOf<
+      Resolver<{ id: number }, unknown, { id: number }>
+    >();
+
+    const resolver2 = zodResolver(
+      z.object({ id: z.number().transform((val) => String(val)) }),
+      {},
+      { raw: false },
+    );
+    expectTypeOf(resolver2).toEqualTypeOf<
+      Resolver<{ id: number }, unknown, { id: string }>
+    >();
+
+    const resolver3 = zodResolver(
+      z.object({ id: z.number().transform((val) => String(val)) }),
+    );
+    expectTypeOf(resolver3).toEqualTypeOf<
+      Resolver<{ id: number }, unknown, { id: string }>
+    >();
+  });
 });
