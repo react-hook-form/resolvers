@@ -103,56 +103,49 @@ describe('zodResolver', () => {
     >();
   });
 
+  it('should correctly infer the output type from a zod schema using a transform', () => {
+    const resolver = zodResolver(
+      z.object({ id: z.number().transform((val) => String(val)) }),
+    );
+
+    expectTypeOf(resolver).toEqualTypeOf<
+      Resolver<FieldValues, unknown, { id: string }>
+    >();
+  });
+
   it('should correctly infer the output type from a zod schema when a different input type is specified', () => {
-    const schema = z.object({ id: z.number() });
-    const resolver = zodResolver<{ id: string }, any, z.output<typeof schema>>(
+    const schema = z.object({ id: z.number() }).transform(({ id }) => {
+      return { id: String(id) };
+    });
+
+    const resolver = zodResolver<{ id: number }, any, z.output<typeof schema>>(
       schema,
     );
 
     expectTypeOf(resolver).toEqualTypeOf<
-      Resolver<{ id: string }, any, { id: number }>
-    >();
-  });
-
-  it('should correctly infer the output type from a zod schema when different input and output types are specified', () => {
-    const resolver = zodResolver<
-      { id: string },
-      { context: any },
-      { id: number }
-    >(z.object({ id: z.number() }));
-
-    expectTypeOf(resolver).toEqualTypeOf<
-      Resolver<{ id: string }, { context: any }, { id: number }>
+      Resolver<{ id: number }, any, { id: string }>
     >();
   });
 
   it('should correctly infer the output type from a Zod schema for the handleSubmit function in useForm', () => {
-    const { handleSubmit } = useForm({
-      resolver: zodResolver(z.object({ id: z.number() })),
+    const schema = z.object({ id: z.number() });
+
+    const form = useForm({
+      resolver: zodResolver(schema),
     });
 
-    expectTypeOf(handleSubmit).parameter(0).toEqualTypeOf<
+    form.handleSubmit((d) => {});
+
+    expectTypeOf(form.handleSubmit).parameter(0).toEqualTypeOf<
       SubmitHandler<{
         id: number;
       }>
     >();
   });
 
-  it('should correctly infer the output type from a Zod schema when a different input type is specified for the handleSubmit function in useForm', () => {
-    const { handleSubmit } = useForm<{ id: number }>({
-      resolver: zodResolver(z.object({ id: z.string() })),
-    });
-
-    expectTypeOf(handleSubmit).parameter(0).toEqualTypeOf<
-      SubmitHandler<{
-        id: string;
-      }>
-    >();
-  });
-
   it('should correctly infer the output type from a Zod schema when different input and output types are specified for the handleSubmit function in useForm', () => {
     const { handleSubmit } = useForm<{ id: string }, any, { id: boolean }>({
-      resolver: zodResolver(z.object({ id: z.number() })),
+      resolver: zodResolver(z.object({ id: z.boolean() })),
     });
 
     expectTypeOf(handleSubmit).parameter(0).toEqualTypeOf<

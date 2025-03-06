@@ -84,7 +84,11 @@ export function zodResolver<
   Input extends FieldValues,
   Context,
   Output,
-  Schema extends z.ZodSchema<Output, any, any> = z.ZodSchema<Output, any, any>,
+  Schema extends z.ZodSchema<Output, any, Input> = z.ZodSchema<
+    Output,
+    any,
+    Input
+  >,
 >(
   schema: Schema,
   schemaOptions?: Partial<z.ParseParams>,
@@ -95,11 +99,7 @@ export function zodResolver<
 ): Resolver<
   Input,
   Context,
-  (typeof resolverOptions)['raw'] extends true
-    ? Input
-    : unknown extends Output
-      ? z.output<Schema>
-      : Output
+  unknown extends Output ? z.output<Schema> : Output
 > {
   return async (values, _, options) => {
     try {
@@ -113,7 +113,7 @@ export function zodResolver<
         errors: {} as FieldErrors,
         values: resolverOptions.raw ? Object.assign({}, values) : data,
       };
-    } catch (error: any) {
+    } catch (error) {
       if (isZodError(error)) {
         return {
           values: {},
