@@ -99,7 +99,11 @@ export function zodResolver<
 ): Resolver<
   Input,
   Context,
-  unknown extends Output ? z.output<Schema> : Output
+  (typeof resolverOptions)['raw'] extends true
+    ? Input
+    : unknown extends Output
+      ? z.output<Schema>
+      : Output
 > {
   return async (values, _, options) => {
     try {
