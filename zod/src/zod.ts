@@ -4,6 +4,8 @@ import {
   FieldErrors,
   FieldValues,
   Resolver,
+  ResolverError,
+  ResolverSuccess,
   appendErrors,
 } from 'react-hook-form';
 import { ZodError, z } from 'zod';
@@ -61,6 +63,24 @@ function parseErrorSchema(
   return errors;
 }
 
+export function zodResolver<Input extends FieldValues, Context, Output>(
+  schema: z.ZodSchema<Output, any, Input>,
+  schemaOptions?: Partial<z.ParseParams>,
+  resolverOptions?: {
+    mode?: 'async' | 'sync';
+    raw?: false;
+  },
+): Resolver<Input, Context, Output>;
+
+export function zodResolver<Input extends FieldValues, Context, Output>(
+  schema: z.ZodSchema<Output, any, Input>,
+  schemaOptions: Partial<z.ParseParams> | undefined,
+  resolverOptions: {
+    mode?: 'async' | 'sync';
+    raw: true;
+  },
+): Resolver<Input, Context, Input>;
+
 /**
  * Creates a resolver function for react-hook-form that validates form data using a Zod schema
  * @param {z.ZodSchema<Input>} schema - The Zod schema used to validate the form data
@@ -68,7 +88,7 @@ function parseErrorSchema(
  * @param {Object} [resolverOptions] - Optional resolver-specific configuration
  * @param {('async'|'sync')} [resolverOptions.mode='async'] - Validation mode. Use 'sync' for synchronous validation
  * @param {boolean} [resolverOptions.raw=false] - If true, returns the raw form values instead of the parsed data
- * @returns {Resolver<z.ouput<typeof schema>>} A resolver function compatible with react-hook-form
+ * @returns {Resolver<z.output<typeof schema>>} A resolver function compatible with react-hook-form
  * @throws {Error} Throws if validation fails with a non-Zod error
  * @example
  * const schema = z.object({
@@ -80,32 +100,15 @@ function parseErrorSchema(
  *   resolver: zodResolver(schema)
  * });
  */
-export function zodResolver<
-  Input extends FieldValues,
-  Context,
-  Output,
-  Schema extends z.ZodSchema<Output, any, Input> = z.ZodSchema<
-    Output,
-    any,
-    Input
-  >,
->(
-  schema: Schema,
+export function zodResolver<Input extends FieldValues, Context, Output>(
+  schema: z.ZodSchema<Output, any, Input>,
   schemaOptions?: Partial<z.ParseParams>,
   resolverOptions: {
     mode?: 'async' | 'sync';
     raw?: boolean;
   } = {},
-): Resolver<
-  Input,
-  Context,
-  (typeof resolverOptions)['raw'] extends true
-    ? Input
-    : unknown extends Output
-      ? z.output<Schema>
-      : Output
-> {
-  return async (values, _, options) => {
+): Resolver<Input, Context, Output | Input> {
+  return async (values: Input, _, options) => {
     try {
       const data = await schema[
         resolverOptions.mode === 'sync' ? 'parse' : 'parseAsync'
@@ -116,7 +119,7 @@ export function zodResolver<
       return {
         errors: {} as FieldErrors,
         values: resolverOptions.raw ? Object.assign({}, values) : data,
-      };
+      } satisfies ResolverSuccess<Output | Input>;
     } catch (error) {
       if (isZodError(error)) {
         return {
@@ -129,7 +132,7 @@ export function zodResolver<
             ),
             options,
           ),
-        };
+        } satisfies ResolverError<Input>;
       }
 
       throw error;

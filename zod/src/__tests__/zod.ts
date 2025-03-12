@@ -99,7 +99,7 @@ describe('zodResolver', () => {
     const resolver = zodResolver(z.object({ id: z.number() }));
 
     expectTypeOf(resolver).toEqualTypeOf<
-      Resolver<FieldValues, unknown, { id: number }>
+      Resolver<{ id: number }, unknown, { id: number }>
     >();
   });
 
@@ -109,7 +109,7 @@ describe('zodResolver', () => {
     );
 
     expectTypeOf(resolver).toEqualTypeOf<
-      Resolver<FieldValues, unknown, { id: string }>
+      Resolver<{ id: number }, unknown, { id: string }>
     >();
   });
 
@@ -134,7 +134,7 @@ describe('zodResolver', () => {
       resolver: zodResolver(schema),
     });
 
-    form.handleSubmit((d) => {});
+    expectTypeOf(form.watch('id')).toEqualTypeOf<number>();
 
     expectTypeOf(form.handleSubmit).parameter(0).toEqualTypeOf<
       SubmitHandler<{
@@ -143,14 +143,18 @@ describe('zodResolver', () => {
     >();
   });
 
-  it('should correctly infer the output type from a Zod schema when different input and output types are specified for the handleSubmit function in useForm', () => {
-    const { handleSubmit } = useForm<{ id: string }, any, { id: boolean }>({
-      resolver: zodResolver(z.object({ id: z.boolean() })),
+  it('should correctly infer the output type from a Zod schema with a transform for the handleSubmit function in useForm', () => {
+    const schema = z.object({ id: z.number().transform((val) => String(val)) });
+
+    const form = useForm({
+      resolver: zodResolver(schema),
     });
 
-    expectTypeOf(handleSubmit).parameter(0).toEqualTypeOf<
+    expectTypeOf(form.watch('id')).toEqualTypeOf<number>();
+
+    expectTypeOf(form.handleSubmit).parameter(0).toEqualTypeOf<
       SubmitHandler<{
-        id: boolean;
+        id: string;
       }>
     >();
   });
