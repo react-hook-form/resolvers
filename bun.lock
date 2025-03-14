@@ -40,7 +40,7 @@
         "npm-run-all": "^4.1.5",
         "react": "^19.0.0",
         "react-dom": "^19.0.0",
-        "react-hook-form": "^7.54.2",
+        "react-hook-form": "7.55.0-next.8",
         "reflect-metadata": "^0.2.2",
         "superstruct": "^2.0.2",
         "typanion": "^3.14.0",
