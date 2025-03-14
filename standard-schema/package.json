@@ -15,5 +15,8 @@
     "@standard-schema/spec": "^1.0.0",
     "@standard-schema/utils": "^0.3.0",
     "@hookform/resolvers": "^2.0.0"
+  },
+  "dependencies": {
+    "@standard-schema/utils": "^0.3.0"
   }
 }
