@@ -1,4 +1,4 @@
-import { FieldValues, Resolver, SubmitHandler, useForm } from 'react-hook-form';
+import { Resolver, SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '..';
 import { fields, invalidData, schema, validData } from './__fixtures__/data';
