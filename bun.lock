@@ -54,7 +54,7 @@
         "zod": "^3.24.1",
       },
       "peerDependencies": {
-        "react-hook-form": "^7.0.0",
+        "react-hook-form": "7.55.0-next.8",
       },
     },
   },
