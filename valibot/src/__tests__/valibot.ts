@@ -1,4 +1,7 @@
-import * as valibot from 'valibot';
+import { SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
+import { Resolver } from 'react-hook-form';
+import * as v from 'valibot';
 /* eslint-disable no-console, @typescript-eslint/ban-ts-comment */
 import { valibotResolver } from '..';
 import {
@@ -21,7 +24,7 @@ describe('valibotResolver', () => {
         ...a,
       };
     });
-    const funcSpy = vi.spyOn(valibot, 'safeParseAsync');
+    const funcSpy = vi.spyOn(v, 'safeParseAsync');
 
     const result = await valibotResolver(schema, undefined, {
       mode: 'sync',
@@ -40,7 +43,7 @@ describe('valibotResolver', () => {
         ...a,
       };
     });
-    const funcSpy = vi.spyOn(valibot, 'safeParseAsync');
+    const funcSpy = vi.spyOn(v, 'safeParseAsync');
 
     const result = await valibotResolver(schema, undefined, {
       mode: 'sync',
@@ -137,5 +140,68 @@ describe('valibotResolver', () => {
       },
       values: {},
     });
+  });
+
+  /**
+   * Type inference tests
+   */
+  it('should correctly infer the output type from a valibot schema', () => {
+    const resolver = valibotResolver(v.object({ id: v.number() }));
+
+    expectTypeOf(resolver).toEqualTypeOf<
+      Resolver<{ id: number }, unknown, { id: number }>
+    >();
+  });
+
+  it('should correctly infer the output type from a valibot schema using a transform', () => {
+    const resolver = valibotResolver(
+      v.object({
+        id: v.pipe(
+          v.number(),
+          v.transform((val) => String(val)),
+        ),
+      }),
+    );
+
+    expectTypeOf(resolver).toEqualTypeOf<
+      Resolver<{ id: number }, unknown, { id: string }>
+    >();
+  });
+
+  it('should correctly infer the output type from a valibot schema for the handleSubmit function in useForm', () => {
+    const schema = v.object({ id: v.number() });
+
+    const form = useForm({
+      resolver: valibotResolver(schema),
+    });
+
+    expectTypeOf(form.watch('id')).toEqualTypeOf<number>();
+
+    expectTypeOf(form.handleSubmit).parameter(0).toEqualTypeOf<
+      SubmitHandler<{
+        id: number;
+      }>
+    >();
+  });
+
+  it('should correctly infer the output type from a valibot schema with a transform for the handleSubmit function in useForm', () => {
+    const schema = v.object({
+      id: v.pipe(
+        v.number(),
+        v.transform((val) => String(val)),
+      ),
+    });
+
+    const form = useForm({
+      resolver: valibotResolver(schema),
+    });
+
+    expectTypeOf(form.watch('id')).toEqualTypeOf<number>();
+
+    expectTypeOf(form.handleSubmit).parameter(0).toEqualTypeOf<
+      SubmitHandler<{
+        id: string;
+      }>
+    >();
   });
 });
