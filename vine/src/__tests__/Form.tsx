@@ -13,8 +13,6 @@ const schema = vine.compile(
   }),
 );
 
-type FormData = Infer<typeof schema> & { unusedProperty: string };
-
 function TestComponent({
   onSubmit,
 }: { onSubmit: (data: Infer<typeof schema>) => void }) {
@@ -55,29 +53,3 @@ test("form's validation with Vine and TypeScript's integration", async () => {
   ).toBeInTheDocument();
   expect(handleSubmit).not.toHaveBeenCalled();
 });
-
-export function TestComponentManualType({
-  onSubmit,
-}: {
-  onSubmit: (data: FormData) => void;
-}) {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<Infer<typeof schema>, undefined, FormData>({
-    resolver: vineResolver(schema), // Useful to check TypeScript regressions
-  });
-
-  return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <input {...register('username')} />
-      {errors.username && <span role="alert">{errors.username.message}</span>}
-
-      <input {...register('password')} />
-      {errors.password && <span role="alert">{errors.password.message}</span>}
-
-      <button type="submit">submit</button>
-    </form>
-  );
-}

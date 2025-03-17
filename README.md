@@ -79,11 +79,6 @@ useForm({
   resolver: zodResolver(schema),
 });
 
-// Different input type
-useForm<{ id: string }>({
-  resolver: zodResolver(schema),
-});
-
 // Force the output type
 useForm<z.input<typeof schema>, any, z.output<typeof schema>>({
   resolver: zodResolver(schema),

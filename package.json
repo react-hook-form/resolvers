@@ -318,5 +318,8 @@
   },
   "peerDependencies": {
     "react-hook-form": "7.55.0-next.8"
+  },
+  "dependencies": {
+    "@standard-schema/utils": "^0.3.0"
   }
 }

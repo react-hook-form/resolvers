@@ -1,3 +1,4 @@
+import { type Resolver, type SubmitHandler, useForm } from 'react-hook-form';
 /* eslint-disable no-console, @typescript-eslint/ban-ts-comment */
 import * as yup from 'yup';
 import { yupResolver } from '..';
@@ -8,7 +9,6 @@ import {
   schemaWithWhen,
   validData,
 } from './__fixtures__/data';
-import { type SubmitHandler, type Resolver, useForm } from 'react-hook-form';
 
 const shouldUseNativeValidation = false;
 
