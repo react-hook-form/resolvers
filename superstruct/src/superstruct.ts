@@ -13,6 +13,22 @@ function parseErrorSchema(error: StructError) {
   );
 }
 
+export function superstructResolver<Input extends FieldValues, Context, Output>(
+  schema: Struct<Input, any>,
+  schemaOptions?: Parameters<typeof validate>[2],
+  resolverOptions?: {
+    raw?: false;
+  },
+): Resolver<Input, Context, Infer<typeof schema>>;
+
+export function superstructResolver<Input extends FieldValues, Context, Output>(
+  schema: Struct<Input, any>,
+  schemaOptions: Parameters<typeof validate>[2] | undefined,
+  resolverOptions: {
+    raw: true;
+  },
+): Resolver<Input, Context, Input>;
+
 /**
  * Creates a resolver for react-hook-form using Superstruct schema validation
  * @param {Struct<TFieldValues, any>} schema - The Superstruct schema to validate against
@@ -30,14 +46,14 @@ function parseErrorSchema(error: StructError) {
  *   resolver: superstructResolver(schema)
  * });
  */
-export function superstructResolver<TFieldValues extends FieldValues>(
-  schema: Struct<TFieldValues, any>,
+export function superstructResolver<Input extends FieldValues, Context, Output>(
+  schema: Struct<Input, any>,
   schemaOptions?: Parameters<typeof validate>[2],
   resolverOptions: {
     raw?: boolean;
   } = {},
-): Resolver<Infer<typeof schema>> {
-  return (values, _, options) => {
+): Resolver<Input, Context, Input | Output> {
+  return (values: Input, _, options) => {
     const result = validate(values, schema, schemaOptions);
 
     if (result[0]) {
