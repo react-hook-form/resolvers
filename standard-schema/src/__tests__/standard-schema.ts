@@ -1,3 +1,4 @@
+import { Resolver, SubmitHandler, useForm } from 'react-hook-form';
 import { standardSchemaResolver } from '..';
 import {
   customSchema,
@@ -6,6 +7,7 @@ import {
   schema,
   validData,
 } from './__fixtures__/data';
+import { z } from 'zod';
 
 const shouldUseNativeValidation = false;
 
@@ -70,5 +72,74 @@ describe('standardSchemaResolver', () => {
     );
 
     expect(result).toMatchSnapshot();
+  });
+
+  /**
+   * Type inference tests
+   */
+  it('should correctly infer the output type from a standardSchema schema', () => {
+    const resolver = standardSchemaResolver(z.object({ id: z.number() }));
+
+    expectTypeOf(resolver).toEqualTypeOf<
+      Resolver<{ id: number }, unknown, { id: number }>
+    >();
+  });
+
+  it('should correctly infer the output type from a standardSchema schema using a transform', () => {
+    const resolver = standardSchemaResolver(
+      z.object({ id: z.number().transform((val) => String(val)) }),
+    );
+
+    expectTypeOf(resolver).toEqualTypeOf<
+      Resolver<{ id: number }, unknown, { id: string }>
+    >();
+  });
+
+  it('should correctly infer the output type from a standardSchema schema when a different input type is specified', () => {
+    const schema = z.object({ id: z.number() }).transform(({ id }) => {
+      return { id: String(id) };
+    });
+
+    const resolver = standardSchemaResolver<
+      { id: number },
+      any,
+      z.output<typeof schema>
+    >(schema);
+
+    expectTypeOf(resolver).toEqualTypeOf<
+      Resolver<{ id: number }, any, { id: string }>
+    >();
+  });
+
+  it('should correctly infer the output type from a standardSchema schema for the handleSubmit function in useForm', () => {
+    const schema = z.object({ id: z.number() });
+
+    const form = useForm({
+      resolver: standardSchemaResolver(schema),
+    });
+
+    expectTypeOf(form.watch('id')).toEqualTypeOf<number>();
+
+    expectTypeOf(form.handleSubmit).parameter(0).toEqualTypeOf<
+      SubmitHandler<{
+        id: number;
+      }>
+    >();
+  });
+
+  it('should correctly infer the output type from a standardSchema schema with a transform for the handleSubmit function in useForm', () => {
+    const schema = z.object({ id: z.number().transform((val) => String(val)) });
+
+    const form = useForm({
+      resolver: standardSchemaResolver(schema),
+    });
+
+    expectTypeOf(form.watch('id')).toEqualTypeOf<number>();
+
+    expectTypeOf(form.handleSubmit).parameter(0).toEqualTypeOf<
+      SubmitHandler<{
+        id: string;
+      }>
+    >();
   });
 });
