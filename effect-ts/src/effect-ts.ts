@@ -9,6 +9,24 @@ import {
   appendErrors,
 } from 'react-hook-form';
 
+export function effectTsResolver<Input extends FieldValues, Context, Output>(
+  schema: Schema.Schema<Output, Input>,
+  schemaOptions?: ParseOptions,
+  resolverOptions?: {
+    mode?: 'async' | 'sync';
+    raw?: false;
+  },
+): Resolver<Input, Context, Output>;
+
+export function effectTsResolver<Input extends FieldValues, Context, Output>(
+  schema: Schema.Schema<Output, Input>,
+  schemaOptions: ParseOptions | undefined,
+  resolverOptions: {
+    mode?: 'async' | 'sync';
+    raw: true;
+  },
+): Resolver<Input, Context, Input>;
+
 /**
  * Creates a resolver for react-hook-form using Effect.ts schema validation
  * @param {Schema.Schema<TFieldValues, I>} schema - The Effect.ts schema to validate against
@@ -24,10 +42,10 @@ import {
  *   resolver: effectTsResolver(schema)
  * });
  */
-export function effectTsResolver<TFieldValues extends FieldValues, I>(
-  schema: Schema.Schema<TFieldValues, I>,
+export function effectTsResolver<Input extends FieldValues, Context, Output>(
+  schema: Schema.Schema<Output, Input>,
   schemaOptions: ParseOptions = { errors: 'all', onExcessProperty: 'ignore' },
-): Resolver<Schema.Schema.Type<typeof schema>> {
+): Resolver<Input, Context, Output | Input> {
   return (values, _, options) => {
     return decodeUnknown(
       schema,
