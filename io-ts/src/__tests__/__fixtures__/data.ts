@@ -50,7 +50,7 @@ export const schema = t.intersection([
   }),
 ]);
 
-export const validData: t.OutputOf<typeof schema> = {
+export const validData = {
   username: 'Doe',
   password: 'Password123',
   accessToken: 'c2883927-5178-4ad1-bbee-07ba33a5de19',
@@ -67,7 +67,7 @@ export const validData: t.OutputOf<typeof schema> = {
     },
   ],
   vehicles: [{ type: 'car', brand: 'BMW', horsepower: 150 }],
-};
+} satisfies t.OutputOf<typeof schema>;
 
 export const invalidData = {
   username: 'test',
@@ -90,7 +90,7 @@ export const invalidData = {
     { type: 'car', brand: 'BMW', horsepower: 150 },
     { type: 'car', brand: 'Mercedes' },
   ],
-} as any as t.OutputOf<typeof schema>;
+} as unknown as t.OutputOf<typeof schema>;
 
 export const fields: Record<InternalFieldName, Field['_f']> = {
   username: {
