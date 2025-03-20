@@ -1,4 +1,4 @@
-import { FieldValues, Resolver, SubmitHandler, useForm } from 'react-hook-form';
+import { Resolver, SubmitHandler, useForm } from 'react-hook-form';
 import * as s from 'superstruct';
 import { superstructResolver } from '..';
 import { fields, invalidData, schema, validData } from './__fixtures__/data';

@@ -1,5 +1,5 @@
 import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
-import { Type, ValidationError } from 'computed-types';
+import { ValidationError } from 'computed-types';
 import FunctionType from 'computed-types/lib/schema/FunctionType';
 import type { FieldErrors, FieldValues, Resolver } from 'react-hook-form';
 
