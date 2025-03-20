@@ -1,8 +1,8 @@
 import { Schema } from 'effect';
-import { effectTsResolver } from '..';
-import { fields, invalidData, schema, validData } from './__fixtures__/data';
 import { Resolver, useForm } from 'react-hook-form';
 import { SubmitHandler } from 'react-hook-form';
+import { effectTsResolver } from '..';
+import { fields, invalidData, schema, validData } from './__fixtures__/data';
 
 const shouldUseNativeValidation = false;
 

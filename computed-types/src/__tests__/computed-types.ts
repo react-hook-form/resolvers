@@ -1,7 +1,7 @@
+import Schema, { number } from 'computed-types';
 import { Resolver, SubmitHandler, useForm } from 'react-hook-form';
 import { computedTypesResolver } from '..';
 import { fields, invalidData, schema, validData } from './__fixtures__/data';
-import Schema, { number } from 'computed-types';
 
 const shouldUseNativeValidation = false;
 

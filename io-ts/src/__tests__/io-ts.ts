@@ -1,8 +1,8 @@
+import * as t from 'io-ts';
+import * as tt from 'io-ts-types';
 import { Resolver, SubmitHandler, useForm } from 'react-hook-form';
 import { ioTsResolver } from '..';
 import { fields, invalidData, schema, validData } from './__fixtures__/data';
-import * as t from 'io-ts';
-import * as tt from 'io-ts-types';
 
 const shouldUseNativeValidation = false;
 

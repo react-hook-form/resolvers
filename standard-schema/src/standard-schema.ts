@@ -38,6 +38,7 @@ export function standardSchemaResolver<
   Output,
 >(
   schema: StandardSchemaV1<Input, Output>,
+  _schemaOptions?: never,
   resolverOptions?: {
     raw?: false;
   },
@@ -49,6 +50,7 @@ export function standardSchemaResolver<
   Output,
 >(
   schema: StandardSchemaV1<Input, Output>,
+  _schemaOptions: never | undefined,
   resolverOptions: {
     raw: true;
   },
@@ -80,6 +82,7 @@ export function standardSchemaResolver<
   Output,
 >(
   schema: StandardSchemaV1<Input, Output>,
+  _schemaOptions?: never,
   resolverOptions: {
     raw?: boolean;
   } = {},

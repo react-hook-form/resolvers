@@ -1,4 +1,5 @@
 import { Resolver, SubmitHandler, useForm } from 'react-hook-form';
+import { z } from 'zod';
 import { standardSchemaResolver } from '..';
 import {
   customSchema,
@@ -7,7 +8,6 @@ import {
   schema,
   validData,
 } from './__fixtures__/data';
-import { z } from 'zod';
 
 const shouldUseNativeValidation = false;
 
@@ -51,7 +51,7 @@ describe('standardSchemaResolver', () => {
   it('should return values from standardSchemaResolver when validation pass & raw=true', async () => {
     const validateSpy = vi.spyOn(schema['~standard'], 'validate');
 
-    const result = await standardSchemaResolver(schema, {
+    const result = await standardSchemaResolver(schema, undefined, {
       raw: true,
     })(validData, undefined, {
       fields,

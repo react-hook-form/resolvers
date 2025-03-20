@@ -1,24 +1,52 @@
 import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
-import { ArkErrors, Type } from 'arktype';
-import { FieldError, FieldErrors, Resolver } from 'react-hook-form';
+import { StandardSchemaV1 } from '@standard-schema/spec';
+import { getDotPath } from '@standard-schema/utils';
+import { FieldError, FieldValues, Resolver } from 'react-hook-form';
 
-function parseErrorSchema(arkErrors: ArkErrors): Record<string, FieldError> {
-  const errors = [...arkErrors];
-  const fieldsErrors: Record<string, FieldError> = {};
+function parseErrorSchema(
+  issues: readonly StandardSchemaV1.Issue[],
+  validateAllFieldCriteria: boolean,
+) {
+  const errors: Record<string, FieldError> = {};
 
-  for (; errors.length; ) {
-    const error = errors[0];
-    const _path = error.path.join('.');
+  for (let i = 0; i < issues.length; i++) {
+    const error = issues[i];
+    const path = getDotPath(error);
 
-    if (!fieldsErrors[_path]) {
-      fieldsErrors[_path] = { message: error.message, type: error.code };
+    if (path) {
+      if (!errors[path]) {
+        errors[path] = { message: error.message, type: '' };
+      }
+
+      if (validateAllFieldCriteria) {
+        const types = errors[path].types || {};
+
+        errors[path].types = {
+          ...types,
+          [Object.keys(types).length]: error.message,
+        };
+      }
     }
-
-    errors.shift();
   }
 
-  return fieldsErrors;
+  return errors;
 }
+
+export function arktypeResolver<Input extends FieldValues, Context, Output>(
+  schema: StandardSchemaV1<Input, Output>,
+  _schemaOptions?: never,
+  resolverOptions?: {
+    raw?: false;
+  },
+): Resolver<Input, Context, Output>;
+
+export function arktypeResolver<Input extends FieldValues, Context, Output>(
+  schema: StandardSchemaV1<Input, Output>,
+  _schemaOptions: never | undefined,
+  resolverOptions: {
+    raw: true;
+  },
+): Resolver<Input, Context, Input>;
 
 /**
  * Creates a resolver for react-hook-form using Arktype schema validation
@@ -35,28 +63,36 @@ function parseErrorSchema(arkErrors: ArkErrors): Record<string, FieldError> {
  *   resolver: arktypeResolver(schema)
  * });
  */
-export function arktypeResolver<Schema extends Type<any, any>>(
-  schema: Schema,
+export function arktypeResolver<Input extends FieldValues, Context, Output>(
+  schema: StandardSchemaV1<Input, Output>,
   _schemaOptions?: never,
   resolverOptions: {
     raw?: boolean;
   } = {},
-): Resolver<Schema['inferOut']> {
-  return (values, _, options) => {
-    const out = schema(values);
+): Resolver<Input, Context, Input | Output> {
+  return async (values: Input, _, options) => {
+    let result = schema['~standard'].validate(values);
+    if (result instanceof Promise) {
+      result = await result;
+    }
 
-    if (out instanceof ArkErrors) {
+    if (result.issues) {
+      const errors = parseErrorSchema(
+        result.issues,
+        !options.shouldUseNativeValidation && options.criteriaMode === 'all',
+      );
+
       return {
         values: {},
-        errors: toNestErrors(parseErrorSchema(out), options),
+        errors: toNestErrors(errors, options),
       };
     }
 
     options.shouldUseNativeValidation && validateFieldsNatively({}, options);
 
     return {
-      errors: {} as FieldErrors,
-      values: resolverOptions.raw ? Object.assign({}, values) : out,
+      values: resolverOptions.raw ? Object.assign({}, values) : result.value,
+      errors: {},
     };
   };
 }
