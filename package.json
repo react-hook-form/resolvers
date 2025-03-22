@@ -129,6 +129,12 @@
       "import": "./standard-schema/dist/standard-schema.mjs",
       "require": "./standard-schema/dist/standard-schema.js"
     },
+    "./valita": {
+      "types": "./valita/dist/index.d.ts",
+      "umd": "./valita/dist/valita.umd.js",
+      "import": "./valita/dist/valita.mjs",
+      "require": "./valita/dist/valita.js"
+    },
     "./package.json": "./package.json",
     "./*": "./*"
   },
@@ -193,7 +199,10 @@
     "fluentvalidation-ts/dist",
     "standard-schema/package.json",
     "standard-schema/src",
-    "standard-schema/dist"
+    "standard-schema/dist",
+    "valita/package.json",
+    "valita/src",
+    "valita/dist"
   ],
   "publishConfig": {
     "access": "public"
@@ -221,6 +230,7 @@
     "build:vine": "microbundle --cwd vine --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm,@vinejs/vine=vine",
     "build:fluentvalidation-ts": "microbundle --cwd fluentvalidation-ts --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
     "build:standard-schema": "microbundle --cwd standard-schema --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm,@standard-schema/spec=standardSchema",
+    "build:valita": "microbundle --cwd valita --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm,@badrap/valita=valita",
     "postbuild": "node ./config/node-13-exports.js && check-export-map",
     "lint": "bunx @biomejs/biome check --write --vcs-use-ignore-file=true .",
     "lint:types": "tsc",
@@ -254,7 +264,8 @@
     "typeschema",
     "vine",
     "fluentvalidation-ts",
-    "standard-schema"
+    "standard-schema",
+    "valita"
   ],
   "repository": {
     "type": "git",
@@ -268,6 +279,7 @@
   "homepage": "https://react-hook-form.com",
   "devDependencies": {
     "@sinclair/typebox": "^0.34.30",
+    "@badrap/valita": "^0.4.3",
     "@standard-schema/spec": "^1.0.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",

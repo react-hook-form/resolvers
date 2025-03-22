@@ -53,6 +53,7 @@ Install your preferred validation library alongside `@hookform/resolvers`.
 | vine  | ✅  | `firstError | all` |
 | yup  | ✅  | `firstError | all` |
 | zod  | ✅ | `firstError | all` |
+| valita  | ❌ | `firstError` |
 </details>
 
 ## TypeScript
@@ -117,6 +118,7 @@ useForm<z.input<typeof schema>, any, z.output<typeof schema>>({
   - [VineJS](#vinejs)
   - [fluentvalidation-ts](#fluentvalidation-ts)
   - [standard-schema](#standard-schema)
+  - [valita](#valita)
 - [Backers](#backers)
   - [Sponsors](#sponsors)
 - [Contributors](#contributors)
@@ -897,6 +899,37 @@ const schema = type({
 const App = () => {
   const { register, handleSubmit } = useForm({
     resolver: standardSchemaResolver(schema),
+  });
+
+  return (
+    <form onSubmit={handleSubmit((d) => console.log(d))}>
+      <input {...register('username')} />
+      <input type="password" {...register('password')} />
+      <input type="submit" />
+    </form>
+  );
+};
+```
+
+### [valita](https://github.com/badrap/valita)
+
+A typesafe validation & parsing library for TypeScript.
+
+[![npm](https://img.shields.io/bundlephobia/minzip/@badrap/valita?style=for-the-badge)](https://bundlephobia.com/result?p=@badrap/valita)
+
+```typescript jsx
+import { useForm } from 'react-hook-form';
+import { valitaResolver } from '@hookform/resolvers/valita';
+import * as v from '@badrap/valita';
+
+const schema = v.object({
+  username: v.string(),
+  password: v.string(),
+});
+
+const App = () => {
+  const { register, handleSubmit } = useForm({
+    resolver: valitaResolver(schema),
   });
 
   return (
