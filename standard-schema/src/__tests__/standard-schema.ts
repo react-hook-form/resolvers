@@ -116,6 +116,9 @@ describe('standardSchemaResolver', () => {
 
     const form = useForm({
       resolver: standardSchemaResolver(schema),
+      defaultValues: {
+        id: 3,
+      },
     });
 
     expectTypeOf(form.watch('id')).toEqualTypeOf<number>();
@@ -132,6 +135,9 @@ describe('standardSchemaResolver', () => {
 
     const form = useForm({
       resolver: standardSchemaResolver(schema),
+      defaultValues: {
+        id: 3,
+      },
     });
 
     expectTypeOf(form.watch('id')).toEqualTypeOf<number>();
