@@ -1,14 +1,8 @@
 import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
-import { Static, StaticDecode, Type } from '@sinclair/typebox';
+import { Static, StaticDecode, TObject } from '@sinclair/typebox';
 import { TypeCheck } from '@sinclair/typebox/compiler';
 import { Value, type ValueError } from '@sinclair/typebox/value';
-import {
-  FieldError,
-  FieldErrors,
-  FieldValues,
-  Resolver,
-  appendErrors,
-} from 'react-hook-form';
+import { FieldError, Resolver, appendErrors } from 'react-hook-form';
 
 function parseErrorSchema(
   _errors: ValueError[],
@@ -45,22 +39,6 @@ function parseErrorSchema(
   return errors;
 }
 
-export function typeboxResolver<Input extends FieldValues, Context>(
-  typecheck: TypeCheck<ReturnType<typeof Type.Object<Input>>>,
-): Resolver<
-  Static<ReturnType<typeof typecheck.Schema>>,
-  Context,
-  StaticDecode<ReturnType<typeof typecheck.Schema>>
->;
-
-export function typeboxResolver<Input extends FieldValues, Context>(
-  schema: ReturnType<typeof Type.Object<Input>>,
-): Resolver<Static<typeof schema>, Context, StaticDecode<typeof schema>>;
-
-export function typeboxResolver<Input extends FieldValues, Context, Output>(
-  schema: ReturnType<typeof Type.Object<Input>>,
-): Resolver<Static<typeof schema>, Context, Output>;
-
 /**
  * Creates a resolver for react-hook-form using Typebox schema validation
  * @param {Schema | TypeCheck<Schema>} schema - The Typebox schema to validate against
@@ -77,10 +55,10 @@ export function typeboxResolver<Input extends FieldValues, Context, Output>(
  *   resolver: typeboxResolver(schema)
  * });
  */
-export function typeboxResolver<Input extends FieldValues, Context, Output>(
-  schema: ReturnType<typeof Type.Object<Input>>,
-): Resolver<Static<typeof schema>, Context, Output | Static<typeof schema>> {
-  return async (values: Static<typeof schema>, _, options) => {
+export function typeboxResolver<Schema extends TObject, Context>(
+  schema: Schema | TypeCheck<Schema>,
+): Resolver<Static<Schema>, Context, StaticDecode<Schema>> {
+  return async (values: Static<Schema>, _, options) => {
     const errors = Array.from(
       schema instanceof TypeCheck
         ? schema.Errors(values)
@@ -91,7 +69,7 @@ export function typeboxResolver<Input extends FieldValues, Context, Output>(
 
     if (!errors.length) {
       return {
-        errors: {} as FieldErrors,
+        errors: {},
         values,
       };
     }
