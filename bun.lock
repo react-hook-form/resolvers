@@ -43,7 +43,7 @@
         "npm-run-all": "^4.1.5",
         "react": "^19.0.0",
         "react-dom": "^19.0.0",
-        "react-hook-form": "7.55.0-next.8",
+        "react-hook-form": "7.55.0-next.9",
         "reflect-metadata": "^0.2.2",
         "superstruct": "^2.0.2",
         "typanion": "^3.14.0",
@@ -57,7 +57,7 @@
         "zod": "^3.24.2",
       },
       "peerDependencies": {
-        "react-hook-form": "7.55.0-next.8",
+        "react-hook-form": "7.55.0-next.9",
       },
     },
   },
@@ -1158,7 +1158,7 @@
 
     "react-dom": ["react-dom@19.0.0", "", { "dependencies": { "scheduler": "^0.25.0" }, "peerDependencies": { "react": "^19.0.0" } }, "sha512-4GV5sHFG0e/0AD4X+ySy6UJd3jVl1iNsNHdpad0qhABJ11twS3TTBnseqsKurKcsNqCEFeGL3uLpVChpIO3QfQ=="],
 
-    "react-hook-form": ["react-hook-form@7.55.0-next.8", "", { "peerDependencies": { "react": "^16.8.0 || ^17 || ^18 || ^19" } }, "sha512-COa8KK4crH0xaYlYrNFk+A9Qly81PPOyCAAQMj9bNLfaRukfVnxJe+8fTanl26zVY1nsMQWwvs7UtR3t5omAjA=="],
+    "react-hook-form": ["react-hook-form@7.55.0-next.9", "", { "peerDependencies": { "react": "^16.8.0 || ^17 || ^18 || ^19" } }, "sha512-gVh95OT6l/77OTQ4Bzxf/7PbeKV0lCn+4WeMtHbNn+wbkPeP3QXi1ICHpVv/cZLT72L8sJy/2/xK9L4l+qX4Pg=="],
 
     "react-is": ["react-is@17.0.2", "", {}, "sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w=="],
 
