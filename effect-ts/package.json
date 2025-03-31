@@ -13,6 +13,6 @@
   "peerDependencies": {
     "@hookform/resolvers": "^2.0.0",
     "effect": "^3.10.3",
-    "react-hook-form": "7.55.0-next.9"
+    "react-hook-form": "7.55.0"
   }
 }
