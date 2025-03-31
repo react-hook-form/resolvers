@@ -1,5 +1,5 @@
 import vine from '@vinejs/vine';
-import { Infer } from '@vinejs/vine/build/src/types';
+import { InferInput } from '@vinejs/vine/build/src/types';
 import { Field, InternalFieldName } from 'react-hook-form';
 
 export const schema = vine.compile(
@@ -31,7 +31,7 @@ export const schema = vine.compile(
   }),
 );
 
-export const validData: Infer<typeof schema> = {
+export const validData = {
   username: 'Doe',
   password: 'Password123_',
   repeatPassword: 'Password123_',
@@ -47,14 +47,14 @@ export const validData: Infer<typeof schema> = {
     },
   ],
   dateStr: '2020-01-01T00:00:00.000Z',
-};
+} satisfies InferInput<typeof schema>;
 
 export const invalidData = {
   password: '___',
   email: '',
   birthYear: 'birthYear',
   like: [{ id: 'z' }],
-} as any as Infer<typeof schema>;
+} as unknown as InferInput<typeof schema>;
 
 export const fields: Record<InternalFieldName, Field['_f']> = {
   username: {

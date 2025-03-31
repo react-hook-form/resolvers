@@ -13,8 +13,6 @@ const schema = Schema({
   }),
 });
 
-type FormData = Type<typeof schema> & { unusedProperty: string };
-
 function TestComponent({
   onSubmit,
 }: { onSubmit: (data: Type<typeof schema>) => void }) {
@@ -57,29 +55,3 @@ test("form's validation with computed-types and TypeScript's integration", async
   expect(screen.getByText(/zipCode field is required/i)).toBeInTheDocument();
   expect(handleSubmit).not.toHaveBeenCalled();
 });
-
-export function TestComponentManualType({
-  onSubmit,
-}: {
-  onSubmit: (data: FormData) => void;
-}) {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<Type<typeof schema>, undefined, FormData>({
-    resolver: computedTypesResolver(schema), // Useful to check TypeScript regressions
-  });
-
-  return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <input {...register('username')} />
-      {errors.username && <span role="alert">{errors.username.message}</span>}
-
-      <input {...register('password')} />
-      {errors.password && <span role="alert">{errors.password.message}</span>}
-
-      <button type="submit">submit</button>
-    </form>
-  );
-}

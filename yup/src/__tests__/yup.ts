@@ -1,3 +1,4 @@
+import { type Resolver, type SubmitHandler, useForm } from 'react-hook-form';
 /* eslint-disable no-console, @typescript-eslint/ban-ts-comment */
 import * as yup from 'yup';
 import { yupResolver } from '..';
@@ -215,5 +216,70 @@ describe('yupResolver', () => {
     expect(schemaSpy).toHaveBeenCalledTimes(1);
     expect(schemaSyncSpy).not.toHaveBeenCalled();
     expect(result).toEqual({ errors: {}, values: { firstName: 'resolver' } });
+  });
+
+  /**
+   * Type inference tests
+   */
+  it('should correctly infer the output type from a yup schema', () => {
+    const resolver = yupResolver(yup.object({ id: yup.number().required() }));
+
+    expectTypeOf(resolver).toEqualTypeOf<
+      Resolver<{ id: number }, unknown, { id: number }>
+    >();
+  });
+
+  it('should correctly infer the output type from a yup schema using a transform', () => {
+    const resolver = yupResolver(
+      yup.object({
+        id: yup
+          .number()
+          .required()
+          .transform((val) => String(val)),
+      }),
+    );
+
+    // Because Yup is not able to infer the output type from the schema with a transform, the output type remains unchanged
+    expectTypeOf(resolver).toEqualTypeOf<
+      Resolver<{ id: number }, unknown, { id: number }>
+    >();
+  });
+
+  it('should correctly infer the output type from a yup schema for the handleSubmit function in useForm', () => {
+    const schema = yup.object({ id: yup.number().required() });
+
+    const form = useForm({
+      resolver: yupResolver(schema),
+    });
+
+    expectTypeOf(form.watch('id')).toEqualTypeOf<number>();
+
+    expectTypeOf(form.handleSubmit).parameter(0).toEqualTypeOf<
+      SubmitHandler<{
+        id: number;
+      }>
+    >();
+  });
+
+  it('should correctly infer the output type from a yup schema with a transform for the handleSubmit function in useForm', () => {
+    const schema = yup.object({
+      id: yup
+        .number()
+        .required()
+        .transform((val) => String(val)),
+    });
+
+    const form = useForm({
+      resolver: yupResolver(schema),
+    });
+
+    expectTypeOf(form.watch('id')).toEqualTypeOf<number>();
+
+    // Because Yup is not able to infer the output type from the schema with a transform, the output type remains unchanged
+    expectTypeOf(form.handleSubmit).parameter(0).toEqualTypeOf<
+      SubmitHandler<{
+        id: number;
+      }>
+    >();
   });
 });

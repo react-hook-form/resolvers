@@ -21,7 +21,7 @@ interface Props {
 }
 
 function TestComponent({ onSubmit }: Props) {
-  const { register, handleSubmit } = useForm<FormData>({
+  const { register, handleSubmit } = useForm({
     resolver: typeboxResolver(typecheck),
     shouldUseNativeValidation: true,
   });

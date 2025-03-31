@@ -55,6 +55,36 @@ Install your preferred validation library alongside `@hookform/resolvers`.
 | zod  | ✅ | `firstError | all` |
 </details>
 
+## TypeScript
+
+Most of the resolvers can infer the output type from the schema. See comparison table for more details.
+
+```tsx
+useForm<Input, Context, Output>()
+```
+
+Example:
+
+```tsx
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+
+const schema = z.object({
+  id: z.number(),
+});
+
+// Automatically infers the output type from the schema
+useForm({
+  resolver: zodResolver(schema),
+});
+
+// Force the output type
+useForm<z.input<typeof schema>, any, z.output<typeof schema>>({
+  resolver: zodResolver(schema),
+});
+```
+
 ## Links
 
 - [React-hook-form validation resolver documentation ](https://react-hook-form.com/docs/useform#resolver)

@@ -10,8 +10,6 @@ const schema = Type.Object({
   password: Type.String({ minLength: 1 }),
 });
 
-type FormData = Static<typeof schema> & { unusedProperty: string };
-
 function TestComponent({
   onSubmit,
 }: {
@@ -52,29 +50,3 @@ test("form's validation with Typebox and TypeScript's integration", async () => 
 
   expect(handleSubmit).not.toHaveBeenCalled();
 });
-
-export function TestComponentManualType({
-  onSubmit,
-}: {
-  onSubmit: (data: FormData) => void;
-}) {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<Static<typeof schema>, undefined, FormData>({
-    resolver: typeboxResolver(schema), // Useful to check TypeScript regressions
-  });
-
-  return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <input {...register('username')} />
-      {errors.username && <span role="alert">{errors.username.message}</span>}
-
-      <input {...register('password')} />
-      {errors.password && <span role="alert">{errors.password.message}</span>}
-
-      <button type="submit">submit</button>
-    </form>
-  );
-}

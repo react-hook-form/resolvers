@@ -22,6 +22,24 @@ function parseErrors(errors: string[], parsedErrors: FieldErrors = {}) {
   }, parsedErrors);
 }
 
+export function typanionResolver<Input extends FieldValues, Context, Output>(
+  schema: t.StrictValidator<Input, Input>,
+  schemaOptions?: Pick<t.ValidationState, 'coercions' | 'coercion'>,
+  resolverOptions?: {
+    mode?: 'async' | 'sync';
+    raw?: false;
+  },
+): Resolver<Input, Context, t.InferType<typeof schema>>;
+
+export function typanionResolver<Input extends FieldValues, Context, Output>(
+  schema: t.StrictValidator<Input, Input>,
+  schemaOptions: Pick<t.ValidationState, 'coercions' | 'coercion'> | undefined,
+  resolverOptions: {
+    mode?: 'async' | 'sync';
+    raw: true;
+  },
+): Resolver<Input, Context, Input>;
+
 /**
  * Creates a resolver for react-hook-form using Typanion schema validation
  * @param {t.StrictValidator<TFieldValues, TFieldValues>} schema - The Typanion schema to validate against
@@ -37,11 +55,11 @@ function parseErrors(errors: string[], parsedErrors: FieldErrors = {}) {
  *   resolver: typanionResolver(schema)
  * });
  */
-export function typanionResolver<TFieldValues extends FieldValues>(
-  schema: t.StrictValidator<TFieldValues, TFieldValues>,
+export function typanionResolver<Input extends FieldValues, Context, Output>(
+  schema: t.StrictValidator<Input, Input>,
   schemaOptions: Pick<t.ValidationState, 'coercions' | 'coercion'> = {},
-): Resolver<t.InferType<typeof schema>> {
-  return (values, _, options) => {
+): Resolver<Input, Context, Output | Input> {
+  return (values: Input, _, options) => {
     const rawErrors: string[] = [];
     const isValid = schema(
       values,

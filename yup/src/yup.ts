@@ -42,6 +42,28 @@ function parseErrorSchema(
   );
 }
 
+export function yupResolver<Input extends FieldValues, Context, Output>(
+  schema:
+    | Yup.ObjectSchema<Input, any, Output, any>
+    | ReturnType<typeof Yup.lazy<Yup.ObjectSchema<Input, any, Output, any>>>,
+  schemaOptions?: Parameters<(typeof schema)['validate']>[1],
+  resolverOptions?: {
+    mode?: 'async' | 'sync';
+    raw?: false;
+  },
+): Resolver<Input, Context, Yup.InferType<typeof schema>>;
+
+export function yupResolver<Input extends FieldValues, Context, Output>(
+  schema:
+    | Yup.ObjectSchema<Input, any, Output, any>
+    | ReturnType<typeof Yup.lazy<Yup.ObjectSchema<Input, any, Output, any>>>,
+  schemaOptions: Parameters<(typeof schema)['validate']>[1] | undefined,
+  resolverOptions: {
+    mode?: 'async' | 'sync';
+    raw: true;
+  },
+): Resolver<Input, Context, Input>;
+
 /**
  * Creates a resolver for react-hook-form using Yup schema validation
  * @param {Yup.ObjectSchema<TFieldValues> | ReturnType<typeof Yup.lazy<Yup.ObjectSchema<TFieldValues>>>} schema - Yup validation schema
@@ -49,7 +71,7 @@ function parseErrorSchema(
  * @param {Object} resolverOptions - Additional resolver configuration
  * @param {('async' | 'sync')} [resolverOptions.mode] - Validation mode
  * @param {boolean} [resolverOptions.raw] - If true, returns raw values instead of validated results
- * @returns {Resolver<Yup.InferType<typeof schema>>} A resolver function compatible with react-hook-form
+ * @returns {Resolver<Yup.InferType<typeof schema> | Input>} A resolver function compatible with react-hook-form
  * @example
  * const schema = Yup.object({
  *   name: Yup.string().required(),
@@ -60,19 +82,19 @@ function parseErrorSchema(
  *   resolver: yupResolver(schema)
  * });
  */
-export function yupResolver<TFieldValues extends FieldValues>(
+export function yupResolver<Input extends FieldValues, Context, Output>(
   schema:
-    | Yup.ObjectSchema<TFieldValues>
-    | ReturnType<typeof Yup.lazy<Yup.ObjectSchema<TFieldValues>>>,
-  schemaOptions: Parameters<(typeof schema)['validate']>[1] = {},
+    | Yup.ObjectSchema<Input, any, Output, any>
+    | ReturnType<typeof Yup.lazy<Yup.ObjectSchema<Input, any, Output, any>>>,
+  schemaOptions?: Parameters<(typeof schema)['validate']>[1],
   resolverOptions: {
     mode?: 'async' | 'sync';
     raw?: boolean;
   } = {},
-): Resolver<Yup.InferType<typeof schema>> {
-  return async (values, context, options) => {
+): Resolver<Input, Context, Yup.InferType<typeof schema> | Input> {
+  return async (values: Input, context, options) => {
     try {
-      if (schemaOptions.context && process.env.NODE_ENV === 'development') {
+      if (schemaOptions?.context && process.env.NODE_ENV === 'development') {
         // eslint-disable-next-line no-console
         console.warn(
           "You should not used the yup options context. Please, use the 'useForm' context object instead",

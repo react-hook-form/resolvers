@@ -1,7 +1,7 @@
 import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
-import { Type, ValidationError } from 'computed-types';
+import { ValidationError } from 'computed-types';
 import FunctionType from 'computed-types/lib/schema/FunctionType';
-import type { FieldErrors, Resolver } from 'react-hook-form';
+import type { FieldErrors, FieldValues, Resolver } from 'react-hook-form';
 
 const isValidationError = (error: any): error is ValidationError =>
   error.errors != null;
@@ -32,9 +32,11 @@ function parseErrorSchema(computedTypesError: ValidationError) {
  *   resolver: computedTypesResolver(schema)
  * });
  */
-export function computedTypesResolver<Schema extends FunctionType<any, any>>(
-  schema: Schema,
-): Resolver<Type<typeof schema>> {
+export function computedTypesResolver<
+  Input extends FieldValues,
+  Context,
+  Output,
+>(schema: FunctionType<Output, [Input]>): Resolver<Input, Context, Output> {
   return async (values, _, options) => {
     try {
       const data = await schema(values);

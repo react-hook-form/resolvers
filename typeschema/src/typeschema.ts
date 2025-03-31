@@ -1,16 +1,21 @@
 import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
-import type { ValidationIssue } from '@typeschema/core';
-import { validate } from '@typeschema/main';
-import { FieldError, FieldErrors, appendErrors } from 'react-hook-form';
-import type { Resolver } from './types';
+import {
+  FieldError,
+  FieldErrors,
+  FieldValues,
+  Resolver,
+  appendErrors,
+} from 'react-hook-form';
+import { StandardSchemaV1 } from 'zod/lib/standard-schema';
 
 const parseErrorSchema = (
-  typeschemaErrors: ValidationIssue[],
+  typeschemaErrors: readonly StandardSchemaV1.Issue[],
   validateAllFieldCriteria: boolean,
 ): FieldErrors => {
+  const schemaErrors = Object.assign([], typeschemaErrors);
   const errors: Record<string, FieldError> = {};
 
-  for (; typeschemaErrors.length; ) {
+  for (; schemaErrors.length; ) {
     const error = typeschemaErrors[0];
 
     if (!error.path) {
@@ -37,11 +42,27 @@ const parseErrorSchema = (
       ) as FieldError;
     }
 
-    typeschemaErrors.shift();
+    schemaErrors.shift();
   }
 
   return errors;
 };
+
+export function typeschemaResolver<Input extends FieldValues, Context, Output>(
+  schema: StandardSchemaV1<Input, Output>,
+  _schemaOptions?: never,
+  resolverOptions?: {
+    raw?: false;
+  },
+): Resolver<Input, Context, Output>;
+
+export function typeschemaResolver<Input extends FieldValues, Context, Output>(
+  schema: StandardSchemaV1<Input, Output>,
+  _schemaOptions: never | undefined,
+  resolverOptions: {
+    raw: true;
+  },
+): Resolver<Input, Context, Input>;
 
 /**
  * Creates a resolver for react-hook-form using TypeSchema validation
@@ -60,30 +81,36 @@ const parseErrorSchema = (
  *   resolver: typeschemaResolver(schema)
  * });
  */
-export const typeschemaResolver: Resolver =
-  (schema, _, resolverOptions = {}) =>
-  async (values, _, options) => {
-    const result = await validate(schema, values);
+export function typeschemaResolver<Input extends FieldValues, Context, Output>(
+  schema: StandardSchemaV1<Input, Output>,
+  _schemaOptions?: never,
+  resolverOptions: {
+    raw?: boolean;
+  } = {},
+): Resolver<Input, Context, Output | Input> {
+  return async (values, _, options) => {
+    let result = schema['~standard'].validate(values);
+    if (result instanceof Promise) {
+      result = await result;
+    }
 
-    options.shouldUseNativeValidation && validateFieldsNatively({}, options);
+    if (result.issues) {
+      const errors = parseErrorSchema(
+        result.issues,
+        !options.shouldUseNativeValidation && options.criteriaMode === 'all',
+      );
 
-    if (result.success) {
       return {
-        errors: {} as FieldErrors,
-        values: resolverOptions.raw
-          ? Object.assign({}, values)
-          : (result.data as any),
+        values: {},
+        errors: toNestErrors(errors, options),
       };
     }
 
+    options.shouldUseNativeValidation && validateFieldsNatively({}, options);
+
     return {
-      values: {},
-      errors: toNestErrors(
-        parseErrorSchema(
-          result.issues,
-          !options.shouldUseNativeValidation && options.criteriaMode === 'all',
-        ),
-        options,
-      ),
+      values: resolverOptions.raw ? Object.assign({}, values) : result.value,
+      errors: {},
     };
   };
+}

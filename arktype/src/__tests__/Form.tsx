@@ -10,8 +10,6 @@ const schema = type({
   password: 'string>1',
 });
 
-type FormData = typeof schema.infer & { unusedProperty: string };
-
 function TestComponent({
   onSubmit,
 }: {
@@ -54,29 +52,3 @@ test("form's validation with arkType and TypeScript's integration", async () => 
   ).toBeInTheDocument();
   expect(handleSubmit).not.toHaveBeenCalled();
 });
-
-export function TestComponentManualType({
-  onSubmit,
-}: {
-  onSubmit: (data: FormData) => void;
-}) {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<typeof schema.infer, undefined, FormData>({
-    resolver: arktypeResolver(schema), // Useful to check TypeScript regressions
-  });
-
-  return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <input {...register('username')} />
-      {errors.username && <span role="alert">{errors.username.message}</span>}
-
-      <input {...register('password')} />
-      {errors.password && <span role="alert">{errors.password.message}</span>}
-
-      <button type="submit">submit</button>
-    </form>
-  );
-}
