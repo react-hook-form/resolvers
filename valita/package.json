@@ -1,0 +1,18 @@
+{
+  "name": "@hookform/resolvers/valita",
+  "amdName": "hookformResolversValita",
+  "version": "1.0.0",
+  "private": true,
+  "description": "React Hook Form validation resolver: valita",
+  "main": "dist/valita.js",
+  "module": "dist/valita.module.js",
+  "umd:main": "dist/valita.umd.js",
+  "source": "src/index.ts",
+  "types": "dist/index.d.ts",
+  "license": "MIT",
+  "peerDependencies": {
+    "@badrap/valita": "0.4.x",
+    "@hookform/resolvers": "^2.0.0",
+    "react-hook-form": "^7.0.0"
+  }
+}

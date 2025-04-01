@@ -21,6 +21,7 @@ const subRepositories = [
   'vine',
   'fluentvalidation-ts',
   'standard-schema',
+  'valita',
 ];
 
 const copySrc = () => {

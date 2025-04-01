@@ -1,0 +1,157 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`valitaResolver > should return a single error from valitaResolver when validation fails 1`] = `
+{
+  "errors": {
+    "accessToken": {
+      "message": "missing_value",
+      "ref": undefined,
+      "type": "missing_value",
+    },
+    "birthYear": {
+      "message": "invalid_type",
+      "ref": undefined,
+      "type": "invalid_type",
+    },
+    "email": {
+      "message": "Invalid email address",
+      "ref": {
+        "name": "email",
+      },
+      "type": "custom_error",
+    },
+    "enabled": {
+      "message": "missing_value",
+      "ref": undefined,
+      "type": "missing_value",
+    },
+    "like": {
+      "id": {
+        "message": "invalid_type",
+        "ref": undefined,
+        "type": "invalid_type",
+      },
+      "name": {
+        "message": "missing_value",
+        "ref": undefined,
+        "type": "missing_value",
+      },
+    },
+    "password": {
+      "message": "One uppercase character",
+      "ref": {
+        "name": "password",
+      },
+      "type": "custom_error",
+    },
+    "repeatPassword": {
+      "message": "missing_value",
+      "ref": undefined,
+      "type": "missing_value",
+    },
+    "tags": [
+      {
+        "message": "invalid_type",
+        "ref": undefined,
+        "type": "invalid_type",
+      },
+      {
+        "message": "invalid_type",
+        "ref": undefined,
+        "type": "invalid_type",
+      },
+      {
+        "message": "invalid_type",
+        "ref": undefined,
+        "type": "invalid_type",
+      },
+    ],
+    "username": {
+      "message": "missing_value",
+      "ref": {
+        "name": "username",
+      },
+      "type": "missing_value",
+    },
+  },
+  "values": {},
+}
+`;
+
+exports[`valitaResolver > should return all the errors from valitaResolver when validation fails with \`validateAllFieldCriteria\` set to true 1`] = `
+{
+  "errors": {
+    "accessToken": {
+      "message": "missing_value",
+      "ref": undefined,
+      "type": "missing_value",
+    },
+    "birthYear": {
+      "message": "invalid_type",
+      "ref": undefined,
+      "type": "invalid_type",
+    },
+    "email": {
+      "message": "Invalid email address",
+      "ref": {
+        "name": "email",
+      },
+      "type": "custom_error",
+    },
+    "enabled": {
+      "message": "missing_value",
+      "ref": undefined,
+      "type": "missing_value",
+    },
+    "like": {
+      "id": {
+        "message": "invalid_type",
+        "ref": undefined,
+        "type": "invalid_type",
+      },
+      "name": {
+        "message": "missing_value",
+        "ref": undefined,
+        "type": "missing_value",
+      },
+    },
+    "password": {
+      "message": "One uppercase character",
+      "ref": {
+        "name": "password",
+      },
+      "type": "custom_error",
+    },
+    "repeatPassword": {
+      "message": "missing_value",
+      "ref": undefined,
+      "type": "missing_value",
+    },
+    "tags": [
+      {
+        "message": "invalid_type",
+        "ref": undefined,
+        "type": "invalid_type",
+      },
+      {
+        "message": "invalid_type",
+        "ref": undefined,
+        "type": "invalid_type",
+      },
+      {
+        "message": "invalid_type",
+        "ref": undefined,
+        "type": "invalid_type",
+      },
+    ],
+    "username": {
+      "message": "missing_value",
+      "ref": {
+        "name": "username",
+      },
+      "type": "missing_value",
+    },
+  },
+  "values": {},
+}
+`;
