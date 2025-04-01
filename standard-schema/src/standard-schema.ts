@@ -3,7 +3,7 @@ import { StandardSchemaV1 } from '@standard-schema/spec';
 import { getDotPath } from '@standard-schema/utils';
 import { FieldError, FieldValues, Resolver } from 'react-hook-form';
 
-function parseIssues(
+function parseErrorSchema(
   issues: readonly StandardSchemaV1.Issue[],
   validateAllFieldCriteria: boolean,
 ) {
@@ -32,6 +32,30 @@ function parseIssues(
   return errors;
 }
 
+export function standardSchemaResolver<
+  Input extends FieldValues,
+  Context,
+  Output,
+>(
+  schema: StandardSchemaV1<Input, Output>,
+  _schemaOptions?: never,
+  resolverOptions?: {
+    raw?: false;
+  },
+): Resolver<Input, Context, Output>;
+
+export function standardSchemaResolver<
+  Input extends FieldValues,
+  Context,
+  Output,
+>(
+  schema: StandardSchemaV1<Input, Output>,
+  _schemaOptions: never | undefined,
+  resolverOptions: {
+    raw: true;
+  },
+): Resolver<Input, Context, Input>;
+
 /**
  * Creates a resolver for react-hook-form that validates data using a Standard Schema.
  *
@@ -53,13 +77,16 @@ function parseIssues(
  * ```
  */
 export function standardSchemaResolver<
-  Schema extends StandardSchemaV1<FieldValues>,
+  Input extends FieldValues,
+  Context,
+  Output,
 >(
-  schema: Schema,
+  schema: StandardSchemaV1<Input, Output>,
+  _schemaOptions?: never,
   resolverOptions: {
     raw?: boolean;
   } = {},
-): Resolver<StandardSchemaV1.InferOutput<Schema>> {
+): Resolver<Input, Context, Output | Input> {
   return async (values, _, options) => {
     let result = schema['~standard'].validate(values);
     if (result instanceof Promise) {
@@ -67,7 +94,7 @@ export function standardSchemaResolver<
     }
 
     if (result.issues) {
-      const errors = parseIssues(
+      const errors = parseErrorSchema(
         result.issues,
         !options.shouldUseNativeValidation && options.criteriaMode === 'all',
       );

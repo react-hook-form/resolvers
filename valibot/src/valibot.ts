@@ -6,13 +6,31 @@ import {
   appendErrors,
 } from 'react-hook-form';
 import { getDotPath, safeParseAsync } from 'valibot';
-import {
-  BaseSchema,
-  BaseSchemaAsync,
-  Config,
-  InferIssue,
-  InferOutput,
-} from 'valibot';
+import { BaseSchema, BaseSchemaAsync, Config, InferIssue } from 'valibot';
+
+export function valibotResolver<Input extends FieldValues, Context, Output>(
+  schema: BaseSchema<Input, Output, any> | BaseSchemaAsync<Input, Output, any>,
+  schemaOptions?: Partial<
+    Omit<Config<InferIssue<typeof schema>>, 'abortPipeEarly' | 'skipPipe'>
+  >,
+  resolverOptions?: {
+    mode?: 'async' | 'sync';
+    raw?: false;
+  },
+): Resolver<Input, Context, Output>;
+
+export function valibotResolver<Input extends FieldValues, Context, Output>(
+  schema: BaseSchema<Input, Output, any> | BaseSchemaAsync<Input, Output, any>,
+  schemaOptions:
+    | Partial<
+        Omit<Config<InferIssue<typeof schema>>, 'abortPipeEarly' | 'skipPipe'>
+      >
+    | undefined,
+  resolverOptions: {
+    mode?: 'async' | 'sync';
+    raw: true;
+  },
+): Resolver<Input, Context, Input>;
 
 /**
  * Creates a resolver for react-hook-form using Valibot schema validation
@@ -32,10 +50,8 @@ import {
  *   resolver: valibotResolver(schema)
  * });
  */
-export function valibotResolver<TFieldValues extends FieldValues>(
-  schema:
-    | BaseSchema<TFieldValues, TFieldValues, any>
-    | BaseSchemaAsync<TFieldValues, TFieldValues, any>,
+export function valibotResolver<Input extends FieldValues, Context, Output>(
+  schema: BaseSchema<Input, Output, any> | BaseSchemaAsync<Input, Output, any>,
   schemaOptions?: Partial<
     Omit<Config<InferIssue<typeof schema>>, 'abortPipeEarly' | 'skipPipe'>
   >,
@@ -50,8 +66,8 @@ export function valibotResolver<TFieldValues extends FieldValues>(
      */
     raw?: boolean;
   } = {},
-): Resolver<InferOutput<typeof schema>> {
-  return async (values, _, options) => {
+): Resolver<Input, Context, Output | Input> {
+  return async (values: Input, _, options) => {
     // Check if we should validate all field criteria
     const validateAllFieldCriteria =
       !options.shouldUseNativeValidation && options.criteriaMode === 'all';

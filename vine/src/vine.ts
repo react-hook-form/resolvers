@@ -1,9 +1,13 @@
 import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
 import { SimpleErrorReporter, VineValidator, errors } from '@vinejs/vine';
-import { Infer, ValidationOptions } from '@vinejs/vine/build/src/types';
+import {
+  ConstructableSchema,
+  ValidationOptions,
+} from '@vinejs/vine/build/src/types';
 import {
   FieldError,
   FieldErrors,
+  FieldValues,
   Resolver,
   appendErrors,
 } from 'react-hook-form';
@@ -41,6 +45,24 @@ function parseErrorSchema(
   return schemaErrors;
 }
 
+export function vineResolver<Input extends FieldValues, Context, Output>(
+  schema: VineValidator<ConstructableSchema<Input, Output, Output>, any>,
+  schemaOptions?: ValidationOptions<any>,
+  resolverOptions?: {
+    mode?: 'async' | 'sync';
+    raw?: false;
+  },
+): Resolver<Input, Context, Output>;
+
+export function vineResolver<Input extends FieldValues, Context, Output>(
+  schema: VineValidator<ConstructableSchema<Input, Output, Output>, any>,
+  schemaOptions: ValidationOptions<any> | undefined,
+  resolverOptions: {
+    mode?: 'async' | 'sync';
+    raw: true;
+  },
+): Resolver<Input, Context, Input>;
+
 /**
  * Creates a resolver for react-hook-form using VineJS schema validation
  * @param {T} schema - The VineJS schema to validate against
@@ -60,11 +82,11 @@ function parseErrorSchema(
  *   resolver: vineResolver(schema)
  * });
  */
-export function vineResolver<T extends VineValidator<any, any>>(
-  schema: T,
+export function vineResolver<Input extends FieldValues, Context, Output>(
+  schema: VineValidator<ConstructableSchema<Input, Output, Output>, any>,
   schemaOptions?: ValidationOptions<any>,
   resolverOptions: { raw?: boolean } = {},
-): Resolver<Infer<typeof schema>> {
+): Resolver<Input, Context, Output | Input> {
   return async (values, _, options) => {
     try {
       const data = await schema.validate(values, schemaOptions);

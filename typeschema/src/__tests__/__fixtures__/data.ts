@@ -66,7 +66,7 @@ export const invalidData = {
   birthYear: 'birthYear',
   like: [{ id: 'z' }],
   url: 'abc',
-};
+} as unknown as z.input<typeof schema>;
 
 export const fields: Record<InternalFieldName, Field['_f']> = {
   username: {

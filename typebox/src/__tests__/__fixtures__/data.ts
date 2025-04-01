@@ -1,4 +1,4 @@
-import { Static, Type } from '@sinclair/typebox';
+import { StaticDecode, Type } from '@sinclair/typebox';
 import { Field, InternalFieldName } from 'react-hook-form';
 
 export const schema = Type.Object({
@@ -37,7 +37,7 @@ export const schema = Type.Object({
   dateStr: Type.Date(),
 });
 
-export const validData: Static<typeof schema> = {
+export const validData: StaticDecode<typeof schema> = {
   username: 'Doe',
   password: 'Password123_',
   repeatPassword: 'Password123_',
@@ -61,7 +61,7 @@ export const invalidData = {
   birthYear: 'birthYear',
   like: [{ id: 'z' }],
   url: 'abc',
-} as any as Static<typeof schema>;
+} as unknown as StaticDecode<typeof schema>;
 
 export const fields: Record<InternalFieldName, Field['_f']> = {
   username: {

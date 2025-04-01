@@ -59,7 +59,7 @@ export const validData = {
     },
   ],
   dateStr: '2020-01-01T00:00:00.000Z',
-} as any as z.infer<typeof schema>;
+} satisfies z.input<typeof schema>;
 
 export const invalidData = {
   password: '___',
@@ -67,7 +67,7 @@ export const invalidData = {
   birthYear: 'birthYear',
   like: [{ id: 'z' }],
   url: 'abc',
-} as any as z.infer<typeof schema>;
+} as unknown as z.input<typeof schema>;
 
 export const fields: Record<InternalFieldName, Field['_f']> = {
   username: {

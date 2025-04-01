@@ -1,3 +1,6 @@
+import * as t from 'io-ts';
+import * as tt from 'io-ts-types';
+import { Resolver, SubmitHandler, useForm } from 'react-hook-form';
 import { ioTsResolver } from '..';
 import { fields, invalidData, schema, validData } from './__fixtures__/data';
 
@@ -33,5 +36,56 @@ describe('ioTsResolver', () => {
     });
 
     expect(result).toMatchSnapshot();
+  });
+
+  /**
+   * Type inference tests
+   */
+  it('should correctly infer the output type from a io-ts schema', () => {
+    const resolver = ioTsResolver(t.type({ id: t.number }));
+
+    expectTypeOf(resolver).toEqualTypeOf<
+      Resolver<{ id: number }, unknown, { id: number }>
+    >();
+  });
+
+  it('should correctly infer the output type from a io-ts schema using a transform', () => {
+    const resolver = ioTsResolver(t.type({ id: tt.NumberFromString }));
+
+    expectTypeOf(resolver).toEqualTypeOf<
+      Resolver<{ id: string }, unknown, { id: number }>
+    >();
+  });
+
+  it('should correctly infer the output type from a io-ts schema for the handleSubmit function in useForm', () => {
+    const schema = t.type({ id: t.number });
+
+    const form = useForm({
+      resolver: ioTsResolver(schema),
+    });
+
+    expectTypeOf(form.watch('id')).toEqualTypeOf<number>();
+
+    expectTypeOf(form.handleSubmit).parameter(0).toEqualTypeOf<
+      SubmitHandler<{
+        id: number;
+      }>
+    >();
+  });
+
+  it('should correctly infer the output type from a io-ts schema with a transform for the handleSubmit function in useForm', () => {
+    const schema = t.type({ id: tt.NumberFromString });
+
+    const form = useForm({
+      resolver: ioTsResolver(schema),
+    });
+
+    expectTypeOf(form.watch('id')).toEqualTypeOf<string>();
+
+    expectTypeOf(form.handleSubmit).parameter(0).toEqualTypeOf<
+      SubmitHandler<{
+        id: number;
+      }>
+    >();
   });
 });
