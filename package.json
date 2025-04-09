@@ -221,6 +221,7 @@
     "build:vine": "microbundle --cwd vine --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm,@vinejs/vine=vine",
     "build:fluentvalidation-ts": "microbundle --cwd fluentvalidation-ts --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
     "build:standard-schema": "microbundle --cwd standard-schema --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm,@standard-schema/spec=standardSchema",
+    "prebuild": "node ./config/collect-peerdeps.js",
     "postbuild": "node ./config/node-13-exports.js && check-export-map",
     "lint": "bunx @biomejs/biome check --write --vcs-use-ignore-file=true .",
     "lint:types": "tsc",
@@ -317,7 +318,27 @@
     "zod": "^3.24.2"
   },
   "peerDependencies": {
-    "react-hook-form": "^7.55.0"
+    "react-hook-form": "^7.55.0",
+    "@hookform/resolvers": "^2.0.0",
+    "ajv": "^8.12.0",
+    "ajv-errors": "^3.0.0",
+    "arktype": "^2.0.0",
+    "class-transformer": "^0.4.0",
+    "class-validator": "^0.12.0",
+    "effect": "^3.10.3",
+    "fluentvalidation-ts": "^3.0.0",
+    "io-ts": "^2.0.0",
+    "fp-ts": "^2.7.0",
+    "nope-validator": "^0.12.0",
+    "@standard-schema/spec": "^1.0.0",
+    "@standard-schema/utils": "^0.3.0",
+    "superstruct": ">=0.12.0",
+    "typanion": "^3.3.2",
+    "@sinclair/typebox": "^0.25.24",
+    "@typeschema/main": "^0.13.7",
+    "valibot": "^1.0.0 || ^1.0.0-beta.4 || ^1.0.0-rc",
+    "vest": ">=3.0.0",
+    "@vinejs/vine": "^2.0.0"
   },
   "dependencies": {
     "@standard-schema/utils": "^0.3.0"

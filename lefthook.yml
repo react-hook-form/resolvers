@@ -22,3 +22,7 @@ pre-commit:
     typescript:
       glob: '*.{ts,tsx}'
       run: bun tsc --noEmit
+    collect-peerdeps:
+      glob: '**/package.json'
+      run: node ./config/collect-peerdeps.js
+      stage_fixed: true
