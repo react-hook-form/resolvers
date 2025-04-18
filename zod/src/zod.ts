@@ -10,6 +10,17 @@ import {
 } from 'react-hook-form';
 import { ZodError, z } from 'zod';
 
+// Add an errors getter compatible with zod v4
+if(!ZodError.prototype.errors){
+  Object.defineProperty(ZodError.prototype, "errors", {
+    get() {
+      return this.issues;
+    },
+    enumerable: true,
+    configurable: true,
+  });
+}
+
 const isZodError = (error: any): error is ZodError =>
   Array.isArray(error?.errors);
 
