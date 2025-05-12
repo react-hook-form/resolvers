@@ -340,7 +340,69 @@
     "vest": ">=3.0.0",
     "@vinejs/vine": "^2.0.0"
   },
-  "dependencies": {
-    "@standard-schema/utils": "^0.3.0"
+  "peerDependenciesMeta": {
+    "react-hook-form": {
+      "optional": true
+    },
+    "@hookform/resolvers": {
+      "optional": true
+    },
+    "ajv": {
+      "optional": true
+    },
+    "ajv-errors": {
+      "optional": true
+    },
+    "arktype": {
+      "optional": true
+    },
+    "class-transformer": {
+      "optional": true
+    },
+    "class-validator": {
+      "optional": true
+    },
+    "effect": {
+      "optional": true
+    },
+    "fluentvalidation-ts": {
+      "optional": true
+    },
+    "io-ts": {
+      "optional": true
+    },
+    "fp-ts": {
+      "optional": true
+    },
+    "nope-validator": {
+      "optional": true
+    },
+    "@standard-schema/spec": {
+      "optional": true
+    },
+    "@standard-schema/utils": {
+      "optional": true
+    },
+    "superstruct": {
+      "optional": true
+    },
+    "typanion": {
+      "optional": true
+    },
+    "@sinclair/typebox": {
+      "optional": true
+    },
+    "@typeschema/main": {
+      "optional": true
+    },
+    "valibot": {
+      "optional": true
+    },
+    "vest": {
+      "optional": true
+    },
+    "@vinejs/vine": {
+      "optional": true
+    }
   }
 }

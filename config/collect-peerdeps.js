@@ -14,9 +14,17 @@ const peerDependencies = Object.fromEntries(
   packageJsons.flatMap((pj) => Object.entries(pj?.peerDependencies ?? {})),
 );
 
+const peerDependenciesMeta = Object.fromEntries(
+  Object.entries(peerDependencies).map(([pName]) => [
+    pName,
+    { optional: true },
+  ]),
+);
+
 const packageJson = {
   ...JSON.parse(await fs.readFile('package.json')),
   peerDependencies,
+  peerDependenciesMeta,
 };
 
 await fs.writeFile(
