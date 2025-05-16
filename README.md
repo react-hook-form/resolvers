@@ -34,25 +34,25 @@ Install your preferred validation library alongside `@hookform/resolvers`.
  
 | resolver  | Infer values <br /> from schema | [criteriaMode](https://react-hook-form.com/docs/useform#criteriaMode) |
 |---|---|---|
-| AJV  | ❌  | `firstError | all` |
+| AJV  | ❌  | `firstError \| all` |
 | Arktype |  ✅ | `firstError` |
-| class-validator  | ✅  | `firstError | all` |
+| class-validator  | ✅  | `firstError \| all` |
 | computed-types  | ✅  | `firstError` |
-| Effect  | ✅  | `firstError | all` |
+| Effect  | ✅  | `firstError \| all` |
 | fluentvalidation-ts  | ❌  | `firstError` |
 | io-ts  | ✅  | `firstError` |
-| joi |  ❌ | `firstError | all` |
+| joi |  ❌ | `firstError \| all` |
 | Nope  | ❌  | `firstError` |
-| Standard Schema  | ✅  | `firstError | all` |
+| Standard Schema  | ✅  | `firstError \| all` |
 | Superstruct  | ✅  | `firstError` |
 | typanion  | ✅  | `firstError` |
-| typebox  | ✅  | `firstError | all` |
-| typeschema  | ❌  | `firstError | all` |
-| valibot  | ✅  | `firstError | all` |
-| vest  | ❌  | `firstError | all` |
-| vine  | ✅  | `firstError | all` |
-| yup  | ✅  | `firstError | all` |
-| zod  | ✅ | `firstError | all` |
+| typebox  | ✅  | `firstError \| all` |
+| typeschema  | ❌  | `firstError \| all` |
+| valibot  | ✅  | `firstError \| all` |
+| vest  | ❌  | `firstError \| all` |
+| vine  | ✅  | `firstError \| all` |
+| yup  | ✅  | `firstError \| all` |
+| zod  | ✅ | `firstError \| all` |
 </details>
 
 ## TypeScript
@@ -91,7 +91,9 @@ useForm<z.input<typeof schema>, any, z.output<typeof schema>>({
 
 ### Supported resolvers
 
+- [React Hook Form Resolvers](#react-hook-form-resolvers)
 - [Install](#install)
+- [TypeScript](#typescript)
 - [Links](#links)
   - [Supported resolvers](#supported-resolvers)
 - [API](#api)
@@ -118,7 +120,6 @@ useForm<z.input<typeof schema>, any, z.output<typeof schema>>({
   - [fluentvalidation-ts](#fluentvalidation-ts)
   - [standard-schema](#standard-schema)
 - [Backers](#backers)
-  - [Sponsors](#sponsors)
 - [Contributors](#contributors)
 
 ## API
