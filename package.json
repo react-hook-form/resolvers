@@ -320,6 +320,7 @@
     "react-hook-form": "^7.55.0"
   },
   "dependencies": {
-    "@standard-schema/utils": "^0.3.0"
+    "@standard-schema/utils": "^0.3.0",
+    "zod-v4": "npm:zod@^3.25.0"
   }
 }
