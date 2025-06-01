@@ -8,10 +8,11 @@ import {
   ResolverSuccess,
   appendErrors,
 } from 'react-hook-form';
-import { ZodError, z } from 'zod-v4/v4';
+import { ZodError } from 'zod-v4/v4';
+import * as core from 'zod-v4/v4/core';
 
 function parseErrorSchema(
-  zodErrors: z.core.$ZodIssue[],
+  zodErrors: core.$ZodIssue[],
   validateAllFieldCriteria: boolean,
 ) {
   const errors: Record<string, FieldError> = {};
@@ -66,22 +67,13 @@ function parseErrorSchema(
 }
 
 export function zodResolver<Input extends FieldValues, Context, Output>(
-  schema: z.ZodSchema<Output, Input>,
-  schemaOptions?: Partial<z.core.ParseContext<z.core.$ZodIssue>>,
+  schema: core.$ZodType<Output, Input>,
+  schemaOptions?: Partial<core.ParseContext<core.$ZodIssue>>,
   resolverOptions?: {
     mode?: 'async' | 'sync';
     raw?: false;
   },
 ): Resolver<Input, Context, Output>;
-
-export function zodResolver<Input extends FieldValues, Context, Output>(
-  schema: z.ZodSchema<Output, Input>,
-  schemaOptions: Partial<z.core.ParseContext<z.core.$ZodIssue>> | undefined,
-  resolverOptions: {
-    mode?: 'async' | 'sync';
-    raw: true;
-  },
-): Resolver<Input, Context, Input>;
 
 /**
  * Creates a resolver function for react-hook-form that validates form data using a Zod schema
@@ -94,8 +86,7 @@ export function zodResolver<Input extends FieldValues, Context, Output>(
  * @throws {Error} Throws if validation fails with a non-Zod error
  * @example
  * const schema = z.object({
- *   name: z.string().min(2),
- *   age: z.number().min(18)
+ * @param {z.core.ParseContext<z.core.$ZodIssue>} [schemaOptions] - Optional configuration options for Zod parsing *   age: z.number().min(18)
  * });
  *
  * useForm({
@@ -103,8 +94,8 @@ export function zodResolver<Input extends FieldValues, Context, Output>(
  * });
  */
 export function zodResolver<Input extends FieldValues, Context, Output>(
-  schema: z.ZodSchema<Output, Input>,
-  schemaOptions?: Partial<z.core.ParseContext<z.core.$ZodIssue>>,
+  schema: core.$ZodType<Output, Input>,
+  schemaOptions?: Partial<core.ParseContext<core.$ZodIssue>>,
   resolverOptions: {
     mode?: 'async' | 'sync';
     raw?: boolean;
@@ -112,23 +103,23 @@ export function zodResolver<Input extends FieldValues, Context, Output>(
 ): Resolver<Input, Context, Output | Input> {
   return async (values: Input, _, options) => {
     try {
-      const data = await schema[
-        resolverOptions.mode === 'sync' ? 'parse' : 'parseAsync'
-      ](values, schemaOptions);
+      const data = await (resolverOptions.mode === 'sync'
+        ? core.parse(schema, values, schemaOptions)
+        : core.parseAsync(schema, values, schemaOptions));
 
       options.shouldUseNativeValidation && validateFieldsNatively({}, options);
 
       return {
         errors: {} as FieldErrors,
-        values: resolverOptions.raw ? Object.assign({}, values) : data,
+        values: resolverOptions.raw ? values : data,
       } satisfies ResolverSuccess<Output | Input>;
     } catch (error) {
       if (error instanceof ZodError) {
         return {
-          values: {},
+          values: {} as Input,
           errors: toNestErrors(
             parseErrorSchema(
-              (error as { issues: z.core.$ZodIssue[] }).issues,
+              (error as { issues: core.$ZodIssue[] }).issues,
               !options.shouldUseNativeValidation &&
                 options.criteriaMode === 'all',
             ),
