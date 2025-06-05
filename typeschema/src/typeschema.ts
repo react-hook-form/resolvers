@@ -1,4 +1,5 @@
 import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
+import { StandardSchemaV1 } from '@standard-schema/spec';
 import {
   FieldError,
   FieldErrors,
@@ -6,7 +7,6 @@ import {
   Resolver,
   appendErrors,
 } from 'react-hook-form';
-import { StandardSchemaV1 } from 'zod/lib/standard-schema';
 
 const parseErrorSchema = (
   typeschemaErrors: readonly StandardSchemaV1.Issue[],

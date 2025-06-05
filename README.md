@@ -175,7 +175,7 @@ const App = () => {
 };
 ```
 
-### [Zod](https://github.com/vriad/zod)
+### [Zod](https://github.com/colinhacks/zod)
 
 TypeScript-first schema validation with static type inference
 
@@ -186,7 +186,7 @@ TypeScript-first schema validation with static type inference
 ```tsx
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
+import { z } from 'zod'; // or 'zod/v4'
 
 const schema = z.object({
   name: z.string().min(1, { message: 'Required' }),
