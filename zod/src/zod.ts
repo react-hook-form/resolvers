@@ -143,7 +143,11 @@ type NonRawResolverOptions = {
 interface Zod3Type<O = unknown, I = unknown> {
   _output: O;
   _input: I;
+  _def: {
+    typeName: string;
+  };
 }
+
 interface Zod4Type<O = unknown, I = unknown> {
   _zod: {
     output: O;
@@ -151,24 +155,61 @@ interface Zod4Type<O = unknown, I = unknown> {
   };
 }
 
+// some type magic to make versions pre-3.25.0 still work
+type IsUnresolved<T> = PropertyKey extends keyof T ? true : false;
+type UnresolvedFallback<T, Fallback> = IsUnresolved<typeof z3> extends true
+  ? Fallback
+  : T;
+type FallbackIssue = {
+  code: string;
+  message: string;
+  path: (string | number)[];
+};
+type Zod3ParseParams = UnresolvedFallback<
+  z3.ParseParams,
+  // fallback if user is on <3.25.0
+  {
+    path?: (string | number)[];
+    errorMap?: (
+      iss: FallbackIssue,
+      ctx: {
+        defaultError: string;
+        data: any;
+      },
+    ) => { message: string };
+    async?: boolean;
+  }
+>;
+type Zod4ParseParams = UnresolvedFallback<
+  z4.ParseContext<z4.$ZodIssue>,
+  // fallback if user is on <3.25.0
+  {
+    readonly error?: (
+      iss: FallbackIssue,
+    ) => null | undefined | string | { message: string };
+    readonly reportInput?: boolean;
+    readonly jitless?: boolean;
+  }
+>;
+
 export function zodResolver<Input extends FieldValues, Context, Output>(
   schema: Zod3Type<Output, Input>,
-  schemaOptions?: Partial<z3.ParseParams>,
+  schemaOptions?: Zod3ParseParams,
   resolverOptions?: NonRawResolverOptions,
 ): Resolver<Input, Context, Output>;
 export function zodResolver<Input extends FieldValues, Context, Output>(
   schema: Zod3Type<Output, Input>,
-  schemaOptions: Partial<z3.ParseParams> | undefined,
+  schemaOptions: Zod3ParseParams | undefined,
   resolverOptions: RawResolverOptions,
 ): Resolver<Input, Context, Input>;
 export function zodResolver<Input extends FieldValues, Context, Output>(
   schema: Zod4Type<Output, Input>,
-  schemaOptions?: z4.ParseContext<z4.$ZodIssue>, // already partial
+  schemaOptions?: Zod4ParseParams, // already partial
   resolverOptions?: NonRawResolverOptions,
 ): Resolver<Input, Context, Output>;
 export function zodResolver<Input extends FieldValues, Context, Output>(
   schema: Zod4Type<Output, Input>,
-  schemaOptions?: z4.ParseContext<z4.$ZodIssue>, // already partial
+  schemaOptions?: Zod4ParseParams, // already partial
   resolverOptions?: RawResolverOptions,
 ): Resolver<Input, Context, Input>;
 /**

@@ -92,6 +92,21 @@ describe('zodResolver', () => {
     await expect(promise).rejects.toThrow('custom error');
   });
 
+  it('should enforce parse params type signature', async () => {
+    const resolver = zodResolver(schema, {
+      jitless: true,
+      reportInput: true,
+      error(iss) {
+        iss.path;
+        iss.code;
+        iss.path;
+        return { message: 'asdf' };
+      },
+    });
+
+    resolver;
+  });
+
   /**
    * Type inference tests
    */
