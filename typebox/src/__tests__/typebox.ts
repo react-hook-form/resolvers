@@ -1,8 +1,8 @@
+import { Type } from '@sinclair/typebox';
+import { TypeCompiler } from '@sinclair/typebox/compiler';
 import { Resolver, SubmitHandler, useForm } from 'react-hook-form';
 import { typeboxResolver } from '..';
 import { fields, invalidData, schema, validData } from './__fixtures__/data';
-import { Type } from '@sinclair/typebox';
-import { TypeCompiler } from '@sinclair/typebox/compiler';
 
 const shouldUseNativeValidation = false;
 
