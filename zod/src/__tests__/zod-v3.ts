@@ -1,5 +1,5 @@
 import { Resolver, SubmitHandler, useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { z } from 'zod/v3';
 import { zodResolver } from '..';
 import { fields, invalidData, schema, validData } from './__fixtures__/data-v3';
 

@@ -3,7 +3,7 @@ import user from '@testing-library/user-event';
 import type { Infer } from '@typeschema/main';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { z } from 'zod/v3';
 import { typeschemaResolver } from '..';
 
 const USERNAME_REQUIRED_MESSAGE = 'username field is required';

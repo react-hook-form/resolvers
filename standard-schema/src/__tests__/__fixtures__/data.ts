@@ -1,6 +1,6 @@
 import { StandardSchemaV1 } from '@standard-schema/spec';
 import { Field, InternalFieldName } from 'react-hook-form';
-import { z } from 'zod';
+import { z } from 'zod/v3';
 
 export const schema = z
   .object({

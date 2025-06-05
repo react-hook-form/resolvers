@@ -1,5 +1,5 @@
 import { Resolver, SubmitHandler, useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { z } from 'zod/v3';
 import { standardSchemaResolver } from '..';
 import {
   customSchema,

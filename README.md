@@ -68,7 +68,7 @@ Example:
 ```tsx
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
+import { z } from 'zod'; // or 'zod/v4'
 
 const schema = z.object({
   id: z.number(),

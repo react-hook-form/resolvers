@@ -148,13 +148,6 @@ interface Zod3Type<O = unknown, I = unknown> {
   };
 }
 
-interface Zod4Type<O = unknown, I = unknown> {
-  _zod: {
-    output: O;
-    input: I;
-  };
-}
-
 // some type magic to make versions pre-3.25.0 still work
 type IsUnresolved<T> = PropertyKey extends keyof T ? true : false;
 type UnresolvedFallback<T, Fallback> = IsUnresolved<typeof z3> extends true
@@ -202,16 +195,27 @@ export function zodResolver<Input extends FieldValues, Context, Output>(
   schemaOptions: Zod3ParseParams | undefined,
   resolverOptions: RawResolverOptions,
 ): Resolver<Input, Context, Input>;
-export function zodResolver<Input extends FieldValues, Context, Output>(
-  schema: Zod4Type<Output, Input>,
+// the Zod 4 overloads need to be generic for complicated reasons
+export function zodResolver<
+  Input extends FieldValues,
+  Context,
+  Output,
+  T extends z4.$ZodType<Output, Input> = z4.$ZodType<Output, Input>,
+>(
+  schema: T,
   schemaOptions?: Zod4ParseParams, // already partial
   resolverOptions?: NonRawResolverOptions,
-): Resolver<Input, Context, Output>;
-export function zodResolver<Input extends FieldValues, Context, Output>(
-  schema: Zod4Type<Output, Input>,
-  schemaOptions?: Zod4ParseParams, // already partial
-  resolverOptions?: RawResolverOptions,
-): Resolver<Input, Context, Input>;
+): Resolver<z4.input<T>, Context, z4.output<T>>;
+export function zodResolver<
+  Input extends FieldValues,
+  Context,
+  Output,
+  T extends z4.$ZodType<Output, Input> = z4.$ZodType<Output, Input>,
+>(
+  schema: z4.$ZodType<Output, Input>,
+  schemaOptions: Zod4ParseParams | undefined, // already partial
+  resolverOptions: RawResolverOptions,
+): Resolver<z4.input<T>, Context, z4.input<T>>;
 /**
  * Creates a resolver function for react-hook-form that validates form data using a Zod schema
  * @param {z3.ZodSchema<Input>} schema - The Zod schema used to validate the form data
