@@ -1,6 +1,6 @@
 import * as typeschema from '@typeschema/main';
 import { Resolver, SubmitHandler, useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { z } from 'zod/v3';
 import { typeschemaResolver } from '..';
 import { fields, invalidData, schema, validData } from './__fixtures__/data';
 

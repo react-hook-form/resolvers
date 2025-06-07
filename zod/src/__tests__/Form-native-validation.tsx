@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { z } from 'zod/v3';
 import { zodResolver } from '..';
 
 const USERNAME_REQUIRED_MESSAGE = 'username field is required';

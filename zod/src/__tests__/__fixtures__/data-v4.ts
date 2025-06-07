@@ -1,6 +1,5 @@
-import { StandardSchemaV1 } from '@standard-schema/spec';
 import { Field, InternalFieldName } from 'react-hook-form';
-import { z } from 'zod/v3';
+import { z } from 'zod/v4';
 
 export const schema = z
   .object({
@@ -20,6 +19,7 @@ export const schema = z
     birthYear: z.number().min(1900).max(2013).optional(),
     email: z.string().email().optional(),
     tags: z.array(z.string()),
+
     enabled: z.boolean(),
     url: z.string().url('Custom error url').or(z.literal('')),
     like: z
@@ -58,7 +58,7 @@ export const validData = {
       name: 'name',
     },
   ],
-  dateStr: '2020-01-01T00:00:00.000Z',
+  dateStr: '2020-01-01',
 } satisfies z.input<typeof schema>;
 
 export const invalidData = {
@@ -85,27 +85,5 @@ export const fields: Record<InternalFieldName, Field['_f']> = {
   birthday: {
     ref: { name: 'birthday' },
     name: 'birthday',
-  },
-};
-
-export const customSchema: StandardSchemaV1<
-  StandardSchemaV1.InferInput<typeof schema>,
-  StandardSchemaV1.InferOutput<typeof schema>
-> = {
-  '~standard': {
-    version: 1,
-    vendor: 'custom',
-    validate: () => ({
-      issues: [
-        {
-          path: [{ key: 'username' }],
-          message: 'Custom error',
-        },
-        {
-          path: [{ key: 'like' }, { key: 0 }, { key: 'id' }],
-          message: 'Custom error',
-        },
-      ],
-    }),
   },
 };

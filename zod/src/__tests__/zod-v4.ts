@@ -1,7 +1,7 @@
 import { Resolver, SubmitHandler, useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { z } from 'zod/v4';
 import { zodResolver } from '..';
-import { fields, invalidData, schema, validData } from './__fixtures__/data';
+import { fields, invalidData, schema, validData } from './__fixtures__/data-v4';
 
 const shouldUseNativeValidation = false;
 
@@ -90,6 +90,21 @@ describe('zodResolver', () => {
     });
 
     await expect(promise).rejects.toThrow('custom error');
+  });
+
+  it('should enforce parse params type signature', async () => {
+    const resolver = zodResolver(schema, {
+      jitless: true,
+      reportInput: true,
+      error(iss) {
+        iss.path;
+        iss.code;
+        iss.path;
+        return { message: 'asdf' };
+      },
+    });
+
+    resolver;
   });
 
   /**

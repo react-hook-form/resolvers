@@ -1,45 +1,55 @@
 import { Field, InternalFieldName } from 'react-hook-form';
-import { z } from 'zod';
+import { z } from 'zod/v4-mini';
 
 export const schema = z
   .object({
-    username: z.string().regex(/^\w+$/).min(3).max(30),
+    username: z
+      .string()
+      .check(z.regex(/^\w+$/), z.minLength(3), z.maxLength(30)),
     password: z
       .string()
-      .regex(new RegExp('.*[A-Z].*'), 'One uppercase character')
-      .regex(new RegExp('.*[a-z].*'), 'One lowercase character')
-      .regex(new RegExp('.*\\d.*'), 'One number')
-      .regex(
-        new RegExp('.*[`~<>?,./!@#$%^&*()\\-_+="\'|{}\\[\\];:\\\\].*'),
-        'One special character',
-      )
-      .min(8, 'Must be at least 8 characters in length'),
+      .check(
+        z.regex(new RegExp('.*[A-Z].*'), 'One uppercase character'),
+        z.regex(new RegExp('.*[a-z].*'), 'One lowercase character'),
+        z.regex(new RegExp('.*\\d.*'), 'One number'),
+        z.regex(
+          new RegExp('.*[`~<>?,./!@#$%^&*()\\-_+="\'|{}\\[\\];:\\\\].*'),
+          'One special character',
+        ),
+        z.minLength(8, 'Must be at least 8 characters in length'),
+      ),
     repeatPassword: z.string(),
     accessToken: z.union([z.string(), z.number()]),
-    birthYear: z.number().min(1900).max(2013).optional(),
-    email: z.string().email().optional(),
+    birthYear: z.optional(z.number().check(z.minimum(1900), z.maximum(2013))),
+    email: z.optional(z.email()),
     tags: z.array(z.string()),
     enabled: z.boolean(),
-    url: z.string().url('Custom error url').or(z.literal('')),
-    like: z
-      .array(
+    url: z.union([z.url('Custom error url'), z.literal('')]),
+    like: z.optional(
+      z.array(
         z.object({
           id: z.number(),
-          name: z.string().length(4),
+          name: z.string().check(z.length(4)),
         }),
-      )
-      .optional(),
+      ),
+    ),
     dateStr: z
-      .string()
-      .transform((value) => new Date(value))
-      .refine((value) => !isNaN(value.getTime()), {
-        message: 'Invalid date',
-      }),
+      .pipe(
+        z.string(),
+        z.transform((value) => new Date(value)),
+      )
+      .check(
+        z.refine((value) => !isNaN(value.getTime()), {
+          message: 'Invalid date',
+        }),
+      ),
   })
-  .refine((obj) => obj.password === obj.repeatPassword, {
-    message: 'Passwords do not match',
-    path: ['confirm'],
-  });
+  .check(
+    z.refine((obj) => obj.password === obj.repeatPassword, {
+      message: 'Passwords do not match',
+      path: ['confirm'],
+    }),
+  );
 
 export const validData = {
   username: 'Doe',
