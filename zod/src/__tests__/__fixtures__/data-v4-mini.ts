@@ -43,6 +43,15 @@ export const schema = z
           message: 'Invalid date',
         }),
       ),
+    auth: z.discriminatedUnion('type', [
+      z.object({
+        type: z.literal('registered'),
+        passwordHash: z.string(),
+      }),
+      z.object({
+        type: z.literal('guest'),
+      }),
+    ]),
   })
   .check(
     z.refine((obj) => obj.password === obj.repeatPassword, {
@@ -68,6 +77,10 @@ export const validData = {
     },
   ],
   dateStr: '2020-01-01',
+  auth: {
+    type: 'registered',
+    passwordHash: 'hash',
+  },
 } satisfies z.input<typeof schema>;
 
 export const invalidData = {
@@ -76,6 +89,7 @@ export const invalidData = {
   birthYear: 'birthYear',
   like: [{ id: 'z' }],
   url: 'abc',
+  auth: { type: 'invalid' },
 } as unknown as z.input<typeof schema>;
 
 export const fields: Record<InternalFieldName, Field['_f']> = {
