@@ -222,7 +222,7 @@
     "build:fluentvalidation-ts": "microbundle --cwd fluentvalidation-ts --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
     "build:standard-schema": "microbundle --cwd standard-schema --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm,@standard-schema/spec=standardSchema",
     "postbuild": "node ./config/node-13-exports.js && check-export-map",
-    "lint": "bunx @biomejs/biome check --write --vcs-use-ignore-file=true .",
+    "lint": "biome check --write --vcs-use-ignore-file=true .",
     "lint:types": "tsc",
     "test": "vitest run",
     "test:watch": "vitest watch",
@@ -267,6 +267,7 @@
   },
   "homepage": "https://react-hook-form.com",
   "devDependencies": {
+    "@biomejs/biome": "^1.8.3",
     "@sinclair/typebox": "^0.34.30",
     "@standard-schema/spec": "^1.0.0",
     "@testing-library/dom": "^10.4.0",
