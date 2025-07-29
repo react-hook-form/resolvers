@@ -91,7 +91,7 @@ function parseZod4Issues(
     const _path = path.join('.');
 
     if (!errors[_path]) {
-      if (error.code === 'invalid_union') {
+      if (error.code === 'invalid_union' && error.errors.length > 0) {
         const unionError = error.errors[0][0];
 
         errors[_path] = {
