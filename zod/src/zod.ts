@@ -215,7 +215,7 @@ export function zodResolver<
   schema: z4.$ZodType<Output, Input>,
   schemaOptions: Zod4ParseParams | undefined, // already partial
   resolverOptions: RawResolverOptions,
-): Resolver<z4.input<T>, Context, z4.output<T>>;
+): Resolver<z4.input<T>, Context, z4.input<T>>;
 /**
  * Creates a resolver function for react-hook-form that validates form data using a Zod schema
  * @param {z3.ZodSchema<Input>} schema - The Zod schema used to validate the form data
