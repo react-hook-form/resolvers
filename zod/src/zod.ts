@@ -15,11 +15,7 @@ const isZod3Error = (error: any): error is z3.ZodError => {
   return Array.isArray(error?.issues);
 };
 const isZod3Schema = (schema: any): schema is z3.ZodSchema => {
-  return (
-    '_def' in schema &&
-    typeof schema._def === 'object' &&
-    'typeName' in schema._def
-  );
+  return '_def' in schema && typeof schema._def === 'object';
 };
 const isZod4Error = (error: any): error is z4.$ZodError => {
   // instanceof is safe in Zod 4 (uses Symbol.hasInstance)
@@ -143,9 +139,7 @@ type NonRawResolverOptions = {
 interface Zod3Type<O = unknown, I = unknown> {
   _output: O;
   _input: I;
-  _def: {
-    typeName: string;
-  };
+  _def: object;
 }
 
 // some type magic to make versions pre-3.25.0 still work
