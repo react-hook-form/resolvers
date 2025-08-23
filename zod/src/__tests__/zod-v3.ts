@@ -178,7 +178,7 @@ describe('zodResolver', () => {
 
   it('should accept z.ZodType', () => {
     // https://github.com/react-hook-form/resolvers/issues/782
-    const schema = z.object({ id: z.number() }) as z.ZodType<{ id: number }>;
+    const schema: z.ZodType<{ id: number }> = z.object({ id: z.number() });
     const resolver = zodResolver(schema);
 
     expectTypeOf(resolver).toEqualTypeOf<
