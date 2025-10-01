@@ -256,7 +256,7 @@ export function zodResolver<Input extends FieldValues, Context, Output>(
           validateFieldsNatively({}, options);
 
         return {
-          errors: {} as FieldErrors<Input>,
+          errors: {} as FieldErrors,
           values: resolverOptions.raw ? Object.assign({}, values) : data,
         } satisfies ResolverSuccess<Output | Input>;
       } catch (error) {
@@ -290,7 +290,7 @@ export function zodResolver<Input extends FieldValues, Context, Output>(
           validateFieldsNatively({}, options);
 
         return {
-          errors: {} as FieldErrors<Input>,
+          errors: {} as FieldErrors,
           values: resolverOptions.raw ? Object.assign({}, values) : data,
         } satisfies ResolverSuccess<Output | Input>;
       } catch (error) {
