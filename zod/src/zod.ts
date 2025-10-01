@@ -1,7 +1,6 @@
 import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
 import {
   FieldError,
-  FieldErrors,
   FieldValues,
   Resolver,
   ResolverError,
@@ -256,7 +255,7 @@ export function zodResolver<Input extends FieldValues, Context, Output>(
           validateFieldsNatively({}, options);
 
         return {
-          errors: {} as FieldErrors,
+          errors: {},
           values: resolverOptions.raw ? Object.assign({}, values) : data,
         } satisfies ResolverSuccess<Output | Input>;
       } catch (error) {
@@ -290,7 +289,7 @@ export function zodResolver<Input extends FieldValues, Context, Output>(
           validateFieldsNatively({}, options);
 
         return {
-          errors: {} as FieldErrors,
+          errors: {},
           values: resolverOptions.raw ? Object.assign({}, values) : data,
         } satisfies ResolverSuccess<Output | Input>;
       } catch (error) {
