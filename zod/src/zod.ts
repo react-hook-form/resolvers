@@ -105,7 +105,9 @@ function parseZod4Issues(
 
     if (error.code === 'invalid_union') {
       error.errors.forEach((unionError) =>
-        unionError.forEach((e) => zodErrors.push(e)),
+        unionError.forEach((e) =>
+          zodErrors.push({ ...e, path: [...error.path, ...e.path] }),
+        ),
       );
     }
 
