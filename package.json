@@ -129,6 +129,12 @@
       "import": "./standard-schema/dist/standard-schema.mjs",
       "require": "./standard-schema/dist/standard-schema.js"
     },
+    "./convex": {
+      "types": "./convex/dist/index.d.ts",
+      "umd": "./convex/dist/convex.umd.js",
+      "import": "./convex/dist/convex.mjs",
+      "require": "./convex/dist/convex.js"
+    },
     "./package.json": "./package.json",
     "./*": "./*"
   },
@@ -193,7 +199,10 @@
     "fluentvalidation-ts/dist",
     "standard-schema/package.json",
     "standard-schema/src",
-    "standard-schema/dist"
+    "standard-schema/dist",
+    "convex/package.json",
+    "convex/src",
+    "convex/dist"
   ],
   "publishConfig": {
     "access": "public"
@@ -221,6 +230,7 @@
     "build:vine": "microbundle --cwd vine --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm,@vinejs/vine=vine",
     "build:fluentvalidation-ts": "microbundle --cwd fluentvalidation-ts --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
     "build:standard-schema": "microbundle --cwd standard-schema --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm,@standard-schema/spec=standardSchema",
+    "build:convex": "microbundle --cwd convex --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
     "postbuild": "node ./config/node-13-exports.js && check-export-map",
     "lint": "biome check --write --vcs-use-ignore-file=true .",
     "lint:types": "tsc",
@@ -289,6 +299,7 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
     "computed-types": "^1.11.2",
+    "convex": "^1.27.5",
     "cross-env": "^7.0.3",
     "effect": "^3.13.12",
     "fluentvalidation-ts": "^3.2.0",
