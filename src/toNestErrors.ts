@@ -14,24 +14,28 @@ export const toNestErrors = <TFieldValues extends FieldValues>(
   options: ResolverOptions<TFieldValues>,
 ): FieldErrors<TFieldValues> => {
   options.shouldUseNativeValidation && validateFieldsNatively(errors, options);
-
   const fieldErrors = {} as FieldErrors<TFieldValues>;
   for (const path in errors) {
     const field = get(options.fields, path) as Field['_f'] | undefined;
-    const error = Object.assign(errors[path] || {}, {
-      ref: field && field.ref,
-    });
-
     if (isNameInFieldArray(options.names || Object.keys(errors), path)) {
-      const fieldArrayErrors = Object.assign({}, get(fieldErrors, path));
-
+      const fieldArrayErrors = Object.assign(
+        {},
+        structuredClone(get(fieldErrors, path)),
+      );
+      const error = Object.assign(structuredClone(errors[path]) || {}, {
+        ref: field && field.ref,
+      });
       set(fieldArrayErrors, 'root', error);
       set(fieldErrors, path, fieldArrayErrors);
     } else {
+      const error = Object.assign(
+        structuredClone(errors[path]) || {},
+        structuredClone(get(fieldErrors, path)),
+        { ref: field && field.ref },
+      );
       set(fieldErrors, path, error);
     }
   }
-
   return fieldErrors;
 };
 
