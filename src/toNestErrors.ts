@@ -20,17 +20,17 @@ export const toNestErrors = <TFieldValues extends FieldValues>(
     if (isNameInFieldArray(options.names || Object.keys(errors), path)) {
       const fieldArrayErrors = Object.assign(
         {},
-        structuredClone(get(fieldErrors, path)),
+        get(fieldErrors, path),
       );
-      const error = Object.assign(structuredClone(errors[path]) || {}, {
+      const error = Object.assign(errors[path] || {}, {
         ref: field && field.ref,
       });
       set(fieldArrayErrors, 'root', error);
       set(fieldErrors, path, fieldArrayErrors);
     } else {
       const error = Object.assign(
-        structuredClone(errors[path]) || {},
-        structuredClone(get(fieldErrors, path)),
+        errors[path] || {},
+        get(fieldErrors, path) || {},
         { ref: field && field.ref },
       );
       set(fieldErrors, path, error);
