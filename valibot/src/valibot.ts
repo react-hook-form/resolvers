@@ -129,9 +129,7 @@ export function valibotResolver<Input extends FieldValues, Context, Output>(
 
     // Otherwise, return resolver result with values
     return {
-      values: resolverOptions.raw
-        ? Object.assign({}, values)
-        : (result.output as FieldValues),
+      values: resolverOptions.raw ? Object.assign({}, values) : result.output,
       errors: {},
     };
   };

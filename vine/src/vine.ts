@@ -6,7 +6,6 @@ import {
 } from '@vinejs/vine/build/src/types';
 import {
   FieldError,
-  FieldErrors,
   FieldValues,
   Resolver,
   appendErrors,
@@ -94,7 +93,7 @@ export function vineResolver<Input extends FieldValues, Context, Output>(
       options.shouldUseNativeValidation && validateFieldsNatively({}, options);
 
       return {
-        errors: {} as FieldErrors,
+        errors: {},
         values: resolverOptions.raw ? Object.assign({}, values) : data,
       };
     } catch (error: any) {
