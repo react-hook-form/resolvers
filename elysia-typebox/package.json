@@ -13,12 +13,6 @@
   "peerDependencies": {
     "react-hook-form": "^7.55.0",
     "@hookform/resolvers": "^2.0.0",
-    "@sinclair/typebox": "^0.25.24",
-    "elysia": "*"
-  },
-  "peerDependenciesMeta": {
-    "elysia": {
-      "optional": true
-    }
+    "@sinclair/typebox": "^0.25.24"
   }
 }
