@@ -183,13 +183,16 @@ function parseErrorSchema(
  *   resolver: elysiaTypeboxResolver(schema)
  * });
  */
-// Type constraint to ensure the schema produces an object-like type
-type ObjectLikeSchema = TSchema & { static: Record<string, any> };
+// Helper type to ensure the schema produces an object
+type EnsureObject<T> = T extends Record<string, unknown> ? T : never;
 
-export function elysiaTypeboxResolver<Schema extends ObjectLikeSchema, Context>(
+export function elysiaTypeboxResolver<
+  Schema extends TSchema,
+  Context = unknown,
+>(
   schema: Schema | TypeCheck<Schema>,
-): Resolver<Static<Schema>, Context, StaticDecode<Schema>> {
-  return async (values: Static<Schema>, _, options) => {
+): Resolver<EnsureObject<Static<Schema>>, Context, StaticDecode<Schema>> {
+  return async (values, _, options) => {
     const originalValues = values;
     let decodedValues = values;
     let errors: ValueError[] = [];
