@@ -132,7 +132,7 @@
     "./elysia-typebox": {
       "types": "./elysia-typebox/dist/index.d.ts",
       "umd": "./elysia-typebox/dist/elysia-typebox.umd.js",
-      "import": "./elysia-typebox/dist/elysia-typebox.mjs",
+      "import": "./elysia-typebox/dist/elysia-typebox.modern.mjs",
       "require": "./elysia-typebox/dist/elysia-typebox.js"
     },
     "./package.json": "./package.json",
@@ -301,6 +301,7 @@
     "computed-types": "^1.11.2",
     "cross-env": "^7.0.3",
     "effect": "^3.13.12",
+    "elysia": "^1.4.16",
     "fluentvalidation-ts": "^3.2.0",
     "fp-ts": "^2.16.9",
     "io-ts": "^2.2.22",
