@@ -8,7 +8,12 @@ import {
 } from '@sinclair/typebox';
 import { TypeCheck } from '@sinclair/typebox/compiler';
 import { Value, type ValueError } from '@sinclair/typebox/value';
-import { FieldError, Resolver, appendErrors } from 'react-hook-form';
+import {
+  FieldError,
+  FieldValues,
+  Resolver,
+  appendErrors,
+} from 'react-hook-form';
 
 type ElysiaCustomError =
   | string
@@ -193,15 +198,9 @@ function parseErrorSchema(
  *   resolver: elysiaTypeboxResolver(schema)
  * });
  */
-// Helper type to ensure the schema produces an object
-type EnsureObject<T> = T extends Record<string, unknown> ? T : never;
-
-export function elysiaTypeboxResolver<
-  Schema extends TSchema,
-  Context = unknown,
->(
-  schema: Schema | TypeCheck<Schema>,
-): Resolver<EnsureObject<Static<Schema>>, Context, StaticDecode<Schema>> {
+export function elysiaTypeboxResolver<S extends TSchema>(
+  schema: S | TypeCheck<S>,
+): Resolver<Static<S> extends FieldValues ? Static<S> : FieldValues> {
   return async (values, _, options) => {
     const originalValues = values;
     let decodedValues = values;
@@ -226,7 +225,7 @@ export function elysiaTypeboxResolver<
             errors = Array.from(Value.Errors(schema, values));
           } else {
             const requiredFields = schemaRequired || [];
-            const decodedObject = { ...values } as Record<string, unknown>;
+            const decodedObject = { ...(values as Record<string, unknown>) };
             let hasDecodeError = false;
 
             for (const [key, propSchema] of Object.entries(schemaProperties)) {
@@ -286,12 +285,16 @@ export function elysiaTypeboxResolver<
     if (!errors.length) {
       return {
         errors: {},
-        values: decodedValues,
+        values: decodedValues as Static<S> extends FieldValues
+          ? StaticDecode<S>
+          : FieldValues,
       };
     }
 
     return {
-      values: {},
+      values: {} as Static<S> extends FieldValues
+        ? StaticDecode<S>
+        : FieldValues,
       errors: toNestErrors(
         parseErrorSchema(
           errors,

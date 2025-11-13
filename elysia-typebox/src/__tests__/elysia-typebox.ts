@@ -152,18 +152,14 @@ describe('elysiaTypeboxResolver', () => {
   it('should correctly infer the output type from a typebox schema', () => {
     const resolver = elysiaTypeboxResolver(Type.Object({ id: Type.Number() }));
 
-    expectTypeOf(resolver).toEqualTypeOf<
-      Resolver<{ id: number }, unknown, { id: number }>
-    >();
+    expectTypeOf(resolver).toEqualTypeOf<Resolver<{ id: number }>>();
   });
 
   it('should correctly infer the output type from a typebox schema with TypeCompiler', () => {
     const typecheck = TypeCompiler.Compile(Type.Object({ id: Type.Number() }));
     const resolver = elysiaTypeboxResolver(typecheck);
 
-    expectTypeOf(resolver).toEqualTypeOf<
-      Resolver<{ id: number }, unknown, { id: number }>
-    >();
+    expectTypeOf(resolver).toEqualTypeOf<Resolver<{ id: number }>>();
   });
 
   it('should correctly infer the output type from a typebox schema using a transform', () => {
@@ -175,9 +171,7 @@ describe('elysiaTypeboxResolver', () => {
       }),
     );
 
-    expectTypeOf(resolver).toEqualTypeOf<
-      Resolver<{ id: number }, unknown, { id: string }>
-    >();
+    expectTypeOf(resolver).toEqualTypeOf<Resolver<{ id: number }>>();
   });
 
   it('should correctly infer the output type from a typebox schema for the handleSubmit function in useForm', () => {
@@ -236,7 +230,7 @@ describe('elysiaTypeboxResolver', () => {
 
     expectTypeOf(form.handleSubmit).parameter(0).toEqualTypeOf<
       SubmitHandler<{
-        id: string;
+        id: number;
       }>
     >();
   });
