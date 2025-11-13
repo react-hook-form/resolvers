@@ -3,7 +3,6 @@ import {
   Kind,
   Static,
   StaticDecode,
-  TObject,
   TSchema,
   TransformKind,
 } from '@sinclair/typebox';
@@ -184,7 +183,10 @@ function parseErrorSchema(
  *   resolver: elysiaTypeboxResolver(schema)
  * });
  */
-export function elysiaTypeboxResolver<Schema extends TObject, Context>(
+// Type constraint to ensure the schema produces an object-like type
+type ObjectLikeSchema = TSchema & { static: Record<string, any> };
+
+export function elysiaTypeboxResolver<Schema extends ObjectLikeSchema, Context>(
   schema: Schema | TypeCheck<Schema>,
 ): Resolver<Static<Schema>, Context, StaticDecode<Schema>> {
   return async (values: Static<Schema>, _, options) => {
@@ -194,7 +196,7 @@ export function elysiaTypeboxResolver<Schema extends TObject, Context>(
 
     if (!(schema instanceof TypeCheck) && hasTransform(schema)) {
       try {
-        decodedValues = Value.Decode(schema, values) as Static<Schema>;
+        decodedValues = Value.Decode(schema, values);
         errors = [];
       } catch (e) {
         if (schema[Kind] === 'Object' && 'properties' in schema) {
