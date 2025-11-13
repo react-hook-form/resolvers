@@ -198,22 +198,31 @@ function parseErrorSchema(
  *   resolver: elysiaTypeboxResolver(schema)
  * });
  */
-export function elysiaTypeboxResolver<S extends TSchema>(
-  schema: S | TypeCheck<S>,
-): Resolver<Static<S> extends FieldValues ? Static<S> : FieldValues> {
+export function elysiaTypeboxResolver<S = unknown>(
+  schema: S | TypeCheck<S extends TSchema ? S : TSchema>,
+): Resolver<
+  S extends TSchema
+    ? Static<S> extends FieldValues
+      ? Static<S>
+      : FieldValues
+    : FieldValues
+> {
   return async (values, _, options) => {
     const originalValues = values;
     let decodedValues = values;
     let errors: ValueError[] = [];
 
-    if (!(schema instanceof TypeCheck) && hasTransform(schema)) {
+    if (!(schema instanceof TypeCheck) && hasTransform(schema as TSchema)) {
       // First try to decode the entire object
       try {
-        decodedValues = Value.Decode(schema, values);
+        decodedValues = Value.Decode(schema as TSchema, values);
         errors = [];
       } catch (e) {
         // If full decode fails, try field-by-field decoding to handle optional fields
-        if (schema[Kind] === 'Object' && 'properties' in schema) {
+        if (
+          (schema as TSchema)[Kind] === 'Object' &&
+          'properties' in (schema as object)
+        ) {
           // We've verified at runtime that schema has properties
           const schemaProperties = (
             schema as TSchema & { properties?: Record<string, TSchema> }
@@ -222,7 +231,7 @@ export function elysiaTypeboxResolver<S extends TSchema>(
             .required;
 
           if (!schemaProperties || typeof schemaProperties !== 'object') {
-            errors = Array.from(Value.Errors(schema, values));
+            errors = Array.from(Value.Errors(schema as TSchema, values));
           } else {
             const requiredFields = schemaRequired || [];
             const decodedObject = { ...(values as Record<string, unknown>) };
@@ -264,19 +273,21 @@ export function elysiaTypeboxResolver<S extends TSchema>(
             // If no decode errors occurred, validate the decoded values
             if (!hasDecodeError) {
               decodedValues = decodedObject as typeof decodedValues;
-              errors = Array.from(Value.Errors(schema, decodedObject));
+              errors = Array.from(
+                Value.Errors(schema as TSchema, decodedObject),
+              );
             }
           }
         } else {
           // For non-object schemas, just get validation errors
-          errors = Array.from(Value.Errors(schema, values));
+          errors = Array.from(Value.Errors(schema as TSchema, values));
         }
       }
     } else {
       errors = Array.from(
         schema instanceof TypeCheck
           ? schema.Errors(values)
-          : Value.Errors(schema, values),
+          : Value.Errors(schema as TSchema, values),
       );
     }
 
@@ -285,21 +296,25 @@ export function elysiaTypeboxResolver<S extends TSchema>(
     if (!errors.length) {
       return {
         errors: {},
-        values: decodedValues as Static<S> extends FieldValues
-          ? StaticDecode<S>
+        values: decodedValues as S extends TSchema
+          ? Static<S> extends FieldValues
+            ? StaticDecode<S>
+            : FieldValues
           : FieldValues,
       };
     }
 
     return {
-      values: {} as Static<S> extends FieldValues
-        ? StaticDecode<S>
+      values: {} as S extends TSchema
+        ? Static<S> extends FieldValues
+          ? StaticDecode<S>
+          : FieldValues
         : FieldValues,
       errors: toNestErrors(
         parseErrorSchema(
           errors,
           !options.shouldUseNativeValidation && options.criteriaMode === 'all',
-          schema instanceof TypeCheck ? undefined : schema,
+          schema instanceof TypeCheck ? undefined : (schema as TSchema),
           originalValues,
         ),
         options,
