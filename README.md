@@ -112,6 +112,7 @@ useForm<z.input<typeof schema>, any, z.output<typeof schema>>({
   - [TypeBox](#typebox)
     - [With `ValueCheck`](#with-valuecheck)
     - [With `TypeCompiler`](#with-typecompiler)
+  - [Elysia TypeBox](#elysia-typebox)
   - [ArkType](#arktype)
   - [Valibot](#valibot)
   - [TypeSchema](#typeschema)
@@ -612,6 +613,59 @@ const App = () => {
     <form onSubmit={handleSubmit((d) => console.log(d))}>
       <input {...register('username')} />
       <input type="password" {...register('password')} />
+      <input type="submit" />
+    </form>
+  );
+};
+```
+
+### [Elysia TypeBox](https://github.com/elysiajs/elysia)
+
+Extended TypeBox with Transform types and custom error messages for [Elysia](https://elysiajs.com) framework
+
+[![npm](https://img.shields.io/bundlephobia/minzip/elysia?style=for-the-badge)](https://bundlephobia.com/result?p=elysia)
+
+```typescript jsx
+import { useForm } from 'react-hook-form';
+import { elysiaTypeboxResolver } from '@hookform/resolvers/elysia-typebox';
+import { Type } from '@sinclair/typebox';
+
+// Supports Elysia's custom error messages
+const schema = Type.Object({
+  username: Type.String({
+    minLength: 3,
+    error: 'Username must be at least 3 characters'
+  }),
+  age: Type.Number({
+    minimum: 18,
+    error: ({ value }) => `Age ${value} is too young. Must be 18+`
+  })
+});
+
+// Or use Elysia's Transform types
+const schemaWithTransform = Type.Object({
+  age: Type.Transform(Type.String())
+    .Decode((value) => {
+      const num = parseInt(value);
+      if (isNaN(num)) throw new Error('Invalid number');
+      return num;
+    })
+    .Encode((value) => String(value))
+});
+
+const App = () => {
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: elysiaTypeboxResolver(schema),
+  });
+
+  return (
+    <form onSubmit={handleSubmit((d) => console.log(d))}>
+      <input {...register('username')} />
+      {errors.username && <p>{errors.username.message}</p>}
+
+      <input type="number" {...register('age')} />
+      {errors.age && <p>{errors.age.message}</p>}
+
       <input type="submit" />
     </form>
   );

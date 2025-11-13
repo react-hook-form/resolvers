@@ -2,7 +2,7 @@
   "name": "@hookform/resolvers",
   "amdName": "hookformResolvers",
   "version": "2.9.1",
-  "description": "React Hook Form validation resolvers: Yup, Joi, Superstruct, Zod, Vest, Class Validator, io-ts, Nope, computed-types, TypeBox, arktype, Typanion, Effect-TS and VineJS",
+  "description": "React Hook Form validation resolvers: Yup, Joi, Superstruct, Zod, Vest, Class Validator, io-ts, Nope, computed-types, TypeBox, Elysia TypeBox, arktype, Typanion, Effect-TS and VineJS",
   "main": "dist/resolvers.js",
   "module": "dist/resolvers.module.js",
   "umd:main": "dist/resolvers.umd.js",
@@ -129,6 +129,12 @@
       "import": "./standard-schema/dist/standard-schema.mjs",
       "require": "./standard-schema/dist/standard-schema.js"
     },
+    "./elysia-typebox": {
+      "types": "./elysia-typebox/dist/index.d.ts",
+      "umd": "./elysia-typebox/dist/elysia-typebox.umd.js",
+      "import": "./elysia-typebox/dist/elysia-typebox.mjs",
+      "require": "./elysia-typebox/dist/elysia-typebox.js"
+    },
     "./package.json": "./package.json",
     "./*": "./*"
   },
@@ -170,6 +176,9 @@
     "typebox/package.json",
     "typebox/src",
     "typebox/dist",
+    "elysia-typebox/package.json",
+    "elysia-typebox/src",
+    "elysia-typebox/dist",
     "arktype/package.json",
     "arktype/src",
     "arktype/dist",
@@ -214,6 +223,7 @@
     "build:typanion": "microbundle --cwd typanion --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
     "build:ajv": "microbundle --cwd ajv --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
     "build:typebox": "microbundle --cwd typebox --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm,@sinclair/typebox/value=value,@sinclair/typebox/compiler=compiler",
+    "build:elysia-typebox": "microbundle --cwd elysia-typebox --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm,@sinclair/typebox/value=value,@sinclair/typebox/compiler=compiler",
     "build:arktype": "microbundle --cwd arktype --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
     "build:valibot": "microbundle --cwd valibot --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
     "build:typeschema": "microbundle --cwd typeschema --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm,@typeschema/main=main",
@@ -314,7 +324,7 @@
     "vest": "^5.4.6",
     "vite": "^6.2.2",
     "vite-tsconfig-paths": "^5.1.4",
-    "vitest": "^3.0.9",
+    "vitest": "^3.2.4",
     "yup": "^1.6.1",
     "zod": "^3.25.0"
   },

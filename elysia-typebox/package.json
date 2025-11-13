@@ -1,0 +1,24 @@
+{
+  "name": "@hookform/resolvers/elysia-typebox",
+  "amdName": "hookformResolversElysiaTypebox",
+  "version": "1.0.0",
+  "private": true,
+  "description": "React Hook Form validation resolver: Elysia's extended TypeBox with custom error messages and type transforms",
+  "main": "dist/elysia-typebox.js",
+  "module": "dist/elysia-typebox.module.js",
+  "umd:main": "dist/elysia-typebox.umd.js",
+  "source": "src/index.ts",
+  "types": "dist/index.d.ts",
+  "license": "MIT",
+  "peerDependencies": {
+    "react-hook-form": "^7.55.0",
+    "@hookform/resolvers": "^2.0.0",
+    "@sinclair/typebox": "^0.25.24",
+    "elysia": "*"
+  },
+  "peerDependenciesMeta": {
+    "elysia": {
+      "optional": true
+    }
+  }
+}
