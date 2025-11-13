@@ -46,17 +46,22 @@ function hasTransform(schema: TSchema): boolean {
 
 function getSchemaAtPath(schema: TSchema, path: string): TSchema | undefined {
   const segments = path.substring(1).split('/').filter(Boolean);
-  let current: any = schema;
+  let current: TSchema | undefined = schema;
 
   for (const segment of segments) {
-    if (current[Kind] === 'Object' && 'properties' in current) {
-      current = current.properties[segment];
-    } else if (current[Kind] === 'Array' && 'items' in current) {
-      current = current.items;
-    } else {
+    if (!current) {
       return undefined;
     }
-    if (!current) {
+
+    if (current[Kind] === 'Object' && 'properties' in current) {
+      const objectSchema = current as TSchema & {
+        properties: Record<string, TSchema>;
+      };
+      current = objectSchema.properties[segment];
+    } else if (current[Kind] === 'Array' && 'items' in current) {
+      const arraySchema = current as TSchema & { items: TSchema };
+      current = arraySchema.items;
+    } else {
       return undefined;
     }
   }
@@ -90,7 +95,7 @@ function processCustomError(
       return result;
     }
     if (typeof result === 'object' && result !== null && 'message' in result) {
-      return String((result as any).message);
+      return String((result as { message: unknown }).message);
     }
   }
 
@@ -119,7 +124,12 @@ function parseErrorSchema(
             : path
                 .split('/')
                 .filter(Boolean)
-                .reduce((obj: any, key) => obj?.[key], originalValues);
+                .reduce((obj: unknown, key) => {
+                  if (obj && typeof obj === 'object' && key in obj) {
+                    return (obj as Record<string, unknown>)[key];
+                  }
+                  return undefined;
+                }, originalValues);
 
         const custom = processCustomError(
           schemaField as TSchema & ElysiaSchemaOptions,
@@ -198,37 +208,68 @@ export function elysiaTypeboxResolver<
     let errors: ValueError[] = [];
 
     if (!(schema instanceof TypeCheck) && hasTransform(schema)) {
+      // First try to decode the entire object
       try {
         decodedValues = Value.Decode(schema, values);
         errors = [];
       } catch (e) {
+        // If full decode fails, try field-by-field decoding to handle optional fields
         if (schema[Kind] === 'Object' && 'properties' in schema) {
-          for (const [key, propSchema] of Object.entries(
-            schema.properties as Record<string, TSchema>,
-          )) {
-            if (hasTransform(propSchema)) {
-              try {
-                Value.Decode(propSchema, (values as any)[key]);
-              } catch (decodeError) {
-                errors = [
-                  {
-                    type: 0,
-                    schema: propSchema,
-                    path: `/${key}`,
-                    value: (values as any)[key],
-                    message:
-                      (decodeError as Error).message ||
-                      'Transform decode failed',
-                    errors: [],
-                  },
-                ];
-                break;
+          // We've verified at runtime that schema has properties
+          const schemaProperties = (
+            schema as TSchema & { properties?: Record<string, TSchema> }
+          ).properties;
+          const schemaRequired = (schema as TSchema & { required?: string[] })
+            .required;
+
+          if (!schemaProperties || typeof schemaProperties !== 'object') {
+            errors = Array.from(Value.Errors(schema, values));
+          } else {
+            const requiredFields = schemaRequired || [];
+            const decodedObject = { ...values } as Record<string, unknown>;
+            let hasDecodeError = false;
+
+            for (const [key, propSchema] of Object.entries(schemaProperties)) {
+              const inputValues = values as Record<string, unknown>;
+              const value = inputValues[key];
+              const isOptional = !requiredFields.includes(key);
+
+              // Skip undefined values for optional fields
+              if (value === undefined && isOptional) {
+                continue;
+              }
+
+              // Try to decode fields with transforms
+              if (hasTransform(propSchema)) {
+                try {
+                  decodedObject[key] = Value.Decode(propSchema, value);
+                } catch (decodeError) {
+                  hasDecodeError = true;
+                  errors = [
+                    {
+                      type: 0,
+                      schema: propSchema,
+                      path: `/${key}`,
+                      value: value,
+                      message:
+                        (decodeError as Error).message ||
+                        'Transform decode failed',
+                      errors: [],
+                    },
+                  ];
+                  break;
+                }
               }
             }
-          }
-        }
 
-        if (!errors.length) {
+            // If no decode errors occurred, validate the decoded values
+            if (!hasDecodeError) {
+              decodedValues = decodedObject as typeof decodedValues;
+              errors = Array.from(Value.Errors(schema, decodedObject));
+            }
+          }
+        } else {
+          // For non-object schemas, just get validation errors
           errors = Array.from(Value.Errors(schema, values));
         }
       }
