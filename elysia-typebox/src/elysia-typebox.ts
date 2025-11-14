@@ -31,6 +31,43 @@ interface ElysiaSchemaOptions {
   error?: ElysiaCustomError;
 }
 
+function cleanUndefinedOptionalFields(
+  schema: unknown,
+  values: unknown,
+): unknown {
+  // If not an object schema or values, return as-is
+  if (
+    !values ||
+    typeof values !== 'object' ||
+    !(schema && typeof schema === 'object')
+  ) {
+    return values;
+  }
+
+  const schemaObj = schema as any;
+
+  // Check if this is an Object schema with properties
+  if (schemaObj[Kind] === 'Object' && 'properties' in schemaObj) {
+    const result: Record<string, unknown> = {};
+    const required = schemaObj.required || [];
+
+    for (const [key, value] of Object.entries(
+      values as Record<string, unknown>,
+    )) {
+      // If value is undefined and field is optional, omit it
+      const isOptional = !required.includes(key);
+      if (value === undefined && isOptional) {
+        continue; // Omit the field entirely
+      }
+      result[key] = value;
+    }
+
+    return result;
+  }
+
+  return values;
+}
+
 function hasTransform(schema: TSchema): boolean {
   if (TransformKind in schema) {
     return true;
@@ -209,13 +246,17 @@ export function elysiaTypeboxResolver<S = unknown>(
 > {
   return async (values, _, options) => {
     const originalValues = values;
-    let decodedValues = values;
+
+    // Clean undefined values from optional fields before validation
+    const cleanedValues = cleanUndefinedOptionalFields(schema, values);
+
+    let decodedValues = cleanedValues;
     let errors: ValueError[] = [];
 
     if (!(schema instanceof TypeCheck) && hasTransform(schema as TSchema)) {
       // First try to decode the entire object
       try {
-        decodedValues = Value.Decode(schema as TSchema, values);
+        decodedValues = Value.Decode(schema as TSchema, cleanedValues);
         errors = [];
       } catch (e) {
         // If full decode fails, try field-by-field decoding to handle optional fields
@@ -231,14 +272,16 @@ export function elysiaTypeboxResolver<S = unknown>(
             .required;
 
           if (!schemaProperties || typeof schemaProperties !== 'object') {
-            errors = Array.from(Value.Errors(schema as TSchema, values));
+            errors = Array.from(Value.Errors(schema as TSchema, cleanedValues));
           } else {
             const requiredFields = schemaRequired || [];
-            const decodedObject = { ...(values as Record<string, unknown>) };
+            const decodedObject = {
+              ...(cleanedValues as Record<string, unknown>),
+            };
             let hasDecodeError = false;
 
             for (const [key, propSchema] of Object.entries(schemaProperties)) {
-              const inputValues = values as Record<string, unknown>;
+              const inputValues = cleanedValues as Record<string, unknown>;
               const value = inputValues[key];
               const isOptional = !requiredFields.includes(key);
 
@@ -280,14 +323,14 @@ export function elysiaTypeboxResolver<S = unknown>(
           }
         } else {
           // For non-object schemas, just get validation errors
-          errors = Array.from(Value.Errors(schema as TSchema, values));
+          errors = Array.from(Value.Errors(schema as TSchema, cleanedValues));
         }
       }
     } else {
       errors = Array.from(
         schema instanceof TypeCheck
-          ? schema.Errors(values)
-          : Value.Errors(schema as TSchema, values),
+          ? schema.Errors(cleanedValues)
+          : Value.Errors(schema as TSchema, cleanedValues),
       );
     }
 
