@@ -301,7 +301,6 @@
     "computed-types": "^1.11.2",
     "cross-env": "^7.0.3",
     "effect": "^3.13.12",
-    "elysia": "^1.4.16",
     "fluentvalidation-ts": "^3.2.0",
     "fp-ts": "^2.16.9",
     "io-ts": "^2.2.22",
