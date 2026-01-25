@@ -147,7 +147,7 @@ Dead simple Object schema validation.
 
 [![npm](https://img.shields.io/bundlephobia/minzip/yup?style=for-the-badge)](https://bundlephobia.com/result?p=yup)
 
-> ⚠️ Pass context via `useForm({ context })`, not via `yupResolver`'s `schemaOptions`. Using React state/atoms via `schemaOptions.context` can result in stale/undefined values.
+> ⚠️ Pass context via `useForm({ context })`, not via `yupResolver`'s `schemaOptions`. Using React state/atoms via `schemaOptions.context` can result in `undefined` values.
 
 ```typescript jsx
 // Correct
