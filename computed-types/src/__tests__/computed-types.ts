@@ -1,3 +1,4 @@
+import { renderHook } from '@testing-library/react';
 import Schema, { number } from 'computed-types';
 import { Resolver, SubmitHandler, useForm } from 'react-hook-form';
 import { computedTypesResolver } from '..';
@@ -65,9 +66,13 @@ describe('computedTypesResolver', () => {
   it('should correctly infer the output type from a computedTypes schema for the handleSubmit function in useForm', () => {
     const schema = Schema({ id: number });
 
-    const form = useForm({
-      resolver: computedTypesResolver(schema),
-    });
+    const {
+      result: { current: form },
+    } = renderHook(() =>
+      useForm({
+        resolver: computedTypesResolver(schema),
+      }),
+    );
 
     expectTypeOf(form.watch('id')).toEqualTypeOf<number>();
 
@@ -81,9 +86,13 @@ describe('computedTypesResolver', () => {
   it('should correctly infer the output type from a computedTypes schema with a transform for the handleSubmit function in useForm', () => {
     const schema = Schema({ id: number.transform((val) => String(val)) });
 
-    const form = useForm({
-      resolver: computedTypesResolver(schema),
-    });
+    const {
+      result: { current: form },
+    } = renderHook(() =>
+      useForm({
+        resolver: computedTypesResolver(schema),
+      }),
+    );
 
     expectTypeOf(form.watch('id')).toEqualTypeOf<number>();
 

@@ -1,3 +1,4 @@
+import { renderHook } from '@testing-library/react';
 import vine from '@vinejs/vine';
 import { Resolver, useForm } from 'react-hook-form';
 import { SubmitHandler } from 'react-hook-form';
@@ -87,9 +88,13 @@ describe('vineResolver', () => {
   it('should correctly infer the output type from a vine schema for the handleSubmit function in useForm', () => {
     const schema = vine.compile(vine.object({ id: vine.number() }));
 
-    const form = useForm({
-      resolver: vineResolver(schema),
-    });
+    const {
+      result: { current: form },
+    } = renderHook(() =>
+      useForm({
+        resolver: vineResolver(schema),
+      }),
+    );
 
     expectTypeOf(form.watch('id')).toEqualTypeOf<number | string>();
 
@@ -107,9 +112,13 @@ describe('vineResolver', () => {
       }),
     );
 
-    const form = useForm({
-      resolver: vineResolver(schema),
-    });
+    const {
+      result: { current: form },
+    } = renderHook(() =>
+      useForm({
+        resolver: vineResolver(schema),
+      }),
+    );
 
     expectTypeOf(form.watch('id')).toEqualTypeOf<string | number>();
 

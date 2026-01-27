@@ -1,3 +1,4 @@
+import { renderHook } from '@testing-library/react';
 import { Resolver, SubmitHandler, useForm } from 'react-hook-form';
 import * as s from 'superstruct';
 import { superstructResolver } from '..';
@@ -18,8 +19,9 @@ describe('superstructResolver', () => {
   it('should return values from superstructResolver with coerced values', async () => {
     const result = await superstructResolver(
       s.object({
-        id: s.coerce(s.number(), s.string(), (val) => String(val)),
+        id: s.coerce(s.string(), s.number(), (val) => String(val)),
       }),
+      { coerce: true },
     )({ id: 1 }, undefined, {
       fields,
       shouldUseNativeValidation,
@@ -64,9 +66,13 @@ describe('superstructResolver', () => {
   it('should correctly infer the output type from a superstruct schema for the handleSubmit function in useForm', () => {
     const schema = s.object({ id: s.number() });
 
-    const form = useForm({
-      resolver: superstructResolver(schema),
-    });
+    const {
+      result: { current: form },
+    } = renderHook(() =>
+      useForm({
+        resolver: superstructResolver(schema, {}),
+      }),
+    );
 
     expectTypeOf(form.watch('id')).toEqualTypeOf<number>();
 
@@ -82,11 +88,19 @@ describe('superstructResolver', () => {
       id: s.coerce(s.string(), s.number(), (val) => String(val)),
     });
 
-    const form = useForm({
-      resolver: superstructResolver(schema),
-    });
+    const {
+      result: { current: form },
+    } = renderHook(() =>
+      useForm({
+        // With coerce, there is no way to infer the input type of the schema
+        resolver: superstructResolver<{ id: number }, unknown, { id: string }>(
+          schema,
+          { coerce: true },
+        ),
+      }),
+    );
 
-    expectTypeOf(form.watch('id')).toEqualTypeOf<string>();
+    expectTypeOf(form.watch('id')).toEqualTypeOf<number>();
 
     expectTypeOf(form.handleSubmit).parameter(0).toEqualTypeOf<
       SubmitHandler<{
