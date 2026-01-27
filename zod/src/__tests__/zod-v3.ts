@@ -1,3 +1,4 @@
+import { renderHook } from '@testing-library/react';
 import { Resolver, SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod/v3';
 import { zodResolver } from '..';
@@ -147,9 +148,13 @@ describe('zodResolver', () => {
   it('should correctly infer the output type from a Zod schema for the handleSubmit function in useForm', () => {
     const schema = z.object({ id: z.number() });
 
-    const form = useForm({
-      resolver: zodResolver(schema),
-    });
+    const {
+      result: { current: form },
+    } = renderHook(() =>
+      useForm({
+        resolver: zodResolver(schema),
+      }),
+    );
 
     expectTypeOf(form.watch('id')).toEqualTypeOf<number>();
 
@@ -163,9 +168,13 @@ describe('zodResolver', () => {
   it('should correctly infer the output type from a Zod schema with a transform for the handleSubmit function in useForm', () => {
     const schema = z.object({ id: z.number().transform((val) => String(val)) });
 
-    const form = useForm({
-      resolver: zodResolver(schema),
-    });
+    const {
+      result: { current: form },
+    } = renderHook(() =>
+      useForm({
+        resolver: zodResolver(schema),
+      }),
+    );
 
     expectTypeOf(form.watch('id')).toEqualTypeOf<number>();
 

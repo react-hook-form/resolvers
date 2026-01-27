@@ -1,3 +1,4 @@
+import { renderHook } from '@testing-library/react';
 import * as t from 'io-ts';
 import * as tt from 'io-ts-types';
 import { Resolver, SubmitHandler, useForm } from 'react-hook-form';
@@ -60,9 +61,13 @@ describe('ioTsResolver', () => {
   it('should correctly infer the output type from a io-ts schema for the handleSubmit function in useForm', () => {
     const schema = t.type({ id: t.number });
 
-    const form = useForm({
-      resolver: ioTsResolver(schema),
-    });
+    const {
+      result: { current: form },
+    } = renderHook(() =>
+      useForm({
+        resolver: ioTsResolver(schema),
+      }),
+    );
 
     expectTypeOf(form.watch('id')).toEqualTypeOf<number>();
 
@@ -76,9 +81,13 @@ describe('ioTsResolver', () => {
   it('should correctly infer the output type from a io-ts schema with a transform for the handleSubmit function in useForm', () => {
     const schema = t.type({ id: tt.NumberFromString });
 
-    const form = useForm({
-      resolver: ioTsResolver(schema),
-    });
+    const {
+      result: { current: form },
+    } = renderHook(() =>
+      useForm({
+        resolver: ioTsResolver(schema),
+      }),
+    );
 
     expectTypeOf(form.watch('id')).toEqualTypeOf<string>();
 

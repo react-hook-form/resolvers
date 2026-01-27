@@ -1,3 +1,4 @@
+import { renderHook } from '@testing-library/react';
 import { Schema } from 'effect';
 import { Resolver, useForm } from 'react-hook-form';
 import { SubmitHandler } from 'react-hook-form';
@@ -114,9 +115,13 @@ describe('effectTsResolver', () => {
   it('should correctly infer the output type from a effectTs schema for the handleSubmit function in useForm', () => {
     const schema = Schema.Struct({ id: Schema.Number });
 
-    const form = useForm({
-      resolver: effectTsResolver(schema),
-    });
+    const {
+      result: { current: form },
+    } = renderHook(() =>
+      useForm({
+        resolver: effectTsResolver(schema),
+      }),
+    );
 
     expectTypeOf(form.watch('id')).toEqualTypeOf<number>();
 
@@ -133,9 +138,13 @@ describe('effectTsResolver', () => {
       }),
     });
 
-    const form = useForm({
-      resolver: effectTsResolver(schema),
-    });
+    const {
+      result: { current: form },
+    } = renderHook(() =>
+      useForm({
+        resolver: effectTsResolver(schema),
+      }),
+    );
 
     expectTypeOf(form.watch('id')).toEqualTypeOf<number>();
 

@@ -1,5 +1,6 @@
 import { Type } from '@sinclair/typebox';
 import { TypeCompiler } from '@sinclair/typebox/compiler';
+import { renderHook } from '@testing-library/react';
 import { Resolver, SubmitHandler, useForm } from 'react-hook-form';
 import { typeboxResolver } from '..';
 import { fields, invalidData, schema, validData } from './__fixtures__/data';
@@ -72,12 +73,16 @@ describe('typeboxResolver', () => {
   it('should correctly infer the output type from a typebox schema for the handleSubmit function in useForm', () => {
     const schema = Type.Object({ id: Type.Number() });
 
-    const form = useForm({
-      resolver: typeboxResolver(schema),
-      defaultValues: {
-        id: 3,
-      },
-    });
+    const {
+      result: { current: form },
+    } = renderHook(() =>
+      useForm({
+        resolver: typeboxResolver(schema),
+        defaultValues: {
+          id: 3,
+        },
+      }),
+    );
 
     expectTypeOf(form.watch('id')).toEqualTypeOf<number>();
 
@@ -91,12 +96,16 @@ describe('typeboxResolver', () => {
   it('should correctly infer the output type from a typebox schema with TypeCompiler for the handleSubmit function in useForm', () => {
     const typecheck = TypeCompiler.Compile(Type.Object({ id: Type.Number() }));
 
-    const form = useForm({
-      resolver: typeboxResolver(typecheck),
-      defaultValues: {
-        id: 3,
-      },
-    });
+    const {
+      result: { current: form },
+    } = renderHook(() =>
+      useForm({
+        resolver: typeboxResolver(typecheck),
+        defaultValues: {
+          id: 3,
+        },
+      }),
+    );
 
     expectTypeOf(form.watch('id')).toEqualTypeOf<number>();
 
@@ -114,12 +123,16 @@ describe('typeboxResolver', () => {
         .Encode((v) => Number.parseInt(v)),
     });
 
-    const form = useForm({
-      resolver: typeboxResolver(schema),
-      defaultValues: {
-        id: 3,
-      },
-    });
+    const {
+      result: { current: form },
+    } = renderHook(() =>
+      useForm({
+        resolver: typeboxResolver(schema),
+        defaultValues: {
+          id: 3,
+        },
+      }),
+    );
 
     expectTypeOf(form.watch('id')).toEqualTypeOf<number>();
 
