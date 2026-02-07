@@ -1,3 +1,4 @@
+import { renderHook } from '@testing-library/react';
 import { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { Resolver } from 'react-hook-form';
@@ -171,9 +172,13 @@ describe('valibotResolver', () => {
   it('should correctly infer the output type from a valibot schema for the handleSubmit function in useForm', () => {
     const schema = v.object({ id: v.number() });
 
-    const form = useForm({
-      resolver: valibotResolver(schema),
-    });
+    const {
+      result: { current: form },
+    } = renderHook(() =>
+      useForm({
+        resolver: valibotResolver(schema),
+      }),
+    );
 
     expectTypeOf(form.watch('id')).toEqualTypeOf<number>();
 
@@ -192,9 +197,13 @@ describe('valibotResolver', () => {
       ),
     });
 
-    const form = useForm({
-      resolver: valibotResolver(schema),
-    });
+    const {
+      result: { current: form },
+    } = renderHook(() =>
+      useForm({
+        resolver: valibotResolver(schema),
+      }),
+    );
 
     expectTypeOf(form.watch('id')).toEqualTypeOf<number>();
 

@@ -1,3 +1,4 @@
+import { renderHook } from '@testing-library/react';
 import { Resolver, SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod/v3';
 import { standardSchemaResolver } from '..';
@@ -113,13 +114,16 @@ describe('standardSchemaResolver', () => {
 
   it('should correctly infer the output type from a standardSchema schema for the handleSubmit function in useForm', () => {
     const schema = z.object({ id: z.number() });
-
-    const form = useForm({
-      resolver: standardSchemaResolver(schema),
-      defaultValues: {
-        id: 3,
-      },
-    });
+    const {
+      result: { current: form },
+    } = renderHook(() =>
+      useForm({
+        resolver: standardSchemaResolver(schema),
+        defaultValues: {
+          id: 3,
+        },
+      }),
+    );
 
     expectTypeOf(form.watch('id')).toEqualTypeOf<number>();
 
@@ -133,12 +137,16 @@ describe('standardSchemaResolver', () => {
   it('should correctly infer the output type from a standardSchema schema with a transform for the handleSubmit function in useForm', () => {
     const schema = z.object({ id: z.number().transform((val) => String(val)) });
 
-    const form = useForm({
-      resolver: standardSchemaResolver(schema),
-      defaultValues: {
-        id: 3,
-      },
-    });
+    const {
+      result: { current: form },
+    } = renderHook(() =>
+      useForm({
+        resolver: standardSchemaResolver(schema),
+        defaultValues: {
+          id: 3,
+        },
+      }),
+    );
 
     expectTypeOf(form.watch('id')).toEqualTypeOf<number>();
 

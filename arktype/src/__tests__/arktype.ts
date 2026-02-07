@@ -1,3 +1,4 @@
+import { renderHook } from '@testing-library/react';
 import { type } from 'arktype';
 import { Resolver, useForm } from 'react-hook-form';
 import { SubmitHandler } from 'react-hook-form';
@@ -51,9 +52,13 @@ describe('arktypeResolver', () => {
   it('should correctly infer the output type from a arktype schema for the handleSubmit function in useForm', () => {
     const schema = type({ id: 'number' });
 
-    const form = useForm({
-      resolver: arktypeResolver(schema),
-    });
+    const {
+      result: { current: form },
+    } = renderHook(() =>
+      useForm({
+        resolver: arktypeResolver(schema),
+      }),
+    );
 
     expectTypeOf(form.watch('id')).toEqualTypeOf<number>();
 
@@ -67,9 +72,13 @@ describe('arktypeResolver', () => {
   it('should correctly infer the output type from a arktype schema with a transform for the handleSubmit function in useForm', () => {
     const schema = type({ id: type('string').pipe((s) => Number.parseInt(s)) });
 
-    const form = useForm({
-      resolver: arktypeResolver(schema),
-    });
+    const {
+      result: { current: form },
+    } = renderHook(() =>
+      useForm({
+        resolver: arktypeResolver(schema),
+      }),
+    );
 
     expectTypeOf(form.watch('id')).toEqualTypeOf<string>();
 
