@@ -148,6 +148,30 @@ interface Zod3Type<O = unknown, I = unknown> {
     typeName: string;
   };
 }
+type Zod4TypeLike = {
+  _zod: {
+    input?: unknown;
+    output?: unknown;
+  };
+};
+type Zod4SchemaLike<Input = FieldValues, Output = unknown> = {
+  _zod: {
+    input: Input;
+    output: Output;
+  };
+};
+type Zod4Input<T extends Zod4TypeLike> = T extends {
+  _zod: { input?: infer I };
+}
+  ? I extends FieldValues
+    ? I
+    : FieldValues
+  : FieldValues;
+type Zod4Output<T extends Zod4TypeLike> = T extends {
+  _zod: { output?: infer O };
+}
+  ? O
+  : unknown;
 
 // some type magic to make versions pre-3.25.0 still work
 type IsUnresolved<T> = PropertyKey extends keyof T ? true : false;
@@ -198,25 +222,31 @@ export function zodResolver<Input extends FieldValues, Context, Output>(
 ): Resolver<Input, Context, Input>;
 // the Zod 4 overloads need to be generic for complicated reasons
 export function zodResolver<
-  Input extends FieldValues,
   Context,
-  Output,
-  T extends z4.$ZodType<Output, Input> = z4.$ZodType<Output, Input>,
+  T extends Zod4TypeLike,
 >(
   schema: T,
   schemaOptions?: Zod4ParseParams, // already partial
   resolverOptions?: NonRawResolverOptions,
-): Resolver<z4.input<T>, Context, z4.output<T>>;
+): Resolver<Zod4Input<T>, Context, Zod4Output<T>>;
 export function zodResolver<
   Input extends FieldValues,
   Context,
   Output,
-  T extends z4.$ZodType<Output, Input> = z4.$ZodType<Output, Input>,
 >(
-  schema: z4.$ZodType<Output, Input>,
+  schema: Zod4SchemaLike<Input, Output>,
+  schemaOptions?: Zod4ParseParams, // already partial
+  resolverOptions?: NonRawResolverOptions,
+): Resolver<Input, Context, Output>;
+export function zodResolver<
+  Input extends FieldValues,
+  Context,
+  Output,
+>(
+  schema: Zod4SchemaLike<Input, Output>,
   schemaOptions: Zod4ParseParams | undefined, // already partial
   resolverOptions: RawResolverOptions,
-): Resolver<z4.input<T>, Context, z4.input<T>>;
+): Resolver<Input, Context, Input>;
 /**
  * Creates a resolver function for react-hook-form that validates form data using a Zod schema
  * @param {z3.ZodSchema<Input>} schema - The Zod schema used to validate the form data
