@@ -221,28 +221,17 @@ export function zodResolver<Input extends FieldValues, Context, Output>(
   resolverOptions: RawResolverOptions,
 ): Resolver<Input, Context, Input>;
 // the Zod 4 overloads need to be generic for complicated reasons
-export function zodResolver<
-  Context,
-  T extends Zod4TypeLike,
->(
+export function zodResolver<Context, T extends Zod4TypeLike>(
   schema: T,
   schemaOptions?: Zod4ParseParams, // already partial
   resolverOptions?: NonRawResolverOptions,
 ): Resolver<Zod4Input<T>, Context, Zod4Output<T>>;
-export function zodResolver<
-  Input extends FieldValues,
-  Context,
-  Output,
->(
+export function zodResolver<Input extends FieldValues, Context, Output>(
   schema: Zod4SchemaLike<Input, Output>,
   schemaOptions?: Zod4ParseParams, // already partial
   resolverOptions?: NonRawResolverOptions,
 ): Resolver<Input, Context, Output>;
-export function zodResolver<
-  Input extends FieldValues,
-  Context,
-  Output,
->(
+export function zodResolver<Input extends FieldValues, Context, Output>(
   schema: Zod4SchemaLike<Input, Output>,
   schemaOptions: Zod4ParseParams | undefined, // already partial
   resolverOptions: RawResolverOptions,
