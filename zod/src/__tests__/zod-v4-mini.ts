@@ -111,6 +111,23 @@ describe('zodResolver', () => {
     >();
   });
 
+  it('should infer resolver types from a Zod v4 mini structural schema type', () => {
+    type StructuralSchema = {
+      _zod: {
+        input: { id: number };
+        output: { id: string };
+      };
+    };
+
+    type InferredResolver = ReturnType<
+      typeof zodResolver<unknown, StructuralSchema>
+    >;
+
+    expectTypeOf<InferredResolver>().toEqualTypeOf<
+      Resolver<{ id: number }, unknown, { id: string }>
+    >();
+  });
+
   it('should correctly infer the output type from a zod schema using a transform', () => {
     const resolver = zodResolver(
       z.object({
