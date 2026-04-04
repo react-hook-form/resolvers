@@ -1,0 +1,262 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ataResolver > should return all the error messages from ataResolver when requirement fails 1`] = `
+{
+  "errors": {
+    "deepObject": {
+      "message": "must have required property 'deepObject'",
+      "ref": undefined,
+      "type": "required",
+    },
+    "enabled": {
+      "message": "must have required property 'enabled'",
+      "ref": undefined,
+      "type": "required",
+    },
+    "password": {
+      "message": "must have required property 'password'",
+      "ref": {
+        "name": "password",
+      },
+      "type": "required",
+    },
+    "tags": {
+      "message": "must have required property 'tags'",
+      "ref": undefined,
+      "type": "required",
+    },
+    "username": {
+      "message": "must have required property 'username'",
+      "ref": {
+        "name": "username",
+      },
+      "type": "required",
+    },
+  },
+  "values": {},
+}
+`;
+
+exports[`ataResolver > should return all the error messages from ataResolver when some property is undefined 1`] = `
+{
+  "errors": {
+    "deepObject": {
+      "data": {
+        "message": "must have required property 'data'",
+        "ref": undefined,
+        "type": "required",
+      },
+    },
+    "enabled": {
+      "message": "must have required property 'enabled'",
+      "ref": undefined,
+      "type": "required",
+    },
+    "password": {
+      "message": "must have required property 'password'",
+      "ref": {
+        "name": "password",
+      },
+      "type": "required",
+    },
+    "tags": {
+      "message": "must have required property 'tags'",
+      "ref": undefined,
+      "type": "required",
+    },
+  },
+  "values": {},
+}
+`;
+
+exports[`ataResolver > should return all the error messages from ataResolver when validation fails and validateAllFieldCriteria set to true 1`] = `
+{
+  "errors": {
+    "birthday": {
+      "message": "must be integer",
+      "ref": {
+        "name": "birthday",
+      },
+      "type": "type",
+      "types": {
+        "type": "must be integer",
+      },
+    },
+    "deepObject": {
+      "data": {
+        "message": "must be string",
+        "ref": undefined,
+        "type": "type",
+        "types": {
+          "type": "must be string",
+        },
+      },
+      "twoLayersDeep": {
+        "name": {
+          "message": "must be string",
+          "ref": undefined,
+          "type": "type",
+          "types": {
+            "type": "must be string",
+          },
+        },
+      },
+    },
+    "email": {
+      "message": "must match format "email"",
+      "ref": {
+        "name": "email",
+      },
+      "type": "format",
+      "types": {
+        "format": "must match format "email"",
+      },
+    },
+    "enabled": {
+      "message": "must have required property 'enabled'",
+      "ref": undefined,
+      "type": "required",
+      "types": {
+        "required": "must have required property 'enabled'",
+      },
+    },
+    "like": [
+      {
+        "id": {
+          "message": "must be number",
+          "ref": undefined,
+          "type": "type",
+          "types": {
+            "type": "must be number",
+          },
+        },
+        "name": {
+          "message": "must have required property 'name'",
+          "ref": undefined,
+          "type": "required",
+          "types": {
+            "required": "must have required property 'name'",
+          },
+        },
+      },
+    ],
+    "password": {
+      "message": "must NOT have fewer than 8 characters",
+      "ref": {
+        "name": "password",
+      },
+      "type": "minLength",
+      "types": {
+        "minLength": "must NOT have fewer than 8 characters",
+        "pattern": "must match pattern ".*[A-Z].*"",
+      },
+    },
+    "tags": {
+      "message": "must have required property 'tags'",
+      "ref": undefined,
+      "type": "required",
+      "types": {
+        "required": "must have required property 'tags'",
+      },
+    },
+    "url": {
+      "message": "must match format "uri"",
+      "ref": undefined,
+      "type": "format",
+      "types": {
+        "format": "must match format "uri"",
+      },
+    },
+    "username": {
+      "message": "must NOT have fewer than 3 characters",
+      "ref": {
+        "name": "username",
+      },
+      "type": "minLength",
+      "types": {
+        "minLength": "must NOT have fewer than 3 characters",
+      },
+    },
+  },
+  "values": {},
+}
+`;
+
+exports[`ataResolver > should return single error message from ataResolver when validation fails and validateAllFieldCriteria set to false 1`] = `
+{
+  "errors": {
+    "birthday": {
+      "message": "must be integer",
+      "ref": {
+        "name": "birthday",
+      },
+      "type": "type",
+    },
+    "deepObject": {
+      "data": {
+        "message": "must be string",
+        "ref": undefined,
+        "type": "type",
+      },
+      "twoLayersDeep": {
+        "name": {
+          "message": "must be string",
+          "ref": undefined,
+          "type": "type",
+        },
+      },
+    },
+    "email": {
+      "message": "must match format "email"",
+      "ref": {
+        "name": "email",
+      },
+      "type": "format",
+    },
+    "enabled": {
+      "message": "must have required property 'enabled'",
+      "ref": undefined,
+      "type": "required",
+    },
+    "like": [
+      {
+        "id": {
+          "message": "must be number",
+          "ref": undefined,
+          "type": "type",
+        },
+        "name": {
+          "message": "must have required property 'name'",
+          "ref": undefined,
+          "type": "required",
+        },
+      },
+    ],
+    "password": {
+      "message": "must NOT have fewer than 8 characters",
+      "ref": {
+        "name": "password",
+      },
+      "type": "minLength",
+    },
+    "tags": {
+      "message": "must have required property 'tags'",
+      "ref": undefined,
+      "type": "required",
+    },
+    "url": {
+      "message": "must match format "uri"",
+      "ref": undefined,
+      "type": "format",
+    },
+    "username": {
+      "message": "must NOT have fewer than 3 characters",
+      "ref": {
+        "name": "username",
+      },
+      "type": "minLength",
+    },
+  },
+  "values": {},
+}
+`;
