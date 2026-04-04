@@ -147,7 +147,7 @@ Dead simple Object schema validation.
 
 [![npm](https://img.shields.io/bundlephobia/minzip/yup?style=for-the-badge)](https://bundlephobia.com/result?p=yup)
 
-> ⚠️ Pass context via `useForm({ context })`, not via `yupResolver`'s `schemaOptions`. Using React state/atoms via `schemaOptions.context` can result in `undefined` values.
+> ⚠️ Pass context via `useForm({ context })`, not via `yupResolver`'s `schemaOptions`. `schemaOptions.context` is overridden by the form context, so use the `useForm` context object instead.
 
 ```typescript jsx
 // Correct
@@ -156,7 +156,7 @@ useForm({
   context: { foo: true },
 });
 
-// Avoid - context will be stale/undefined
+// Avoid - schemaOptions.context will be ignored/overridden
 yupResolver(schema, { context: { foo: true } });
 ```
 
