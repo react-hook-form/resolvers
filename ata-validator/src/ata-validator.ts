@@ -45,10 +45,13 @@ const parseErrorSchema = (
   return parsedErrors;
 };
 
-export const ataResolver: Resolver =
-  (schema, schemaOptions, resolverOptions = {}) =>
-  async (values, _, options) => {
-    const validator = new Validator(schema, schemaOptions);
+export const ataResolver: Resolver = (
+  schema,
+  schemaOptions,
+  resolverOptions = {},
+) => {
+  const validator = new Validator(schema, schemaOptions);
+  return async (values, _, options) => {
     const result = validator.validate(values);
 
     options.shouldUseNativeValidation && validateFieldsNatively({}, options);
@@ -70,3 +73,4 @@ export const ataResolver: Resolver =
           ),
         };
   };
+};
