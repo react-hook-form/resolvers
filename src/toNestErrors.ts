@@ -39,17 +39,17 @@ const isNameInFieldArray = (
   names: InternalFieldName[],
   name: InternalFieldName,
 ) => {
-  const path = escapeBrackets(name);
+  const path = escapeForRegex(name);
   return names.some((n) => escapeBrackets(n).match(`^${path}\\.\\d+`));
 };
 
-/**
- * Escapes special characters in a string to be used in a regex pattern.
- * it removes the brackets from the string to match the `set` method.
- *
- * @param input - The input string to escape.
- * @returns The escaped string.
- */
+// Removes brackets to match react-hook-form's `set` method behavior.
 function escapeBrackets(input: string): string {
-  return input.replace(/\]|\[/g, '');
+  return input.replace(/[\[\]]/g, '');
+}
+
+// Removes brackets then escapes regex metacharacters so a field name can be
+// safely embedded in a regex pattern without causing a SyntaxError.
+function escapeForRegex(input: string): string {
+  return escapeBrackets(input).replace(/[.*+?^${}()|\\]/g, '\\$&');
 }
