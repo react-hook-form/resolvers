@@ -285,6 +285,19 @@ test('ensures consistent ordering when a field array has a root error and an err
   });
 });
 
+test('does not throw SyntaxError for field names containing regex metacharacters', () => {
+  expect(() =>
+    toNestErrors(
+      { 'foo(bar': { type: 'custom', message: 'err' } },
+      {
+        names: ['foo(bar', 'foo(bar.0'],
+        fields: { 'foo(bar': { name: 'foo(bar', ref: { name: 'foo(bar' } } },
+        shouldUseNativeValidation: false,
+      },
+    ),
+  ).not.toThrow();
+});
+
 test('should correctly validate object with special characters', () => {
   const result = toNestErrors(
     { '[array-2]': { type: 'string', message: 'string is required' } },
