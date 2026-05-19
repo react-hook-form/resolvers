@@ -35,6 +35,7 @@ Install your preferred validation library alongside `@hookform/resolvers`.
 | resolver  | Infer values <br /> from schema | [criteriaMode](https://react-hook-form.com/docs/useform#criteriaMode) |
 |---|---|---|
 | AJV  | ❌  | `firstError \| all` |
+| ata-validator  | ❌  | `firstError \| all` |
 | Arktype |  ✅ | `firstError` |
 | class-validator  | ✅  | `firstError \| all` |
 | computed-types  | ✅  | `firstError` |
@@ -109,6 +110,7 @@ useForm<z.input<typeof schema>, any, z.output<typeof schema>>({
   - [computed-types](#computed-types)
   - [typanion](#typanion)
   - [Ajv](#ajv)
+  - [ata-validator](#ata-validator)
   - [TypeBox](#typebox)
     - [With `ValueCheck`](#with-valuecheck)
     - [With `TypeCompiler`](#with-typecompiler)
@@ -905,6 +907,52 @@ const App = () => {
       <input {...register('username')} />
       <input type="password" {...register('password')} />
       <input type="submit" />
+    </form>
+  );
+};
+```
+
+### [ata-validator](https://github.com/nicholasgasior/ata-validator)
+
+A JSON Schema-based validator for JavaScript and TypeScript
+
+[![npm](https://img.shields.io/bundlephobia/minzip/ata-validator?style=for-the-badge)](https://bundlephobia.com/result?p=ata-validator)
+
+```typescript jsx
+import { useForm } from 'react-hook-form';
+import { ataResolver } from '@hookform/resolvers/ata-validator';
+
+const schema = {
+  type: 'object',
+  properties: {
+    username: {
+      type: 'string',
+      minLength: 1,
+    },
+    password: {
+      type: 'string',
+      minLength: 1,
+    },
+  },
+  required: ['username', 'password'],
+};
+
+const App = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: ataResolver(schema),
+  });
+
+  return (
+    <form onSubmit={handleSubmit((data) => console.log(data))}>
+      <input {...register('username')} />
+      {errors.username && <span>{errors.username.message}</span>}
+      <input {...register('password')} />
+      {errors.password && <span>{errors.password.message}</span>}
+      <button type="submit">submit</button>
     </form>
   );
 };
