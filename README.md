@@ -149,6 +149,19 @@ Dead simple Object schema validation.
 
 [![npm](https://img.shields.io/bundlephobia/minzip/yup?style=for-the-badge)](https://bundlephobia.com/result?p=yup)
 
+> ⚠️ Pass context via `useForm({ context })`, not via `yupResolver`'s `schemaOptions`. `schemaOptions.context` is overridden by the form context, so use the `useForm` context object instead.
+
+```typescript jsx
+// Correct
+useForm({
+  resolver: yupResolver(schema),
+  context: { foo: true },
+});
+
+// Avoid - schemaOptions.context will be ignored/overridden
+yupResolver(schema, { context: { foo: true } });
+```
+
 ```typescript jsx
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
