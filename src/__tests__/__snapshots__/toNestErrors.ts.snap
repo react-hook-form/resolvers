@@ -3,6 +3,11 @@
 exports[`transforms flat object to nested object 1`] = `
 {
   "name": {
+    "firstName": {
+      "message": "third message",
+      "ref": undefined,
+      "type": "rd",
+    },
     "message": "first message",
     "ref": {
       "reportValidity": [MockFunction spy],
@@ -25,6 +30,11 @@ exports[`transforms flat object to nested object 1`] = `
 exports[`transforms flat object to nested object and shouldUseNativeValidation: true 1`] = `
 {
   "name": {
+    "firstName": {
+      "message": "third message",
+      "ref": undefined,
+      "type": "rd",
+    },
     "message": "first message",
     "ref": {
       "reportValidity": [MockFunction spy] {
