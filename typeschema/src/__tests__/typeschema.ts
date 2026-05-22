@@ -1,4 +1,4 @@
-import * as typeschema from '@typeschema/main';
+import { renderHook } from '@testing-library/react';
 import { Resolver, SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod/v3';
 import { typeschemaResolver } from '..';
@@ -13,7 +13,7 @@ vi.mock('@typeschema/main', async (importOriginal) => {
 
 describe('typeschemaResolver', () => {
   it('should return values from typeschemaResolver when validation pass & raw=true', async () => {
-    const validateSpy = vi.spyOn(typeschema, 'validate');
+    const validateSpy = vi.spyOn(schema['~standard'], 'validate');
 
     const result = await typeschemaResolver(schema, undefined, { raw: true })(
       validData,
@@ -26,7 +26,7 @@ describe('typeschemaResolver', () => {
   });
 
   it('should return parsed values from typeschemaResolver when validation pass', async () => {
-    const validateSpy = vi.spyOn(typeschema, 'validate');
+    const validateSpy = vi.spyOn(schema['~standard'], 'validate');
 
     const result = await typeschemaResolver(schema)(validData, undefined, {
       fields,
@@ -110,12 +110,16 @@ describe('typeschemaResolver', () => {
   it('should correctly infer the output type from a typeschema schema for the handleSubmit function in useForm', () => {
     const schema = z.object({ id: z.number() });
 
-    const form = useForm({
-      resolver: typeschemaResolver(schema),
-      defaultValues: {
-        id: 3,
-      },
-    });
+    const {
+      result: { current: form },
+    } = renderHook(() =>
+      useForm({
+        resolver: typeschemaResolver(schema),
+        defaultValues: {
+          id: 3,
+        },
+      }),
+    );
 
     expectTypeOf(form.watch('id')).toEqualTypeOf<number>();
 
@@ -129,12 +133,16 @@ describe('typeschemaResolver', () => {
   it('should correctly infer the output type from a typeschema schema with a transform for the handleSubmit function in useForm', () => {
     const schema = z.object({ id: z.number().transform((val) => String(val)) });
 
-    const form = useForm({
-      resolver: typeschemaResolver(schema),
-      defaultValues: {
-        id: 3,
-      },
-    });
+    const {
+      result: { current: form },
+    } = renderHook(() =>
+      useForm({
+        resolver: typeschemaResolver(schema),
+        defaultValues: {
+          id: 3,
+        },
+      }),
+    );
 
     expectTypeOf(form.watch('id')).toEqualTypeOf<number>();
 

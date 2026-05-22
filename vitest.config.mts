@@ -13,8 +13,15 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./tests/setup.ts'],
     include: ['**/__tests__/**/*.+(js|jsx|ts|tsx)'],
-    exclude: ['**/node_modules/**', '**/__fixtures__/**', '/\\.'],
+    exclude: ['**/node_modules/**', '**/__fixtures__/**'],
     clearMocks: true,
     restoreMocks: true,
+    server: {
+      deps: {
+        // Needed to spy on "zod/v4/core" parse method without getting the error
+        // TypeError: Cannot redefine property: parse
+        inline: ['z'],
+      },
+    },
   },
 });
