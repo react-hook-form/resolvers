@@ -69,7 +69,7 @@ exports[`standardSchemaResolver > should return a single error from standardSche
       },
     ],
     "password": {
-      "message": "One uppercase character",
+      "message": "One uppercase character\nOne lowercase character\nOne number\nMust be at least 8 characters in length",
       "ref": {
         "name": "password",
       },
@@ -168,7 +168,7 @@ exports[`standardSchemaResolver > should return all the errors from standardSche
       },
     ],
     "password": {
-      "message": "One uppercase character",
+      "message": "One uppercase character\nOne lowercase character\nOne number\nMust be at least 8 characters in length",
       "ref": {
         "name": "password",
       },
@@ -270,5 +270,35 @@ exports[`standardSchemaResolver > should return values from standardSchemaResolv
     "url": "https://react-hook-form.com/",
     "username": "Doe",
   },
+}
+`;
+
+exports[`standardSchemaResolver > should return a root error when a standard schema issue has no path 1`] = `
+{
+  "errors": {
+    "root": {
+      "message": "Invalid input",
+      "ref": undefined,
+      "type": "",
+    },
+  },
+  "values": {},
+}
+`;
+
+exports[`standardSchemaResolver > should collect all root errors when validateAllFieldCriteria is true 1`] = `
+{
+  "errors": {
+    "root": {
+      "message": "Invalid union\nMissing discriminator",
+      "ref": undefined,
+      "type": "",
+      "types": {
+        "0": "Invalid union",
+        "1": "Missing discriminator",
+      },
+    },
+  },
+  "values": {},
 }
 `;
