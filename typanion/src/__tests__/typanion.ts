@@ -1,3 +1,4 @@
+import { renderHook } from '@testing-library/react';
 import { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { Resolver } from 'react-hook-form';
@@ -51,9 +52,13 @@ describe('typanionResolver', () => {
   it('should correctly infer the output type from a typanion schema for the handleSubmit function in useForm', () => {
     const schema = t.isObject({ id: t.isNumber() });
 
-    const form = useForm({
-      resolver: typanionResolver(schema),
-    });
+    const {
+      result: { current: form },
+    } = renderHook(() =>
+      useForm({
+        resolver: typanionResolver(schema),
+      }),
+    );
 
     expectTypeOf(form.watch('id')).toEqualTypeOf<number>();
 

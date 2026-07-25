@@ -13,6 +13,19 @@ function parseErrorSchema(error: StructError) {
   );
 }
 
+// This is required to correctly type the input of the returned function when coerce is true
+// superstruct does not store the input type of a schema alongside it
+// Infer<typeof schema> gives the output type of the coercion
+export function superstructResolver<Input extends FieldValues, Context, Output>(
+  schema: Struct<Output, any>,
+  schemaOptions: Omit<Parameters<typeof validate>[2], 'coerce'> & {
+    coerce: true;
+  },
+  resolverOptions?: {
+    raw?: boolean;
+  },
+): Resolver<Input, Context, Output>;
+
 export function superstructResolver<Input extends FieldValues, Context, Output>(
   schema: Struct<Input, any>,
   schemaOptions?: Parameters<typeof validate>[2],

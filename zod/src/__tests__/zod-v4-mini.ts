@@ -1,5 +1,7 @@
+import { renderHook } from '@testing-library/react';
 import { Resolver, SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod/v4-mini';
+import * as v4Core from 'zod/v4/core';
 import { zodResolver } from '..';
 import {
   fields,
@@ -12,7 +14,7 @@ const shouldUseNativeValidation = false;
 
 describe('zodResolver', () => {
   it('should return values from zodResolver when validation pass & raw=true', async () => {
-    const parseAsyncSpy = vi.spyOn(schema, 'parseAsync');
+    const parseAsyncSpy = vi.spyOn(v4Core, 'parseAsync');
 
     const result = await zodResolver(schema, undefined, {
       raw: true,
@@ -28,8 +30,8 @@ describe('zodResolver', () => {
   });
 
   it('should return parsed values from zodResolver with `mode: sync` when validation pass', async () => {
-    const parseSpy = vi.spyOn(schema, 'parse');
-    const parseAsyncSpy = vi.spyOn(schema, 'parseAsync');
+    const parseSpy = vi.spyOn(v4Core, 'parse');
+    const parseAsyncSpy = vi.spyOn(v4Core, 'parseAsync');
 
     const result = await zodResolver(schema, undefined, {
       mode: 'sync',
@@ -50,8 +52,8 @@ describe('zodResolver', () => {
   });
 
   it('should return a single error from zodResolver with `mode: sync` when validation fails', async () => {
-    const parseSpy = vi.spyOn(schema, 'parse');
-    const parseAsyncSpy = vi.spyOn(schema, 'parseAsync');
+    const parseSpy = vi.spyOn(v4Core, 'parse');
+    const parseAsyncSpy = vi.spyOn(v4Core, 'parseAsync');
 
     const result = await zodResolver(schema, undefined, {
       mode: 'sync',
@@ -146,9 +148,13 @@ describe('zodResolver', () => {
   it('should correctly infer the output type from a Zod schema for the handleSubmit function in useForm', () => {
     const schema = z.object({ id: z.number() });
 
-    const form = useForm({
-      resolver: zodResolver(schema),
-    });
+    const {
+      result: { current: form },
+    } = renderHook(() =>
+      useForm({
+        resolver: zodResolver(schema),
+      }),
+    );
 
     expectTypeOf(form.watch('id')).toEqualTypeOf<number>();
 
@@ -167,9 +173,13 @@ describe('zodResolver', () => {
       ),
     });
 
-    const form = useForm({
-      resolver: zodResolver(schema),
-    });
+    const {
+      result: { current: form },
+    } = renderHook(() =>
+      useForm({
+        resolver: zodResolver(schema),
+      }),
+    );
 
     expectTypeOf(form.watch('id')).toEqualTypeOf<number>();
 

@@ -12,12 +12,14 @@ const parseErrorSchema = (
   typeschemaErrors: readonly StandardSchemaV1.Issue[],
   validateAllFieldCriteria: boolean,
 ): FieldErrors => {
-  const schemaErrors = Object.assign([], typeschemaErrors);
+  // Need to pass generics so that the array isn't typed as "never[]"
+  const schemaErrors = Object.assign(
+    [] as typeof typeschemaErrors,
+    typeschemaErrors,
+  );
   const errors: Record<string, FieldError> = {};
 
-  for (; schemaErrors.length; ) {
-    const error = typeschemaErrors[0];
-
+  for (const error of schemaErrors) {
     if (!error.path) {
       continue;
     }
@@ -41,8 +43,6 @@ const parseErrorSchema = (
           : error.message,
       ) as FieldError;
     }
-
-    schemaErrors.shift();
   }
 
   return errors;

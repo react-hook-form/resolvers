@@ -1,3 +1,4 @@
+import { renderHook } from '@testing-library/react';
 import { type Resolver, type SubmitHandler, useForm } from 'react-hook-form';
 /* eslint-disable no-console, @typescript-eslint/ban-ts-comment */
 import * as yup from 'yup';
@@ -248,9 +249,13 @@ describe('yupResolver', () => {
   it('should correctly infer the output type from a yup schema for the handleSubmit function in useForm', () => {
     const schema = yup.object({ id: yup.number().required() });
 
-    const form = useForm({
-      resolver: yupResolver(schema),
-    });
+    const {
+      result: { current: form },
+    } = renderHook(() =>
+      useForm({
+        resolver: yupResolver(schema),
+      }),
+    );
 
     expectTypeOf(form.watch('id')).toEqualTypeOf<number>();
 
@@ -269,9 +274,13 @@ describe('yupResolver', () => {
         .transform((val) => String(val)),
     });
 
-    const form = useForm({
-      resolver: yupResolver(schema),
-    });
+    const {
+      result: { current: form },
+    } = renderHook(() =>
+      useForm({
+        resolver: yupResolver(schema),
+      }),
+    );
 
     expectTypeOf(form.watch('id')).toEqualTypeOf<number>();
 

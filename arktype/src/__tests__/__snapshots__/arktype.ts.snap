@@ -6,41 +6,41 @@ exports[`arktypeResolver > should return a single error from arktypeResolver whe
     "accessToken": {
       "message": "accessToken must be a number or a string (was missing)",
       "ref": undefined,
-      "type": "required",
+      "type": "",
     },
     "birthYear": {
       "message": "birthYear must be a number (was a string)",
       "ref": undefined,
-      "type": "domain",
+      "type": "",
     },
     "dateStr": {
       "message": "dateStr must be a Date (was missing)",
       "ref": undefined,
-      "type": "required",
+      "type": "",
     },
     "email": {
       "message": "email must be an email address (was "")",
       "ref": {
         "name": "email",
       },
-      "type": "pattern",
+      "type": "",
     },
     "enabled": {
       "message": "enabled must be boolean (was missing)",
       "ref": undefined,
-      "type": "required",
+      "type": "",
     },
     "like": [
       {
         "id": {
           "message": "like[0].id must be a number (was a string)",
           "ref": undefined,
-          "type": "domain",
+          "type": "",
         },
         "name": {
           "message": "like[0].name must be a string (was missing)",
           "ref": undefined,
-          "type": "required",
+          "type": "",
         },
       },
     ],
@@ -49,24 +49,24 @@ exports[`arktypeResolver > should return a single error from arktypeResolver whe
       "ref": {
         "name": "password",
       },
-      "type": "union",
+      "type": "",
     },
     "repeatPassword": {
       "message": "repeatPassword must be a string (was missing)",
       "ref": undefined,
-      "type": "required",
+      "type": "",
     },
     "tags": {
       "message": "tags must be an array (was missing)",
       "ref": undefined,
-      "type": "required",
+      "type": "",
     },
     "username": {
       "message": "username must be a string (was missing)",
       "ref": {
         "name": "username",
       },
-      "type": "required",
+      "type": "",
     },
   },
   "values": {},
