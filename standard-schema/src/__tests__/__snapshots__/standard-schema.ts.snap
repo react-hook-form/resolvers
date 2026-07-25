@@ -1,5 +1,23 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`standardSchemaResolver > should collect all root errors when validateAllFieldCriteria is true 1`] = `
+{
+  "errors": {
+    "root": {
+      "message": "Invalid union
+Missing discriminator",
+      "ref": undefined,
+      "type": "",
+      "types": {
+        "0": "Invalid union",
+        "1": "Missing discriminator",
+      },
+    },
+  },
+  "values": {},
+}
+`;
+
 exports[`standardSchemaResolver > should correctly handle path segments that are objects 1`] = `
 {
   "errors": {
@@ -17,6 +35,19 @@ exports[`standardSchemaResolver > should correctly handle path segments that are
       "ref": {
         "name": "username",
       },
+      "type": "",
+    },
+  },
+  "values": {},
+}
+`;
+
+exports[`standardSchemaResolver > should return a root error when a standard schema issue has no path 1`] = `
+{
+  "errors": {
+    "root": {
+      "message": "Invalid input",
+      "ref": undefined,
       "type": "",
     },
   },
