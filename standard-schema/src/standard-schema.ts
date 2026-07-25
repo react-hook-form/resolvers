@@ -3,33 +3,81 @@ import { StandardSchemaV1 } from '@standard-schema/spec';
 import { getDotPath } from '@standard-schema/utils';
 import { FieldError, FieldValues, Resolver } from 'react-hook-form';
 
+const schemaRootKey = Symbol('Schema root');
+
+function appendErrorMessage(error: FieldError, message: string | undefined) {
+  if (!message) {
+    return;
+  }
+
+  error.message = error.message ? `${error.message}\n${message}` : message;
+}
+
+function appendErrorTypes(error: FieldError, types: FieldError['types']) {
+  if (!types) {
+    return;
+  }
+
+  const nextTypes = error.types || {};
+
+  for (const message of Object.values(types)) {
+    nextTypes[Object.keys(nextTypes).length] = message;
+  }
+
+  error.types = nextTypes;
+}
+
 function parseErrorSchema(
   issues: readonly StandardSchemaV1.Issue[],
   validateAllFieldCriteria: boolean,
 ) {
-  const errors: Record<string, FieldError> = {};
+  const errors = new Map<string | typeof schemaRootKey, FieldError>();
 
   for (let i = 0; i < issues.length; i++) {
     const error = issues[i];
-    const path = getDotPath(error);
+    const path = getDotPath(error) || schemaRootKey;
+    const fieldError = errors.get(path);
 
-    if (path) {
-      if (!errors[path]) {
-        errors[path] = { message: error.message, type: '' };
-      }
+    if (!fieldError) {
+      errors.set(path, { message: error.message, type: '' });
+    } else if (path === schemaRootKey) {
+      // Root-level issues aren't tied to a single field, so there's no
+      // natural "first" message to prefer the way there is for a field —
+      // keep every one of them regardless of criteriaMode.
+      appendErrorMessage(fieldError, error.message);
+    }
 
-      if (validateAllFieldCriteria) {
-        const types = errors[path].types || {};
+    if (validateAllFieldCriteria) {
+      const currentError = errors.get(path)!;
+      const types = currentError.types || {};
 
-        errors[path].types = {
-          ...types,
-          [Object.keys(types).length]: error.message,
-        };
-      }
+      currentError.types = {
+        ...types,
+        [Object.keys(types).length]: error.message,
+      };
     }
   }
 
-  return errors;
+  const fieldErrors: Record<string, FieldError> = {};
+
+  for (const [path, error] of errors) {
+    if (path !== schemaRootKey) {
+      fieldErrors[path] = error;
+    }
+  }
+
+  const rootError = errors.get(schemaRootKey);
+
+  if (rootError) {
+    if (fieldErrors.root) {
+      appendErrorMessage(fieldErrors.root, rootError.message);
+      appendErrorTypes(fieldErrors.root, rootError.types);
+    } else {
+      fieldErrors.root = rootError;
+    }
+  }
+
+  return fieldErrors;
 }
 
 export function standardSchemaResolver<
