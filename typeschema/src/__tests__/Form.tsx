@@ -1,6 +1,5 @@
 import { render, screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
-import type { Infer } from '@typeschema/main';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod/v3';
@@ -12,7 +11,7 @@ const schema = z.object({
 });
 
 interface Props {
-  onSubmit: (data: Infer<typeof schema>) => void;
+  onSubmit: (data: z.infer<typeof schema>) => void;
 }
 
 function TestComponent({ onSubmit }: Props) {

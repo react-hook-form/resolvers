@@ -1,7 +1,13 @@
 import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
-import type { ShapeErrors } from 'nope-validator/lib/cjs/types';
 import type { FieldError, FieldErrors } from 'react-hook-form';
 import type { Resolver } from './types';
+
+// nope-validator doesn't publicly export this shape (and its internal file
+// layout has changed across major versions), so it's redeclared here to
+// avoid depending on an unstable, non-exported module path.
+type ShapeErrors = {
+  [key: string]: string | ShapeErrors;
+};
 
 const parseErrors = (
   errors: ShapeErrors,

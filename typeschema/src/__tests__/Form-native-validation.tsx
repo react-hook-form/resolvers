@@ -1,6 +1,5 @@
 import { render, screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
-import type { Infer } from '@typeschema/main';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod/v3';
@@ -14,7 +13,7 @@ const schema = z.object({
   password: z.string().min(1, { message: PASSWORD_REQUIRED_MESSAGE }),
 });
 
-type FormData = Infer<typeof schema>;
+type FormData = z.infer<typeof schema>;
 
 interface Props {
   onSubmit: (data: FormData) => void;

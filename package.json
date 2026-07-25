@@ -319,7 +319,7 @@
     "reflect-metadata": "^0.2.2",
     "superstruct": "^2.0.2",
     "typanion": "^3.14.0",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.3",
     "valibot": "1.0.0-beta.12",
     "vest": "^5.4.6",
     "vite": "^6.4.3",
@@ -431,5 +431,8 @@
   },
   "dependencies": {
     "@standard-schema/utils": "^0.3.0"
+  },
+  "overrides": {
+    "ajv": "^8.20.0"
   }
 }
