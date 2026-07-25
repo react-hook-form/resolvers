@@ -74,6 +74,111 @@ describe('standardSchemaResolver', () => {
     expect(result).toMatchSnapshot();
   });
 
+  it('should return a root error when a standard schema issue has no path', async () => {
+    const result = await standardSchemaResolver({
+      '~standard': {
+        version: 1,
+        vendor: 'custom',
+        validate: () => ({
+          issues: [
+            {
+              message: 'Invalid input',
+            },
+          ],
+        }),
+      },
+    })(validData, undefined, {
+      fields,
+      shouldUseNativeValidation,
+    });
+
+    expect(result).toMatchSnapshot();
+  });
+
+  it('should collect all root errors when validateAllFieldCriteria is true', async () => {
+    const result = await standardSchemaResolver({
+      '~standard': {
+        version: 1,
+        vendor: 'custom',
+        validate: () => ({
+          issues: [
+            {
+              message: 'Invalid union',
+            },
+            {
+              message: 'Missing discriminator',
+            },
+          ],
+        }),
+      },
+    })(validData, undefined, {
+      fields,
+      criteriaMode: 'all',
+      shouldUseNativeValidation,
+    });
+
+    expect(result).toMatchSnapshot();
+  });
+
+  it('should preserve a root field error when a schema root error is present', async () => {
+    const result = await standardSchemaResolver({
+      '~standard': {
+        version: 1,
+        vendor: 'custom',
+        validate: () => ({
+          issues: [
+            {
+              path: [{ key: 'root' }],
+              message: 'Root field error',
+            },
+            {
+              message: 'Schema root error',
+            },
+          ],
+        }),
+      },
+    })(validData, undefined, {
+      fields,
+      shouldUseNativeValidation,
+    });
+
+    expect(result.errors).toMatchObject({
+      root: {
+        message: 'Root field error\nSchema root error',
+      },
+    });
+  });
+
+  it('should only keep the first error message for the same field path in `firstError` mode', async () => {
+    const result = await standardSchemaResolver({
+      '~standard': {
+        version: 1,
+        vendor: 'custom',
+        validate: () => ({
+          issues: [
+            {
+              path: [{ key: 'username' }],
+              message: 'First username error',
+            },
+            {
+              path: [{ key: 'username' }],
+              message: 'Second username error',
+            },
+          ],
+        }),
+      },
+    })(validData, undefined, {
+      fields,
+      shouldUseNativeValidation,
+    });
+
+    expect(result.errors).toMatchObject({
+      username: {
+        message: 'First username error',
+      },
+    });
+  });
+
   /**
    * Type inference tests
    */
