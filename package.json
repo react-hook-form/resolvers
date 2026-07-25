@@ -210,7 +210,7 @@
   "scripts": {
     "prepare": "run-s build:src",
     "build": "cross-env npm-run-all --parallel 'build:*'",
-    "build:src": "microbundle build --globals react-hook-form=ReactHookForm",
+    "build:src": "microbundle build --tsconfig tsconfig.build.json --globals react-hook-form=ReactHookForm",
     "build:zod": "microbundle --cwd zod --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
     "build:yup": "microbundle --cwd yup --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
     "build:joi": "microbundle --cwd joi --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
