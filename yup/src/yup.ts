@@ -51,7 +51,7 @@ export function yupResolver<Input extends FieldValues, Context, Output>(
     mode?: 'async' | 'sync';
     raw?: false;
   },
-): Resolver<Input, Context, Yup.InferType<typeof schema>>;
+): Resolver<Yup.InferType<typeof schema>, Context, Yup.InferType<typeof schema>>;
 
 export function yupResolver<Input extends FieldValues, Context, Output>(
   schema:
@@ -62,7 +62,7 @@ export function yupResolver<Input extends FieldValues, Context, Output>(
     mode?: 'async' | 'sync';
     raw: true;
   },
-): Resolver<Input, Context, Input>;
+): Resolver<Yup.InferType<typeof schema>, Context, Yup.InferType<typeof schema>>;
 
 /**
  * Creates a resolver for react-hook-form using Yup schema validation
