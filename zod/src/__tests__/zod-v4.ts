@@ -108,6 +108,27 @@ describe('zodResolver', () => {
     });
   });
 
+  it('should not throw when a discriminated union is submitted without its discriminator set', async () => {
+    // https://github.com/react-hook-form/resolvers/issues/ (zod4
+    // discriminatedUnion with no matching discriminator used to throw
+    // "t.errors[0] is undefined" / "Cannot read properties of undefined
+    // (reading '0')" instead of reporting a validation error).
+    const unionSchema = z.discriminatedUnion('type', [
+      z.object({ type: z.literal('foo') }),
+      z.object({ type: z.literal('bar') }),
+    ]);
+
+    const result = await zodResolver(unionSchema)(
+      {} as unknown as z.input<typeof unionSchema>,
+      undefined,
+      { fields: {}, shouldUseNativeValidation },
+    );
+
+    expect(result.errors).toMatchObject({
+      type: { type: 'invalid_union' },
+    });
+  });
+
   it('should not throw when a discriminated union member is itself a discriminated union whose discriminator is missing', async () => {
     // https://github.com/react-hook-form/resolvers/issues/... (nested
     // discriminatedUnion whose own discriminator is absent used to throw
