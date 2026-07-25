@@ -4,6 +4,7 @@
     "module": "ESNext",
     "target": "ES2017",
     "moduleResolution": "node",
+    "ignoreDeprecations": "6.0",
     "skipLibCheck": true,
     "strict": true,
     "esModuleInterop": true,
