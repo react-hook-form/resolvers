@@ -47,11 +47,14 @@ function parseZod3Issues(
           (closest, current) =>
             current.errors.length < closest.errors.length ? current : closest,
         );
+        // Fall back to the union issue's own message/code if the closest
+        // member somehow has no issues of its own (shouldn't happen, but
+        // avoids ever throwing on an unexpected/malformed union shape).
         const unionError = closestUnionError.errors[0];
 
         errors[_path] = {
-          message: unionError.message,
-          type: unionError.code,
+          message: unionError?.message ?? message,
+          type: unionError?.code ?? code,
         };
       } else {
         errors[_path] = { message, type: code };
@@ -104,11 +107,16 @@ function parseZod4Issues(
         const closestBranch = error.errors.reduce((closest, branch) =>
           branch.length < closest.length ? branch : closest,
         );
+        // Fall back to the union issue's own message/code if the closest
+        // branch somehow has no issues of its own (shouldn't happen — a
+        // 0-issue branch means that branch matched — but this guarantees we
+        // never throw on an unexpected/malformed union shape, e.g. a "no
+        // matching discriminator" issue nested in a way we haven't seen).
         const unionError = closestBranch[0];
 
         errors[_path] = {
-          message: unionError.message,
-          type: unionError.code,
+          message: unionError?.message ?? message,
+          type: unionError?.code ?? code,
         };
       } else {
         errors[_path] = { message, type: code };
