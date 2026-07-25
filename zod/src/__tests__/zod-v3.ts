@@ -81,6 +81,36 @@ describe('zodResolver', () => {
     expect(result).toMatchSnapshot();
   });
 
+  it('should surface the error from the union member closest to matching, not just the first member', async () => {
+    const branchWithMoreIssues = z.object({
+      id: z.number({ invalid_type_error: 'id wrong (branch B)' }),
+      name: z.number({ invalid_type_error: 'name wrong (branch B)' }),
+    });
+    const branchWithFewerIssues = z.object({
+      id: z.string(),
+      name: z.number({
+        invalid_type_error: 'name wrong (branch A, closer match)',
+      }),
+    });
+    // branchWithMoreIssues is listed first, but only branchWithFewerIssues
+    // actually comes close to matching the input (it only fails on `name`).
+    const unionSchema = z.object({
+      target: z.union([branchWithMoreIssues, branchWithFewerIssues]),
+    });
+
+    const result = await zodResolver(unionSchema)(
+      { target: { id: 'abc', name: 'xyz' } } as unknown as z.input<
+        typeof unionSchema
+      >,
+      undefined,
+      { fields: {}, shouldUseNativeValidation },
+    );
+
+    expect(result.errors).toMatchObject({
+      target: { message: 'name wrong (branch A, closer match)' },
+    });
+  });
+
   it('should throw any error unrelated to Zod', async () => {
     const schemaWithCustomError = schema.refine(() => {
       throw Error('custom error');

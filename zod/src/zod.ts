@@ -40,7 +40,14 @@ function parseZod3Issues(
 
     if (!errors[_path]) {
       if ('unionErrors' in error) {
-        const unionError = error.unionErrors[0].errors[0];
+        // Surface the error from whichever union member came closest to
+        // matching (fewest issues), rather than always the first member —
+        // the first member isn't necessarily the one the input was meant for.
+        const closestUnionError = error.unionErrors.reduce(
+          (closest, current) =>
+            current.errors.length < closest.errors.length ? current : closest,
+        );
+        const unionError = closestUnionError.errors[0];
 
         errors[_path] = {
           message: unionError.message,
@@ -91,7 +98,13 @@ function parseZod4Issues(
 
     if (!errors[_path]) {
       if (error.code === 'invalid_union' && error.errors.length > 0) {
-        const unionError = error.errors[0][0];
+        // Surface the error from whichever union member came closest to
+        // matching (fewest issues), rather than always the first member —
+        // the first member isn't necessarily the one the input was meant for.
+        const closestBranch = error.errors.reduce((closest, branch) =>
+          branch.length < closest.length ? branch : closest,
+        );
+        const unionError = closestBranch[0];
 
         errors[_path] = {
           message: unionError.message,
