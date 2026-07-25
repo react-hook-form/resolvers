@@ -108,6 +108,54 @@ describe('zodResolver', () => {
     });
   });
 
+  it('should not throw when a discriminated union member is itself a discriminated union whose discriminator is missing', async () => {
+    // https://github.com/react-hook-form/resolvers/issues/... (nested
+    // discriminatedUnion whose own discriminator is absent used to throw
+    // "Cannot read properties of undefined (reading '0')" instead of
+    // reporting a validation error).
+    const baseNested = {
+      type: z.literal('b'),
+      name: z.string().nonempty(),
+      nested_type: z.enum(['nested_1', 'nested_2']),
+    };
+
+    const nestedUnionSchema = z.object({
+      my_array: z.array(
+        z.discriminatedUnion('type', [
+          z.object({
+            type: z.literal('a'),
+            name: z.string().nonempty(),
+          }),
+          z.discriminatedUnion('nested_type', [
+            z.object({
+              ...baseNested,
+              nested_type: z.literal('nested_1'),
+              role_other: z.string().nonempty(),
+            }),
+            z.object({
+              ...baseNested,
+              nested_type: z.literal('nested_2'),
+            }),
+          ]),
+        ]),
+      ),
+    });
+
+    const result = await zodResolver(nestedUnionSchema)(
+      // `type: 'b'` matches the second (nested) union, but its own
+      // `nested_type` discriminator is missing.
+      { my_array: [{ type: 'b' }] } as unknown as z.input<
+        typeof nestedUnionSchema
+      >,
+      undefined,
+      { fields: {}, shouldUseNativeValidation },
+    );
+
+    expect(result.errors).toMatchObject({
+      my_array: [{ nested_type: { type: 'invalid_union' } }],
+    });
+  });
+
   it('should throw any error unrelated to Zod', async () => {
     const schemaWithCustomError = schema.refine(() => {
       throw Error('custom error');
