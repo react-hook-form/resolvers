@@ -54,6 +54,11 @@ function parseErrorSchema(
  * useForm({
  *   resolver: typeboxResolver(schema)
  * });
+ *
+ * // Schemas using a custom/third-party `Kind` (e.g. ElysiaJS's `t.Files()`) must have
+ * // that kind registered with TypeBox's own `TypeRegistry` before validating, since
+ * // this resolver validates via `@sinclair/typebox`'s `Value.Errors`/`Value.Check`:
+ * // TypeRegistry.Set('Files', (schema, value) => Array.isArray(value));
  */
 export function typeboxResolver<Schema extends TObject, Context>(
   schema: Schema | TypeCheck<Schema>,

@@ -643,6 +643,26 @@ const App = () => {
 };
 ```
 
+#### Custom/third-party types (e.g. ElysiaJS's `t.Files()`)
+
+`typeboxResolver` validates using `@sinclair/typebox`'s own `Value.Errors`/`Value.Check`, so any schema
+`Kind` not built into TypeBox (custom types, or ones defined by a third-party library such as ElysiaJS)
+must be registered with TypeBox's own `TypeRegistry` (and `FormatRegistry` for string formats) before
+it's used — this is a TypeBox-level extension point, not something `@hookform/resolvers` wraps or needs
+to expose separately:
+
+```typescript jsx
+import { TypeRegistry } from '@sinclair/typebox';
+
+if (!TypeRegistry.Has('Files')) {
+  TypeRegistry.Set('Files', (schema, value) => Array.isArray(value));
+}
+```
+
+Make sure this registration runs against the same `@sinclair/typebox` module instance the schema was
+built with — if a library vendors its own copy of `@sinclair/typebox` instead of relying on the shared
+peer dependency, its registrations won't be visible here, and you'll see a runtime `"Unknown type"` error.
+
 ### [ArkType](https://github.com/arktypeio/arktype)
 
 TypeScript's 1:1 validator, optimized from editor to runtime
