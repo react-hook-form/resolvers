@@ -68,6 +68,67 @@ test('transforms flat object to nested object with names option', () => {
   });
 });
 
+test('uses the first element of `refs` as `ref` for radio/checkbox fields (#630)', () => {
+  const checkboxEl = { name: 'isTosAccepted', type: 'checkbox' };
+
+  const result = toNestErrors(
+    {
+      isTosAccepted: { type: 'oneOf', message: 'must accept tos' },
+    },
+    {
+      fields: {
+        // react-hook-form stores a placeholder object as `ref` for
+        // radio/checkbox fields and keeps the actual DOM elements in `refs`.
+        isTosAccepted: {
+          name: 'isTosAccepted',
+          ref: { name: 'isTosAccepted', type: 'checkbox' },
+          refs: [checkboxEl],
+        },
+      } as any as Record<InternalFieldName, Field['_f']>,
+      shouldUseNativeValidation: false,
+    },
+  );
+
+  expect(result.isTosAccepted?.ref).toBe(checkboxEl);
+});
+
+test('uses the first element of `refs` for a radio group with multiple options', () => {
+  const firstRadioEl = { name: 'plan', type: 'radio', value: 'basic' };
+  const secondRadioEl = { name: 'plan', type: 'radio', value: 'pro' };
+
+  const result = toNestErrors(
+    { plan: { type: 'required', message: 'plan is required' } },
+    {
+      fields: {
+        plan: {
+          name: 'plan',
+          ref: { name: 'plan', type: 'radio' },
+          refs: [firstRadioEl, secondRadioEl],
+        },
+      } as any as Record<InternalFieldName, Field['_f']>,
+      shouldUseNativeValidation: false,
+    },
+  );
+
+  expect(result.plan?.ref).toBe(firstRadioEl);
+});
+
+test('falls back to `ref` when the field has no `refs` (non radio/checkbox fields)', () => {
+  const inputEl = { name: 'username', type: 'text' };
+
+  const result = toNestErrors(
+    { username: { type: 'required', message: 'username is required' } },
+    {
+      fields: {
+        username: { name: 'username', ref: inputEl },
+      } as any as Record<InternalFieldName, Field['_f']>,
+      shouldUseNativeValidation: false,
+    },
+  );
+
+  expect(result.username?.ref).toBe(inputEl);
+});
+
 test('transforms flat object to nested object with root error for field array', () => {
   const result = toNestErrors(
     {

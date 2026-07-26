@@ -50,3 +50,29 @@ test("form's validation with Yup and TypeScript's integration", async () => {
   expect(screen.getByText(/password is a required field/i)).toBeInTheDocument();
   expect(handleSubmit).not.toHaveBeenCalled();
 });
+
+const checkboxSchema = Yup.object({
+  isTosAccepted: Yup.boolean().oneOf([true], 'must accept tos').required(),
+});
+
+test('errors.<field>.ref is the checkbox input element, not validation metadata (#630)', async () => {
+  let latestErrors: ReturnType<typeof useForm>['formState']['errors'] = {};
+  function Wrapper() {
+    const methods = useForm({ resolver: yupResolver(checkboxSchema) });
+    latestErrors = methods.formState.errors;
+
+    return (
+      <form onSubmit={methods.handleSubmit(() => {})}>
+        <input type="checkbox" {...methods.register('isTosAccepted')} />
+        <button type="submit">submit</button>
+      </form>
+    );
+  }
+
+  render(<Wrapper />);
+
+  const checkbox = screen.getByRole('checkbox');
+  await user.click(screen.getByText(/submit/i));
+
+  expect(latestErrors.isTosAccepted?.ref).toBe(checkbox);
+});
