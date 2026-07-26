@@ -7,8 +7,13 @@ import {
   ResolverSuccess,
   appendErrors,
 } from 'react-hook-form';
-import * as z3 from 'zod/v3';
-import * as z4 from 'zod/v4/core';
+// Type-only: these subpaths don't exist before zod@3.25.0, so importing them
+// as values would break resolution for anyone on an older zod 3.x. `import
+// type` is fully erased at build time, so the compiled output never
+// references these subpaths at runtime — see `isZod4Error` below for how the
+// one runtime check that used to need `z4.$ZodError` avoids that now.
+import type * as z3 from 'zod/v3';
+import type * as z4 from 'zod/v4/core';
 
 const isZod3Error = (error: any): error is z3.ZodError => {
   return Array.isArray(error?.issues);
@@ -21,8 +26,12 @@ const isZod3Schema = (schema: any): schema is z3.ZodSchema => {
   return '_def' in schema && typeof schema._def === 'object';
 };
 const isZod4Error = (error: any): error is z4.$ZodError => {
-  // instanceof is safe in Zod 4 (uses Symbol.hasInstance)
-  return error instanceof z4.$ZodError;
+  // Replicates zod4's own `$ZodError`/`Symbol.hasInstance` check
+  // (`inst?._zod?.traits?.has(name)`, see zod's `$constructor` in
+  // `v4/core/core.ts`) by hand rather than importing `$ZodError` as a value,
+  // since that import only exists in zod@3.25.0+ (see the `import type` note
+  // above).
+  return !!error?._zod?.traits?.has('$ZodError');
 };
 const isZod4Schema = (schema: any): schema is z4.$ZodType => {
   return '_zod' in schema && typeof schema._zod === 'object';
