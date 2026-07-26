@@ -103,12 +103,17 @@ export const ajvResolver: Resolver =
       ),
     );
 
-    const valid = validate(values);
+    // Ajv mutates the object passed to `validate` in place (e.g. to apply
+    // `useDefaults`, `removeAdditional`, or `coerceTypes`). Validating a
+    // clone keeps those mutations from leaking into react-hook-form's
+    // internal form values, which are passed in by reference.
+    const parsedValues = structuredClone(values);
+    const valid = validate(parsedValues);
 
     options.shouldUseNativeValidation && validateFieldsNatively({}, options);
 
     return valid
-      ? { values, errors: {} }
+      ? { values: parsedValues, errors: {} }
       : {
           values: {},
           errors: toNestErrors(

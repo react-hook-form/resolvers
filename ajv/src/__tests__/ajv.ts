@@ -1,3 +1,4 @@
+import { JSONSchemaType } from 'ajv';
 import { ajvResolver } from '..';
 import {
   fields,
@@ -99,5 +100,44 @@ describe('ajvResolver', () => {
         },
       ),
     ).toMatchSnapshot();
+  });
+
+  it('should not mutate the input values object when `useDefaults` fills in missing properties (#647)', async () => {
+    interface DataWithDefaults {
+      user: { name: string; lastName: string };
+    }
+
+    const schemaWithDefaults: JSONSchemaType<DataWithDefaults> = {
+      type: 'object',
+      properties: {
+        user: {
+          type: 'object',
+          properties: {
+            name: { type: 'string', default: 'Camilo' },
+            lastName: { type: 'string', default: 'A random lastName' },
+          },
+          required: ['name', 'lastName'],
+        },
+      },
+      required: ['user'],
+    };
+
+    // Simulates react-hook-form's internal form values, which are passed
+    // into the resolver by reference and must not be mutated as a side
+    // effect of validation.
+    const formValues: Partial<DataWithDefaults> = { user: {} as any };
+
+    const result = await ajvResolver(schemaWithDefaults, {
+      useDefaults: true,
+    })(formValues as DataWithDefaults, undefined, {
+      fields,
+      shouldUseNativeValidation,
+    });
+
+    expect(formValues).toEqual({ user: {} });
+    expect(result).toEqual({
+      values: { user: { name: 'Camilo', lastName: 'A random lastName' } },
+      errors: {},
+    });
   });
 });
