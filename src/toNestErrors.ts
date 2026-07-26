@@ -18,8 +18,11 @@ export const toNestErrors = <TFieldValues extends FieldValues>(
   const fieldErrors = {} as FieldErrors<TFieldValues>;
   for (const path in errors) {
     const field = get(options.fields, path) as Field['_f'] | undefined;
+    // Radio/checkbox fields keep a placeholder `ref` (`{ name, type }`) and
+    // store the actual DOM elements in `refs`, matching react-hook-form's
+    // own `validateField` behavior for built-in validation.
     const error = Object.assign(errors[path] || {}, {
-      ref: field && field.ref,
+      ref: field && field.refs ? field.refs[0] : field && field.ref,
     });
 
     if (isNameInFieldArray(options.names || Object.keys(errors), path)) {
