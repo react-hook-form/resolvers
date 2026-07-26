@@ -229,6 +229,16 @@ const App = () => {
 };
 ```
 
+> ⚠️ If your schema uses `.default(...)` on a field, that field becomes optional on the schema's _input_ type (`z.input`) but stays required on its _output_ type (`z.output`/`z.infer`) — the default only fills it in after validation. Passing a single generic to `useForm<T>` pins both to the same type and will conflict with `zodResolver`, which infers input and output separately. Either omit the generic and let it infer from `resolver`, or specify all three explicitly:
+>
+> ```tsx
+> const schema = z.object({ debug_mode: z.boolean().default(true) });
+>
+> useForm<z.input<typeof schema>, unknown, z.output<typeof schema>>({
+>   resolver: zodResolver(schema),
+> });
+> ```
+
 ### [Superstruct](https://github.com/ianstormtaylor/superstruct)
 
 A simple and composable way to validate data in JavaScript (or TypeScript).
