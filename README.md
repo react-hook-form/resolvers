@@ -729,6 +729,24 @@ const App = () => {
 };
 ```
 
+> ⚠️ If your schema uses `v.transform(...)` (or `v.pipe(..., v.transform(...))`) on a field, that field's
+> parsed _output_ type can differ from what the user actually types (its _input_ type) — e.g. a string
+> input transformed into a number. Passing a single generic to `useForm<T>` pins both the submitted values
+> and the `handleSubmit` payload to that one type, which conflicts with `valibotResolver`, since it infers
+> input and output separately. Either omit the generic and let it infer from `resolver`, or specify all
+> three explicitly:
+>
+> ```tsx
+> const schema = v.object({
+>   name: v.string(),
+>   number: v.pipe(v.string(), v.transform(Number)),
+> });
+>
+> useForm<v.InferInput<typeof schema>, unknown, v.InferOutput<typeof schema>>({
+>   resolver: valibotResolver(schema),
+> });
+> ```
+
 ### [TypeSchema](https://typeschema.com)
 
 Universal adapter for schema validation, compatible with [any validation library](https://typeschema.com/#coverage)

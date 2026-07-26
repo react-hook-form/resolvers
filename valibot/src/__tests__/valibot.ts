@@ -213,4 +213,32 @@ describe('valibotResolver', () => {
       }>
     >();
   });
+
+  it('keeps handleSubmit typed to the transformed output when useForm is given all three generics (#773)', () => {
+    const schema = v.object({
+      name: v.string(),
+      number: v.pipe(v.string(), v.transform(Number)),
+    });
+
+    const {
+      result: { current: form },
+    } = renderHook(() =>
+      useForm<
+        v.InferInput<typeof schema>,
+        unknown,
+        v.InferOutput<typeof schema>
+      >({
+        resolver: valibotResolver(schema),
+      }),
+    );
+
+    expectTypeOf(form.watch('number')).toEqualTypeOf<string>();
+
+    expectTypeOf(form.handleSubmit).parameter(0).toEqualTypeOf<
+      SubmitHandler<{
+        name: string;
+        number: number;
+      }>
+    >();
+  });
 });
