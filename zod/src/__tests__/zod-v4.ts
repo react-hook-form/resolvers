@@ -208,6 +208,30 @@ describe('zodResolver', () => {
     });
   });
 
+  it('should not misdetect a zod4 schema as zod3 (both have an object-shaped `_def`)', async () => {
+    // The zod3 detection was loosened to only require an object-shaped
+    // `_def` (see issue #782 — dynamically selected schemas typed via the
+    // generic `z.ZodType<Output>` annotation don't statically expose
+    // `_def.typeName`). Zod 4 schemas also have an object-shaped `_def`
+    // (just without `typeName`), so zod4 must be detected first via its
+    // unambiguous `_zod` marker — otherwise this would incorrectly take the
+    // zod3 code path and mishandle zod4's error shape.
+    const testSchema = z.object({ name: z.string() });
+
+    const result = await zodResolver(testSchema)(
+      { name: 123 as any },
+      undefined,
+      {
+        fields: {},
+        shouldUseNativeValidation,
+      },
+    );
+
+    expect(result.errors).toMatchObject({
+      name: { type: 'invalid_type' },
+    });
+  });
+
   it('should throw any error unrelated to Zod', async () => {
     const schemaWithCustomError = schema.refine(() => {
       throw Error('custom error');

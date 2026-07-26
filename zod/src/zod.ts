@@ -14,11 +14,11 @@ const isZod3Error = (error: any): error is z3.ZodError => {
   return Array.isArray(error?.issues);
 };
 const isZod3Schema = (schema: any): schema is z3.ZodSchema => {
-  return (
-    '_def' in schema &&
-    typeof schema._def === 'object' &&
-    'typeName' in schema._def
-  );
+  // Deliberately doesn't require `typeName` in `_def` — dynamically selected
+  // schemas typed via the generic `z.ZodType<Output>` annotation (rather than
+  // a concrete subclass like `ZodObject`) don't statically expose `typeName`,
+  // even though they're genuine Zod 3 schema instances at runtime.
+  return '_def' in schema && typeof schema._def === 'object';
 };
 const isZod4Error = (error: any): error is z4.$ZodError => {
   // instanceof is safe in Zod 4 (uses Symbol.hasInstance)
@@ -165,9 +165,7 @@ type NonRawResolverOptions = {
 interface Zod3Type<O = unknown, I = unknown> {
   _output: O;
   _input: I;
-  _def: {
-    typeName: string;
-  };
+  _def: object;
 }
 
 // minimal interface to avoid assignability issues between zod v4 patch/minor
@@ -275,40 +273,11 @@ export function zodResolver<Input extends FieldValues, Context, Output>(
     raw?: boolean;
   } = {},
 ): Resolver<Input, Context, Output | Input> {
-  if (isZod3Schema(schema)) {
-    return async (values: Input, _, options) => {
-      try {
-        const data = await schema[
-          resolverOptions.mode === 'sync' ? 'parse' : 'parseAsync'
-        ](values, schemaOptions);
-
-        options.shouldUseNativeValidation &&
-          validateFieldsNatively({}, options);
-
-        return {
-          errors: {},
-          values: resolverOptions.raw ? Object.assign({}, values) : data,
-        } satisfies ResolverSuccess<Output | Input>;
-      } catch (error) {
-        if (isZod3Error(error)) {
-          return {
-            values: {},
-            errors: toNestErrors(
-              parseZod3Issues(
-                error.errors,
-                !options.shouldUseNativeValidation &&
-                  options.criteriaMode === 'all',
-              ),
-              options,
-            ),
-          } satisfies ResolverError<Input>;
-        }
-
-        throw error;
-      }
-    };
-  }
-
+  // Zod 4 is checked first: its `_zod` marker is unambiguous, whereas the
+  // Zod 3 check below only requires an object-shaped `_def` (to support
+  // dynamically-selected schemas typed via the generic `z.ZodType<Output>`
+  // annotation, see `isZod3Schema`) — and Zod 4 schemas also have an
+  // object-shaped `_def`, so they'd otherwise be misdetected as Zod 3.
   if (isZod4Schema(schema)) {
     return async (values: Input, _, options) => {
       try {
@@ -348,6 +317,40 @@ export function zodResolver<Input extends FieldValues, Context, Output>(
             errors: toNestErrors(
               parseZod4Issues(
                 error.issues,
+                !options.shouldUseNativeValidation &&
+                  options.criteriaMode === 'all',
+              ),
+              options,
+            ),
+          } satisfies ResolverError<Input>;
+        }
+
+        throw error;
+      }
+    };
+  }
+
+  if (isZod3Schema(schema)) {
+    return async (values: Input, _, options) => {
+      try {
+        const data = await schema[
+          resolverOptions.mode === 'sync' ? 'parse' : 'parseAsync'
+        ](values, schemaOptions);
+
+        options.shouldUseNativeValidation &&
+          validateFieldsNatively({}, options);
+
+        return {
+          errors: {},
+          values: resolverOptions.raw ? Object.assign({}, values) : data,
+        } satisfies ResolverSuccess<Output | Input>;
+      } catch (error) {
+        if (isZod3Error(error)) {
+          return {
+            values: {},
+            errors: toNestErrors(
+              parseZod3Issues(
+                error.errors,
                 !options.shouldUseNativeValidation &&
                   options.criteriaMode === 'all',
               ),
