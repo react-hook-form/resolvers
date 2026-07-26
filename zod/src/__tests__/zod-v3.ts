@@ -214,4 +214,27 @@ describe('zodResolver', () => {
       }>
     >();
   });
+
+  it('should accept a dynamically selected schema typed via the generic z.ZodType annotation', async () => {
+    // https://github.com/react-hook-form/resolvers/issues/782 — schemas
+    // chosen conditionally between two shapes and annotated with the base
+    // `z.ZodType<Output>` (rather than a concrete subclass like `ZodObject`)
+    // don't statically expose `_def.typeName`, even though they're genuine
+    // Zod 3 schema instances at runtime.
+    const updateSchema = z.object({ id: z.string(), name: z.string() });
+    const createSchema = z.object({ name: z.string() });
+    const useUpdateSchema = true;
+    const dynamicSchema = (
+      useUpdateSchema ? updateSchema : createSchema
+    ) as z.ZodType<{ name: string }>;
+
+    const resolver = zodResolver(dynamicSchema);
+
+    const result = await resolver({ id: '1', name: 'John' } as any, undefined, {
+      fields: {},
+      shouldUseNativeValidation,
+    });
+
+    expect(result.errors).toEqual({});
+  });
 });
