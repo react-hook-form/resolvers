@@ -1,7 +1,6 @@
 import { renderHook } from '@testing-library/react';
 import { Resolver, SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod/v4';
-import * as v4Core from 'zod/v4/core';
 import { zodResolver } from '..';
 import { fields, invalidData, schema, validData } from './__fixtures__/data-v4';
 
@@ -9,7 +8,7 @@ const shouldUseNativeValidation = false;
 
 describe('zodResolver', () => {
   it('should return values from zodResolver when validation pass & raw=true', async () => {
-    const parseAsyncSpy = vi.spyOn(v4Core, 'parseAsync');
+    const parseAsyncSpy = vi.spyOn(schema, 'parseAsync');
 
     const result = await zodResolver(schema, undefined, {
       raw: true,
@@ -23,8 +22,8 @@ describe('zodResolver', () => {
   });
 
   it('should return parsed values from zodResolver with `mode: sync` when validation pass', async () => {
-    const parseSpy = vi.spyOn(v4Core, 'parse');
-    const parseAsyncSpy = vi.spyOn(v4Core, 'parseAsync');
+    const parseSpy = vi.spyOn(schema, 'parse');
+    const parseAsyncSpy = vi.spyOn(schema, 'parseAsync');
 
     const result = await zodResolver(schema, undefined, {
       mode: 'sync',
@@ -46,8 +45,8 @@ describe('zodResolver', () => {
   });
 
   it('should return a single error from zodResolver with `mode: sync` when validation fails', async () => {
-    const parseSpy = vi.spyOn(v4Core, 'parse');
-    const parseAsyncSpy = vi.spyOn(v4Core, 'parseAsync');
+    const parseSpy = vi.spyOn(schema, 'parse');
+    const parseAsyncSpy = vi.spyOn(schema, 'parseAsync');
 
     const result = await zodResolver(schema, undefined, {
       mode: 'sync',
@@ -174,6 +173,38 @@ describe('zodResolver', () => {
 
     expect(result.errors).toMatchObject({
       my_array: [{ nested_type: { type: 'invalid_union' } }],
+    });
+  });
+
+  it("should use the schema's own bound parse/parseAsync method rather than a standalone zod/v4/core import", async () => {
+    // Bundlers that can resolve `zod` and `zod/v4/core` to two distinct
+    // module instances (e.g. Metro with package-exports resolution enabled)
+    // would silently drop any `z.config()`/locale the app configured on its
+    // own zod instance if this resolver called a standalone parse function
+    // from its own `zod/v4/core` import instead of the schema's own method.
+    // Proven here by making the schema's own `parseAsync` throw a distinct
+    // error and asserting the resolver actually surfaces it, rather than
+    // independently re-validating via some other zod reference.
+    const testSchema = z.object({ name: z.string() });
+    const customIssue: z.core.$ZodIssue = {
+      code: 'custom',
+      message: 'error from the schema instance, not a separate zod import',
+      path: ['name'],
+      input: undefined,
+    };
+    vi.spyOn(testSchema, 'parseAsync').mockRejectedValueOnce(
+      new z.core.$ZodError([customIssue]),
+    );
+
+    const result = await zodResolver(testSchema)({ name: '' }, undefined, {
+      fields: {},
+      shouldUseNativeValidation,
+    });
+
+    expect(result.errors).toMatchObject({
+      name: {
+        message: 'error from the schema instance, not a separate zod import',
+      },
     });
   });
 

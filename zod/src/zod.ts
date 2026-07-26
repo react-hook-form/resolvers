@@ -312,9 +312,27 @@ export function zodResolver<Input extends FieldValues, Context, Output>(
   if (isZod4Schema(schema)) {
     return async (values: Input, _, options) => {
       try {
-        const parseFn =
-          resolverOptions.mode === 'sync' ? z4.parse : z4.parseAsync;
-        const data: any = await parseFn(schema, values, schemaOptions);
+        // Call the schema's own bound `parse`/`parseAsync` method rather
+        // than the standalone `z4.parse`/`z4.parseAsync` functions. Those
+        // standalone functions read from this module's own imported
+        // `zod/v4/core`, which — under bundlers that can resolve `zod` and
+        // `zod/v4/core` to two distinct module instances (e.g. Metro with
+        // package-exports resolution enabled) — may not be the same zod
+        // instance the schema was created with, silently dropping any
+        // global config (`z.config()`) or locale the app configured on its
+        // own zod instance. The schema's own method is always bound to
+        // whichever zod instance actually created it.
+        const classicSchema = schema as unknown as {
+          parse: (values: unknown, schemaOptions: unknown) => unknown;
+          parseAsync: (
+            values: unknown,
+            schemaOptions: unknown,
+          ) => Promise<unknown>;
+        };
+        const data: any =
+          resolverOptions.mode === 'sync'
+            ? classicSchema.parse(values, schemaOptions)
+            : await classicSchema.parseAsync(values, schemaOptions);
 
         options.shouldUseNativeValidation &&
           validateFieldsNatively({}, options);
