@@ -13,6 +13,6 @@
   "peerDependencies": {
     "react-hook-form": "^7.55.0",
     "@hookform/resolvers": "^2.0.0",
-    "ata-validator": "^0.7.0"
+    "ata-validator": "^1.2.0"
   }
 }
