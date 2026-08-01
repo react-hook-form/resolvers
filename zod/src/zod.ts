@@ -41,7 +41,11 @@ function parseZod3Issues(
   zodErrors: z3.ZodIssue[],
   validateAllFieldCriteria: boolean,
 ) {
-  const errors: Record<string, FieldError> = {};
+  // A null-prototype object avoids false-positive hits from inherited
+  // members (e.g. `toString`, `constructor`, `__proto__`) when a field is
+  // named after one of them — a plain `{}` would make `!errors[_path]`
+  // truthy-skip those paths and silently drop their errors.
+  const errors: Record<string, FieldError> = Object.create(null);
   for (; zodErrors.length; ) {
     const error = zodErrors[0];
     const { code, message, path } = error;
@@ -101,7 +105,8 @@ function parseZod4Issues(
   zodErrors: z4.$ZodIssue[],
   validateAllFieldCriteria: boolean,
 ) {
-  const errors: Record<string, FieldError> = {};
+  // See the matching comment in `parseZod3Issues` above.
+  const errors: Record<string, FieldError> = Object.create(null);
   // const _zodErrors = zodErrors as z4.$ZodISsue; //
   for (; zodErrors.length; ) {
     const error = zodErrors[0];
