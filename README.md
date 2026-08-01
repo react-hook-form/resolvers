@@ -23,7 +23,7 @@ This function allows you to use any external validation library such as Yup, Zod
 ## Install
 
 Install your preferred validation library alongside `@hookform/resolvers`.
-    
+
     npm install @hookform/resolvers # npm
     yarn add @hookform/resolvers # yarn
     pnpm install @hookform/resolvers # pnpm
@@ -31,29 +31,30 @@ Install your preferred validation library alongside `@hookform/resolvers`.
 
 <details>
   <summary>Resolver Comparison</summary>
- 
-| resolver  | Infer values <br /> from schema | [criteriaMode](https://react-hook-form.com/docs/useform#criteriaMode) |
-|---|---|---|
-| AJV  | ❌  | `firstError \| all` |
-| ata-validator  | ❌  | `firstError \| all` |
-| Arktype |  ✅ | `firstError` |
-| class-validator  | ✅  | `firstError \| all` |
-| computed-types  | ✅  | `firstError` |
-| Effect  | ✅  | `firstError \| all` |
-| fluentvalidation-ts  | ❌  | `firstError` |
-| io-ts  | ✅  | `firstError` |
-| joi |  ❌ | `firstError \| all` |
-| Nope  | ❌  | `firstError` |
-| Standard Schema  | ✅  | `firstError \| all` |
-| Superstruct  | ✅  | `firstError` |
-| typanion  | ✅  | `firstError` |
-| typebox  | ✅  | `firstError \| all` |
-| typeschema  | ❌  | `firstError \| all` |
-| valibot  | ✅  | `firstError \| all` |
-| vest  | ❌  | `firstError \| all` |
-| vine  | ✅  | `firstError \| all` |
-| yup  | ✅  | `firstError \| all` |
-| zod  | ✅ | `firstError \| all` |
+
+| resolver            | Infer values <br /> from schema | [criteriaMode](https://react-hook-form.com/docs/useform#criteriaMode) |
+| -------------------- | -------------------------------- | ----------------------------------------------------------------------- |
+| AJV                  | ❌ | `firstError \| all` |
+| ata-validator         | ❌ | `firstError \| all` |
+| Arktype               | ✅ | `firstError` |
+| class-validator       | ✅ | `firstError \| all` |
+| computed-types        | ✅ | `firstError` |
+| Effect                | ✅ | `firstError \| all` |
+| fluentvalidation-ts   | ❌ | `firstError` |
+| io-ts                 | ✅ | `firstError` |
+| joi                   | ❌ | `firstError \| all` |
+| Nope                  | ❌ | `firstError` |
+| Standard Schema       | ✅ | `firstError \| all` |
+| Superstruct           | ✅ | `firstError` |
+| typanion              | ✅ | `firstError` |
+| typebox               | ✅ | `firstError \| all` |
+| typeschema            | ❌ | `firstError \| all` |
+| valibot               | ✅ | `firstError \| all` |
+| vest                  | ❌ | `firstError \| all` |
+| vine                  | ✅ | `firstError \| all` |
+| yup                   | ✅ | `firstError \| all` |
+| zod                   | ✅ | `firstError \| all` |
+
 </details>
 
 ## TypeScript
@@ -88,15 +89,14 @@ useForm<z.input<typeof schema>, any, z.output<typeof schema>>({
 
 ## Links
 
-- [React-hook-form validation resolver documentation ](https://react-hook-form.com/docs/useform#resolver)
+- [React-hook-form validation resolver documentation](https://react-hook-form.com/docs/useform#resolver)
 
-### Supported resolvers
+### Table of Contents
 
-- [React Hook Form Resolvers](#react-hook-form-resolvers)
 - [Install](#install)
 - [TypeScript](#typescript)
 - [Links](#links)
-  - [Supported resolvers](#supported-resolvers)
+  - [Table of Contents](#table-of-contents)
 - [API](#api)
 - [Quickstart](#quickstart)
   - [Yup](#yup)
@@ -110,10 +110,10 @@ useForm<z.input<typeof schema>, any, z.output<typeof schema>>({
   - [computed-types](#computed-types)
   - [typanion](#typanion)
   - [Ajv](#ajv)
-  - [ata-validator](#ata-validator)
   - [TypeBox](#typebox)
     - [With `ValueCheck`](#with-valuecheck)
     - [With `TypeCompiler`](#with-typecompiler)
+    - [Custom/third-party types](#customthird-party-types-eg-elysiajss-tfiles)
   - [ArkType](#arktype)
   - [Valibot](#valibot)
   - [TypeSchema](#typeschema)
@@ -121,6 +121,7 @@ useForm<z.input<typeof schema>, any, z.output<typeof schema>>({
   - [VineJS](#vinejs)
   - [fluentvalidation-ts](#fluentvalidation-ts)
   - [standard-schema](#standard-schema)
+  - [ata-validator](#ata-validator)
 - [Backers](#backers)
 - [Contributors](#contributors)
 
@@ -151,7 +152,7 @@ Dead simple Object schema validation.
 
 > ⚠️ Pass context via `useForm({ context })`, not via `yupResolver`'s `schemaOptions`. `schemaOptions.context` is overridden by the form context, so use the `useForm` context object instead.
 
-```typescript jsx
+```tsx
 // Correct
 useForm({
   resolver: yupResolver(schema),
@@ -162,7 +163,7 @@ useForm({
 yupResolver(schema, { context: { foo: true } });
 ```
 
-```typescript jsx
+```tsx
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -245,7 +246,7 @@ A simple and composable way to validate data in JavaScript (or TypeScript).
 
 [![npm](https://img.shields.io/bundlephobia/minzip/superstruct?style=for-the-badge)](https://bundlephobia.com/result?p=superstruct)
 
-```typescript jsx
+```tsx
 import { useForm } from 'react-hook-form';
 import { superstructResolver } from '@hookform/resolvers/superstruct';
 import { object, string, number } from 'superstruct';
@@ -276,7 +277,7 @@ The most powerful data validation library for JS.
 
 [![npm](https://img.shields.io/bundlephobia/minzip/joi?style=for-the-badge)](https://bundlephobia.com/result?p=joi)
 
-```typescript jsx
+```tsx
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
@@ -307,7 +308,7 @@ Vest 🦺 Declarative Validation Testing.
 
 [![npm](https://img.shields.io/bundlephobia/minzip/vest?style=for-the-badge)](https://bundlephobia.com/result?p=vest)
 
-```typescript jsx
+```tsx
 import { useForm } from 'react-hook-form';
 import { vestResolver } from '@hookform/resolvers/vest';
 import { create, test, enforce } from 'vest';
@@ -323,7 +324,7 @@ const validationSuite = create((data = {}) => {
 });
 
 const App = () => {
-  const { register, handleSubmit, errors } = useForm({
+  const { register, handleSubmit } = useForm({
     resolver: vestResolver(validationSuite),
   });
 
@@ -390,7 +391,7 @@ Validate your data with powerful decoders.
 
 [![npm](https://img.shields.io/bundlephobia/minzip/io-ts?style=for-the-badge)](https://bundlephobia.com/result?p=io-ts)
 
-```typescript jsx
+```tsx
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { ioTsResolver } from '@hookform/resolvers/io-ts';
@@ -426,7 +427,7 @@ A small, simple, and fast JS validator
 
 [![npm](https://img.shields.io/bundlephobia/minzip/nope-validator?style=for-the-badge)](https://bundlephobia.com/result?p=nope-validator)
 
-```typescript jsx
+```tsx
 import { useForm } from 'react-hook-form';
 import { nopeResolver } from '@hookform/resolvers/nope';
 import Nope from 'nope-validator';
@@ -586,7 +587,7 @@ JSON Schema Type Builder with Static Type Resolution for TypeScript
 
 #### With `ValueCheck`
 
-```typescript jsx
+```tsx
 import { useForm } from 'react-hook-form';
 import { typeboxResolver } from '@hookform/resolvers/typebox';
 import { Type } from '@sinclair/typebox';
@@ -615,7 +616,7 @@ const App = () => {
 
 A high-performance JIT of `TypeBox`, [read more](https://github.com/sinclairzx81/typebox#typecompiler)
 
-```typescript jsx
+```tsx
 import { useForm } from 'react-hook-form';
 import { typeboxResolver } from '@hookform/resolvers/typebox';
 import { Type } from '@sinclair/typebox';
@@ -651,7 +652,7 @@ must be registered with TypeBox's own `TypeRegistry` (and `FormatRegistry` for s
 it's used — this is a TypeBox-level extension point, not something `@hookform/resolvers` wraps or needs
 to expose separately:
 
-```typescript jsx
+```tsx
 import { TypeRegistry } from '@sinclair/typebox';
 
 if (!TypeRegistry.Has('Files')) {
@@ -669,7 +670,7 @@ TypeScript's 1:1 validator, optimized from editor to runtime
 
 [![npm](https://img.shields.io/bundlephobia/minzip/arktype?style=for-the-badge)](https://bundlephobia.com/result?p=arktype)
 
-```typescript jsx
+```tsx
 import { useForm } from 'react-hook-form';
 import { arktypeResolver } from '@hookform/resolvers/arktype';
 import { type } from 'arktype';
@@ -700,7 +701,7 @@ The modular and type safe schema library for validating structural data
 
 [![npm](https://img.shields.io/bundlephobia/minzip/valibot?style=for-the-badge)](https://bundlephobia.com/result?p=valibot)
 
-```typescript jsx
+```tsx
 import { useForm } from 'react-hook-form';
 import { valibotResolver } from '@hookform/resolvers/valibot';
 import * as v from 'valibot';
@@ -753,7 +754,7 @@ Universal adapter for schema validation, compatible with [any validation library
 
 [![npm](https://img.shields.io/bundlephobia/minzip/@typeschema/main?style=for-the-badge)](https://bundlephobia.com/result?p=@typeschema/main)
 
-```typescript jsx
+```tsx
 import { useForm } from 'react-hook-form';
 import { typeschemaResolver } from '@hookform/resolvers/typeschema';
 import { z } from 'zod';
@@ -785,7 +786,7 @@ A powerful TypeScript framework that provides a fully-fledged functional effect 
 
 [![npm](https://img.shields.io/bundlephobia/minzip/effect?style=for-the-badge)](https://bundlephobia.com/result?p=effect)
 
-```typescript jsx
+```tsx
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { effectTsResolver } from '@hookform/resolvers/effect-ts';
@@ -836,7 +837,7 @@ VineJS is a form data validation library for Node.js
 
 [![npm](https://img.shields.io/bundlephobia/minzip/@vinejs/vine?style=for-the-badge)](https://bundlephobia.com/result?p=@vinejs/vine)
 
-```typescript jsx
+```tsx
 import { useForm } from 'react-hook-form';
 import { vineResolver } from '@hookform/resolvers/vine';
 import vine from '@vinejs/vine';
@@ -849,7 +850,11 @@ const schema = vine.compile(
 );
 
 const App = () => {
-  const { register, handleSubmit } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     resolver: vineResolver(schema),
   });
 
@@ -865,14 +870,13 @@ const App = () => {
 };
 ```
 
-
 ### [fluentvalidation-ts](https://github.com/AlexJPotter/fluentvalidation-ts)
 
 A TypeScript-first library for building strongly-typed validation rules
 
-[![npm](https://img.shields.io/bundlephobia/minzip/@vinejs/vine?style=for-the-badge)](https://bundlephobia.com/result?p=@vinejs/vine)
+[![npm](https://img.shields.io/bundlephobia/minzip/fluentvalidation-ts?style=for-the-badge)](https://bundlephobia.com/result?p=fluentvalidation-ts)
 
-```typescript jsx
+```tsx
 import { useForm } from 'react-hook-form';
 import { fluentValidationResolver } from '@hookform/resolvers/fluentvalidation-ts';
 import { Validator } from 'fluentvalidation-ts';
@@ -891,7 +895,11 @@ class FormDataValidator extends Validator<FormData> {
 }
 
 const App = () => {
-  const { register, handleSubmit } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     resolver: fluentValidationResolver(new FormDataValidator()),
   });
 
@@ -915,7 +923,7 @@ A standard interface for TypeScript schema validation libraries
 
 Example zod
 
-```typescript jsx
+```tsx
 import { useForm } from 'react-hook-form';
 import { standardSchemaResolver } from '@hookform/resolvers/standard-schema';
 import { z } from 'zod';
@@ -948,7 +956,7 @@ const App = () => {
 
 Example arkType
 
-```typescript jsx
+```tsx
 import { useForm } from 'react-hook-form';
 import { standardSchemaResolver } from '@hookform/resolvers/standard-schema';
 import { type } from 'arktype';
@@ -979,7 +987,7 @@ A JSON Schema-based validator for JavaScript and TypeScript
 
 [![npm](https://img.shields.io/bundlephobia/minzip/ata-validator?style=for-the-badge)](https://bundlephobia.com/result?p=ata-validator)
 
-```typescript jsx
+```tsx
 import { useForm } from 'react-hook-form';
 import { ataResolver } from '@hookform/resolvers/ata-validator';
 
@@ -1024,7 +1032,7 @@ const App = () => {
 Thanks go to all our backers! [[Become a backer](https://opencollective.com/react-hook-form#backer)].
 
 <a href="https://opencollective.com/react-hook-form#backers">
-    <img src="https://opencollective.com/react-hook-form/backers.svg?width=950" />
+    <img src="https://opencollective.com/react-hook-form/backers.svg?width=950" alt="React Hook Form backers" />
 </a>
 
 ## Contributors
@@ -1032,5 +1040,5 @@ Thanks go to all our backers! [[Become a backer](https://opencollective.com/reac
 Thanks go to these wonderful people! [[Become a contributor](CONTRIBUTING.md)].
 
 <a href="https://github.com/react-hook-form/react-hook-form/graphs/contributors">
-    <img src="https://opencollective.com/react-hook-form/contributors.svg?width=950" />
+    <img src="https://opencollective.com/react-hook-form/contributors.svg?width=950" alt="React Hook Form contributors" />
 </a>
