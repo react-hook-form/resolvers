@@ -15,6 +15,10 @@ function parseErrorSchema(
   error: Yup.ValidationError,
   validateAllFieldCriteria: boolean,
 ) {
+  // A null-prototype accumulator avoids false-positive hits from inherited
+  // members (e.g. `toString`, `constructor`) when a field is named after
+  // one of them — a plain `{}` would make `!previous[error.path!]`
+  // truthy-skip those paths and silently drop their errors.
   return (error.inner || []).reduce<Record<string, FieldError>>(
     (previous, error) => {
       if (!previous[error.path!]) {
@@ -38,7 +42,7 @@ function parseErrorSchema(
 
       return previous;
     },
-    {},
+    Object.create(null),
   );
 }
 

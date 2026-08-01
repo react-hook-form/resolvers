@@ -7,7 +7,8 @@ const parseErrorSchema = (
   ataErrors: ValidationError[],
   validateAllFieldCriteria: boolean,
 ) => {
-  const parsedErrors: Record<string, FieldError> = {};
+  // See the matching comment in the ajv resolver's `parseErrorSchema`.
+  const parsedErrors: Record<string, FieldError> = Object.create(null);
 
   for (let index = 0; index < ataErrors.length; index += 1) {
     const error = ataErrors[index];
