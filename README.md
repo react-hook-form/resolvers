@@ -1038,7 +1038,3 @@ Thanks go to all our backers! [[Become a backer](https://opencollective.com/reac
 ## Contributors
 
 Thanks go to these wonderful people! [[Become a contributor](CONTRIBUTING.md)].
-
-<a href="https://github.com/react-hook-form/react-hook-form/graphs/contributors">
-    <img src="https://opencollective.com/react-hook-form/contributors.svg?width=950" alt="React Hook Form contributors" />
-</a>
