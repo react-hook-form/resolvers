@@ -7,7 +7,8 @@ function parseErrorSchema(
   issues: readonly StandardSchemaV1.Issue[],
   validateAllFieldCriteria: boolean,
 ) {
-  const errors: Record<string, FieldError> = {};
+  // See the matching comment in the zod resolver's `parseZod3Issues`.
+  const errors: Record<string, FieldError> = Object.create(null);
 
   for (let i = 0; i < issues.length; i++) {
     const error = issues[i];

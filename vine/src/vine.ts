@@ -15,7 +15,11 @@ function parseErrorSchema(
   vineErrors: SimpleErrorReporter['errors'],
   validateAllFieldCriteria: boolean,
 ) {
-  const schemaErrors: Record<string, FieldError> = {};
+  // A null-prototype object avoids false-positive hits from inherited
+  // members (e.g. `toString`, `constructor`) when a field is named after
+  // one of them — a plain `{}` would make `path in schemaErrors` true for
+  // those paths and silently drop their errors.
+  const schemaErrors: Record<string, FieldError> = Object.create(null);
 
   for (; vineErrors.length; ) {
     const error = vineErrors[0];

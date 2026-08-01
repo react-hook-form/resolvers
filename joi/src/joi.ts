@@ -8,7 +8,11 @@ const parseErrorSchema = (
   validateAllFieldCriteria: boolean,
 ) =>
   error.details.length
-    ? error.details.reduce<Record<string, FieldError>>((previous, error) => {
+    ? // A null-prototype accumulator avoids false-positive hits from
+      // inherited members (e.g. `toString`, `constructor`) when a field is
+      // named after one of them — a plain `{}` would make `!previous[_path]`
+      // truthy-skip those paths and silently drop their errors.
+      error.details.reduce<Record<string, FieldError>>((previous, error) => {
         const _path = error.path.join('.');
 
         if (!previous[_path]) {
@@ -31,7 +35,7 @@ const parseErrorSchema = (
         }
 
         return previous;
-      }, {})
+      }, Object.create(null))
     : {};
 
 /**

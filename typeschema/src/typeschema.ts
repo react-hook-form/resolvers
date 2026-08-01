@@ -17,7 +17,8 @@ const parseErrorSchema = (
     [] as typeof typeschemaErrors,
     typeschemaErrors,
   );
-  const errors: Record<string, FieldError> = {};
+  // See the matching comment in the zod resolver's `parseZod3Issues`.
+  const errors: Record<string, FieldError> = Object.create(null);
 
   for (const error of schemaErrors) {
     if (!error.path) {

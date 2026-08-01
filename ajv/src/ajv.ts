@@ -9,7 +9,11 @@ const parseErrorSchema = (
   ajvErrors: AjvError[],
   validateAllFieldCriteria: boolean,
 ) => {
-  const parsedErrors: Record<string, FieldError> = {};
+  // A null-prototype object avoids false-positive hits from inherited
+  // members (e.g. `toString`, `constructor`) when a field is named after
+  // one of them — a plain `{}` would make `!parsedErrors[path]` truthy-skip
+  // those paths and silently drop their errors.
+  const parsedErrors: Record<string, FieldError> = Object.create(null);
 
   const reduceError = (error: AjvError) => {
     // Ajv will return empty instancePath when require error

@@ -58,6 +58,10 @@ export function effectTsResolver<Input extends FieldValues, Context, Output>(
         const validateAllFieldCriteria =
           !options.shouldUseNativeValidation && options.criteriaMode === 'all';
 
+        // A null-prototype accumulator avoids false-positive hits from
+        // inherited members (e.g. `toString`, `constructor`) when a field
+        // is named after one of them — a plain `{}` would make `!acc[key]`
+        // truthy-skip those paths and silently drop their errors.
         const errors = issues.reduce(
           (acc, error) => {
             const key = error.path.join('.');
@@ -83,7 +87,7 @@ export function effectTsResolver<Input extends FieldValues, Context, Output>(
 
             return acc;
           },
-          {} as Record<string, FieldError>,
+          Object.create(null) as Record<string, FieldError>,
         );
 
         return toNestErrors(errors, options);

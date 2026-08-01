@@ -83,8 +83,12 @@ export function valibotResolver<Input extends FieldValues, Context, Output>(
 
     // If there are issues, return them as errors
     if (result.issues) {
-      // Create errors object
-      const errors: Record<string, FieldError> = {};
+      // Create errors object. A null-prototype object avoids false-positive
+      // hits from inherited members (e.g. `toString`, `constructor`) when a
+      // field is named after one of them — a plain `{}` would make
+      // `!errors[path]` truthy-skip those paths and silently drop their
+      // errors.
+      const errors: Record<string, FieldError> = Object.create(null);
 
       // Iterate over issues to add them to errors object
       for (; result.issues.length; ) {

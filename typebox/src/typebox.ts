@@ -8,7 +8,8 @@ function parseErrorSchema(
   _errors: ValueError[],
   validateAllFieldCriteria: boolean,
 ) {
-  const errors: Record<string, FieldError> = {};
+  // See the matching comment in the zod resolver's `parseZod3Issues`.
+  const errors: Record<string, FieldError> = Object.create(null);
   for (; _errors.length; ) {
     const error = _errors[0];
     const { type, message, path } = error;

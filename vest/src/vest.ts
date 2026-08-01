@@ -7,7 +7,8 @@ const parseErrorSchema = (
   vestError: VestErrors,
   validateAllFieldCriteria: boolean,
 ) => {
-  const errors: Record<string, FieldError> = {};
+  // See the matching comment in the zod resolver's `parseZod3Issues`.
+  const errors: Record<string, FieldError> = Object.create(null);
   for (const path in vestError) {
     if (!errors[path]) {
       errors[path] = { message: vestError[path][0], type: '' };
