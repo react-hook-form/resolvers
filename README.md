@@ -842,12 +842,10 @@ import { useForm } from 'react-hook-form';
 import { vineResolver } from '@hookform/resolvers/vine';
 import vine from '@vinejs/vine';
 
-const schema = vine.compile(
-  vine.object({
-    username: vine.string().minLength(1),
-    password: vine.string().minLength(1),
-  }),
-);
+const schema = vine.create({
+  username: vine.string().minLength(1),
+  password: vine.string().minLength(1),
+});
 
 const App = () => {
   const {
