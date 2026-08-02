@@ -74,12 +74,10 @@ export function vineResolver<Input extends FieldValues, Context, Output>(
  * @param {boolean} [resolverOptions.raw=false] - If true, returns raw values instead of validated results
  * @returns {Resolver<Infer<typeof schema>>} A resolver function compatible with react-hook-form
  * @example
- * const schema = vine.compile(
- *   vine.object({
- *     name: vine.string().minLength(2),
- *     age: vine.number().min(18)
- *   })
- * );
+ * const schema = vine.create({
+ *   name: vine.string().minLength(2),
+ *   age: vine.number().min(18)
+ * });
  *
  * useForm({
  *   resolver: vineResolver(schema)

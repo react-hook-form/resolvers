@@ -59,9 +59,8 @@ describe('vineResolver', () => {
    * Type inference tests
    */
   it('should correctly infer the output type from a vine schema', () => {
-    const resolver = vineResolver(
-      vine.compile(vine.object({ id: vine.number() })),
-    );
+    const schema = vine.create({ id: vine.number() });
+    const resolver = vineResolver(schema);
 
     expectTypeOf(resolver).toEqualTypeOf<
       Resolver<{ id: number | string }, unknown, { id: number }>
@@ -69,16 +68,13 @@ describe('vineResolver', () => {
   });
 
   it('should correctly infer the output type from a vine schema using a transform', () => {
-    const resolver = vineResolver(
-      vine.compile(
-        vine.object({
-          id: vine
-            .number()
-            .decimal([2, 4])
-            .transform<string>((val: unknown) => String(val)),
-        }),
-      ),
-    );
+    const schema = vine.create({
+      id: vine
+        .number()
+        .decimal([2, 4])
+        .transform<string>((val: unknown) => String(val)),
+    });
+    const resolver = vineResolver(schema);
 
     expectTypeOf(resolver).toEqualTypeOf<
       Resolver<{ id: number | string }, unknown, { id: string }>
@@ -86,7 +82,7 @@ describe('vineResolver', () => {
   });
 
   it('should correctly infer the output type from a vine schema for the handleSubmit function in useForm', () => {
-    const schema = vine.compile(vine.object({ id: vine.number() }));
+    const schema = vine.create({ id: vine.number() });
 
     const {
       result: { current: form },
@@ -106,11 +102,9 @@ describe('vineResolver', () => {
   });
 
   it('should correctly infer the output type from a vine schema with a transform for the handleSubmit function in useForm', () => {
-    const schema = vine.compile(
-      vine.object({
-        id: vine.number().transform<string>((val: unknown) => String(val)),
-      }),
-    );
+    const schema = vine.create({
+      id: vine.number().transform<string>((val: unknown) => String(val)),
+    });
 
     const {
       result: { current: form },

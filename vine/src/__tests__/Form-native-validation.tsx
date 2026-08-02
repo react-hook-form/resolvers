@@ -6,12 +6,10 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { vineResolver } from '..';
 
-const schema = vine.compile(
-  vine.object({
-    username: vine.string().minLength(1),
-    password: vine.string().minLength(1),
-  }),
-);
+const schema = vine.create({
+  username: vine.string().minLength(1),
+  password: vine.string().minLength(1),
+});
 
 interface Props {
   onSubmit: (data: Infer<typeof schema>) => void;
