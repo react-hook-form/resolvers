@@ -13,7 +13,7 @@ interface FormData {
   password: string;
 }
 
-const validationSuite = vest.create('form', (data: FormData) => {
+const validationSuite = vest.create((data: FormData) => {
   vest.test('username', USERNAME_REQUIRED_MESSAGE, () => {
     vest.enforce(data.username).isNotEmpty();
   });

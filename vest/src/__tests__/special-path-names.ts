@@ -12,10 +12,12 @@ describe('vestResolver special path names', () => {
       // unreachable through this resolver's public API regardless of this
       // fix. A fake schema function isolates the resolver's own
       // path-tracking logic instead.
-      const schema = () => ({
-        hasErrors: () => true,
-        getErrors: () => ({ [name]: [`${name} is required`] }),
-      });
+      const schema = {
+        run: () => ({
+          hasErrors: () => true,
+          getErrors: () => ({ [name]: [`${name} is required`] }),
+        }),
+      };
 
       const result = await vestResolver(schema as any, undefined, {
         mode: 'sync',

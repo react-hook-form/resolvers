@@ -10,7 +10,7 @@ interface FormData {
   password: string;
 }
 
-const validationSuite = vest.create('form', (data: FormData) => {
+const validationSuite = vest.create((data: FormData) => {
   vest.test('username', 'Username is required', () => {
     vest.enforce(data.username).isNotEmpty();
   });

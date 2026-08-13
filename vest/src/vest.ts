@@ -1,6 +1,5 @@
 import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
 import { FieldError } from 'react-hook-form';
-import promisify from 'vest/promisify';
 import type { Resolver, VestErrors } from './types';
 
 const parseErrorSchema = (
@@ -47,8 +46,8 @@ export const vestResolver: Resolver =
   async (values, context, options) => {
     const result =
       resolverOptions.mode === 'sync'
-        ? schema(values, options.names, context)
-        : await promisify(schema)(values, options.names, context);
+        ? schema.run(values, options.names, context)
+        : await schema.run(values, options.names, context);
 
     if (result.hasErrors()) {
       return {

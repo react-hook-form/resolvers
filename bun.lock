@@ -53,7 +53,7 @@
         "typanion": "^3.14.0",
         "typescript": "^6.0.3",
         "valibot": "1.0.0-beta.12",
-        "vest": "^5.4.6",
+        "vest": "^6.3.2",
         "vite": "^6.4.3",
         "vite-tsconfig-paths": "^5.1.4",
         "vitest": "^3.2.7",
@@ -83,7 +83,7 @@
         "superstruct": ">=0.12.0",
         "typanion": "^3.3.2",
         "valibot": ">=0.31.0 || ^1.0.0-beta.4 || ^1.0.0-rc",
-        "vest": ">=3.0.0",
+        "vest": ">=6.0.0",
         "yup": "^1.0.0",
         "zod": "^3.25.0 || ^4.0.0",
       },
@@ -683,7 +683,7 @@
 
     "concat-with-sourcemaps": ["concat-with-sourcemaps@1.1.0", "", { "dependencies": { "source-map": "^0.6.1" } }, "sha512-4gEjHJFT9e+2W/77h/DS5SGUgwDaOwprX8L/gl5+3ixnzkVJJsZWDSelmN3Oilw3LNDZjZV0yqH1hLG3k6nghg=="],
 
-    "context": ["context@3.0.33", "", { "dependencies": { "vest-utils": "^1.3.3" } }, "sha512-9nBbXhHVKRFLYKk3oa7W+aHt/eiGm5aIMp4Y4IwQsiAO+deRtlJ72EA8m7Cvs3v7gjjBuqKljvt2eyihVHUJoQ=="],
+    "context": ["context@4.0.17", "", { "dependencies": { "vest-utils": "^2.0.17" } }, "sha512-SM/Rmr9egp0N3+t0kfIFz1Dayfcl+8bussTdW0lw9gU+KUe3v+QPVyxvr+KzVx13U5Ac0dCdjGacWION6NuRUQ=="],
 
     "convert-source-map": ["convert-source-map@2.0.0", "", {}, "sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg=="],
 
@@ -1077,7 +1077,7 @@
 
     "ms": ["ms@2.1.3", "", {}, "sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA=="],
 
-    "n4s": ["n4s@5.0.28", "", { "dependencies": { "context": "^3.0.33", "vest-utils": "^1.3.3" } }, "sha512-64ap7Qn8Oyua2ImIZH6/pkql89qyiTZ4jJqpS2g863++0tgbM4cuv3KJvZqMpa8kY2ovZ4q3cD0/KU4SImjg5g=="],
+    "n4s": ["n4s@6.2.1", "", { "dependencies": { "context": "^4.0.17", "vest-utils": "^2.0.17" } }, "sha512-j1kYy6fD0wfIsvUiaSnKGQxKJ9ZWJDwwbX8muh2/Y1j+qDADFc+e/Ggy/Hvj3dYU3zQsvuSpViOsNY/nkNCDZQ=="],
 
     "nanoid": ["nanoid@3.3.11", "", { "bin": { "nanoid": "bin/nanoid.cjs" } }, "sha512-N8SpfPUnUp1bK+PMYW8qSWdl9U+wwNWI4QKxOYDy9JAro3WMX7p2OeVRF9v+347pnakNevPmiHhNmZ2HbFA76w=="],
 
@@ -1479,13 +1479,11 @@
 
     "validator": ["validator@13.15.35", "", {}, "sha512-TQ5pAGhd5whStmqWvYF4OjQROlmv9SMFVt37qoCBdqRffuuklWYQlCNnEs2ZaIBD1kZRNnikiZOS1eqgkar0iw=="],
 
-    "vast": ["vast@1.0.42", "", { "dependencies": { "vest-utils": "^1.3.3" } }, "sha512-YP3zNDRVZZRuHgUJ5xD7HAF0AFius2KWqIYSAuzA6E4ftPkL+gSQrp9agPM1HgsHS9L7XWoegYxsH81kawztuQ=="],
+    "vest": ["vest@6.3.2", "", { "dependencies": { "context": "^4.0.17", "n4s": "^6.2.1", "vest-utils": "^2.0.17", "vestjs-runtime": "^2.0.17" } }, "sha512-gpXsKohvbntw2Z4VKNw04tax3EG4Av7z/8JyAe5qmpRUn2mxzPUh2OhmEf485i8v+oiCH49R+R6owVHYYlreGw=="],
 
-    "vest": ["vest@5.4.6", "", { "dependencies": { "context": "^3.0.33", "n4s": "^5.0.28", "vast": "^1.0.42", "vest-utils": "^1.3.3", "vestjs-runtime": "^1.5.1" } }, "sha512-Q3KQYluxdjnz5/HmR8coHNlXbJPLWMfrwz4wlcqMX4SaJ8qcmy5Ix9NTiQt3hTMrETdj+q+513J/kt+ahdJlLg=="],
+    "vest-utils": ["vest-utils@2.0.17", "", {}, "sha512-12gNz4I3oXKO12sp4B0UBgY1b/m4Zmd7e7x1EDQkIDf/N+DHCOk1h16YGM6g/zZS1ZoJMvL35SADcEsZ+YMN3g=="],
 
-    "vest-utils": ["vest-utils@1.3.3", "", {}, "sha512-9y+26YXjOpv89QmEXlFrTFLUMwUjAuwpimUVgb8HS3eNuBR3HEY68o4U/sPyGTh3OEvS7N502pX82WDm1zvsaA=="],
-
-    "vestjs-runtime": ["vestjs-runtime@1.5.1", "", { "dependencies": { "context": "^3.0.33", "vest-utils": "^1.3.3" } }, "sha512-kiXuNJBS/6ZkzMArLuiEBtXe/cMr/8NE4lp6flpLuEzVwXM2nli9UfvQ26lmuvU1/ggPgjJNv/FpSnWofvHYcA=="],
+    "vestjs-runtime": ["vestjs-runtime@2.0.17", "", { "dependencies": { "context": "^4.0.17", "vest-utils": "^2.0.17" } }, "sha512-6U2jLwvqtVSOE/kS0YFDZFLBT6a5TJEod787MVE4w691M32bW0y8uWZWquIJ7a96929/p/afH5lcVt4XGef1YQ=="],
 
     "vite": ["vite@6.4.3", "", { "dependencies": { "esbuild": "^0.25.0", "fdir": "^6.4.4", "picomatch": "^4.0.2", "postcss": "^8.5.3", "rollup": "^4.34.9", "tinyglobby": "^0.2.13" }, "optionalDependencies": { "fsevents": "~2.3.3" }, "peerDependencies": { "@types/node": "^18.0.0 || ^20.0.0 || >=22.0.0", "jiti": ">=1.21.0", "less": "*", "lightningcss": "^1.21.0", "sass": "*", "sass-embedded": "*", "stylus": "*", "sugarss": "*", "terser": "^5.16.0", "tsx": "^4.8.1", "yaml": "^2.4.2" }, "optionalPeers": ["@types/node", "jiti", "less", "lightningcss", "sass", "sass-embedded", "stylus", "sugarss", "terser", "tsx", "yaml"], "bin": { "vite": "bin/vite.js" } }, "sha512-NTKlcQjlAK7MlQoyb6LgaqHc8sso/pVyUJYWMws3jg21uTJw/LddqIFPcPqP6PzpgbIcZyKI85sFE4HBrQDA8A=="],
 
