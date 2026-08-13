@@ -70,9 +70,9 @@ describe('vestResolver', () => {
   });
 
   it('should call a suite with values, validated field names and a context as arguments', async () => {
-    const suite = vi.fn(validationSuite) as any as typeof validationSuite;
+    const run = vi.spyOn(validationSuite, 'run');
 
-    await vestResolver(suite)(
+    await vestResolver(validationSuite)(
       validData,
       { some: 'context' },
       {
@@ -82,8 +82,8 @@ describe('vestResolver', () => {
       },
     );
 
-    expect(suite).toHaveBeenCalledTimes(1);
-    expect(suite).toHaveBeenCalledWith(validData, ['username'], {
+    expect(run).toHaveBeenCalledTimes(1);
+    expect(run).toHaveBeenCalledWith(validData, ['username'], {
       some: 'context',
     });
   });

@@ -1,7 +1,7 @@
 import { Field, InternalFieldName } from 'react-hook-form';
 import * as vest from 'vest';
 
-export const validationSuite = vest.create('form', (data: any = {}) => {
+export const validationSuite = vest.create((data: any = {}) => {
   vest.test('username', 'Username is required', () => {
     vest.enforce(data.username).isNotEmpty();
   });

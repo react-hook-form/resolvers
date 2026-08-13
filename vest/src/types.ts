@@ -4,17 +4,15 @@ import {
   ResolverOptions,
   ResolverResult,
 } from 'react-hook-form';
-import * as Vest from 'vest';
+import type { Suite } from 'vest';
 
 export type ICreateResult<
   TValues extends FieldValues = FieldValues,
   TContext = any,
-> = ReturnType<
-  typeof Vest.create<
-    any,
-    any,
-    (values: TValues, names?: FieldName<TValues>[], context?: TContext) => void
-  >
+> = Suite<
+  any,
+  any,
+  (values: TValues, names?: FieldName<TValues>[], context?: TContext) => void
 >;
 
 export type Resolver = <TValues extends FieldValues, TContext>(
