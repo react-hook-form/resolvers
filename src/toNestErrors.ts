@@ -48,7 +48,7 @@ const isNameInFieldArray = (
 
 // Removes brackets to match react-hook-form's `set` method behavior.
 function escapeBrackets(input: string): string {
-  return input.replace(/[\[\]]/g, '');
+  return input.replace(/\[(\d+)]/g, '.$1').replace(/[[\]]/g, '');
 }
 
 // Removes brackets then escapes regex metacharacters so a field name can be
