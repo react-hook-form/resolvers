@@ -359,6 +359,71 @@ test('does not throw SyntaxError for field names containing regex metacharacters
   ).not.toThrow();
 });
 
+test('preserves nested field array errors when the error path uses bracket notation (#875)', () => {
+  const result = toNestErrors(
+    {
+      'scenarios[0].rows': { type: 'root-error', message: 'rows required' },
+      'scenarios[0].rows[0].values': {
+        type: 'required',
+        message: 'value required',
+      },
+    },
+    {
+      // Mirrors react-hook-form's real `_fields`, which is a genuine nested
+      // tree (unlike the flat dot-keyed mocks used elsewhere in this file),
+      // so that `get()` resolves bracket-notation paths the same way it
+      // would in production.
+      fields: {
+        scenarios: {
+          0: {
+            rows: Object.assign(
+              {
+                name: 'scenarios.0.rows',
+                ref: { name: 'scenarios.0.rows' },
+              },
+              {
+                0: {
+                  values: {
+                    name: 'scenarios.0.rows.0.values',
+                    ref: { name: 'scenarios.0.rows.0.values' },
+                  },
+                },
+              },
+            ),
+          },
+        },
+      } as any as Record<InternalFieldName, Field['_f']>,
+      names: [
+        'scenarios.0.rows',
+        'scenarios.0.rows.0.values',
+        'scenarios.0.rows.1.values',
+      ],
+      shouldUseNativeValidation: false,
+    },
+  );
+
+  expect(result).toEqual({
+    scenarios: [
+      {
+        rows: {
+          '0': {
+            values: {
+              type: 'required',
+              message: 'value required',
+              ref: { name: 'scenarios.0.rows.0.values' },
+            },
+          },
+          root: {
+            type: 'root-error',
+            message: 'rows required',
+            ref: { name: 'scenarios.0.rows' },
+          },
+        },
+      },
+    ],
+  });
+});
+
 test('should correctly validate object with special characters', () => {
   const result = toNestErrors(
     { '[array-2]': { type: 'string', message: 'string is required' } },
