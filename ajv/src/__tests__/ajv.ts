@@ -102,6 +102,64 @@ describe('ajvResolver', () => {
     ).toMatchSnapshot();
   });
 
+  it.each(
+    ['a/b', 'a~b', 'a~1b'].flatMap((name) =>
+      [false, true].map((required) => ({ name, required })),
+    ),
+  )(
+    'should preserve $name with required=$required',
+    async ({ name, required }) => {
+      const result = await ajvResolver<Record<string, string>>({
+        type: 'object',
+        properties: { [name]: { type: 'string' } },
+        required: [name],
+      })(required ? {} : { [name]: 1 }, undefined, {
+        fields: {},
+        shouldUseNativeValidation,
+      });
+
+      expect(Object.keys(result.errors)).toEqual([name]);
+      expect(result.errors[name]?.type).toBe(required ? 'required' : 'type');
+    },
+  );
+
+  it.each([false, true])(
+    'should preserve nested paths, messages and refs with required=%s',
+    async (required) => {
+      const name = 'parent/~1.a~1/b';
+      const ref = { name };
+      const type = required ? 'required' : 'type';
+      const result = await ajvResolver<{ 'parent/~1': { 'a~1/b': string } }>({
+        type: 'object',
+        properties: {
+          'parent/~1': {
+            type: 'object',
+            properties: { 'a~1/b': { type: 'string' } },
+            required: ['a~1/b'],
+          },
+        },
+        required: ['parent/~1'],
+        errorMessage: 'Invalid value',
+      })({ 'parent/~1': required ? {} : { 'a~1/b': 1 } }, undefined, {
+        fields: { [name]: { name, ref } },
+        criteriaMode: 'all',
+        shouldUseNativeValidation,
+      });
+
+      expect(result.errors).toEqual({
+        'parent/~1': {
+          'a~1/b': {
+            type,
+            message: 'Invalid value',
+            types: { [type]: 'Invalid value' },
+            ref,
+          },
+        },
+      });
+      expect(result.errors['parent/~1']?.['a~1/b']?.ref).toBe(ref);
+    },
+  );
+
   it('should not mutate the input values object when `useDefaults` fills in missing properties (#647)', async () => {
     interface DataWithDefaults {
       user: { name: string; lastName: string };
