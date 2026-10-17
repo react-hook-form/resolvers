@@ -16,13 +16,18 @@ const parseErrorSchema = (
   const parsedErrors: Record<string, FieldError> = Object.create(null);
 
   const reduceError = (error: AjvError) => {
+    const pathSegments = error.instancePath
+      .split('/')
+      .slice(1)
+      .map((segment) => segment.replace(/~1/g, '/').replace(/~0/g, '~'));
+
     // Ajv will return empty instancePath when require error
     if (error.keyword === 'required') {
-      error.instancePath += `/${error.params.missingProperty}`;
+      pathSegments.push(error.params.missingProperty);
     }
 
     // `/deepObject/data` -> `deepObject.data`
-    const path = error.instancePath.substring(1).replace(/\//g, '.');
+    const path = pathSegments.join('.');
 
     if (!parsedErrors[path]) {
       parsedErrors[path] = {
