@@ -8,7 +8,7 @@ describe('effectTsResolver special path names', () => {
     'reports a validation error for a field named "%s"',
     async (name) => {
       const schema = Schema.Struct({
-        [name]: Schema.String.pipe(Schema.minLength(1)),
+        [name]: Schema.String.check(Schema.isMinLength(1)),
       });
 
       const result = await effectTsResolver(schema as any)(
