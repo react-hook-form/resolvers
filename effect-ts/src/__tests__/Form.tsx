@@ -9,11 +9,11 @@ const USERNAME_REQUIRED_MESSAGE = 'username field is required';
 const PASSWORD_REQUIRED_MESSAGE = 'password field is required';
 
 const schema = Schema.Struct({
-  username: Schema.String.pipe(
-    Schema.nonEmptyString({ message: () => USERNAME_REQUIRED_MESSAGE }),
+  username: Schema.String.check(
+    Schema.isNonEmpty({ message: USERNAME_REQUIRED_MESSAGE }),
   ),
-  password: Schema.String.pipe(
-    Schema.nonEmptyString({ message: () => PASSWORD_REQUIRED_MESSAGE }),
+  password: Schema.String.check(
+    Schema.isNonEmpty({ message: PASSWORD_REQUIRED_MESSAGE }),
   ),
 });
 

@@ -2,43 +2,43 @@ import { Schema } from 'effect';
 import { Field, InternalFieldName } from 'react-hook-form';
 
 export const schema = Schema.Struct({
-  username: Schema.String.pipe(
-    Schema.nonEmptyString({ message: () => 'A username is required' }),
+  username: Schema.String.check(
+    Schema.isNonEmpty({ message: 'A username is required' }),
   ),
-  password: Schema.String.pipe(
-    Schema.pattern(new RegExp('.*[A-Z].*'), {
-      message: () => 'At least 1 uppercase letter.',
+  password: Schema.String.check(
+    Schema.isPattern(new RegExp('.*[A-Z].*'), {
+      message: 'At least 1 uppercase letter.',
     }),
-    Schema.pattern(new RegExp('.*[a-z].*'), {
-      message: () => 'At least 1 lowercase letter.',
+    Schema.isPattern(new RegExp('.*[a-z].*'), {
+      message: 'At least 1 lowercase letter.',
     }),
-    Schema.pattern(new RegExp('.*\\d.*'), {
-      message: () => 'At least 1 number.',
+    Schema.isPattern(new RegExp('.*\\d.*'), {
+      message: 'At least 1 number.',
     }),
-    Schema.pattern(
+    Schema.isPattern(
       new RegExp('.*[`~<>?,./!@#$%^&*()\\-_+="\'|{}\\[\\];:\\\\].*'),
       {
-        message: () => 'At least 1 special character.',
+        message: 'At least 1 special character.',
       },
     ),
-    Schema.minLength(8, { message: () => 'Must be at least 8 characters.' }),
+    Schema.isMinLength(8, { message: 'Must be at least 8 characters.' }),
   ),
-  accessToken: Schema.Union(Schema.String, Schema.Number),
-  birthYear: Schema.Number.pipe(
-    Schema.greaterThan(1900, {
-      message: () => 'Must be greater than the year 1900',
+  accessToken: Schema.Union([Schema.String, Schema.Number]),
+  birthYear: Schema.Number.check(
+    Schema.isGreaterThan(1900, {
+      message: 'Must be greater than the year 1900',
     }),
-    Schema.filter((value) => value < new Date().getFullYear(), {
-      message: () => 'Must be before the current year.',
+    Schema.makeFilter((value: number) => value < new Date().getFullYear(), {
+      message: 'Must be before the current year.',
     }),
   ),
-  email: Schema.String.pipe(
-    Schema.pattern(
+  email: Schema.String.check(
+    Schema.isPattern(
       new RegExp(
         /^(?!\.)(?!.*\.\.)([A-Z0-9_+-.]*)[A-Z0-9_+-]@([A-Z0-9][A-Z0-9-]*\.)+[A-Z]{2,}$/i,
       ),
       {
-        message: () => 'A valid email address is required.',
+        message: 'A valid email address is required.',
       },
     ),
   ),
@@ -49,9 +49,9 @@ export const schema = Schema.Struct({
   ),
   luckyNumbers: Schema.Array(Schema.Number),
   enabled: Schema.Boolean,
-  animal: Schema.Union(Schema.String, Schema.Literal('bird', 'snake')),
+  animal: Schema.Union([Schema.String, Schema.Literals(['bird', 'snake'])]),
   vehicles: Schema.Array(
-    Schema.Union(
+    Schema.Union([
       Schema.Struct({
         type: Schema.Literal('car'),
         brand: Schema.String,
@@ -61,7 +61,7 @@ export const schema = Schema.Struct({
         type: Schema.Literal('bike'),
         speed: Schema.Number,
       }),
-    ),
+    ]),
   ),
 });
 

@@ -21,7 +21,9 @@
     "jsx": "react",
     "types": ["vitest/globals"],
     "paths": {
-      "@hookform/resolvers": ["."]
+      "@hookform/resolvers": ["."],
+      "effect": ["./node_modules/effect/dist/index"],
+      "effect/*": ["./node_modules/effect/dist/*"]
     }
   }
 }

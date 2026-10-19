@@ -4,17 +4,17 @@ exports[`effectTsResolver > should return a single error from effectTsResolver w
 {
   "errors": {
     "animal": {
-      "message": "Expected string, actual ["dog"]",
+      "message": "Expected string | "bird" | "snake"",
       "ref": undefined,
-      "type": "Type",
+      "type": "AnyOf",
     },
     "luckyNumbers": [
       ,
       ,
       {
-        "message": "Expected number, actual "3"",
+        "message": "Expected number",
         "ref": undefined,
-        "type": "Type",
+        "type": "InvalidType",
       },
     ],
     "password": {
@@ -22,15 +22,15 @@ exports[`effectTsResolver > should return a single error from effectTsResolver w
       "ref": {
         "name": "password",
       },
-      "type": "Refinement",
+      "type": "Filter",
     },
     "vehicles": [
       ,
       {
         "horsepower": {
-          "message": "is missing",
+          "message": "Missing key",
           "ref": undefined,
-          "type": "Missing",
+          "type": "MissingKey",
         },
       },
     ],
@@ -47,10 +47,9 @@ exports[`effectTsResolver > should return all the errors from effectTsResolver w
       "ref": {
         "name": "phoneNumber",
       },
-      "type": "Refinement",
+      "type": "Filter",
       "types": {
-        "Refinement": "Please enter a valid phone number in international format.",
-        "Type": "Expected undefined, actual "123"",
+        "Filter": "Please enter a valid phone number in international format.",
       },
     },
   },
@@ -66,7 +65,7 @@ exports[`effectTsResolver > should return the first error from effectTsResolver 
       "ref": {
         "name": "phoneNumber",
       },
-      "type": "Refinement",
+      "type": "Filter",
     },
   },
   "values": {},
