@@ -979,7 +979,7 @@ const App = () => {
 };
 ```
 
-### [ata-validator](https://github.com/nicholasgasior/ata-validator)
+### [ata-validator](https://github.com/ata-core/ata-validator)
 
 A JSON Schema-based validator for JavaScript and TypeScript
 
@@ -1022,6 +1022,21 @@ const App = () => {
       <button type="submit">submit</button>
     </form>
   );
+};
+```
+
+The schema can also be compiled at build time, which leaves ata-validator out of the bundle. Write a module with `npx ata compile schema.json --order` and pass it to `ataCompiledResolver`; the answers are the ones `ataResolver` gives, defaults included.
+
+```tsx
+import { useForm } from 'react-hook-form';
+import { ataCompiledResolver } from '@hookform/resolvers/ata-validator';
+import * as schema from './schema.validator.mjs';
+
+const App = () => {
+  const { register, handleSubmit } = useForm({
+    resolver: ataCompiledResolver(schema),
+  });
+  // ...
 };
 ```
 
