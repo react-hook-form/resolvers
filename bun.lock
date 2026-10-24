@@ -63,7 +63,6 @@
       "peerDependencies": {
         "@sinclair/typebox": ">=0.25.24",
         "@standard-schema/spec": "^1.0.0",
-        "@typeschema/main": ">=0.13.7",
         "@vinejs/vine": "^2.0.0 || ^3.0.0 || ^4.0.0",
         "ajv": "^8.12.0",
         "ajv-errors": "^3.0.0",
@@ -90,7 +89,6 @@
       "optionalPeers": [
         "@sinclair/typebox",
         "@standard-schema/spec",
-        "@typeschema/main",
         "@vinejs/vine",
         "ajv",
         "ajv-errors",
