@@ -13,7 +13,7 @@ on:
 
 jobs:
   build:
-    name: Lint, and test on Node ${{ matrix.node }} and ${{ matrix.os }}
+    name: Lint and test
     runs-on: ubuntu-latest
 
     steps:
@@ -39,7 +39,7 @@ jobs:
         run: bun run build
 
   publish-module:
-    name: 'Publish Module to NPM on Node ${{ matrix.node }} and ${{ matrix.os }}'
+    name: Publish Module to NPM
     needs: build
     if: github.repository == 'react-hook-form/resolvers'  && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/beta' || github.ref == 'refs/heads/1.x')
     runs-on: ubuntu-latest
