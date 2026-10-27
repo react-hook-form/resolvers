@@ -13,7 +13,11 @@ function parseErrorSchema(
   for (; _errors.length; ) {
     const error = _errors[0];
     const { type, message, path } = error;
-    const _path = path.substring(1).replace(/\//g, '.');
+    const _path = path
+      .split('/')
+      .slice(1)
+      .map((segment) => segment.replace(/~1/g, '/').replace(/~0/g, '~'))
+      .join('.');
 
     if (!errors[_path]) {
       errors[_path] = { message, type: '' + type };
