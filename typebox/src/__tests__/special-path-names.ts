@@ -1,7 +1,6 @@
-import { Type } from '@sinclair/typebox';
-import { TypeCompiler } from '@sinclair/typebox/compiler';
-import { ValueErrorType } from '@sinclair/typebox/errors';
 import { createFormControl } from 'react-hook-form';
+import { Type } from 'typebox';
+import { Compile } from 'typebox/compile';
 import { typeboxResolver } from '..';
 
 const shouldUseNativeValidation = false;
@@ -19,15 +18,17 @@ describe.each([false, true])('typeboxResolver with compiler=%s', (compiled) => {
     async ({ name, criteriaMode }) => {
       const schema = Type.Object({ [name]: Type.String({ minLength: 1 }) });
       const ref = { name };
-      const type = String(ValueErrorType.StringMinLength);
-      const message = 'Expected string length greater or equal to 1';
-      const result = await typeboxResolver(
-        compiled ? TypeCompiler.Compile(schema) : schema,
-      )({ [name]: '' }, undefined, {
-        fields: { [name]: { name, ref } },
-        criteriaMode,
-        shouldUseNativeValidation,
-      });
+      const type = 'minLength';
+      const message = 'must not have fewer than 1 characters';
+      const result = await typeboxResolver(compiled ? Compile(schema) : schema)(
+        { [name]: '' },
+        undefined,
+        {
+          fields: { [name]: { name, ref } },
+          criteriaMode,
+          shouldUseNativeValidation,
+        },
+      );
 
       expect(result).toEqual({
         values: {},
@@ -54,16 +55,18 @@ describe.each([false, true])('typeboxResolver with compiler=%s', (compiled) => {
     });
     const name = 'parent/~1.0.a~1/b';
     const ref = { name };
-    const type = String(ValueErrorType.StringMinLength);
-    const message = 'Expected string length greater or equal to 1';
-    const result = await typeboxResolver(
-      compiled ? TypeCompiler.Compile(schema) : schema,
-    )({ 'parent/~1': [{ 'a~1/b': '' }] }, undefined, {
-      names: [name],
-      fields: { [name]: { name, ref } },
-      criteriaMode: 'all',
-      shouldUseNativeValidation,
-    });
+    const type = 'minLength';
+    const message = 'must not have fewer than 1 characters';
+    const result = await typeboxResolver(compiled ? Compile(schema) : schema)(
+      { 'parent/~1': [{ 'a~1/b': '' }] },
+      undefined,
+      {
+        names: [name],
+        fields: { [name]: { name, ref } },
+        criteriaMode: 'all',
+        shouldUseNativeValidation,
+      },
+    );
 
     expect(result.errors).toEqual({
       'parent/~1': [
@@ -73,7 +76,7 @@ describe.each([false, true])('typeboxResolver with compiler=%s', (compiled) => {
             message,
             types: {
               [type]: message,
-              [ValueErrorType.StringPattern]: "Expected string to match '^a'",
+              pattern: 'must match pattern "^a"',
             },
             ref,
           },
@@ -83,15 +86,42 @@ describe.each([false, true])('typeboxResolver with compiler=%s', (compiled) => {
     expect(result.errors['parent/~1']?.[0]?.['a~1/b']?.ref).toBe(ref);
   });
 
+  it('reports each missing required property at its own escaped path', async () => {
+    const schema = Type.Object({
+      nested: Type.Object({
+        'a/b': Type.String(),
+        'c~d': Type.String(),
+      }),
+    });
+    const result = await typeboxResolver(compiled ? Compile(schema) : schema)(
+      { nested: {} } as any,
+      undefined,
+      { fields: {}, shouldUseNativeValidation },
+    );
+
+    expect(result.errors).toEqual({
+      nested: {
+        'a/b': {
+          type: 'required',
+          message: 'must have required properties a/b',
+          ref: undefined,
+        },
+        'c~d': {
+          type: 'required',
+          message: 'must have required properties c~d',
+          ref: undefined,
+        },
+      },
+    });
+  });
+
   it('fails field validation for a registered escaped name', async () => {
     const schema = Type.Object({
       'profile/name': Type.String({ minLength: 1 }),
     });
     const form = createFormControl({
       defaultValues: { 'profile/name': '' },
-      resolver: typeboxResolver(
-        compiled ? TypeCompiler.Compile(schema) : schema,
-      ),
+      resolver: typeboxResolver(compiled ? Compile(schema) : schema),
     });
     form.register('profile/name');
 
@@ -111,11 +141,10 @@ describe('typeboxResolver special path names', () => {
     async (name) => {
       const schema = Type.Object({ [name]: Type.String({ minLength: 1 }) });
 
-      const result = await typeboxResolver(schema as any)(
-        { [name]: '' } as any,
-        undefined,
-        { fields: {}, shouldUseNativeValidation } as any,
-      );
+      const result = await typeboxResolver(schema)({ [name]: '' }, undefined, {
+        fields: {},
+        shouldUseNativeValidation,
+      });
 
       expect(result.errors[name]).toBeDefined();
     },

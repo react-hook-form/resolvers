@@ -1,44 +1,63 @@
 import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
-import { Static, StaticDecode, TObject } from '@sinclair/typebox';
-import { TypeCheck } from '@sinclair/typebox/compiler';
-import { Value, type ValueError } from '@sinclair/typebox/value';
 import { FieldError, Resolver, appendErrors } from 'react-hook-form';
+import type { Static, StaticDecode, TObject, TProperties } from 'typebox';
+import { Validator } from 'typebox/compile';
+import type { TLocalizedValidationError } from 'typebox/error';
+import { Locale } from 'typebox/system';
+import { Value } from 'typebox/value';
+
+// TypeBox reports a single `required` error on the parent object listing every
+// missing property; split it into one error per missing field so each one lands
+// on its own path, re-localizing the message for that single property.
+function expandRequiredErrors(
+  errors: TLocalizedValidationError[],
+): TLocalizedValidationError[] {
+  return errors.flatMap<TLocalizedValidationError>((error) =>
+    error.keyword === 'required'
+      ? error.params.requiredProperties.map((property) => {
+          const single = {
+            ...error,
+            instancePath: `${error.instancePath}/${property.replace(/~/g, '~0').replace(/\//g, '~1')}`,
+            params: { requiredProperties: [property] },
+          };
+          return { ...single, message: Locale.Get()(single) };
+        })
+      : [error],
+  );
+}
 
 function parseErrorSchema(
-  _errors: ValueError[],
+  _errors: TLocalizedValidationError[],
   validateAllFieldCriteria: boolean,
 ) {
   // See the matching comment in the zod resolver's `parseZod3Issues`.
   const errors: Record<string, FieldError> = Object.create(null);
-  for (; _errors.length; ) {
-    const error = _errors[0];
-    const { type, message, path } = error;
-    const _path = path
+  for (const error of _errors) {
+    const { keyword: type, message, instancePath } = error;
+    const _path = instancePath
       .split('/')
       .slice(1)
       .map((segment) => segment.replace(/~1/g, '/').replace(/~0/g, '~'))
       .join('.');
 
     if (!errors[_path]) {
-      errors[_path] = { message, type: '' + type };
+      errors[_path] = { message, type };
     }
 
     if (validateAllFieldCriteria) {
       const types = errors[_path].types;
-      const messages = types && types['' + type];
+      const messages = types && types[type];
 
       errors[_path] = appendErrors(
         _path,
         validateAllFieldCriteria,
         errors,
-        '' + type,
+        type,
         messages
-          ? ([] as string[]).concat(messages as string[], error.message)
-          : error.message,
+          ? ([] as string[]).concat(messages as string[], message)
+          : message,
       ) as FieldError;
     }
-
-    _errors.shift();
   }
 
   return errors;
@@ -46,7 +65,7 @@ function parseErrorSchema(
 
 /**
  * Creates a resolver for react-hook-form using Typebox schema validation
- * @param {Schema | TypeCheck<Schema>} schema - The Typebox schema to validate against
+ * @param {Schema | Validator<TProperties, Schema>} schema - The Typebox schema to validate against
  * @param {Object} options - Additional resolver configuration
  * @param {string} [options.mode='async'] - Validation mode
  * @returns {Resolver<Static<Schema>>} A resolver function compatible with react-hook-form
@@ -60,18 +79,17 @@ function parseErrorSchema(
  *   resolver: typeboxResolver(schema)
  * });
  *
- * // Schemas using a custom/third-party `Kind` (e.g. ElysiaJS's `t.Files()`) must have
- * // that kind registered with TypeBox's own `TypeRegistry` before validating, since
- * // this resolver validates via `@sinclair/typebox`'s `Value.Errors`/`Value.Check`:
- * // TypeRegistry.Set('Files', (schema, value) => Array.isArray(value));
+ * // Custom string formats must be registered with TypeBox's own `Format` registry
+ * // before validating, since this resolver validates via `typebox`'s `Value.Errors`:
+ * // Format.Set('slug', (value) => /^[a-z0-9-]+$/.test(value));
  */
 export function typeboxResolver<Schema extends TObject, Context>(
-  schema: Schema | TypeCheck<Schema>,
+  schema: Schema | Validator<TProperties, Schema>,
 ): Resolver<Static<Schema>, Context, StaticDecode<Schema>> {
   return async (values: Static<Schema>, _, options) => {
-    const errors = Array.from(
-      schema instanceof TypeCheck
-        ? schema.Errors(values)
+    const errors = expandRequiredErrors(
+      schema instanceof Validator
+        ? (schema as Validator<TProperties, Schema>).Errors(values)
         : Value.Errors(schema, values),
     );
 
@@ -80,7 +98,7 @@ export function typeboxResolver<Schema extends TObject, Context>(
     if (!errors.length) {
       return {
         errors: {},
-        values,
+        values: values as StaticDecode<Schema>,
       };
     }
 

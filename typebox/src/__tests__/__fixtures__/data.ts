@@ -1,5 +1,5 @@
-import { StaticDecode, Type } from '@sinclair/typebox';
 import { Field, InternalFieldName } from 'react-hook-form';
+import { StaticDecode, Type } from 'typebox';
 
 export const schema = Type.Object({
   username: Type.String({
@@ -19,11 +19,7 @@ export const schema = Type.Object({
       maximum: 2013,
     }),
   ),
-  email: Type.Optional(
-    Type.RegExp(
-      /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i,
-    ),
-  ),
+  email: Type.Optional(Type.String({ format: 'email' })),
   tags: Type.Array(Type.String()),
   enabled: Type.Boolean(),
   like: Type.Optional(
@@ -34,7 +30,7 @@ export const schema = Type.Object({
       }),
     ),
   ),
-  dateStr: Type.Date(),
+  dateStr: Type.String({ format: 'date' }),
 });
 
 export const validData: StaticDecode<typeof schema> = {
@@ -52,7 +48,7 @@ export const validData: StaticDecode<typeof schema> = {
       name: 'name',
     },
   ],
-  dateStr: new Date(),
+  dateStr: '2024-01-01',
 };
 
 export const invalidData = {

@@ -4,69 +4,69 @@ exports[`typeboxResolver (with compiler) > should return a single error from typ
 {
   "errors": {
     "accessToken": {
-      "message": "Expected required property",
+      "message": "must have required properties accessToken",
       "ref": undefined,
-      "type": "45",
+      "type": "required",
     },
     "birthYear": {
-      "message": "Expected number",
+      "message": "must be number",
       "ref": undefined,
-      "type": "41",
+      "type": "type",
     },
     "dateStr": {
-      "message": "Expected required property",
+      "message": "must have required properties dateStr",
       "ref": undefined,
-      "type": "45",
+      "type": "required",
     },
     "email": {
-      "message": "Expected string to match regular expression",
+      "message": "must match format "email"",
       "ref": {
         "name": "email",
       },
-      "type": "48",
+      "type": "format",
     },
     "enabled": {
-      "message": "Expected required property",
+      "message": "must have required properties enabled",
       "ref": undefined,
-      "type": "45",
+      "type": "required",
     },
     "like": [
       {
         "id": {
-          "message": "Expected number",
+          "message": "must be number",
           "ref": undefined,
-          "type": "41",
+          "type": "type",
         },
         "name": {
-          "message": "Expected required property",
+          "message": "must have required properties name",
           "ref": undefined,
-          "type": "45",
+          "type": "required",
         },
       },
     ],
     "password": {
-      "message": "Expected string length greater or equal to 8",
+      "message": "must not have fewer than 8 characters",
       "ref": {
         "name": "password",
       },
-      "type": "52",
+      "type": "minLength",
     },
     "repeatPassword": {
-      "message": "Expected required property",
+      "message": "must have required properties repeatPassword",
       "ref": undefined,
-      "type": "45",
+      "type": "required",
     },
     "tags": {
-      "message": "Expected required property",
+      "message": "must have required properties tags",
       "ref": undefined,
-      "type": "45",
+      "type": "required",
     },
     "username": {
-      "message": "Expected required property",
+      "message": "must have required properties username",
       "ref": {
         "name": "username",
       },
-      "type": "45",
+      "type": "required",
     },
   },
   "values": {},
@@ -77,109 +77,102 @@ exports[`typeboxResolver (with compiler) > should return all the errors from typ
 {
   "errors": {
     "accessToken": {
-      "message": "Expected required property",
+      "message": "must have required properties accessToken",
       "ref": undefined,
-      "type": "45",
+      "type": "required",
       "types": {
-        "45": "Expected required property",
-        "62": "Expected union value",
+        "required": "must have required properties accessToken",
       },
     },
     "birthYear": {
-      "message": "Expected number",
+      "message": "must be number",
       "ref": undefined,
-      "type": "41",
+      "type": "type",
       "types": {
-        "41": "Expected number",
+        "type": "must be number",
       },
     },
     "dateStr": {
-      "message": "Expected required property",
+      "message": "must have required properties dateStr",
       "ref": undefined,
-      "type": "45",
+      "type": "required",
       "types": {
-        "20": "Expected Date",
-        "45": "Expected required property",
+        "required": "must have required properties dateStr",
       },
     },
     "email": {
-      "message": "Expected string to match regular expression",
+      "message": "must match format "email"",
       "ref": {
         "name": "email",
       },
-      "type": "48",
+      "type": "format",
       "types": {
-        "48": "Expected string to match regular expression",
+        "format": "must match format "email"",
       },
     },
     "enabled": {
-      "message": "Expected required property",
+      "message": "must have required properties enabled",
       "ref": undefined,
-      "type": "45",
+      "type": "required",
       "types": {
-        "14": "Expected boolean",
-        "45": "Expected required property",
+        "required": "must have required properties enabled",
       },
     },
     "like": [
       {
         "id": {
-          "message": "Expected number",
+          "message": "must be number",
           "ref": undefined,
-          "type": "41",
+          "type": "type",
           "types": {
-            "41": "Expected number",
+            "type": "must be number",
           },
         },
         "name": {
-          "message": "Expected required property",
+          "message": "must have required properties name",
           "ref": undefined,
-          "type": "45",
+          "type": "required",
           "types": {
-            "45": "Expected required property",
-            "54": "Expected string",
+            "required": "must have required properties name",
           },
         },
       },
     ],
     "password": {
-      "message": "Expected string length greater or equal to 8",
+      "message": "must not have fewer than 8 characters",
       "ref": {
         "name": "password",
       },
-      "type": "52",
+      "type": "minLength",
       "types": {
-        "52": "Expected string length greater or equal to 8",
-        "53": "Expected string to match '^(.*[A-Za-z\\d].*)$'",
+        "minLength": "must not have fewer than 8 characters",
+        "pattern": "must match pattern "^(.*[A-Za-z\\d].*)$"",
       },
     },
     "repeatPassword": {
-      "message": "Expected required property",
+      "message": "must have required properties repeatPassword",
       "ref": undefined,
-      "type": "45",
+      "type": "required",
       "types": {
-        "45": "Expected required property",
-        "54": "Expected string",
+        "required": "must have required properties repeatPassword",
       },
     },
     "tags": {
-      "message": "Expected required property",
+      "message": "must have required properties tags",
       "ref": undefined,
-      "type": "45",
+      "type": "required",
       "types": {
-        "45": "Expected required property",
-        "6": "Expected array",
+        "required": "must have required properties tags",
       },
     },
     "username": {
-      "message": "Expected required property",
+      "message": "must have required properties username",
       "ref": {
         "name": "username",
       },
-      "type": "45",
+      "type": "required",
       "types": {
-        "45": "Expected required property",
-        "54": "Expected string",
+        "required": "must have required properties username",
       },
     },
   },

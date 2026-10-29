@@ -583,14 +583,16 @@ const App = () => {
 
 JSON Schema Type Builder with Static Type Resolution for TypeScript
 
-[![npm](https://img.shields.io/bundlephobia/minzip/@sinclair/typebox?style=for-the-badge)](https://bundlephobia.com/result?p=@sinclair/typebox)
+[![npm](https://img.shields.io/bundlephobia/minzip/typebox?style=for-the-badge)](https://bundlephobia.com/result?p=typebox)
 
-#### With `ValueCheck`
+> Requires `typebox` 1.x (`npm install typebox`). The legacy `@sinclair/typebox` 0.x package is no longer supported.
+
+#### With `Value`
 
 ```tsx
 import { useForm } from 'react-hook-form';
 import { typeboxResolver } from '@hookform/resolvers/typebox';
-import { Type } from '@sinclair/typebox';
+import { Type } from 'typebox';
 
 const schema = Type.Object({
   username: Type.String({ minLength: 1 }),
@@ -612,22 +614,22 @@ const App = () => {
 };
 ```
 
-#### With `TypeCompiler`
+#### With `Compile`
 
-A high-performance JIT of `TypeBox`, [read more](https://github.com/sinclairzx81/typebox#typecompiler)
+A high-performance JIT of `TypeBox`, [read more](https://sinclairzx81.github.io/typebox/#/docs/compile/overview)
 
 ```tsx
 import { useForm } from 'react-hook-form';
 import { typeboxResolver } from '@hookform/resolvers/typebox';
-import { Type } from '@sinclair/typebox';
-import { TypeCompiler } from '@sinclair/typebox/compiler';
+import { Type } from 'typebox';
+import { Compile } from 'typebox/compile';
 
 const schema = Type.Object({
   username: Type.String({ minLength: 1 }),
   password: Type.String({ minLength: 1 }),
 });
 
-const typecheck = TypeCompiler.Compile(schema);
+const typecheck = Compile(schema);
 
 const App = () => {
   const { register, handleSubmit } = useForm({
@@ -644,25 +646,18 @@ const App = () => {
 };
 ```
 
-#### Custom/third-party types (e.g. ElysiaJS's `t.Files()`)
+#### Custom formats
 
-`typeboxResolver` validates using `@sinclair/typebox`'s own `Value.Errors`/`Value.Check`, so any schema
-`Kind` not built into TypeBox (custom types, or ones defined by a third-party library such as ElysiaJS)
-must be registered with TypeBox's own `TypeRegistry` (and `FormatRegistry` for string formats) before
-it's used — this is a TypeBox-level extension point, not something `@hookform/resolvers` wraps or needs
-to expose separately:
+`typeboxResolver` validates using `typebox`'s own `Value.Errors` (or the compiled `Validator`), so custom
+string formats must be registered with TypeBox's `Format` registry before they're used:
 
 ```tsx
-import { TypeRegistry } from '@sinclair/typebox';
+import { Format } from 'typebox/format';
 
-if (!TypeRegistry.Has('Files')) {
-  TypeRegistry.Set('Files', (schema, value) => Array.isArray(value));
-}
+Format.Set('slug', (value) => /^[a-z0-9-]+$/.test(value));
 ```
 
-Make sure this registration runs against the same `@sinclair/typebox` module instance the schema was
-built with — if a library vendors its own copy of `@sinclair/typebox` instead of relying on the shared
-peer dependency, its registrations won't be visible here, and you'll see a runtime `"Unknown type"` error.
+Make sure this registration runs against the same `typebox` module instance the schema was built with.
 
 ### [ArkType](https://github.com/arktypeio/arktype)
 

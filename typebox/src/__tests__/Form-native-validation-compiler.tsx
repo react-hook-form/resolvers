@@ -4,15 +4,15 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { typeboxResolver } from '..';
 
-import { Static, Type } from '@sinclair/typebox';
-import { TypeCompiler } from '@sinclair/typebox/compiler';
+import { Static, Type } from 'typebox';
+import { Compile } from 'typebox/compile';
 
 const schema = Type.Object({
   username: Type.String({ minLength: 1 }),
   password: Type.String({ minLength: 1 }),
 });
 
-const typecheck = TypeCompiler.Compile(schema);
+const typecheck = Compile(schema);
 
 type FormData = Static<typeof schema>;
 
@@ -61,14 +61,14 @@ test("form's native validation with Typebox (with compiler)", async () => {
   usernameField = screen.getByPlaceholderText(/username/i) as HTMLInputElement;
   expect(usernameField.validity.valid).toBe(false);
   expect(usernameField.validationMessage).toBe(
-    'Expected string length greater or equal to 1',
+    'must not have fewer than 1 characters',
   );
 
   // password
   passwordField = screen.getByPlaceholderText(/password/i) as HTMLInputElement;
   expect(passwordField.validity.valid).toBe(false);
   expect(passwordField.validationMessage).toBe(
-    'Expected string length greater or equal to 1',
+    'must not have fewer than 1 characters',
   );
 
   await user.type(screen.getByPlaceholderText(/username/i), 'joe');
