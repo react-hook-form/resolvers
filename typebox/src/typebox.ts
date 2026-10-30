@@ -65,10 +65,10 @@ function parseErrorSchema(
 
 /**
  * Creates a resolver for react-hook-form using Typebox schema validation
- * @param {Schema | Validator<TProperties, Schema>} schema - The Typebox schema to validate against
+ * @param {Schema | Validator<TypeContext, Schema>} schema - The Typebox schema to validate against
  * @param {Object} options - Additional resolver configuration
  * @param {string} [options.mode='async'] - Validation mode
- * @returns {Resolver<Static<Schema>>} A resolver function compatible with react-hook-form
+ * @returns {Resolver<Static<Schema, TypeContext>>} A resolver function compatible with react-hook-form
  * @example
  * const schema = Type.Object({
  *   name: Type.String(),
@@ -83,13 +83,21 @@ function parseErrorSchema(
  * // before validating, since this resolver validates via `typebox`'s `Value.Errors`:
  * // Format.Set('slug', (value) => /^[a-z0-9-]+$/.test(value));
  */
-export function typeboxResolver<Schema extends TObject, Context>(
-  schema: Schema | Validator<TProperties, Schema>,
-): Resolver<Static<Schema>, Context, StaticDecode<Schema>> {
-  return async (values: Static<Schema>, _, options) => {
+export function typeboxResolver<
+  Schema extends TObject,
+  Context,
+  TypeContext extends TProperties = Record<never, never>,
+>(
+  schema: Schema | Validator<TypeContext, Schema>,
+): Resolver<
+  Static<Schema, TypeContext>,
+  Context,
+  StaticDecode<Schema, TypeContext>
+> {
+  return async (values: Static<Schema, TypeContext>, _, options) => {
     const errors = expandRequiredErrors(
       schema instanceof Validator
-        ? (schema as Validator<TProperties, Schema>).Errors(values)
+        ? (schema as Validator<TypeContext, Schema>).Errors(values)
         : Value.Errors(schema, values),
     );
 
@@ -98,7 +106,7 @@ export function typeboxResolver<Schema extends TObject, Context>(
     if (!errors.length) {
       return {
         errors: {},
-        values: values as StaticDecode<Schema>,
+        values: values as StaticDecode<Schema, TypeContext>,
       };
     }
 

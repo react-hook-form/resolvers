@@ -56,6 +56,34 @@ describe('typeboxResolver', () => {
     >();
   });
 
+  it('should correctly infer the output type from a typebox schema with Compile and a reference', () => {
+    const typecheck = Compile(
+      { Name: Type.String() },
+      Type.Object({ name: Type.Ref('Name') }),
+    );
+    const resolver = typeboxResolver(typecheck);
+
+    expectTypeOf(resolver).toEqualTypeOf<
+      Resolver<{ name: string }, unknown, { name: string }>
+    >();
+  });
+
+  it('should correctly infer the output type from a typebox schema with Compile and a reference using a transform', () => {
+    const typecheck = Compile(
+      {
+        Id: Type.Codec(Type.Number())
+          .Decode((v) => String(v))
+          .Encode((v) => Number.parseInt(v)),
+      },
+      Type.Object({ id: Type.Ref('Id') }),
+    );
+    const resolver = typeboxResolver(typecheck);
+
+    expectTypeOf(resolver).toEqualTypeOf<
+      Resolver<{ id: number }, unknown, { id: string }>
+    >();
+  });
+
   it('should correctly infer the output type from a typebox schema using a transform', () => {
     const resolver = typeboxResolver(
       Type.Object({
