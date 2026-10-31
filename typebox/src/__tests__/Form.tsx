@@ -1,8 +1,8 @@
-import { Static, Type } from '@sinclair/typebox';
 import { render, screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { Static, Type } from 'typebox';
 import { typeboxResolver } from '..';
 
 const schema = Type.Object({
@@ -45,7 +45,7 @@ test("form's validation with Typebox and TypeScript's integration", async () => 
   await user.click(screen.getByText(/submit/i));
 
   expect(
-    screen.getAllByText(/Expected string length greater or equal to 1/i),
+    screen.getAllByText(/must not have fewer than 1 characters/i),
   ).toHaveLength(2);
 
   expect(handleSubmit).not.toHaveBeenCalled();

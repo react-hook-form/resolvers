@@ -1,9 +1,9 @@
-import { Static, Type } from '@sinclair/typebox';
-import { TypeCompiler } from '@sinclair/typebox/compiler';
 import { render, screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { Static, Type } from 'typebox';
+import { Compile } from 'typebox/compile';
 import { typeboxResolver } from '..';
 
 const schema = Type.Object({
@@ -11,11 +11,13 @@ const schema = Type.Object({
   password: Type.String({ minLength: 1 }),
 });
 
-const typecheck = TypeCompiler.Compile(schema);
+const typecheck = Compile(schema);
 
 function TestComponent({
   onSubmit,
-}: { onSubmit: (data: Static<typeof schema>) => void }) {
+}: {
+  onSubmit: (data: Static<typeof schema>) => void;
+}) {
   const {
     register,
     handleSubmit,
@@ -46,7 +48,7 @@ test("form's validation with Typebox (with compiler) and TypeScript's integratio
   await user.click(screen.getByText(/submit/i));
 
   expect(
-    screen.getAllByText(/Expected string length greater or equal to 1/i),
+    screen.getAllByText(/must not have fewer than 1 characters/i),
   ).toHaveLength(2);
 
   expect(handleSubmit).not.toHaveBeenCalled();

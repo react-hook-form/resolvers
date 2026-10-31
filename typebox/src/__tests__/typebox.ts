@@ -1,7 +1,7 @@
-import { Type } from '@sinclair/typebox';
-import { TypeCompiler } from '@sinclair/typebox/compiler';
 import { renderHook } from '@testing-library/react';
 import { Resolver, SubmitHandler, useForm } from 'react-hook-form';
+import { Type } from 'typebox';
+import { Compile } from 'typebox/compile';
 import { typeboxResolver } from '..';
 import { fields, invalidData, schema, validData } from './__fixtures__/data';
 
@@ -47,8 +47,8 @@ describe('typeboxResolver', () => {
     >();
   });
 
-  it('should correctly infer the output type from a typebox schema with TypeCompiler', () => {
-    const typecheck = TypeCompiler.Compile(Type.Object({ id: Type.Number() }));
+  it('should correctly infer the output type from a typebox schema with Compile', () => {
+    const typecheck = Compile(Type.Object({ id: Type.Number() }));
     const resolver = typeboxResolver(typecheck);
 
     expectTypeOf(resolver).toEqualTypeOf<
@@ -56,10 +56,38 @@ describe('typeboxResolver', () => {
     >();
   });
 
+  it('should correctly infer the output type from a typebox schema with Compile and a reference', () => {
+    const typecheck = Compile(
+      { Name: Type.String() },
+      Type.Object({ name: Type.Ref('Name') }),
+    );
+    const resolver = typeboxResolver(typecheck);
+
+    expectTypeOf(resolver).toEqualTypeOf<
+      Resolver<{ name: string }, unknown, { name: string }>
+    >();
+  });
+
+  it('should correctly infer the output type from a typebox schema with Compile and a reference using a transform', () => {
+    const typecheck = Compile(
+      {
+        Id: Type.Codec(Type.Number())
+          .Decode((v) => String(v))
+          .Encode((v) => Number.parseInt(v)),
+      },
+      Type.Object({ id: Type.Ref('Id') }),
+    );
+    const resolver = typeboxResolver(typecheck);
+
+    expectTypeOf(resolver).toEqualTypeOf<
+      Resolver<{ id: number }, unknown, { id: string }>
+    >();
+  });
+
   it('should correctly infer the output type from a typebox schema using a transform', () => {
     const resolver = typeboxResolver(
       Type.Object({
-        id: Type.Transform(Type.Number())
+        id: Type.Codec(Type.Number())
           .Decode((v) => String(v))
           .Encode((v) => Number.parseInt(v)),
       }),
@@ -93,8 +121,8 @@ describe('typeboxResolver', () => {
     >();
   });
 
-  it('should correctly infer the output type from a typebox schema with TypeCompiler for the handleSubmit function in useForm', () => {
-    const typecheck = TypeCompiler.Compile(Type.Object({ id: Type.Number() }));
+  it('should correctly infer the output type from a typebox schema with Compile for the handleSubmit function in useForm', () => {
+    const typecheck = Compile(Type.Object({ id: Type.Number() }));
 
     const {
       result: { current: form },
@@ -118,7 +146,7 @@ describe('typeboxResolver', () => {
 
   it('should correctly infer the output type from a typebox schema with a transform for the handleSubmit function in useForm', () => {
     const schema = Type.Object({
-      id: Type.Transform(Type.Number())
+      id: Type.Codec(Type.Number())
         .Decode((v) => String(v))
         .Encode((v) => Number.parseInt(v)),
     });
