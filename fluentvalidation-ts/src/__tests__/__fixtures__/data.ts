@@ -57,7 +57,7 @@ export class SchemaValidator extends Validator<Schema> {
       .when((birthYear) => birthYear != undefined);
 
     this.ruleFor('email').emailAddress();
-    this.ruleFor('tags');
+    this.ruleForEach('tags').notEmpty();
     this.ruleFor('enabled');
 
     this.ruleForEach('like').setValidator(() => new LikeValidator());
