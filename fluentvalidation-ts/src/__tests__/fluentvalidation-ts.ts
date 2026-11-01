@@ -54,6 +54,32 @@ describe('fluentValidationResolver', () => {
     expect(result).toMatchSnapshot();
   });
 
+  it('should preserve the error message and ref for an array item', async () => {
+    const ref = { name: 'tags.1' };
+    const result = await fluentValidationResolver(validator)(
+      { ...validData, tags: ['tag1', ''] },
+      undefined,
+      {
+        fields: { 'tags.1': { name: 'tags.1', ref } },
+        shouldUseNativeValidation,
+      },
+    );
+
+    expect(result).toEqual({
+      errors: {
+        tags: [
+          undefined,
+          {
+            message: 'Value cannot be empty',
+            type: 'validation',
+            ref,
+          },
+        ],
+      },
+      values: {},
+    });
+  });
+
   it('should return a single error from fluentValidationResolver with `mode: sync` when validation fails', async () => {
     const validateSpy = vi.spyOn(validator, 'validate');
 

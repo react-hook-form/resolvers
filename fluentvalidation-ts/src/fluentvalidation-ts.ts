@@ -15,11 +15,7 @@ function traverseObject<T>(
     const currentIndex = [...parentIndices, key];
     const currentValue = object[key];
 
-    if (Array.isArray(currentValue)) {
-      currentValue.forEach((item: any, index: number) => {
-        traverseObject(item, errors, [...currentIndex, index]);
-      });
-    } else if (typeof currentValue === 'object' && currentValue !== null) {
+    if (typeof currentValue === 'object' && currentValue !== null) {
       traverseObject(currentValue, errors, currentIndex);
     } else if (typeof currentValue === 'string') {
       errors[currentIndex.join('.')] = {
