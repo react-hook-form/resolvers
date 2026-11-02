@@ -45,6 +45,7 @@ export function ioTsResolver<Input extends FieldValues, Context, Output>(
  */
 export function ioTsResolver<Input extends FieldValues, Context, Output>(
   schema: t.Type<Output, Input>,
+  resolverOptions: { raw?: boolean } = {},
 ): Resolver<Input, Context, Input | Output> {
   return (values, _context, options) =>
     pipe(
@@ -67,12 +68,12 @@ export function ioTsResolver<Input extends FieldValues, Context, Output>(
           values: {},
           errors,
         }),
-        (values) => {
+        (result) => {
           options.shouldUseNativeValidation &&
             validateFieldsNatively({}, options);
 
           return {
-            values,
+            values: resolverOptions.raw ? Object.assign({}, values) : result,
             errors: {},
           };
         },

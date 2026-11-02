@@ -20,6 +20,23 @@ describe('ioTsResolver', () => {
     expect(result).toEqual({ errors: {}, values: validData });
   });
 
+  it('should return values from ioTsResolver when validation pass & raw=true', async () => {
+    const schema = t.type({ id: tt.NumberFromString });
+    const validateSpy = vi.spyOn(schema, 'decode');
+
+    const result = ioTsResolver(schema, { raw: true })(
+      { id: '42' },
+      undefined,
+      {
+        fields,
+        shouldUseNativeValidation,
+      },
+    );
+
+    expect(validateSpy).toHaveBeenCalled();
+    expect(result).toEqual({ errors: {}, values: { id: '42' } });
+  });
+
   it('should return a single error from ioTsResolver when validation fails', () => {
     const result = ioTsResolver(schema)(invalidData, undefined, {
       fields,
