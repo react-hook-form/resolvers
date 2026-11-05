@@ -23,7 +23,7 @@
         "@vitejs/plugin-react": "^4.7.0",
         "ajv": "^8.20.0",
         "ajv-errors": "^3.0.0",
-        "ajv-formats": "^2.1.1",
+        "ajv-formats": "^3.0.1",
         "arktype": "2.0.4",
         "ata-validator": "^1.23.0",
         "check-export-map": "^1.3.1",
@@ -65,7 +65,7 @@
         "@vinejs/vine": "^2.0.0 || ^3.0.0 || ^4.0.0",
         "ajv": "^8.12.0",
         "ajv-errors": "^3.0.0",
-        "ajv-formats": "^2.1.1",
+        "ajv-formats": "^2.1.1 || ^3.0.0",
         "arktype": "^2.0.0",
         "ata-validator": "^1.23.0",
         "class-transformer": ">=0.4.0",
@@ -583,7 +583,7 @@
 
     "ajv-errors": ["ajv-errors@3.0.0", "", { "peerDependencies": { "ajv": "^8.0.1" } }, "sha512-V3wD15YHfHz6y0KdhYFjyy9vWtEVALT9UrxfN3zqlI6dMioHnJrqOYfyPKol3oqrnCM9uwkcdCwkJ0WUcbLMTQ=="],
 
-    "ajv-formats": ["ajv-formats@2.1.1", "", { "dependencies": { "ajv": "^8.0.0" } }, "sha512-Wx0Kx52hxE7C18hkMEggYlEifqWZtYaRgouJor+WMdPnQyEK13vgEWyVNup7SoeeoLMsr4kf5h6dOW11I15MUA=="],
+    "ajv-formats": ["ajv-formats@3.0.1", "", { "dependencies": { "ajv": "^8.0.0" } }, "sha512-8iUql50EUR+uUcdRQ3HDqa6EVyo3docL8g5WJ3FNcWmu62IbkGUue/pEyLBW8VGKKucTPgqeks4fIU1DA4yowQ=="],
 
     "ansi-regex": ["ansi-regex@5.0.1", "", {}, "sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ=="],
 
