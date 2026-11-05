@@ -73,6 +73,7 @@ export function effectTsResolver<Input extends FieldValues, Context, Output>(
 export function effectTsResolver<Input extends FieldValues, Context, Output>(
   schema: Schema.Codec<Output, Input, never, unknown>,
   schemaOptions: ParseOptions = { errors: 'all', onExcessProperty: 'ignore' },
+  resolverOptions: { raw?: boolean } = {},
 ): Resolver<Input, Context, Output | Input> {
   return (values, _, options) =>
     Schema.decodeUnknownEffect(schema)(values, schemaOptions).pipe(
@@ -123,7 +124,10 @@ export function effectTsResolver<Input extends FieldValues, Context, Output>(
           options.shouldUseNativeValidation &&
             validateFieldsNatively({}, options);
 
-          return { errors: {}, values: result };
+          return {
+            errors: {},
+            values: resolverOptions.raw ? Object.assign({}, values) : result,
+          };
         },
       }),
       Effect.runPromise,

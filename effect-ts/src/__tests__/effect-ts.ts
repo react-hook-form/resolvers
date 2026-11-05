@@ -176,6 +176,19 @@ describe('effectTsResolver', () => {
     expect(result).toEqual({ errors: {}, values: { age: 42 } });
   });
 
+  it('should return values from effectTsResolver when validation pass & raw=true', async () => {
+    const schema = Schema.Struct({ age: Schema.NumberFromString });
+    const values = { age: '42' };
+
+    const result = await effectTsResolver(schema, undefined, { raw: true })(
+      values,
+      undefined,
+      { fields, shouldUseNativeValidation },
+    );
+
+    expect(result).toEqual({ errors: {}, values });
+  });
+
   it('should report errors raised by a failing transformation', async () => {
     const schema = Schema.Struct({
       age: Schema.String.pipe(
