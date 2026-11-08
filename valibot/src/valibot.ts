@@ -93,32 +93,30 @@ export function valibotResolver<Input extends FieldValues, Context, Output>(
       // Iterate over issues to add them to errors object
       for (; result.issues.length; ) {
         const issue = result.issues[0];
-        // Create dot path from issue
-        const path = getDotPath(issue);
+        // Object-level checks report no dot path; keep them on the empty key
+        const path = getDotPath(issue) ?? '';
 
-        if (path) {
-          // Add first error of path to errors object
-          if (!errors[path]) {
-            errors[path] = { message: issue.message, type: issue.type };
-          }
+        // Add first error of path to errors object
+        if (!errors[path]) {
+          errors[path] = { message: issue.message, type: issue.type };
+        }
 
-          // If configured, add all errors of path to errors object
-          if (validateAllFieldCriteria) {
-            const types = errors[path].types;
-            const messages = types && types[issue.type];
-            errors[path] = appendErrors(
-              path,
-              validateAllFieldCriteria,
-              errors,
-              issue.type,
-              messages
-                ? ([] as string[]).concat(
-                    messages as string | string[],
-                    issue.message,
-                  )
-                : issue.message,
-            ) as FieldError;
-          }
+        // If configured, add all errors of path to errors object
+        if (validateAllFieldCriteria) {
+          const types = errors[path].types;
+          const messages = types && types[issue.type];
+          errors[path] = appendErrors(
+            path,
+            validateAllFieldCriteria,
+            errors,
+            issue.type,
+            messages
+              ? ([] as string[]).concat(
+                  messages as string | string[],
+                  issue.message,
+                )
+              : issue.message,
+          ) as FieldError;
         }
 
         result.issues.shift();

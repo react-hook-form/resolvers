@@ -123,6 +123,34 @@ describe('valibotResolver', () => {
     });
   });
 
+  it('should return an object-level issue on the empty path', async () => {
+    const crossFieldSchema = v.pipe(
+      v.object({ password: v.string(), confirm: v.string() }),
+      v.partialCheck(
+        [['password'], ['confirm']],
+        (input) => input.password === input.confirm,
+        'The two passwords do not match.',
+      ),
+    );
+
+    const result = await valibotResolver(crossFieldSchema)(
+      { password: 'one', confirm: 'two' },
+      undefined,
+      { fields, shouldUseNativeValidation },
+    );
+
+    expect(result).toEqual({
+      errors: {
+        '': {
+          message: 'The two passwords do not match.',
+          ref: undefined,
+          type: 'partial_check',
+        },
+      },
+      values: {},
+    });
+  });
+
   it('should be able to validate variants with errors', async () => {
     const result = await valibotResolver(schemaError, undefined, {
       mode: 'sync',
