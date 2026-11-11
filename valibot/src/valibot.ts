@@ -1,4 +1,4 @@
-import { toNestErrors } from '@hookform/resolvers';
+import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
 import {
   FieldError,
   FieldValues,
@@ -128,6 +128,8 @@ export function valibotResolver<Input extends FieldValues, Context, Output>(
         errors: toNestErrors(errors, options),
       } as const;
     }
+
+    options.shouldUseNativeValidation && validateFieldsNatively({}, options);
 
     // Otherwise, return resolver result with values
     return {

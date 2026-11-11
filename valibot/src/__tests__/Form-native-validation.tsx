@@ -1,7 +1,7 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import user from '@testing-library/user-event';
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { Resolver, useForm } from 'react-hook-form';
 import * as v from 'valibot';
 import { valibotResolver } from '..';
 
@@ -23,11 +23,12 @@ type FormData = { username: string; password: string };
 
 interface Props {
   onSubmit: (data: FormData) => void;
+  resolver: Resolver<FormData>;
 }
 
-function TestComponent({ onSubmit }: Props) {
+function TestComponent({ onSubmit, resolver }: Props) {
   const { register, handleSubmit } = useForm<FormData>({
-    resolver: valibotResolver(schema),
+    resolver,
     shouldUseNativeValidation: true,
   });
 
@@ -42,9 +43,14 @@ function TestComponent({ onSubmit }: Props) {
   );
 }
 
-test("form's native validation with Valibot", async () => {
+test.each([
+  ['async', valibotResolver(schema)],
+  ['sync', valibotResolver(schema, undefined, { mode: 'sync' })],
+  ['raw', valibotResolver(schema, undefined, { raw: true })],
+  ['sync/raw', valibotResolver(schema, undefined, { mode: 'sync', raw: true })],
+])("form's native validation with Valibot (%s)", async (_, resolver) => {
   const handleSubmit = vi.fn();
-  render(<TestComponent onSubmit={handleSubmit} />);
+  render(<TestComponent onSubmit={handleSubmit} resolver={resolver} />);
 
   // username
   let usernameField = screen.getByPlaceholderText(
@@ -71,6 +77,7 @@ test("form's native validation with Valibot", async () => {
   passwordField = screen.getByPlaceholderText(/password/i) as HTMLInputElement;
   expect(passwordField.validity.valid).toBe(false);
   expect(passwordField.validationMessage).toBe(PASSWORD_REQUIRED_MESSAGE);
+  expect(handleSubmit).not.toHaveBeenCalled();
 
   await user.type(screen.getByPlaceholderText(/password/i), 'password');
 
@@ -78,4 +85,20 @@ test("form's native validation with Valibot", async () => {
   passwordField = screen.getByPlaceholderText(/password/i) as HTMLInputElement;
   expect(passwordField.validity.valid).toBe(true);
   expect(passwordField.validationMessage).toBe('');
+
+  await user.type(usernameField, 'username');
+  await user.click(screen.getByText(/submit/i));
+
+  await waitFor(() => expect(handleSubmit).toHaveBeenCalledTimes(1));
+  await waitFor(() => {
+    expect(usernameField.validity.valid).toBe(true);
+    expect(usernameField.validationMessage).toBe('');
+    expect(passwordField.validity.valid).toBe(true);
+    expect(passwordField.validationMessage).toBe('');
+  });
+  expect(usernameField.form?.checkValidity()).toBe(true);
+  expect(handleSubmit.mock.calls[0][0]).toEqual({
+    username: 'username',
+    password: 'password',
+  });
 });
