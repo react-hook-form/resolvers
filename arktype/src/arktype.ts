@@ -12,21 +12,20 @@ function parseErrorSchema(
 
   for (let i = 0; i < issues.length; i++) {
     const error = issues[i];
-    const path = getDotPath(error);
+    // Object-level checks report no dot path; keep them on the empty key
+    const path = getDotPath(error) ?? '';
 
-    if (path) {
-      if (!errors[path]) {
-        errors[path] = { message: error.message, type: '' };
-      }
+    if (!errors[path]) {
+      errors[path] = { message: error.message, type: '' };
+    }
 
-      if (validateAllFieldCriteria) {
-        const types = errors[path].types || {};
+    if (validateAllFieldCriteria) {
+      const types = errors[path].types || {};
 
-        errors[path].types = {
-          ...types,
-          [Object.keys(types).length]: error.message,
-        };
-      }
+      errors[path].types = {
+        ...types,
+        [Object.keys(types).length]: error.message,
+      };
     }
   }
 
