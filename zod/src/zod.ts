@@ -229,16 +229,12 @@ type Zod4ParseParams = UnresolvedFallback<
   }
 >;
 
-export function zodResolver<Input extends FieldValues, Context, Output>(
-  schema: Zod3Type<Output, Input>,
-  schemaOptions?: Zod3ParseParams,
-  resolverOptions?: NonRawResolverOptions,
-): Resolver<Input, Context, Output>;
-export function zodResolver<Input extends FieldValues, Context, Output>(
-  schema: Zod3Type<Output, Input>,
-  schemaOptions: Zod3ParseParams | undefined,
-  resolverOptions: RawResolverOptions,
-): Resolver<Input, Context, Input>;
+// The Zod 4 overloads are declared first, mirroring the runtime check below:
+// `Zod3Type` only requires an object-shaped `_def`, which Zod 4 schemas also
+// have, so a Zod 4 schema would otherwise match the Zod 3 overloads. For a
+// concrete schema that happens to infer the same types, but for a generic
+// `Schema extends z.ZodType<...>` it collapses the input/output types to the
+// constraint instead of `z.input<Schema>`/`z.output<Schema>`.
 // the Zod 4 overloads need to be generic for complicated reasons
 export function zodResolver<
   Input extends FieldValues,
@@ -256,10 +252,20 @@ export function zodResolver<
   Output,
   T extends Zod4Type<Output, Input> = Zod4Type<Output, Input>,
 >(
-  schema: Zod4Type<Output, Input>,
+  schema: T,
   schemaOptions: Zod4ParseParams | undefined, // already partial
   resolverOptions: RawResolverOptions,
 ): Resolver<z4.input<T>, Context, z4.input<T>>;
+export function zodResolver<Input extends FieldValues, Context, Output>(
+  schema: Zod3Type<Output, Input>,
+  schemaOptions?: Zod3ParseParams,
+  resolverOptions?: NonRawResolverOptions,
+): Resolver<Input, Context, Output>;
+export function zodResolver<Input extends FieldValues, Context, Output>(
+  schema: Zod3Type<Output, Input>,
+  schemaOptions: Zod3ParseParams | undefined,
+  resolverOptions: RawResolverOptions,
+): Resolver<Input, Context, Input>;
 /**
  * Creates a resolver function for react-hook-form that validates form data using a Zod schema
  * @param {z3.ZodSchema<Input>} schema - The Zod schema used to validate the form data
