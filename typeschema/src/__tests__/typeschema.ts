@@ -1,5 +1,11 @@
 import { renderHook } from '@testing-library/react';
-import { Resolver, SubmitHandler, useForm } from 'react-hook-form';
+import {
+  Resolver,
+  SubmitHandler,
+  createFormControl,
+  useForm,
+} from 'react-hook-form';
+import * as v from 'valibot';
 import { z } from 'zod/v3';
 import { typeschemaResolver } from '..';
 import { fields, invalidData, schema, validData } from './__fixtures__/data';
@@ -55,6 +61,55 @@ describe('typeschemaResolver', () => {
     });
 
     expect(result).toMatchSnapshot();
+  });
+
+  it('should return a path-less issue on the empty path and block submission', async () => {
+    const crossFieldSchema = v.pipe(
+      v.object({ list: v.array(v.string()), length: v.number() }),
+      v.check(
+        (input) => input.list.length === input.length,
+        'The list does not match the length.',
+      ),
+    );
+    const values = { list: ['one'], length: 2 };
+    const resolver = typeschemaResolver(crossFieldSchema);
+    const result = await resolver(values, undefined, {
+      fields,
+      shouldUseNativeValidation,
+    });
+
+    expect(result).toEqual({
+      errors: {
+        '': {
+          message: 'The list does not match the length.',
+          type: '',
+          ref: undefined,
+        },
+      },
+      values: {},
+    });
+
+    const form = createFormControl({ defaultValues: values, resolver });
+    form.register('list.0');
+    form.register('length');
+
+    expect(await form.trigger()).toBe(false);
+
+    const submitHandler = vi.fn();
+    const errorHandler = vi.fn();
+    await form.handleSubmit(submitHandler, errorHandler)();
+
+    expect(submitHandler).not.toHaveBeenCalled();
+    expect(errorHandler).toHaveBeenCalledWith(result.errors, undefined);
+
+    form.setValue('length', 1);
+    expect(await form.trigger()).toBe(true);
+    await form.handleSubmit(submitHandler)();
+
+    expect(submitHandler).toHaveBeenCalledWith(
+      { list: ['one'], length: 1 },
+      undefined,
+    );
   });
 
   it('should throw any error unrelated to TypeSchema', async () => {
