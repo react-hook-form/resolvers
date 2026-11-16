@@ -199,3 +199,167 @@ describe('ajvResolver', () => {
     });
   });
 });
+
+describe('ajvResolver async validation', () => {
+  const schema: JSONSchemaType<{ title: string }> = {
+    type: 'object',
+    properties: { title: { type: 'string', minLength: 3, pattern: '^[A-Z]' } },
+    required: ['title'],
+  };
+  const options = { fields: {}, shouldUseNativeValidation: false };
+
+  it('returns field errors for invalid values', async () => {
+    expect(
+      await ajvResolver(schema, undefined, { mode: 'async' })(
+        { title: 'x' },
+        undefined,
+        options,
+      ),
+    ).toEqual({
+      values: {},
+      errors: {
+        title: {
+          type: 'minLength',
+          message: 'must NOT have fewer than 3 characters',
+          ref: undefined,
+        },
+      },
+    });
+  });
+
+  it('returns all criteria errors from the validation rejection', async () => {
+    expect(
+      await ajvResolver(schema, undefined, { mode: 'async' })(
+        { title: 'x' },
+        undefined,
+        { ...options, criteriaMode: 'all' },
+      ),
+    ).toEqual({
+      values: {},
+      errors: {
+        title: {
+          type: 'minLength',
+          message: 'must NOT have fewer than 3 characters',
+          ref: undefined,
+          types: {
+            minLength: 'must NOT have fewer than 3 characters',
+            pattern: 'must match pattern "^[A-Z]"',
+          },
+        },
+      },
+    });
+  });
+
+  it('preserves required paths and custom error messages', async () => {
+    expect(
+      await ajvResolver(
+        {
+          ...schema,
+          errorMessage: { required: { title: 'Title is required' } },
+        },
+        undefined,
+        { mode: 'async' },
+      )({}, undefined, options),
+    ).toEqual({
+      values: {},
+      errors: {
+        title: {
+          type: 'required',
+          message: 'Title is required',
+          ref: undefined,
+        },
+      },
+    });
+  });
+
+  it('returns valid parsed values without mutating the input', async () => {
+    const values = {};
+    expect(
+      await ajvResolver(
+        {
+          ...schema,
+          properties: { title: { type: 'string', default: 'Title' } },
+        },
+        { useDefaults: true },
+        { mode: 'async' },
+      )(values, undefined, options),
+    ).toEqual({ values: { title: 'Title' }, errors: {} });
+    expect(values).toEqual({});
+  });
+
+  it('waits for an async format validation result', async () => {
+    expect(
+      await ajvResolver(
+        {
+          ...schema,
+          properties: { title: { type: 'string', format: 'delayed' } },
+        },
+        {
+          formats: {
+            delayed: {
+              type: 'string',
+              async: true,
+              validate: async () => false,
+            },
+          },
+        },
+        { mode: 'async' },
+      )({ title: 'Title' }, undefined, options),
+    ).toEqual({
+      values: {},
+      errors: {
+        title: {
+          type: 'format',
+          message: 'must match format "delayed"',
+          ref: undefined,
+        },
+      },
+    });
+  });
+
+  it('sets and clears native validation errors', async () => {
+    const ref = document.createElement('input');
+    const resolver = ajvResolver(schema, undefined, { mode: 'async' });
+    const nativeOptions = {
+      fields: { title: { name: 'title', ref } },
+      shouldUseNativeValidation: true,
+      criteriaMode: 'all' as const,
+    };
+    const invalid = await resolver({ title: 'x' }, undefined, nativeOptions);
+    expect(invalid.values).toEqual({});
+    expect(invalid.errors.title).toEqual({
+      type: 'minLength',
+      message: 'must NOT have fewer than 3 characters',
+      ref,
+    });
+    expect(ref.validationMessage).toBe('must NOT have fewer than 3 characters');
+    expect(
+      await resolver({ title: 'Title' }, undefined, nativeOptions),
+    ).toEqual({ values: { title: 'Title' }, errors: {} });
+    expect(ref.validationMessage).toBe('');
+  });
+
+  it('propagates non-validation errors from async formats', async () => {
+    const error = new Error('Format failed');
+    await expect(
+      ajvResolver(
+        {
+          ...schema,
+          properties: { title: { type: 'string', format: 'delayed' } },
+        },
+        {
+          formats: {
+            delayed: {
+              type: 'string',
+              async: true,
+              validate: async () => {
+                throw error;
+              },
+            },
+          },
+        },
+        { mode: 'async' },
+      )({ title: 'Title' }, undefined, options),
+    ).rejects.toBe(error);
+  });
+});
