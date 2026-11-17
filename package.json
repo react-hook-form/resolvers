@@ -209,7 +209,7 @@
   },
   "scripts": {
     "prepare": "run-s build:src",
-    "build": "cross-env npm-run-all --parallel 'build:*'",
+    "build": "cross-env npm-run-all --parallel --max-parallel 4 'build:*'",
     "build:src": "microbundle build --tsconfig tsconfig.build.json --globals react-hook-form=ReactHookForm",
     "build:zod": "microbundle --cwd zod --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
     "build:yup": "microbundle --cwd yup --globals @hookform/resolvers=hookformResolvers,react-hook-form=ReactHookForm",
