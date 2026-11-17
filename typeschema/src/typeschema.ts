@@ -21,10 +21,7 @@ const parseErrorSchema = (
   const errors: Record<string, FieldError> = Object.create(null);
 
   for (const error of schemaErrors) {
-    if (!error.path) {
-      continue;
-    }
-    const _path = error.path.join('.');
+    const _path = error.path?.join('.') ?? '';
 
     if (!errors[_path]) {
       errors[_path] = { message: error.message, type: '' };
