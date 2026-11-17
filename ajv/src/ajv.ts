@@ -1,5 +1,5 @@
 import { toNestErrors, validateFieldsNatively } from '@hookform/resolvers';
-import Ajv, { DefinedError } from 'ajv';
+import Ajv, { DefinedError, ValidationError } from 'ajv';
 import ajvErrors from 'ajv-errors';
 import addFormats from 'ajv-formats';
 import { FieldError, appendErrors } from 'react-hook-form';
@@ -117,7 +117,17 @@ export const ajvResolver: Resolver =
     // clone keeps those mutations from leaking into react-hook-form's
     // internal form values, which are passed in by reference.
     const parsedValues = structuredClone(values);
-    const valid = validate(parsedValues);
+    let valid;
+    let errors;
+    try {
+      valid = await validate(parsedValues);
+      errors = validate.errors;
+    } catch (error) {
+      if (!(error instanceof ValidationError)) {
+        throw error;
+      }
+      errors = error.errors;
+    }
 
     options.shouldUseNativeValidation && validateFieldsNatively({}, options);
 
@@ -127,7 +137,7 @@ export const ajvResolver: Resolver =
           values: {},
           errors: toNestErrors(
             parseErrorSchema(
-              validate.errors as DefinedError[],
+              errors as DefinedError[],
               !options.shouldUseNativeValidation &&
                 options.criteriaMode === 'all',
             ),
