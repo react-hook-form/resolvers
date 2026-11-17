@@ -11,10 +11,24 @@ on:
       - '.npmignore'
       - '*.md'
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   build:
-    name: Lint and test
+    name: ${{ matrix.task.name }}
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        task:
+          - name: Lint and types
+            run: bunx biome ci --vcs-use-ignore-file=true . && bun lint:types
+          - name: Test
+            run: bun run test
+          - name: Build
+            run: bun run build
 
     steps:
       - name: Checkout repo
@@ -23,20 +37,18 @@ jobs:
       - name: Setup bun
         uses: oven-sh/setup-bun@v2
 
+      - name: Cache bun dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: bun-${{ runner.os }}-${{ hashFiles('bun.lock') }}
+          restore-keys: bun-${{ runner.os }}-
+
       - name: Install Dependencies
-        run: bun install
+        run: bun install --frozen-lockfile
 
-      - name: Lint
-        run: bun lint
-      
-      - name: Test
-        run: bun run test
-          
-      - name: TS
-        run: bun lint:types
-
-      - name: Build
-        run: bun run build
+      - name: ${{ matrix.task.name }}
+        run: ${{ matrix.task.run }}
 
   publish-module:
     name: Publish Module to NPM
@@ -55,8 +67,15 @@ jobs:
       - name: Setup bun
         uses: oven-sh/setup-bun@v2
 
+      - name: Cache bun dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: bun-${{ runner.os }}-${{ hashFiles('bun.lock') }}
+          restore-keys: bun-${{ runner.os }}-
+
       - name: Install Dependencies
-        run: bun install
+        run: bun install --frozen-lockfile
 
       - name: Build
         run: bun run build
