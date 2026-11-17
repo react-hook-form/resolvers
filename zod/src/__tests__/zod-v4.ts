@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react';
-import { Resolver, SubmitHandler, useForm } from 'react-hook-form';
+import { FieldValues, Resolver, SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod/v4';
 import { zodResolver } from '..';
 import { fields, invalidData, schema, validData } from './__fixtures__/data-v4';
@@ -332,5 +332,42 @@ describe('zodResolver', () => {
         id: string;
       }>
     >();
+  });
+
+  it('should infer the input and output types from a generic zod schema', () => {
+    // A generic `Schema` must resolve to the Zod 4 overload, which keeps
+    // `z.input<Schema>`/`z.output<Schema>` deferred. The Zod 3 overload would
+    // collapse them to the constraint (`FieldValues`) instead.
+    function useSchemaForm<Schema extends z.ZodType<FieldValues, FieldValues>>(
+      schema: Schema,
+    ) {
+      const resolver = zodResolver(schema);
+
+      expectTypeOf(resolver).toEqualTypeOf<
+        Resolver<z.input<Schema>, unknown, z.output<Schema>>
+      >();
+
+      return useForm<z.input<Schema>, unknown, z.output<Schema>>({
+        resolver: zodResolver(schema),
+      });
+    }
+
+    expectTypeOf(useSchemaForm).toBeFunction();
+  });
+
+  it('should infer the input type as output from a generic zod schema with raw=true', () => {
+    function useRawSchemaForm<
+      Schema extends z.ZodType<FieldValues, FieldValues>,
+    >(schema: Schema) {
+      const resolver = zodResolver(schema, undefined, { raw: true });
+
+      expectTypeOf(resolver).toEqualTypeOf<
+        Resolver<z.input<Schema>, unknown, z.input<Schema>>
+      >();
+
+      return resolver;
+    }
+
+    expectTypeOf(useRawSchemaForm).toBeFunction();
   });
 });
