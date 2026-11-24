@@ -32,7 +32,7 @@
         "computed-types": "^1.11.2",
         "cross-env": "^7.0.3",
         "effect": "^4.0.5",
-        "fluentvalidation-ts": "^3.3.0",
+        "fluentvalidation-ts": "^5.0.0",
         "fp-ts": "^2.16.11",
         "io-ts": "^2.2.22",
         "io-ts-types": "^0.5.19",
@@ -72,7 +72,7 @@
         "class-validator": ">=0.12.0",
         "computed-types": "^1.0.0",
         "effect": "^4.0.0",
-        "fluentvalidation-ts": "^3.0.0",
+        "fluentvalidation-ts": "^3.0.0 || ^4.0.0 || ^5.0.0",
         "fp-ts": "^2.7.0",
         "io-ts": "^2.0.0",
         "joi": "^17.0.0 || ^18.0.0",
@@ -817,7 +817,7 @@
 
     "find-up": ["find-up@4.1.0", "", { "dependencies": { "locate-path": "^5.0.0", "path-exists": "^4.0.0" } }, "sha512-PpOwAdQ/YlXQ2vj8a3h8IipDuYRi3wceVQQGYWxNINccq40Anw7BlsEXCMbt1Zt+OLA6Fq9suIpIWD0OsnISlw=="],
 
-    "fluentvalidation-ts": ["fluentvalidation-ts@3.3.0", "", {}, "sha512-zL7f8xZG+J8Ey9/RiE5L6b2EA4vIOtgw1MAZqODOgOahSbcC1hivezv4EM6WDWPJyGFoA0FfZxXtJfWKbMQgDQ=="],
+    "fluentvalidation-ts": ["fluentvalidation-ts@5.0.0", "", {}, "sha512-Nd9+ZsJS9WPG8IKmotX8B1PHhkgxXfYSHPmWLHQE4YVTD2WEE3V2aitGLFKu5W53fKrjr+1XLGdQRciuVvcNmw=="],
 
     "for-each": ["for-each@0.3.5", "", { "dependencies": { "is-callable": "^1.2.7" } }, "sha512-dKx12eRCVIzqCxFGplyFKJMPvLEWgmNtUrpTiJIR5u97zEhRG8ySrtboPHZXx7daLxQVrl643cTzbab2tkQjxg=="],
 
